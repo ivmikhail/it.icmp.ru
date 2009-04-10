@@ -24,9 +24,9 @@ public class User
 
     public enum Roles
     {
-        Admin = 0,
-        Poster = 1,
-        User = 2,
+        Admin = 1,
+        Poster = 2,
+        User = 3
     }
 
     public int Id
@@ -65,20 +65,7 @@ public class User
     {
         get
         {
-            Roles result;
-            switch (_role)
-            {
-                case 0:
-                    result = Roles.Admin;
-                    break;
-                case 1:
-                    result = Roles.Poster;
-                    break;
-                default:
-                    result = Roles.User;
-                    break;
-            }
-            return result;
+            return (Roles) Enum.ToObject(typeof (Roles), _role);
         }
         set
         {
