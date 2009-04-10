@@ -141,6 +141,7 @@ public class Post
         _id = id;
         _title = title;
         _description = description;
+        _text = text;
         _cdate = cdate;
         _userId = userId;
         _catId = catId;
