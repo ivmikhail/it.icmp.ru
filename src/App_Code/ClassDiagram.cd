@@ -47,45 +47,45 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CurrentUser">
-    <Position X="0.5" Y="7.25" Width="1.5" />
+    <Position X="0.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\CurrentUser.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>gAAAAAAAAAAAAAAAAgAAAAAAAAAAABAAEAAACIAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Users">
     <Position X="0.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Users.cs</FileName>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAQAgAAFAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAIAAAAAAQAAAAAAAAAAAQAgAAFAAAAEAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="PostCategories">
     <Position X="5.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\PostCategories.cs</FileName>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAAIA=</HashCode>
+      <HashCode>AAIAAAEAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAACAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Posts">
     <Position X="4" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Posts.cs</FileName>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAgAAAAAEAAAAAAEAAAAAAAIA=</HashCode>
+      <HashCode>AgIAAAAAAAhAAAAAAAAAgAAAAAEAAAAAAEAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MenuItems">
     <Position X="2.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\MenuItems.cs</FileName>
-      <HashCode>AAIAAAAAAAAAAAAAAAQAAAAAAAEAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAMAAABAAAAAAAAAAAQAAAAAAAEAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Comments">
     <Position X="7.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Comments.cs</FileName>
-      <HashCode>AAIAAAIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAIAAAAAAAAEAAAAAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
 </ClassDiagram>

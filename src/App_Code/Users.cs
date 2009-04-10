@@ -13,6 +13,15 @@ using System.Collections.Generic;
 public static class Users
 {
     /// <summary>
+    /// Получаем пользователя из базы по логину
+    /// </summary>
+    /// <param name="login">login он же nick</param>
+    public static User GetUserByLogin(string login)
+    {
+        return GetUserFromRow(Database.UserGetByLogin(login));
+    }
+
+    /// <summary>
     /// Получаем пользователя по идентификатору
     /// </summary>
     /// <param name="userId">Идентификатор</param>
@@ -80,12 +89,20 @@ public static class Users
 
     private static User GetUserFromRow(DataRow dr)
     {
-        User user = new User(Convert.ToInt32(dr["id"]),
-                             Convert.ToString(dr["nick"]),
-                             Convert.ToString(dr["pass"]), 
-                             Convert.ToDateTime(dr["cdate"]),
-                             (User.Roles)Convert.ToInt16(dr["role"]),
-                             Convert.ToString(dr["email"]));
+        User user;
+        if (dr == null)
+        {
+            user = new User();
+        }
+        else
+        {
+            user = new User(Convert.ToInt32(dr["id"]),
+                                 Convert.ToString(dr["nick"]),
+                                 Convert.ToString(dr["pass"]),
+                                 Convert.ToDateTime(dr["cdate"]),
+                                 (User.Roles)Convert.ToInt16(dr["role"]),
+                                 Convert.ToString(dr["email"]));
+        }
         return user;
     }
 }

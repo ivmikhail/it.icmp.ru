@@ -62,10 +62,18 @@ public static class MenuItems
 
     private static MenuItem GetItemFromRow(DataRow dr)
     {
-        MenuItem item = new MenuItem(Convert.ToInt32(dr["id"]),
-                             Convert.ToInt32(dr["parent_id"]),
-                             Convert.ToString(dr["url"]),
-                             Convert.ToInt32(dr["sort"]));
+        MenuItem item;
+        if (dr == null)
+        {
+            item = new MenuItem();
+        }
+        else
+        {
+            item = new MenuItem(Convert.ToInt32(dr["id"]),
+                                 Convert.ToInt32(dr["parent_id"]),
+                                 Convert.ToString(dr["url"]),
+                                 Convert.ToInt32(dr["sort"]));
+        }
         return item;
     }
 }

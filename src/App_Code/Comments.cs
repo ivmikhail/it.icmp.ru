@@ -45,16 +45,6 @@ public static class Comments
         return comm;
     }
 
-    private static Comment GetCommentFromRow(DataRow dr)
-    {
-        Comment comment = new Comment(Convert.ToInt32(dr["id"]),
-                             Convert.ToInt32(dr["post_id"]),
-                             Convert.ToInt32(dr["user_id"]), 
-                             Convert.ToDateTime(dr["cdate"]),
-                             Convert.ToString(dr["ip"]));
-        return comment;
-    }
-
     private static List<Comment> GetCommentFromTable(DataTable dt)
     {
         List<Comment> comments = new List<Comment>();
@@ -63,5 +53,24 @@ public static class Comments
             comments.Add(GetCommentFromRow(dt.Rows[i]));
         }
         return comments;
+    }
+
+    private static Comment GetCommentFromRow(DataRow dr)
+    {
+        Comment comment;
+        if (dr == null)
+        {
+            comment = new Comment();
+        }
+        else
+        {
+            comment = new Comment(Convert.ToInt32(dr["id"]),
+                             Convert.ToInt32(dr["post_id"]),
+                             Convert.ToInt32(dr["user_id"]),
+                             Convert.ToDateTime(dr["cdate"]),
+                             Convert.ToString(dr["ip"]));
+        }
+
+        return comment;
     }
 }
