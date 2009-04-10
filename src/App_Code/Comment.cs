@@ -67,4 +67,5 @@ public class Comment
         _cdate = cdate;
         _ip = ip;
     }
+    public Comment() { }
 }

@@ -17,6 +17,10 @@ public class MenuItem
         {
             return _id;
         }
+        set
+        {
+            _id = value;
+        }
     }
 
     public MenuItem Parent

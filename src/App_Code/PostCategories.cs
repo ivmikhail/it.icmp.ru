@@ -59,9 +59,17 @@ public static class PostCategories
 
     private static PostCategory GetCategoryFromRow(DataRow dr)
     {
-        PostCategory cat = new PostCategory(Convert.ToInt32(dr["id"]),
-                             Convert.ToString(dr["name"]),
-                             Convert.ToInt32(dr["sort"]));
+        PostCategory cat;
+        if (dr == null)
+        {
+            cat = new PostCategory();
+        }
+        else
+        {
+            cat = new PostCategory(Convert.ToInt32(dr["id"]),
+                                 Convert.ToString(dr["name"]),
+                                 Convert.ToInt32(dr["sort"]));
+        }
         return cat;
     }
 }

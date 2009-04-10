@@ -767,6 +767,44 @@ public class Database
         connection.Close();
         return result;
     }
+    public static DataRow UserGetByLogin(String login)
+    {
+        SqlConnection connection = OpenConnection();
+        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByLogin", connection);
+        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+        cmd.Parameters.Add("@login", System.Data.SqlDbType.VarChar, 32);
+        cmd.Parameters["@login"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@login"].Value = login;
+        System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+        System.Data.DataTable table = new DataTable();
+
+        for (int i = 0; (i < reader.FieldCount); i++)
+        {
+            System.Type __type;
+            string __name;
+            __type = reader.GetFieldType(i);
+            __name = reader.GetName(i);
+            table.Columns.Add(__name, __type);
+        }
+
+        DataRow result;
+        if (reader.Read())
+        {
+            System.Data.DataRow row = table.NewRow();
+            object[] rowdata = new object[reader.FieldCount];
+            reader.GetValues(rowdata);
+            row.ItemArray = rowdata;
+            result = row;
+        }
+        else
+        {
+            result = null;
+        }
+        reader.Close();
+        connection.Close();
+        return result;
+    }
     public static DataTable UserGetByRole(Int32 role)
     {
         SqlConnection connection = OpenConnection();

@@ -75,16 +75,24 @@ public static class Posts
 
     private static Post GetPostFromRow(DataRow dr)
     {
-        Post post = new Post(Convert.ToInt32(dr["id"]),
-                     Convert.ToString(dr["title"]),
-                     Convert.ToString(dr["description"]),
-                     Convert.ToString(dr["text"]),
-                     Convert.ToDateTime(dr["cdate"]),
-                     Convert.ToInt32(dr["user_id"]),
-                     Convert.ToInt32(dr["cat_id"]),
-                     Convert.ToBoolean(dr["attached"]),
-                     Convert.ToInt32(dr["views"]),
-                     Convert.ToString(dr["source"]));
+        Post post;
+        if (dr == null)
+        {
+            post = new Post();
+        }
+        else
+        {
+            post = new Post(Convert.ToInt32(dr["id"]),
+                         Convert.ToString(dr["title"]),
+                         Convert.ToString(dr["description"]),
+                         Convert.ToString(dr["text"]),
+                         Convert.ToDateTime(dr["cdate"]),
+                         Convert.ToInt32(dr["user_id"]),
+                         Convert.ToInt32(dr["cat_id"]),
+                         Convert.ToBoolean(dr["attached"]),
+                         Convert.ToInt32(dr["views"]),
+                         Convert.ToString(dr["source"]));
+        }
         return post;
     }
 }
