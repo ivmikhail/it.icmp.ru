@@ -5,7 +5,7 @@
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\User.cs</FileName>
-      <HashCode>AAQCAAAIACQAAAAAEABAAAAAABKAAAAAAAABAAAAAAE=</HashCode>
+      <HashCode>AAQCAAAIACQAABAAEABAAAAAABKAAAAAAAABAAAAAAE=</HashCode>
     </TypeIdentifier>
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
@@ -47,14 +47,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CurrentUser">
-    <Position X="0.5" Y="7.5" Width="1.5" />
+    <Position X="0.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\CurrentUser.cs</FileName>
-      <HashCode>gAAAAAAAAAAAAAAAAgAAAAAAAAAAABAAEAAACIAAAAA=</HashCode>
+      <HashCode>gAAAAAAAAAAAABAAAgAAAAAAAAABABAAEAAAAAAAIAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Users">
-    <Position X="0.5" Y="5" Width="1.5" />
+    <Position X="0.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Users.cs</FileName>
       <HashCode>AAIAAAAAAQAAAAAAAAAAAQAgAAFAAAAEAAAAAAAAAIA=</HashCode>

@@ -96,6 +96,20 @@ public class User
             _cdate = value;
         }
     }
+    /// <summary>
+    /// Забанен ли данный пользователь по login'у
+    /// </summary>
+    public bool IsBanned
+    {
+        get
+        {
+            throw new System.NotImplementedException();
+        }
+        set
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
     public User(int id, string nick, string pass, DateTime cdate, User.Roles role, string email)
     {
@@ -107,5 +121,13 @@ public class User
         _email = email;
     }
 
-    public User() { }
+    public User() 
+    {
+        _id = -1;
+        _nick = "";
+        _pass = "";
+        _cdate = DateTime.Now;
+        _role = 3;
+        _email = "bill@microsoft.com";
+    }
 }

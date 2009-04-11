@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\...\src\", "src\", "{0D7464F7-1F15-47D2-B13A-963A24559885}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "c:\...\src\", "src\", "{0D7464F7-1F15-47D2-B13A-963A24559885}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.VirtualPath = "/src"
 		Debug.AspNetCompiler.PhysicalPath = "src\"
@@ -17,7 +17,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\...\src\", "src\", "{0D7
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1343"
+		VWDPort = "4174"
 	EndProjectSection
 EndProject
 Global

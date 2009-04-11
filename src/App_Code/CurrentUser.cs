@@ -13,11 +13,23 @@ using System.Collections.Specialized;
 public static class CurrentUser
 {
     /// <summary>
-    /// Возвращаем обьект юзер из Сессии, если авторизован. Иначе null
+    /// Возвращаем обьект юзер из Сессии, если авторизован.
     /// </summary>
-    public static User GetUser()
+    public static User User
     {
-        throw new System.NotImplementedException();
+        get 
+        {
+            User dbUser;
+            if (isAuth)
+            {
+                dbUser = (User)HttpContext.Current.Session["ITCurrentUser"];
+            } else
+            {
+                dbUser = new User();
+            }
+            return dbUser;
+        }
+
     }
 
     /// <summary>
@@ -25,30 +37,34 @@ public static class CurrentUser
     /// </summary>
     /// <param name="login">Логин, он же nick</param>
     /// <param name="pass">Пароль</param>
-    public static bool LogIn(string login, string pass)
+    public static User LogIn(string login, string pass)
     {
-        bool status = false;
         User candidate = Users.GetUserByLogin(login);
 
-        string true_pass = "magicword1" + pass + "magicword"; //TODO: Вынести в конфиг
-        string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile( true_pass, "MD5");
+        string hashedPass = HashPass(pass);        
 
-        if(candidate.Id != 0 && candidate.Pass == HashPass(pass))
+        if(candidate.Id > 0 && candidate.Pass == hashedPass)
         {
             HttpContext.Current.Session.Add("ITCurrentUser", candidate);
-            status = true;
         }
 
-        return status;
+        return candidate;
+    }
+
+    private static string HashPass(string pass)
+    {
+        string preparedPass = Global.MagicWord.Substring(0, 2) + pass + Global.MagicWord.Substring(2);
+        string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass, "MD5");
+        return hashedPass;
     }
 
     /// <summary>
     /// Выход
     /// </summary>
-    /// <param name="returnUrl">Урл, куда перенаправим пользователя после выхода</param>
-    public static void LogOut(string returnUrl)
+    public static void LogOut()
     {
-        throw new System.NotImplementedException();
+        HttpContext.Current.Session.Remove("ITCurrentUser");
+        FormsAuthentication.SignOut();
     }
 
     public static string Ip
@@ -69,14 +85,6 @@ public static class CurrentUser
     }
 
     /// <summary>
-    /// Хешируем пароль
-    /// </summary>
-    private static string HashPass(string pass)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    /// <summary>
     /// Регистрируем нового пользователя
     /// </summary>
     /// <param name="login">login=nick</param>
@@ -84,6 +92,27 @@ public static class CurrentUser
     /// <param name="email">электропочта</param>
     public static User Register(string login, string pass, string email)
     {
+        User user = new User();
+        user.Nick = login;
+        user.Pass = HashPass(pass);
+        user.Email = email;
+
+        return Users.Add(user);
+    }
+
+    /// <summary>
+    /// Проверяем забанен ли текущий пользователь по IP
+    /// </summary>
+    public static bool IsBanned()
+    {
         throw new System.NotImplementedException();
+    }
+
+    public static bool isAuth
+    {
+        get
+        {
+            return HttpContext.Current.User.Identity.IsAuthenticated;
+        }
     }
 }

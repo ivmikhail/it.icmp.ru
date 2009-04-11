@@ -17,7 +17,7 @@ public partial class ItCaptcha : System.Web.UI.UserControl {
     }
     private void setNewQuestion() {
         VariantCaptcha ic = Database.GetItCaptcha();
-        lblQuestion.Text = ic.Question;
+        lblQuestion.Text = ic.Question; 
         ddlVariants.Items.Clear();
         ddlVariants.Items.Add(new ListItem("Выберите вариант", "-1"));
         for (int i = 0; i < ic.Variants.Count; i++)
