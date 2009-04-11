@@ -928,6 +928,7 @@ public class Database
         connection.Close();
         return result;
     }
+    //TODO: Изменить. Этот класс руками не пишется! Каждый раз генерируется автоматом.
     public static VariantCaptcha GetItCaptcha()
     {
         SqlConnection connection = OpenConnection();

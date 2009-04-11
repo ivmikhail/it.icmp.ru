@@ -9,12 +9,10 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
-public partial class MasterPage : System.Web.UI.MasterPage
+public partial class Register : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Label1.Text = "Авторизован ли -" + Convert.ToString(CurrentUser.isAuth);
-        Label1.Text += "  Логин-"+ CurrentUser.User.Nick;
-        Label1.Text += "  role-" + CurrentUser.User.Role;
+
     }
 }

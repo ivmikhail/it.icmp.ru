@@ -150,5 +150,16 @@ public class Post
         _source = source;
     }
 
-    public Post() { }
+    public Post() {
+        _id = -1;
+        _title = "";
+        _description = "";
+        _text = "";
+        _cdate = DateTime.Now;
+        _userId = -1;
+        _catId = -1;
+        _attached = 0;
+        _views = 0;
+        _source = "";
+    }
 }

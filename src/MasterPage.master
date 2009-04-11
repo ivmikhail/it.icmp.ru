@@ -1,5 +1,5 @@
 <%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
-<%@ Register Src="LoginControl.ascx" TagName="LoginControl" TagPrefix="my" %>
+<%@ Register Src="Controls/LoginForm.ascx" TagName="LoginForm" TagPrefix="uc" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
@@ -9,7 +9,8 @@
 <body>
     <form id="MainForm" runat="server">
         <div>
-            <my:LoginControl id="LoginForm" runat="server" />
+            <asp:Label ID="Label1" runat="server" Text="Label" ForeColor="Red" />
+            <uc:LoginForm id="LoginForm" runat="server" />
         </div>
         <div>
             <asp:contentplaceholder id="ContentPlaceHolder1" runat="server">

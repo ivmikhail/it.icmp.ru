@@ -80,5 +80,10 @@ public class MenuItem
     }
 
     public MenuItem()
-    { }
+    {
+        _id = -1;
+        _parentId = -1;
+        _url = "";
+        _sort = -1;
+    }
 }

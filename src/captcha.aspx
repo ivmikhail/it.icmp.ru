@@ -1,5 +1,5 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="captcha.aspx.cs" Inherits="captcha" %>
-<%@ Register src="ItCaptcha.ascx" tagname="ItCaptcha" tagprefix="uc" %>
+<%@ Register src="~/Controls/ItCaptcha.ascx" tagname="ItCaptcha" tagprefix="uc" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 

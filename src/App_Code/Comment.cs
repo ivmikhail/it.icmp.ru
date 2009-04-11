@@ -67,5 +67,11 @@ public class Comment
         _cdate = cdate;
         _ip = ip;
     }
-    public Comment() { }
+    public Comment() {
+        _id = -1;
+        _postId = -1;
+        _userId = -1;
+        _cdate = DateTime.Now;
+        _ip = "";
+    }
 }

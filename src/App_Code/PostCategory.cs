@@ -57,5 +57,9 @@ public class PostCategory
         _sort = sort;
     }
 
-    public PostCategory() { }
+    public PostCategory() {
+        _id = -1;
+        _name = "";
+        _sort = -1;
+    }
 }
