@@ -38,4 +38,25 @@ public class VariantCaptcha {
         this._variants = variants;
         this._rightAnswer = rigthAnswer;
     }
+
+    public static VariantCaptcha GetItCaptcha() {
+        DataTable dt = Database.CaptchaGet();
+        List<String> variants = new List<string>();
+        int rightId = -1;
+        string answer = null;
+        for (int i = 0; i < dt.Rows.Count; i++) {
+            if (Convert.ToBoolean(dt.Rows[i]["isAnswer"])) {
+                answer = dt.Rows[i]["text"].ToString();
+                continue;
+            }
+            variants.Add(dt.Rows[i]["text"].ToString());
+            if (Convert.ToBoolean(dt.Rows[i]["isRight"])) {
+                rightId = variants.Count - 1;
+            }
+        }
+        if (answer == null || rightId == -1) {
+            return null;
+        }
+        return new VariantCaptcha(answer, variants, rightId);
+    }
 }
