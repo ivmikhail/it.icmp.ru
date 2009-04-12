@@ -13,6 +13,13 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (CurrentUser.isAuth)
+        {
+            UserProfile.Visible = true;
+        } else
+        {
+            LoginForm.Visible = true;
+        }
         Label1.Text = "Авторизован ли -" + Convert.ToString(CurrentUser.isAuth);
         Label1.Text += "  Логин-"+ CurrentUser.User.Nick;
         Label1.Text += "  role-" + CurrentUser.User.Role;

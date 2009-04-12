@@ -1,0 +1,51 @@
+﻿
+html,body 
+{
+	margin:0;
+	padding:0;
+}
+body
+{
+	font: 90% Verdana, Arial, Helvetica, sans-serif;
+    color: #373737;
+    background-color: #f5f5f5;     
+}
+img 
+{
+	border:0;
+}
+p
+{
+	margin:0 10px 10px;
+}
+div#header
+{
+	background-image: url(../../media/img/top_image.jpg);
+}
+div#navigate
+{
+	float:left;
+	width:25%;
+	margin-left:-100%;
+}
+div#dynamic_content
+{
+	margin: 0 25%;
+}
+div#stats
+{
+	float:left;
+	width:25%;
+	margin-left:-25%;
+}
+div#footer
+{
+	clear:left;
+	width:100%;
+}
+
+div#wrapper
+{
+	float:left;
+	width:100%;
+}

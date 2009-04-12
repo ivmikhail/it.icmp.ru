@@ -13,6 +13,23 @@ public partial class Register : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (CurrentUser.isAuth)
+        {
+            RegUser.Visible = false;
+            AboutRegister.Text = "Вы уже зарегистрированы.";
+        } else
+        {
+            AboutRegister.Text = @"<span>При регистрации Вы получите доступ к следующим разделам сайта:</span>
+                                <ul type='square'>
+                                    <li>Электронные книги</li>
+                                    <li>Видео курсы</li>
+                                    <li>Тесты</li>
+                                    <li>Файлы</li>
+                                    <li>Появится возможность производить поиск по разделам</li>
+                                    <li>Оставлять комменты к новостям</li>
+                                    <li>Оставлять отзывы</li>
+                                <ul>";
+        }
 
     }
 }

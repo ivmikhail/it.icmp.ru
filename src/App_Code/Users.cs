@@ -53,9 +53,10 @@ public static class Users
     /// Получаем самых активных постеров
     /// </summary>
     /// <param name="count">Кол-во нужных пользователей</param>
-    public static List<User> GetTopPosters(int count)
+    public static KeyValuePair<string, string> GetTopPosters(int count)
     {
-        return GetUsersFromTable(Database.UserGetTopPosters(count));
+        throw new NotImplementedException();
+        //return GetUsersFromTable(Database.UserGetTopPosters(count));
     }
 
     /// <summary>
