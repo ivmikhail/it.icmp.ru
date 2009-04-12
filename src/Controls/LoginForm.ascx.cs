@@ -39,130 +39,17 @@ public partial class LoginForm : System.Web.UI.UserControl
         {
             return;
         }
-        User user = CurrentUser.LogIn(login, pass);
+        User user = CurrentUser.LogIn(login, pass, remember);
         if (user.Id > 0)
         {
-            DateTime ticketExpiration = DateTime.Now;
-            if (remember)
-            {
-                DateTime.Now.AddYears(20);
-            } else
-            {
-                DateTime.Now.AddMinutes(20);
-            }
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.Nick, DateTime.Now, ticketExpiration, remember, Convert.ToString((int)user.Role));
-            string encrypt = FormsAuthentication.Encrypt(ticket);
-            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypt);
-            cookie.Expires = ticket.IssueDate.AddYears(20);
-            Response.Cookies.Add(cookie);
-            //TODO: Проверка бана
-            /*
-            if (CurrentUser.User.IsBanned)
-            {
-                UserIsBanned.IsValid = false;
-            } else
-            {
-                FormsAuthentication.RedirectFromLoginPage(login, remember);
-            }
-           */
-           FormsAuthentication.RedirectFromLoginPage(login, remember);
+            //Response.Redirect("Default.aspx");
+            FormsAuthentication.RedirectFromLoginPage(login, remember);
+            //System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
+            //id.Ticket.UserData = Convert.ToString((int)user.Role);
+            //FormsAuthentication.RenewTicketIfOld(new FormsAuthenticationTicket(1, user.Nick, DateTime.Now, ticketExpiration, remember, Convert.ToString((int)user.Role)));
         } else
         {
             WrongAccount.IsValid = false;
         }
-
-
-        /*
-          Try
-                'get the connection string from web.config and open a connection
-                'to the database
-                strConnection = ConfigurationManager. _
-                ConnectionStrings("dbConn").ConnectionString
-
-                dbConn = New OleDb.OleDbConnection(strConnection)
-                dbConn.Open()
-
-                'check to see if the user exists in the database
-                strSQL = "SELECT nick AS UserName, Role FROM tblUsers " & _
-                  "WHERE nick=? AND Password=?"
-                dCmd = New OleDbCommand(strSQL, dbConn)
-                dCmd.Parameters.Add(New OleDbParameter("nick", _
-                       Login1.UserName))
-                dCmd.Parameters.Add(New OleDbParameter("Password", _
-                       Login1.Password))
-                dr = dCmd.ExecuteReader()
-
-                Dim isPersistent As Boolean = Login1.RememberMeSet
-                If (dr.Read()) Then
-                    'user credentials were found in the database so notify the system
-                    'that the user is authenticated
-
-                    'create an authentication ticket for the user with an expiration
-                    'time of 30 minutes and placing the user's role in the userData
-                    'property
-
-                    If (Login1.RememberMeSet) Then
-                        ticket = New FormsAuthenticationTicket(1, _
-                      CStr(dr.Item("UserName")), _
-                      DateTime.Now(), _
-                      DateTime.Now().AddYears(10), _
-                      Login1.RememberMeSet, _
-                      CStr(dr.Item("Role")))
-                        'cookie.Expires = ticket.IssueDate.AddYears(10)
-                    Else
-                        ticket = New FormsAuthenticationTicket(1, _
-                      CStr(dr.Item("UserName")), _
-                      DateTime.Now(), _
-                      DateTime.Now().AddMinutes(20), _
-                      Login1.RememberMeSet, _
-                      CStr(dr.Item("Role")))
-                    End If
-                    encryptedStr = FormsAuthentication.Encrypt(ticket)
-
-                    'add the encrypted authentication ticket in the cookies collection
-                    'and if the cookie is to be persisted, set the expiration for
-                    '10 years from now. Otherwise do not set the expiration or the
-                    'cookie will be created as a persistent cookie.
-                    cookie = New HttpCookie(FormsAuthentication.FormsCookieName, encryptedStr)
-                    cookie.Expires = ticket.IssueDate.AddYears(10)
-
-                    Response.Cookies.Add(cookie)
-
-                    'get the next page for the user
-                    If (Not IsNothing(Request.QueryString(QS_RETURN_URL))) Then
-                        'user attempted to access a page without logging in so redirect
-                        'them to their originally requested page
-                        nextPage = Request.QueryString(QS_RETURN_URL)
-                    Else
-                        'user came straight to the login page so just send them to the
-                        'home page
-                        nextPage = Request.ServerVariables("PATH_INFO") & "?" & Request.ServerVariables("QUERY_STRING")
-
-                    End If
-
-                    'Redirect user to the next page
-                    'NOTE: This must be a Response.Redirect to write the cookie to the
-                    '	user's browser. Do NOT change to Server.Transfer which
-                    '	does not cause around trip to the client browser and thus
-                    '	will not write the authentication cookie to the client
-                    '	browser.
-                    Response.Redirect(nextPage, True)
-                    'Response.Redirect(FormsAuthentication.GetRedirectUrl(Login1.UserName, True))
-                    'Response.Redirect("http://it.icmp.ru:8080/newsdetails.aspx?news_id=2851")
-                Else
-                    Login1.FailureText = "Отказано в доступе"
-                End If
-
-            Finally
-                'cleanup
-                If (Not IsNothing(dr)) Then
-                    dr.Close()
-                End If
-
-                If (Not IsNothing(dbConn)) Then
-                    dbConn.Close()
-                End If
-            End Try 
-        */
     }
 }

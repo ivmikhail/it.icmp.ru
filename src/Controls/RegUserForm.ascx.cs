@@ -13,19 +13,6 @@ public partial class RegUserForm : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
-            if (Request.QueryString["ReturnUrl"] != null)
-            {
-                ViewState["returnUrl"] = Uri.UnescapeDataString(Request.QueryString["ReturnUrl"]);
-            } else if (HttpContext.Current.Request.UrlReferrer == null)
-            {
-                ViewState["returnUrl"] = FormsAuthentication.LoginUrl;
-            } else
-            {
-                ViewState["returnUrl"] = HttpContext.Current.Request.UrlReferrer;
-            }
-        }
     }
     protected void RegisterButton_Click(object sender, EventArgs e)
     {
@@ -34,11 +21,16 @@ public partial class RegUserForm : System.Web.UI.UserControl
             return;
         }
 
-        User user = CurrentUser.Register(TextBoxLogin.Text.Trim(), TextBoxPass.Text, TextBoxEmail.Text.Trim().ToLower());
+        string login = TextBoxLogin.Text.Trim();
+        string pass = TextBoxPass.Text;
+        string email = TextBoxEmail.Text.Trim().ToLower();
 
+        User user = CurrentUser.Register(login, pass, email);
+        
         if (user.Id > 0)
         {
-            Response.Redirect(ViewState["returnUrl"].ToString());
+            CurrentUser.LogIn(login, pass, true);
+            FormsAuthentication.RedirectFromLoginPage(login, true);
         } else
         {
             RegisterFailed.IsValid = false;

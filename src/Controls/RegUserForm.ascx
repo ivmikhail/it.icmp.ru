@@ -1,22 +1,35 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="RegUserForm.ascx.cs" Inherits="RegUserForm" %>
 <div id="reguser_panel">
-    <div>
-        <label>
-            логин   
-            <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" />
-         </label>
-         <label>
-            e-mail   
-            <asp:TextBox ID="TextBoxEmail" runat="server" ValidationGroup="ValidateRegData" />
-         </label>
-         <label>
-            пароль
-            <asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateRegData" TextMode="Password"/>
-         </label>
-         <label>
-            повторите пароль
-            <asp:TextBox ID="TextBoxPassConf" runat="server" ValidationGroup="ValidateRegData" TextMode="Password"/>
-         </label>
+    <div id="reguser_data">
+        <ul>
+            <li>
+                <label>
+                    логин   
+                    <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" />
+                </label>
+            </li>        
+            <li>
+                 <label>
+                    e-mail   
+                    <asp:TextBox ID="TextBoxEmail" runat="server" ValidationGroup="ValidateRegData" />
+                 </label>
+            </li>            
+            <li>
+                <label>
+                    пароль
+                    <asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateRegData" TextMode="Password"/>
+                </label>
+            </li>            
+            <li>
+                <label>
+                    повторите пароль
+                    <asp:TextBox ID="TextBoxPassConf" runat="server" ValidationGroup="ValidateRegData" TextMode="Password"/>
+                </label>
+            </li>
+            <li>            
+                <asp:LinkButton ID="RegisterButton" runat="server" ValidationGroup="ValidateRegData" OnClick="RegisterButton_Click">Зарегаться</asp:LinkButton>
+            </li>
+         </ul>
      </div>
      <div id="reguser_messages">
         <asp:ValidationSummary ID="ValidationSummaryAuth" runat="server" ValidationGroup="ValidateRegData" DisplayMode="List"  />
@@ -78,5 +91,4 @@
                              ErrorMessage="Ошибка, регистрация не прошла, обратитесь к администратору." 
                              ValidationGroup="ValidateRegData" />
      </div>     
-    <asp:LinkButton ID="RegisterButton" runat="server" ValidationGroup="ValidateRegData" OnClick="RegisterButton_Click">Зарегаться</asp:LinkButton>
 </div>

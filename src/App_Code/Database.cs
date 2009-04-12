@@ -957,7 +957,8 @@ public class Database
         connection.Close();
         return result;
     }
-    //TODO: Изменить. Этот класс руками не пишется! Каждый раз генерируется автоматом.
+    //TODO: Скоро этот кусок исчезнет
+    /*
     public static VariantCaptcha GetItCaptcha()
     {
         SqlConnection connection = OpenConnection();
@@ -987,4 +988,5 @@ public class Database
         }
         return new VariantCaptcha(answer, variants, rightId);
     }
+     */
 }
