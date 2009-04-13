@@ -44,19 +44,4 @@ public class Global : System.Web.HttpApplication
             return _connectionString;
         }
     }
-
-    private static string _magicWord = "";
-    public static string MagicWord
-    {
-        get
-        {
-            if (_magicWord == "")
-            {
-                string word = ConfigurationManager.AppSettings["MagicWord"];
-                _magicWord = word.Length < 3 ? "do you like porno?" : ConfigurationManager.AppSettings["MagicWord"];      
-            }
-            return _magicWord;
-        }
-    }
-
 }
