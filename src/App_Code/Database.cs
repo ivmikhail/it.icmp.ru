@@ -957,36 +957,5 @@ public class Database
         connection.Close();
         return result;
     }
-    //TODO: Скоро этот кусок исчезнет
-    /*
-    public static VariantCaptcha GetItCaptcha()
-    {
-        SqlConnection connection = OpenConnection();
-        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaGet", connection);
-        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-        SqlDataReader reader = cmd.ExecuteReader();
-        List<String> variants = new List<string>();
-        String answer = null;
-        int rightId = -1;
-        if(reader.Read())
-        {
-            answer = reader["text"].ToString();
-        }
-        while (reader.Read())
-        {
-            variants.Add(reader["text"].ToString());
-            if(Convert.ToBoolean(reader["isRight"]))
-            {
-                rightId = variants.Count - 1;
-            }
-        }
-        connection.Close();
-        if(answer==null || rightId==-1)
-        {
-            return null;
-        }
-        return new VariantCaptcha(answer, variants, rightId);
-    }
-     */
+    //TODO: Скоро этот кусок исчезнет. И нехай.
 }
