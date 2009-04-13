@@ -196,7 +196,10 @@ public static class CurrentUser
 
     private static string HashPass(string pass)
     {
+        // TODO: предлагаю убрать MagicWord как опасную фичу. Как хеш использовать Hash(login.ToUpper() + password.ToUpper())
+        // этого будет достаточно, хотя в Redmine к примеру обходятся хешем пароля.
         string preparedPass = Global.MagicWord.Substring(0, 2) + pass + Global.MagicWord.Substring(2);
+        // TODO: вместо MD5 заюзать SHA1
         string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass, "MD5");
         return hashedPass;
     }
@@ -207,6 +210,7 @@ public static class CurrentUser
     public static void LogOut()
     {
         HttpContext.Current.Session.Remove("ITCurrentUser");
+        HttpContext.Current.Session.Abandon();
         FormsAuthentication.SignOut();
     }
 
