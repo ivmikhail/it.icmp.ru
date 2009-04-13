@@ -15,11 +15,11 @@ public static class CurrentUser
     /// <summary>
     /// Возвращаем обьект юзер из Сессии, если авторизован.
     /// </summary>
-    private static User currentUser;
     public static User User
     {
         get 
         {
+            User currentUser = new User();
             if (isAuth)
             {
                 currentUser = (User)HttpContext.Current.Session["CurrentUser"];
@@ -28,12 +28,6 @@ public static class CurrentUser
                     currentUser = GetUserFromCookie();
                 }
 
-            } else
-            {
-                if (currentUser == null)
-                {
-                    currentUser = new User();
-                }
             }
             return currentUser;
         }
@@ -84,6 +78,7 @@ public static class CurrentUser
     /// </summary>
     public static void LogOut()
     {
+        HttpContext.Current.Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
         HttpContext.Current.Session.Remove("CurrentUser");
         HttpContext.Current.Session.Abandon();
         FormsAuthentication.SignOut();
