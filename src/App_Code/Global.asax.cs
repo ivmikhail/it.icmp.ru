@@ -20,15 +20,14 @@ public class Global : System.Web.HttpApplication
     public void Application_AuthenticateRequest(Object src, EventArgs e)
     {
         //Note: Здесь нельзя получить доступ к сессии
-        //TODO: Не пахет.
-        if (!(HttpContext.Current.User == null))
+        if (HttpContext.Current.Request.IsAuthenticated)
         {
             if (HttpContext.Current.User.Identity.AuthenticationType == "Forms")
             {
                 System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
                 string[] roles = id.Ticket.UserData.Split(','); // на самом деле у чела не может быть по 2 роли одновременно
-                HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(id, roles);
-                //HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(id, new string[] { Convert.ToString((int)CurrentUser.User.Role) });
+                Context.User = new System.Security.Principal.GenericPrincipal(id, roles);
+                
             }
         }
     }
