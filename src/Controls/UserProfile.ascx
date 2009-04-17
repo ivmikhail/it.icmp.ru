@@ -2,7 +2,7 @@
 <div id="user_profile">
     <ul>
         <li>
-            <asp:Label ID="LabelUserLogin" runat="server" Text="usernick" />
+            Aloha <asp:Label ID="LabelUserLogin" runat="server" Text="usernick" />!
         </li>        
         <li>
             UserRole - <asp:Label ID="LabelUserRole" runat="server" Text="userrole" />

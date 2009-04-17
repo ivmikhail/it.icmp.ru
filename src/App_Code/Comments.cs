@@ -41,7 +41,7 @@ public static class Comments
     /// <param name="comment">Сам коммент</param>
     public static Comment Add(Comment comment)
     {
-        Comment comm = GetCommentFromRow(Database.CommentAdd(comment.Post.Id, comment.Author.Id, comment.Ip));
+        Comment comm = GetCommentFromRow(Database.CommentAdd(comment.Post.Id, comment.Author.Id, comment.Ip, comment.Text));
         return comm;
     }
 
@@ -68,7 +68,8 @@ public static class Comments
                              Convert.ToInt32(dr["post_id"]),
                              Convert.ToInt32(dr["user_id"]),
                              Convert.ToDateTime(dr["cdate"]),
-                             Convert.ToString(dr["ip"]));
+                             Convert.ToString(dr["ip"]), 
+                             Convert.ToString(dr["text"]));
         }
 
         return comment;

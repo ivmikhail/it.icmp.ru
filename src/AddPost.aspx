@@ -11,25 +11,25 @@
         <li>
             <h2>Заголовок</h2>
             <label>
-                <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text"/>  
+                <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="32"/>  
              </label>
         </li>
         <li>
             <h2>Краткое описание</h2>
             <label>               
-                <asp:TextBox ID="TextBoxDesc" runat="server" TextMode="MultiLine" Rows="10" Width="100%"/>  
+                <asp:TextBox ID="TextBoxDesc" runat="server" TextMode="MultiLine" Rows="10" Width="100%" MaxLength="512"/>  
             </label>
         </li>        
         <li>
             <h2>Текст новости</h2>          
             <label>               
-                <asp:TextBox ID="TextBoxText" runat="server" TextMode="MultiLine" Rows="25" Width="100%"/>  
+                <asp:TextBox ID="TextBoxText" runat="server" TextMode="MultiLine" Rows="25" Width="100%" MaxLength="2048"/>  
             </label>
         </li>        
         <li>
             <h2>Источник(откуда стырили)</h2>
             <label>                
-                <asp:TextBox ID="TextBoxSource" runat="server" CssClass="input-text"/> 
+                <asp:TextBox ID="TextBoxSource" runat="server" CssClass="input-text" MaxLength="256"/> 
             </label>
         </li>        
         <li>

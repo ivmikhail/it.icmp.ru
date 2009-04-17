@@ -15,12 +15,17 @@ public class Comment
     private int _userId;
     private DateTime _cdate;
     private string _ip;
+    private string _text;
 
     public int Id
     {
         get
         {
             return _id;
+        }
+        set
+        {
+            _id = value;
         }
     }
 
@@ -36,11 +41,23 @@ public class Comment
         }
     }
 
+    /// <summary>
+    /// Пустой юзер если коммент оставил аноним
+    /// </summary>
     public User Author
     {
         get
         {
-            return Users.GetById(_userId);
+            User user = new User();
+            if (_userId > 0)
+            {
+                user = Users.GetById(_userId);
+            }
+            return user;
+        }
+        set
+        {
+            _userId = value.Id;
         }
     }
 
@@ -50,6 +67,10 @@ public class Comment
         {
             return _cdate;
         }
+        set
+        {
+            _cdate = value;
+        }
     }
 
     public string Ip
@@ -58,14 +79,31 @@ public class Comment
         {
             return _ip;
         }
+        set
+        {
+            _ip = value;
+        }
     }
-    public Comment(int id, int postId, int userId, DateTime cdate, string ip)
+    public string Text
+    {
+        get
+        {
+            return _text;
+        }
+        set
+        {
+            _text = value;
+        }
+    }
+
+    public Comment(int id, int postId, int userId, DateTime cdate, string ip, string text)
     {
         _id = id;
         _postId = postId;
         _userId = userId;
         _cdate = cdate;
         _ip = ip;
+        _text = text;
     }
     public Comment() {
         _id = -1;
@@ -73,5 +111,6 @@ public class Comment
         _userId = -1;
         _cdate = DateTime.Now;
         _ip = "";
+        _text = "";
     }
 }
