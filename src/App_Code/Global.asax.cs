@@ -44,4 +44,16 @@ public class Global : System.Web.HttpApplication
             return _connectionString;
         }
     }
+    private static int _postsCount = -1;
+    public static int PostsCount
+    {
+        get
+        {
+            if (_postsCount == -1)
+            {
+                _postsCount = Convert.ToInt32(ConfigurationManager.AppSettings["PostsCount"].ToString()); ;
+            }
+            return _postsCount;
+        }
+    }
 }

@@ -1,29 +1,29 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="RegUserForm.ascx.cs" Inherits="RegUserForm" %>
 <div id="reguser_panel">
     <div id="reguser_data">
-        <ul>
+        <ul class="list">
             <li>
-                <label>
-                    логин   
-                    <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" />
+                <h2>логин</h2>  
+                <label> 
+                    <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text"/>
                 </label>
             </li>        
             <li>
+                 <h2>e-mail</h2>   
                  <label>
-                    e-mail   
-                    <asp:TextBox ID="TextBoxEmail" runat="server" ValidationGroup="ValidateRegData" />
+                    <asp:TextBox ID="TextBoxEmail" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text"/>
                  </label>
             </li>            
             <li>
+                <h2>пароль</h2>
                 <label>
-                    пароль
-                    <asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateRegData" TextMode="Password"/>
+                    <asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateRegData" TextMode="Password" CssClass="input-text"/>
                 </label>
             </li>            
             <li>
+                <h2>повторите пароль</h2>
                 <label>
-                    повторите пароль
-                    <asp:TextBox ID="TextBoxPassConf" runat="server" ValidationGroup="ValidateRegData" TextMode="Password"/>
+                    <asp:TextBox ID="TextBoxPassConf" runat="server" ValidationGroup="ValidateRegData" TextMode="Password" CssClass="input-text"/>
                 </label>
             </li>
             <li>            
@@ -31,7 +31,7 @@
             </li>
          </ul>
      </div>
-     <div id="reguser_messages">
+     <div class="reguser_messages">
         <asp:ValidationSummary ID="ValidationSummaryAuth" runat="server" ValidationGroup="ValidateRegData" DisplayMode="List"  />
         
         <asp:RequiredFieldValidator     ID="RequiredLogin" 

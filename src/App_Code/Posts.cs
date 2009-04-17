@@ -39,7 +39,7 @@ public static class Posts
     }
 
     /// <summary>
-    /// Возвращает все закрепленные посты. Они всегда будут видны.
+    /// Возвращает все закрепленные посты. Они всегда и везде будут видны.
     /// </summary>
     /// <returns></returns>
     public static List<Post> GetAttached()
@@ -48,9 +48,9 @@ public static class Posts
     }
 
     /// <summary>
-    /// Добавление нового поста //как то не так...
+    /// Добавление нового поста
     /// </summary>
-    /// <param name="post">Сам пост</param>
+    /// <param name="post">Сам пост, CreateDate будет изменен на дату добавления новости в базу.</param>
     public static Post Add(Post post)
     {
         DataRow dr = Database.PostAdd(post.Title, 
@@ -91,7 +91,8 @@ public static class Posts
                          Convert.ToInt32(dr["cat_id"]),
                          Convert.ToBoolean(dr["attached"]),
                          Convert.ToInt32(dr["views"]),
-                         Convert.ToString(dr["source"]));
+                         Convert.ToString(dr["source"]),
+                         Convert.ToInt32(dr["comments_count"]));
         }
         return post;
     }

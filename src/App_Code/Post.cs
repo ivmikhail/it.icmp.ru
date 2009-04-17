@@ -19,6 +19,7 @@ public class Post
     private int _attached;
     private int _views;
     private string _source;
+    private int _commentsCount;
 
     public int Id
     {
@@ -82,6 +83,10 @@ public class Post
         {
             return Users.GetById(_userId);
         }
+        set
+        {
+            _userId = value.Id;
+        }
     }
 
     public PostCategory Category
@@ -127,6 +132,17 @@ public class Post
             _source = value;
         }
     }
+    public int CommentsCount
+    {
+        get
+        {
+            return _commentsCount;
+        }
+        set
+        {
+            _commentsCount = value;
+        }
+    }
 
     /// <summary>
     /// Обновляем
@@ -136,7 +152,7 @@ public class Post
         throw new System.NotImplementedException();
     }
 
-    public Post(int id, string title, string description, string text, DateTime cdate, int userId, int catId, bool attached, int views, string source)
+    public Post(int id, string title, string description, string text, DateTime cdate, int userId, int catId, bool attached, int views, string source, int commentsCount)
     {
         _id = id;
         _title = title;
@@ -148,6 +164,7 @@ public class Post
         _attached = attached ? 1 : 0;
         _views = views;
         _source = source;
+        _commentsCount = commentsCount;
     }
 
     public Post() {
@@ -161,5 +178,6 @@ public class Post
         _attached = 0;
         _views = 0;
         _source = "";
+        _commentsCount = 0;
     }
 }

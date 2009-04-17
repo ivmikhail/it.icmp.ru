@@ -18,6 +18,7 @@ public static class PostCategories
     /// <param name="id">Идентификатор категории</param>
     public static PostCategory GetById(int id)
     {
+        //TODO: закешировать
         return GetCategoryFromRow(Database.CategoryGetById(id));
     }
 
@@ -26,6 +27,7 @@ public static class PostCategories
     /// </summary>
     public static List<PostCategory> GetAll()
     {
+        //TODO: Закешировать
         return GetCategoryFromTable(Database.CategoryGetAll());
     }
 
@@ -35,6 +37,7 @@ public static class PostCategories
     /// <param name="id">Идентификатор категории</param>
     public static void Delete(int id)
     {
+        //TODO: сбросить кеш
         Database.CategoryDel(id);
     }
 
@@ -44,6 +47,7 @@ public static class PostCategories
     /// <param name="category">Сама категория</param>
     public static PostCategory Add(PostCategory category)
     {
+        //TODO: сбросить кеш
         return GetCategoryFromRow(Database.CategoryAdd(category.Name, category.Sort));
     }
 
