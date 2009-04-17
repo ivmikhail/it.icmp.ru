@@ -13,8 +13,7 @@ public class Database
         if (ConfigurationManager.ConnectionStrings[Environment.MachineName] != null)
         {
             connectionString = ConfigurationManager.ConnectionStrings[Environment.MachineName].ConnectionString;
-        }
-        else
+        } else
         {
             connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         }
@@ -22,7 +21,8 @@ public class Database
         connection.Open();
         return connection;
     }
-    public static DataTable CaptchaGet() {
+    public static DataTable CaptchaGet()
+    {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaGet", connection);
         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -30,7 +30,8 @@ public class Database
         System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
         System.Data.DataTable table = new DataTable();
 
-        for (int i = 0; (i < reader.FieldCount); i++) {
+        for (int i = 0; (i < reader.FieldCount); i++)
+        {
             System.Type __type;
             string __name;
             __type = reader.GetFieldType(i);
@@ -38,7 +39,8 @@ public class Database
             table.Columns.Add(__name, __type);
         }
 
-        while (reader.Read()) {
+        while (reader.Read())
+        {
             System.Data.DataRow row = table.NewRow();
             object[] rowdata = new object[reader.FieldCount];
             reader.GetValues(rowdata);
@@ -50,7 +52,6 @@ public class Database
         connection.Close();
         return result;
     }
-
     public static DataRow CategoryAdd(String name, Int32 sort)
     {
         SqlConnection connection = OpenConnection();
@@ -83,8 +84,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -164,8 +164,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -208,8 +207,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -332,8 +330,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -382,8 +379,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -493,8 +489,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -611,8 +606,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -657,7 +651,7 @@ public class Database
         connection.Close();
         return result;
     }
-    public static int PostUpdate(Int32 id, String title, String desc, String text, Int32 cat_id, Byte attached, String source)
+    public static int PostUpdate(Int32 id, String title, String desc, String text, Int32 cat_id, Byte attached, String source, Int32 comments_count)
     {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostUpdate", connection);
@@ -683,7 +677,10 @@ public class Database
         cmd.Parameters["@attached"].Value = attached;
         cmd.Parameters.Add("@source", System.Data.SqlDbType.VarChar, 256);
         cmd.Parameters["@source"].Direction = System.Data.ParameterDirection.Input;
-        cmd.Parameters["@source"].Value = source; int result = cmd.ExecuteNonQuery();
+        cmd.Parameters["@source"].Value = source;
+        cmd.Parameters.Add("@comments_count", System.Data.SqlDbType.Int, 0);
+        cmd.Parameters["@comments_count"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@comments_count"].Value = comments_count; int result = cmd.ExecuteNonQuery();
         connection.Close();
         return result;
     }
@@ -737,8 +734,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -787,8 +783,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -825,8 +820,7 @@ public class Database
             reader.GetValues(rowdata);
             row.ItemArray = rowdata;
             result = row;
-        }
-        else
+        } else
         {
             result = null;
         }
@@ -957,5 +951,4 @@ public class Database
         connection.Close();
         return result;
     }
-    //TODO: Скоро этот кусок исчезнет. И нехай.
 }

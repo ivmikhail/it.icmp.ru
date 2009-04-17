@@ -13,7 +13,7 @@ using System.Collections.Specialized;
 public static class CurrentUser
 {
     /// <summary>
-    /// Возвращаем обьект юзер из Сессии, если авторизован.
+    /// Возвращаем обьект юзер из сессии/куки, если авторизован.
     /// </summary>
     public static User User
     {

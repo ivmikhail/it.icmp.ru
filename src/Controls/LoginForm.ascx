@@ -1,23 +1,23 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="LoginForm.ascx.cs" Inherits="LoginForm" %>
 <div id="auth_panel">
     <div id="auth_data">
-        <ul>
-            <li>            
+        <ul class="list">
+            <li>   
+                логин        
                 <label>
-                    логин   
                     <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateAuthData" />
                 </label>
             </li>            
-            <li>            
+            <li>     
+                пароль       
                 <label>
-                    пароль
                     <asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateAuthData" TextMode="Password"/>
                 </label>
             </li>
             
-            <li>            
+            <li>   
+                запомнить         
                 <label>
-                    запомнить 
                     <asp:CheckBox ID="CheckBoxIsRemember" runat="server" />     
                 </label>
             </li>

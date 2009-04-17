@@ -1,13 +1,14 @@
 <%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
 <%@ Register Src="~/controls/LoginForm.ascx"   TagName="LoginForm"   TagPrefix="uc" %>
 <%@ Register Src="~/controls/UserProfile.ascx" TagName="UserProfile" TagPrefix="uc" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
 <head runat="server">
     <title>Ykt IT Community</title>
-    <link rel="shortcut icon" href="media/img/itc.ico"   type="image/vnd.microsoft.icon" />
-    <link rel="stylesheet"    href="media/css/style.css" type="text/css" />
+    <link rel="shortcut icon" href="media/img/itc.ico"     type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet"    href="media/css/style.css?1"   type="text/css" />
+    <link rel="stylesheet"    href="media/css/default.css?1" type="text/css" />
 </head>
 <body>
     <form id="MainForm" runat="server">
@@ -17,7 +18,6 @@
             </div>
             <div id="wrapper">
                 <div id="dynamic_content">
-                    Тута новости
                     <asp:contentplaceholder id="ContentPlaceHolder1" runat="server">
                     </asp:contentplaceholder>
                 </div>
