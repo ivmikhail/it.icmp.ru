@@ -172,7 +172,7 @@ public class Database
         connection.Close();
         return result;
     }
-    public static DataRow CommentAdd(Int32 post_id, Int32 user_id, String ip)
+    public static DataRow CommentAdd(Int32 post_id, Int32 user_id, String ip, String text)
     {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentAdd", connection);
@@ -187,6 +187,9 @@ public class Database
         cmd.Parameters.Add("@ip", System.Data.SqlDbType.VarChar, 50);
         cmd.Parameters["@ip"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@ip"].Value = ip;
+        cmd.Parameters.Add("@text", System.Data.SqlDbType.VarChar, 512);
+        cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@text"].Value = text;
         System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
         System.Data.DataTable table = new DataTable();
 

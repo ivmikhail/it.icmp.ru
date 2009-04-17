@@ -20,8 +20,5 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             LoginForm.Visible = true;
         }
-        Label1.Text = "Авторизован ли -" + Convert.ToString(CurrentUser.isAuth);
-        Label1.Text += "  Логин-"+ CurrentUser.User.Nick;
-        Label1.Text += "  role-" + CurrentUser.User.Role;
     }
 }

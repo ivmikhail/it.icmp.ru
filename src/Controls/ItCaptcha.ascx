@@ -1,8 +1,11 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="ItCaptcha.ascx.cs" Inherits="ItCaptcha" %>
-Введите пожалуйста ответ на данный вопрос:
-<p>
-    <asp:Label ID="lblQuestion" runat="server" Text="Кто придумал C#?" EnableViewState="False" />
-    <asp:DropDownList ID="ddlVariants" runat="server" />
-    <asp:Label ID="lblErrorMessage" runat="server" Text="Неправильный ответ" EnableViewState="False" ForeColor="Red" Visible="False" />
-    <asp:HiddenField ID="hdnRightAnswer" runat="server" />
-</p>
+<div class="captcha">
+    Введите пожалуйста ответ на данный вопрос:
+    <br />
+        <asp:Literal ID="lblQuestion" runat="server" EnableViewState="False">Кто придумал C#?</asp:Literal>
+        <asp:DropDownList ID="ddlVariants" runat="server" />
+        <span class="error-message">
+            <asp:Literal ID="lblErrorMessage" runat="server" EnableViewState="False" Visible="false">Неправильный ответ</asp:Literal>
+        </span>
+        <asp:HiddenField ID="hdnRightAnswer" runat="server" />
+</div>

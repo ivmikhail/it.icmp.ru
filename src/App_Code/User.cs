@@ -124,7 +124,7 @@ public class User
     public User() 
     {
         _id = -1;
-        _nick = "";
+        _nick = "anonymous";
         _pass = "";
         _cdate = DateTime.Now;
         _role = 3;
