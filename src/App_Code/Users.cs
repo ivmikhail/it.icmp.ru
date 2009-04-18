@@ -53,10 +53,36 @@ public static class Users
     /// Получаем самых активных постеров
     /// </summary>
     /// <param name="count">Кол-во нужных пользователей</param>
-    public static KeyValuePair<string, string> GetTopPosters(int count)
+    public static List<KeyValuePair<string, string>> GetTopPosters(int count)
     {
-        throw new NotImplementedException();
-        //return GetUsersFromTable(Database.UserGetTopPosters(count));
+        List<KeyValuePair<string, string>> top = new List<KeyValuePair<string,string>>();
+        DataTable dt = Database.UserGetTopPosters(count);
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            string username = dt.Rows[i]["usernick"].ToString();
+            string text = dt.Rows[i]["postcount"].ToString();
+            top.Add(new KeyValuePair<string,string>(username, text));
+        }
+
+        return top;
+    }
+
+    /// <summary>
+    /// Получаем статистику по пользователям(кол-во пользователей, админов, постеров)
+    /// </summary>
+    public static List<KeyValuePair<string, string>> GetStats()
+    {
+        //TODO:Закешировать
+        List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+        DataTable dt = Database.UserGetStat();
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            string key = dt.Rows[i]["key"].ToString();
+            string value = dt.Rows[i]["value"].ToString();
+            top.Add(new KeyValuePair<string, string>(key, value));
+        }
+
+        return top;
     }
 
     /// <summary>

@@ -46,9 +46,9 @@
             <br />
             <uc:ItCaptcha ID="captcha" runat="server" Visible="false"/>           
             <div id="write-comment"> 
-                <asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="5" Width="100%" MaxLength="512"/>                
-                <asp:RequiredFieldValidator ID="RequiredFieldValidatorComment" runat="server" ErrorMessage="Введите комментарий" ControlToValidate="TextBoxComment" />
-                <asp:LinkButton ID="LinkButtonAddComment" runat="server" OnClick="LinkButtonAddComment_Click">Добавить</asp:LinkButton>
+                <asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="5" Width="100%" MaxLength="512" ValidationGroup="Comment"/>                
+                <asp:RequiredFieldValidator ID="RequiredFieldValidatorComment" runat="server" ErrorMessage="Введите комментарий" ControlToValidate="TextBoxComment" ValidationGroup="Comment"/>
+                <asp:LinkButton ID="LinkButtonAddComment" runat="server" OnClick="LinkButtonAddComment_Click" ValidationGroup="Comment">Добавить</asp:LinkButton>
             </div>
         </div>
      </div>

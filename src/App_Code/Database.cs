@@ -264,10 +264,10 @@ public class Database
         connection.Close();
         return result;
     }
-    public static DataTable CommentGetLast(Int32 count)
+    public static DataTable CommentGetLasts(Int32 count)
     {
         SqlConnection connection = OpenConnection();
-        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentGetLast", connection);
+        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentGetLasts", connection);
         cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
         cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
@@ -555,6 +555,46 @@ public class Database
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetAttached", connection);
         cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
+        System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+        System.Data.DataTable table = new DataTable();
+
+        for (int i = 0; (i < reader.FieldCount); i++)
+        {
+            System.Type __type;
+            string __name;
+            __type = reader.GetFieldType(i);
+            __name = reader.GetName(i);
+            table.Columns.Add(__name, __type);
+        }
+
+        while (reader.Read())
+        {
+            System.Data.DataRow row = table.NewRow();
+            object[] rowdata = new object[reader.FieldCount];
+            reader.GetValues(rowdata);
+            row.ItemArray = rowdata;
+            table.Rows.Add(row);
+        }
+        reader.Close();
+        DataTable result = table;
+        connection.Close();
+        return result;
+    }
+    public static DataTable PostGetByCat(Int32 page, Int32 count, Int32 cat_id)
+    {
+        SqlConnection connection = OpenConnection();
+        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetByCat", connection);
+        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+        cmd.Parameters.Add("@page", System.Data.SqlDbType.Int, 0);
+        cmd.Parameters["@page"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@page"].Value = page;
+        cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
+        cmd.Parameters["@count"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@count"].Value = count;
+        cmd.Parameters.Add("@cat_id", System.Data.SqlDbType.Int, 0);
+        cmd.Parameters["@cat_id"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@cat_id"].Value = cat_id;
         System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
         System.Data.DataTable table = new DataTable();
 
@@ -874,6 +914,37 @@ public class Database
         cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
         cmd.Parameters["@count"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@count"].Value = count;
+        System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+        System.Data.DataTable table = new DataTable();
+
+        for (int i = 0; (i < reader.FieldCount); i++)
+        {
+            System.Type __type;
+            string __name;
+            __type = reader.GetFieldType(i);
+            __name = reader.GetName(i);
+            table.Columns.Add(__name, __type);
+        }
+
+        while (reader.Read())
+        {
+            System.Data.DataRow row = table.NewRow();
+            object[] rowdata = new object[reader.FieldCount];
+            reader.GetValues(rowdata);
+            row.ItemArray = rowdata;
+            table.Rows.Add(row);
+        }
+        reader.Close();
+        DataTable result = table;
+        connection.Close();
+        return result;
+    }
+    public static DataTable UserGetStat()
+    {
+        SqlConnection connection = OpenConnection();
+        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetStat", connection);
+        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
         System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
         System.Data.DataTable table = new DataTable();
 

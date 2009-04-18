@@ -145,11 +145,18 @@ public class Post
     }
 
     /// <summary>
-    /// Обновляем
+    /// Обновляем. 
     /// </summary>
     public void Update()
     {
-        throw new System.NotImplementedException();
+        Database.PostUpdate(_id, _title, _description, _text, _catId, (byte)_attached, _source, _commentsCount);
+    }
+    /// <summary>
+    /// Обновляем кол-в просмотров
+    /// </summary>
+    public void UpdateViews()
+    {
+        Database.PostUpdateViews(_id);
     }
 
     public Post(int id, string title, string description, string text, DateTime cdate, int userId, int catId, bool attached, int views, string source, int commentsCount)

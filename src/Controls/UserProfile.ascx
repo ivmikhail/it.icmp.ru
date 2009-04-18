@@ -1,9 +1,7 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserProfile.ascx.cs" Inherits="Controls_UserProfile" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserProfile.ascx.cs" Inherits="UserProfile" %>
 <div id="user_profile">
-    <ul>
-        <li>
-            Aloha <asp:Label ID="LabelUserLogin" runat="server" Text="usernick" />!
-        </li>        
+<h2>Aloha <asp:Label ID="LabelUserLogin" runat="server" Text="usernick" />!</h2>
+    <ul class="list">
         <li>
             UserRole - <asp:Label ID="LabelUserRole" runat="server" Text="userrole" />
         </li>        

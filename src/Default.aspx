@@ -1,5 +1,6 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" Title="Ykt IT Community | Главная" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <h2>Новости</h2>
     <asp:Repeater ID="RepeaterPosts" runat="server">
         <HeaderTemplate>
             <ul id="posts-list" class="list">
@@ -11,7 +12,7 @@
                         <h2>
                             <a href='default.aspx?cat=<%# Eval("category.id")%>'><%# Eval("category.name")%></a> 
                             &rarr;
-                            <a href='news.aspx?cat=<%# Eval("id")%>#cut'><%# Eval("title")%></a>
+                            <a href='news.aspx?id=<%# Eval("id")%>#cut'><%# Eval("title")%></a>
                         </h2>
                         <div class="post-desc">
                             <%# Eval("description")%>                        
@@ -25,7 +26,7 @@
                         <%# Eval("createdate")%> / автор: <%# Eval("author.nick")%> / просмотров: <%# Eval("views")%> / <a href='News.aspx?id=<%# Eval("id")%>#comments'>комментарии(<%# Eval("commentscount")%>)</a>            
                     </div>
                 <div>
-            <li>
+            </li>
         </ItemTemplate>
         <FooterTemplate>
             </ul>

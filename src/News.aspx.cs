@@ -17,6 +17,10 @@ public partial class News : System.Web.UI.Page
     {
         LoadData();
         this.Title += post.Title;
+        if (!(CurrentUser.isAuth && CurrentUser.User == post.Author))
+        {
+            post.UpdateViews();
+        }
     }
     private void LoadData()
     {
@@ -25,7 +29,7 @@ public partial class News : System.Web.UI.Page
         LoadComments();
     }
     /// <summary>
-    /// Загрузка автора нового коммента и капчи, если нужно.
+    /// Загрузка автора нового коммента и капчи(если нужно).
     /// </summary>
     private void LoadCommentData()
     {

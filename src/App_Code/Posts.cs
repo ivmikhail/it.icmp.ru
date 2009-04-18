@@ -27,6 +27,18 @@ public static class Posts
     {
         return GetPostsFromTable(Database.PostGet(page, count));
     }
+    /// <summary>
+    /// Забираем посты постранично, с учетом даты, аттачей и категории
+    /// </summary>
+    /// <param name="page">Страница которая нам нужна</param>
+    /// <param name="count">Кол-во постов на страницу</param>
+    /// <param name="count">id категории</param>
+    public static List<Post> GetPostsByCat(int page, int count, int cat_id)
+    {
+        return GetPostsFromTable(Database.PostGetByCat(page, count, cat_id));
+    }
+
+
 
     /// <summary>
     /// Популярные посты
@@ -36,15 +48,6 @@ public static class Posts
     public static List<Post> GetTop(int period, int count)
     {
         return GetPostsFromTable(Database.PostGetTop(period, count));
-    }
-
-    /// <summary>
-    /// Возвращает все закрепленные посты. Они всегда и везде будут видны.
-    /// </summary>
-    /// <returns></returns>
-    public static List<Post> GetAttached()
-    {
-        return GetPostsFromTable(Database.PostGetAttached());
     }
 
     /// <summary>

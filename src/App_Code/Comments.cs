@@ -27,12 +27,38 @@ public static class Comments
     }
 
     /// <summary>
-    /// Забираем последние комментарии
+    /// Забираем последние комментарии в формате "author: commenttext"
     /// </summary>
     /// <param name="count">Кол-во нужных комментов</param>
-    public static List<Comment> GetLast(int count)
+    public static List<Comment> GetLasts(int count)
     {
-        return GetCommentFromTable(Database.CommentGetLast(count));
+        //TODO:закешировать
+        DataTable dt = Database.CommentGetLasts(count);
+        List<Comment> comments = new List<Comment>();
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            string username = dt.Rows[i]["usernick"].ToString() == "" ? "anonymous" : dt.Rows[i]["usernick"].ToString();
+            string text  = dt.Rows[i]["text"].ToString();
+            string post_id = dt.Rows[i]["post_id"].ToString();
+            if(text.Length > 30)
+            {
+                text = text.Substring(0, 30) + "...";
+            }
+            // хехе см. коммент в конце метода
+            comments.Add(new Comment(-1, -1, -1, DateTime.Now, "-1", username + ": " + "<a href='News.aspx?id=" + post_id +"#comments' alt='Посмотреть все комментарии'>" + text + "</a>"));
+        }
+        return comments;
+
+        /*
+              .cs:
+              LastComments.DataSource = Comments.GetLasts(Global.LastCommentsCount); // GetLasts возвращает List<string> 
+              LastComments.DataBind();
+         
+             .aspx:
+             <asp:Repeater ID="PopularPosts" runat="server" >
+                    <%# Eval(что здесь должно быть?)%>
+             </asp:Repeater>
+         */
     }
 
     /// <summary>

@@ -45,6 +45,11 @@
             </label>  
         </li>
         <li>
+            <div class="error-message">
+                <asp:Literal ID="AddPostMessages" runat="server" />
+            </div>
+        </li>
+        <li>
             <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click">Добавить</asp:LinkButton>
         </li>
     </ul>
