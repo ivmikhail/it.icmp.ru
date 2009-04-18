@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using System.Collections.Generic;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
@@ -20,5 +21,56 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             LoginForm.Visible = true;
         }
+        LoadLastComments();
+        LoadCategories();
+        LoadPopularPosts();
+        LoadTopPosters();
+        LoadLastRegistered();
+        LoadStat();
+
+    }
+
+    private void LoadPopularPosts()
+    {
+        PopularPosts.DataSource = Posts.GetTop(Global.PopularPostsPeriod, Global.PopularPostsCount);
+        PopularPosts.DataBind();
+    }
+    private void LoadLastComments()
+    {
+        LastComments.DataSource = Comments.GetLasts(Global.LastCommentsCount);
+        LastComments.DataBind();
+    }
+    private void LoadCategories()
+    {
+        Categories.DataSource = PostCategories.GetAll();
+        Categories.DataBind();
+    }
+    private void LoadTopPosters()
+    {
+        TopPosters.DataSource = Users.GetTopPosters(Global.TopPostersCount);
+        TopPosters.DataBind();
+    }
+    private void LoadLastRegistered()
+    {
+        LastRegistered.DataSource = Users.GetLastRegistered(Global.LastRegisteredCount);
+        LastRegistered.DataBind();
+    }
+    private void LoadStat()
+    {
+        List<KeyValuePair<string, string>> stats = Users.GetStats();
+        foreach(KeyValuePair<string, string> stat in stats)
+        {
+            if(stat.Key == "admins")
+            {
+                TotalAdmins.Text = stat.Value;
+            } else if (stat.Key == "posters")
+            {
+                TotalPosters.Text = stat.Value;
+            } else
+            {
+                TotalUsers.Text = stat.Value;
+            }
+        }
     }
 }
+

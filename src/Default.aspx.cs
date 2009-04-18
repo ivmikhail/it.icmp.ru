@@ -21,9 +21,22 @@ public partial class _Default : System.Web.UI.Page
     }
     private void LoadPosts(int page_num)
     {
-        List<Post> posts = Posts.GetAttached();
-        posts.AddRange(Posts.GetPosts(page_num, Global.PostsCount));
+        List<Post> posts = new List<Post>();
+        int cat_id = GetCatId();
+        if (cat_id > 0)
+        {
+            posts = Posts.GetPostsByCat(page_num, Global.PostsCount, cat_id);
+        } else
+        {
+            posts = Posts.GetPosts(page_num, Global.PostsCount);
+        }
         RepeaterPosts.DataSource = posts;
         RepeaterPosts.DataBind();
+    }
+    private int GetCatId()
+    {
+        int id = -1;
+        Int32.TryParse(Request.QueryString["cat"], out id);
+        return id;
     }
 }

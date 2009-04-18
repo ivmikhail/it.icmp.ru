@@ -30,17 +30,61 @@ public partial class AddPost : System.Web.UI.Page
     }
     protected void LinkButtonAdd_Click(object sender, EventArgs e)
     {
-        Post newpost = new Post();       
-        
-        newpost.Category    = PostCategories.GetById(Convert.ToInt32(DropDownListCats.SelectedValue)); 
-        newpost.Title       = Server.HtmlEncode(TextBoxTitle.Text);
-        newpost.Description = Server.HtmlEncode(TextBoxDesc.Text);
-        newpost.Text        = Server.HtmlEncode(TextBoxText.Text);
-        newpost.Source      = Server.HtmlEncode(TextBoxSource.Text);
-        newpost.Author      = CurrentUser.User;
-        newpost.Attached    = CheckBoxAttached.Checked;
+        List<string> errors = ValidateData();
+        if (errors.Count == 0)
+        {
+            Post newpost = new Post();
 
-        Posts.Add(newpost);
-        Response.Redirect(FormsAuthentication.DefaultUrl);
+            newpost.Category = PostCategories.GetById(Convert.ToInt32(DropDownListCats.SelectedValue));
+            newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
+            newpost.Description = Server.HtmlEncode(TextBoxDesc.Text);
+            newpost.Text = Server.HtmlEncode(TextBoxText.Text);
+            newpost.Source = Server.HtmlEncode(TextBoxSource.Text);
+            newpost.Author = CurrentUser.User;
+            newpost.Attached = CheckBoxAttached.Checked;
+
+            Posts.Add(newpost);
+            Response.Redirect(FormsAuthentication.DefaultUrl);
+        } else
+        {
+            WriteErrors(errors);
+        }
+    }
+    private List<string> ValidateData()
+    {
+        List<string> errors = new List<string>();
+        if (DropDownListCats.SelectedValue == "-1")
+        {
+            errors.Add("Выберите категорию");
+        }
+        if (TextBoxTitle.Text.Length == 0 && TextBoxTitle.Text.Length < 32)
+        {
+            errors.Add("Количество символов в заголовке должно быть от 1 до 32.");
+        }
+        if (TextBoxDesc.Text.Length == 0 && TextBoxDesc.Text.Length < 512)
+        {
+            errors.Add("Количество символов в описании должно быть от 1 до 512.");
+        }
+        if (TextBoxText.Text.Length == 0 && TextBoxText.Text.Length < 2048)
+        {
+            errors.Add("Количество символов в теле новости должно быть от 1 до 2048.");
+        }
+        if (TextBoxSource.Text.Length < 256)
+        {
+            errors.Add("Количество символов в источнике должно быть от 0 до 256.");
+        }
+
+        return errors;
+    }
+    private void WriteErrors(List<string> errors)
+    {
+        string text = "<ul class='list'>";
+        foreach (string message in errors)
+        {
+            text += "<li>" + message+"</li>";
+        }
+        text += "</ul>";
+        AddPostMessages.Text = text;
+        LinkButtonAdd.Focus();
     }
 }

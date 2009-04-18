@@ -1,5 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="LoginForm.ascx.cs" Inherits="LoginForm" %>
 <div id="auth_panel">
+<h2>Авторизация</h2>
     <div id="auth_data">
         <ul class="list">
             <li>   

@@ -56,4 +56,65 @@ public class Global : System.Web.HttpApplication
             return _postsCount;
         }
     }
+    private static int _lastCommentsCount = -1;
+    public static int LastCommentsCount
+    {
+        get
+        {
+            if (_lastCommentsCount == -1)
+            {
+                _lastCommentsCount = Convert.ToInt32(ConfigurationManager.AppSettings["LastCommentsCount"].ToString()); ;
+            }
+            return _lastCommentsCount;
+        }
+    }
+    private static int _popularPostsCount = -1;
+    public static int PopularPostsCount
+    {
+        get
+        {
+            if (_popularPostsCount == -1)
+            {
+                _popularPostsCount = Convert.ToInt32(ConfigurationManager.AppSettings["PopularPostsCount"].ToString()); ;
+            }
+            return _popularPostsCount;
+        }
+    }
+
+    private static int _popularPostsPeriod = -1;
+    public static int PopularPostsPeriod
+    {
+        get
+        {
+            if (_popularPostsPeriod == -1)
+            {
+                _popularPostsPeriod = Convert.ToInt32(ConfigurationManager.AppSettings["PopularPostsPeriod"].ToString()); ;
+            }
+            return _popularPostsPeriod;
+        }
+    }
+    private static int _topPostersCount = -1;
+    public static int TopPostersCount
+    {
+        get
+        {
+            if (_topPostersCount == -1)
+            {
+                _topPostersCount = Convert.ToInt32(ConfigurationManager.AppSettings["TopPostersCount"].ToString()); ;
+            }
+            return _topPostersCount;
+        }
+    }
+    private static int _lastRegisteredCount = -1;
+    public static int LastRegisteredCount
+    {
+        get
+        {
+            if (_lastRegisteredCount == -1)
+            {
+                _lastRegisteredCount = Convert.ToInt32(ConfigurationManager.AppSettings["LastRegisteredCount"].ToString()); ;
+            }
+            return _lastRegisteredCount;
+        }
+    }
 }
