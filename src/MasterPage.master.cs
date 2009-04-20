@@ -21,6 +21,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             LoginForm.Visible = true;
         }
+        LoadLinks();
         LoadLastComments();
         LoadCategories();
         LoadPopularPosts();
@@ -29,35 +30,42 @@ public partial class MasterPage : System.Web.UI.MasterPage
         LoadStat();
 
     }
-
+    private void LoadLinks()
+    {
+        RepeaterMenu.DataSource = MenuItem.GetByParent(0);
+        RepeaterMenu.DataBind();
+    }
     private void LoadPopularPosts()
     {
-        PopularPosts.DataSource = Posts.GetTop(Global.PopularPostsPeriod, Global.PopularPostsCount);
+        PopularPosts.DataSource = Post.GetTop(Global.PopularPostsPeriod, Global.PopularPostsCount);
         PopularPosts.DataBind();
     }
     private void LoadLastComments()
     {
-        LastComments.DataSource = Comments.GetLasts(Global.LastCommentsCount);
+        LastComments.DataSource = Comment.GetLasts(Global.LastCommentsCount);
         LastComments.DataBind();
     }
     private void LoadCategories()
     {
-        Categories.DataSource = PostCategories.GetAll();
-        Categories.DataBind();
+        List<Category> cats = new List<Category>();
+        cats.Add(new Category(-1, "Все новости", -1));
+        cats.AddRange(Category.GetAll());
+        NewsCategories.DataSource = cats;
+        NewsCategories.DataBind();
     }
     private void LoadTopPosters()
     {
-        TopPosters.DataSource = Users.GetTopPosters(Global.TopPostersCount);
+        TopPosters.DataSource = User.GetTopPosters(Global.TopPostersCount);
         TopPosters.DataBind();
     }
     private void LoadLastRegistered()
     {
-        LastRegistered.DataSource = Users.GetLastRegistered(Global.LastRegisteredCount);
+        LastRegistered.DataSource = User.GetLastRegistered(Global.LastRegisteredCount);
         LastRegistered.DataBind();
     }
     private void LoadStat()
     {
-        List<KeyValuePair<string, string>> stats = Users.GetStats();
+        List<KeyValuePair<string, string>> stats = User.GetStats();
         foreach(KeyValuePair<string, string> stat in stats)
         {
             if(stat.Key == "admins")
@@ -70,6 +78,17 @@ public partial class MasterPage : System.Web.UI.MasterPage
             {
                 TotalUsers.Text = stat.Value;
             }
+        }
+    }
+    protected void RepeaterMenu_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        RepeaterItem item = e.Item;
+        if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater RepeaterSubMenu= (Repeater)item.FindControl("RepeaterSubMenu");
+            MenuItem current = (MenuItem)item.DataItem;
+            RepeaterSubMenu.DataSource = MenuItem.GetByParent(current.Id);
+            RepeaterSubMenu.DataBind();
         }
     }
 }

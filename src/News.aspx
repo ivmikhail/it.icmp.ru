@@ -4,9 +4,8 @@
     <div class="post"> 
         <div class="post-title">
             <h2>
-                <asp:HyperLink ID="HyperLinkCategory" runat="server">HyperLink</asp:HyperLink>
-                &rarr;
                 <asp:HyperLink ID="HyperLinkTitle" runat="server">HyperLink</asp:HyperLink>
+                (<asp:Literal ID="LinksPostCategories" runat="server"></asp:Literal>)
             </h2>
             <div class="post-desc">
                 <asp:Literal ID="desc" runat="server" />           

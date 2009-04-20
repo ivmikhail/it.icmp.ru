@@ -17,7 +17,7 @@ public partial class News : System.Web.UI.Page
     {
         LoadData();
         this.Title += post.Title;
-        if (!(CurrentUser.isAuth && CurrentUser.User == post.Author))
+        if (CurrentUser.User != post.Author) // пусть пока будет так TODO: приделать чтобы работало через кукисы
         {
             post.UpdateViews();
         }
@@ -44,11 +44,10 @@ public partial class News : System.Web.UI.Page
     }
     private void LoadPost()
     {
-        post = Posts.GetById(GetPostId());
+        post = Post.GetById(GetPostId());
         if (post.Id > 0)
         {
-            HyperLinkCategory.Text = post.Category.Name;
-            HyperLinkCategory.NavigateUrl = "default.aspx?cat=" + post.Category.Id;
+            WritePostCategories(post);
             HyperLinkTitle.Text = post.Title;
             HyperLinkTitle.NavigateUrl = "news.aspx?id=" + post.Id;
 
@@ -64,6 +63,19 @@ public partial class News : System.Web.UI.Page
             Response.Redirect(FormsAuthentication.DefaultUrl);
         }
     }
+    private void WritePostCategories(Post post)
+    {
+        string result = String.Empty;
+        foreach (Category cat in Category.GetPostCategrories(post))
+        {
+            if (result.Length > 0)
+            {
+                result += ", ";
+            }
+            result += "<a href='default.aspx?cat='" + cat.Id + ">" + cat.Name + "</a>";
+        }
+        LinksPostCategories.Text = result;
+    }
     private int GetPostId()
     {
         int id = -1;
@@ -73,7 +85,7 @@ public partial class News : System.Web.UI.Page
 
     private void LoadComments()
     {
-        List<Comment> comments = Comments.GetByPost(post.Id);
+        List<Comment> comments = Comment.GetByPost(post.Id);
         RepeaterComments.DataSource = comments;
         RepeaterComments.DataBind();
 
@@ -103,7 +115,7 @@ public partial class News : System.Web.UI.Page
         comm.Ip = CurrentUser.Ip;
         comm.Post = post;
         comm.Text = Server.HtmlEncode(TextBoxComment.Text);
-        Comments.Add(comm);
+        Comment.Add(comm);
         Response.Redirect("news.aspx?id=" + post.Id + "#comments");
     }
 }

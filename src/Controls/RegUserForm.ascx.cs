@@ -72,7 +72,7 @@ public partial class RegUserForm : System.Web.UI.UserControl
         bool status = true;
 
         string login = TextBoxLogin.Text.Trim();
-        User user = Users.GetUserByLogin(login);
+        User user = User.GetUserByLogin(login);
         if (user.Id > 0)
         {
             status = AccountExist.IsValid = false;

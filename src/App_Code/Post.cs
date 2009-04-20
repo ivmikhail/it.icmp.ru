@@ -3,6 +3,8 @@ using System.Web;
 using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
+using System.Collections.Generic;
+using System.Data;
 
 /// <summary>
 /// Собственно новость.
@@ -15,7 +17,7 @@ public class Post
     private string _text;
     private DateTime _cdate;
     private int _userId;
-    private int _catId;
+    private List<Category> _cats;
     private int _attached;
     private int _views;
     private string _source;
@@ -81,7 +83,7 @@ public class Post
     {
         get
         {
-            return Users.GetById(_userId);
+            return User.GetById(_userId);
         }
         set
         {
@@ -89,15 +91,15 @@ public class Post
         }
     }
 
-    public PostCategory Category
+    public List<Category> Cats
     {
         get
         {
-            return PostCategories.GetById(_catId);
+            return Category.GetPostCategrories(this);
         }
         set
         {
-            _catId = value.Id;
+            _cats = value;
         }
     }
 
@@ -149,7 +151,8 @@ public class Post
     /// </summary>
     public void Update()
     {
-        Database.PostUpdate(_id, _title, _description, _text, _catId, (byte)_attached, _source, _commentsCount);
+        Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
+        Post.PostAttachCategories(_cats, this);
     }
     /// <summary>
     /// Обновляем кол-в просмотров
@@ -159,7 +162,7 @@ public class Post
         Database.PostUpdateViews(_id);
     }
 
-    public Post(int id, string title, string description, string text, DateTime cdate, int userId, int catId, bool attached, int views, string source, int commentsCount)
+    public Post(int id, string title, string description, string text, DateTime cdate, int userId, bool attached, int views, string source, int commentsCount)
     {
         _id = id;
         _title = title;
@@ -167,7 +170,6 @@ public class Post
         _text = text;
         _cdate = cdate;
         _userId = userId;
-        _catId = catId;
         _attached = attached ? 1 : 0;
         _views = views;
         _source = source;
@@ -181,10 +183,120 @@ public class Post
         _text = "";
         _cdate = DateTime.Now;
         _userId = -1;
-        _catId = -1;
+        _cats = new List<Category>();
         _attached = 0;
         _views = 0;
         _source = "";
         _commentsCount = 0;
+    }
+
+    public static Post GetById(int id)
+    {
+        return GetPostFromRow(Database.PostGetById(id));
+    }
+
+    public static void Delete(Post post)
+    {
+        Database.PostDel(post.Id);
+    }
+    /// <summary>
+    /// Сцепляем новость к категориям
+    /// </summary>
+    /// <param name="cats">Категории</param>
+    /// <param name="post_id">Новость</param>
+    public static void PostAttachCategories(List<Category> cats, Post post)
+    {
+        // лучше не придумалось
+        string query = "INSERT INTO post_cat(post_id, cat_id) VALUES";
+        string param = String.Empty;
+        foreach (Category cat in cats)
+        {
+            if (param.Length > 0)
+            {
+                param += ", ";
+            }
+            param += "(" + post.Id + "," + cat.Id + ")";
+        }
+        query += param;
+        Database.PostAttachCategories(post.Id, query);
+    }
+
+    /// <summary>
+    /// Забираем посты постранично, с учетом даты и аттачей
+    /// </summary>
+    /// <param name="page">Страница которая нам нужна</param>
+    /// <param name="count">Кол-во постов на страницу</param>
+    public static List<Post> GetPosts(int page, int count)
+    {
+        return GetPostsFromTable(Database.PostGet(page, count));
+    }
+    /// <summary>
+    /// Забираем посты постранично, с учетом даты, аттачей и категории
+    /// </summary>
+    /// <param name="page">Страница которая нам нужна</param>
+    /// <param name="count">Кол-во постов на страницу</param>
+    /// <param name="count">id категории</param>
+    public static List<Post> GetPostsByCat(int page, int count, int cat_id)
+    {
+        return GetPostsFromTable(Database.PostGetByCat(page, count, cat_id));
+    }
+
+
+
+    /// <summary>
+    /// Популярные посты
+    /// </summary>
+    /// <param name="period">Период, в днях. Например популярные посты за последние N дней.</param>
+    /// <param name="count">Кол-во нужных постов</param>
+    public static List<Post> GetTop(int period, int count)
+    {
+        return GetPostsFromTable(Database.PostGetTop(period, count));
+    }
+
+    /// <summary>
+    /// Добавление нового поста
+    /// </summary>
+    /// <param name="post">Сам пост, CreateDate будет изменен на дату добавления новости в базу.</param>
+    public static Post Add(Post post)
+    {
+        DataRow dr = Database.PostAdd(post.Title,
+                                      post.Description,
+                                      post.Text,
+                                      Convert.ToByte(post.Attached),
+                                      post.Source,
+                                      post.Author.Id);
+        return GetPostFromRow(dr);
+    }
+
+    private static List<Post> GetPostsFromTable(DataTable dt)
+    {
+        List<Post> posts = new List<Post>();
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            posts.Add(GetPostFromRow(dt.Rows[i]));
+        }
+        return posts;
+    }
+
+    private static Post GetPostFromRow(DataRow dr)
+    {
+        Post post;
+        if (dr == null)
+        {
+            post = new Post();
+        } else
+        {
+            post = new Post(Convert.ToInt32(dr["id"]),
+                         Convert.ToString(dr["title"]),
+                         Convert.ToString(dr["description"]),
+                         Convert.ToString(dr["text"]),
+                         Convert.ToDateTime(dr["cdate"]),
+                         Convert.ToInt32(dr["user_id"]),
+                         Convert.ToBoolean(dr["attached"]),
+                         Convert.ToInt32(dr["views"]),
+                         Convert.ToString(dr["source"]),
+                         Convert.ToInt32(dr["comments_count"]));
+        }
+        return post;
     }
 }

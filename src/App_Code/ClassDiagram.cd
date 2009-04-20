@@ -5,7 +5,7 @@
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\User.cs</FileName>
-      <HashCode>AAQCAAAIACQAABAAEABAAAAAABKAAAAAAAABAAAAAAE=</HashCode>
+      <HashCode>AAYCAAAIASQAABAAEABAAQAgABPAAAAEAAABAAABAIE=</HashCode>
     </TypeIdentifier>
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
@@ -22,70 +22,35 @@
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Post.cs</FileName>
-      <HashCode>ggQCAAAIAsAgAEAEgABEBAAAAAAAAAAIACABCAAACAA=</HashCode>
+      <HashCode>AgYCAAAKAsggAEAEgABGhAAAAAEQAQAIAGABCAAAgIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Comment">
-    <Position X="7.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>App_Code\Comment.cs</FileName>
-      <HashCode>AAACAAAIAAAAAAAAgABAAABACAAAAAAIAAABAAAAIAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PostCategory">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>App_Code\PostCategory.cs</FileName>
-      <HashCode>AAQCIAAAAAAAAAAAAABQAARAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Code\Comment.cs</FileName>
+      <HashCode>AAICAAIIAAAAAAAEgABAAARAGAEAAAAIAAABCAAAIAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MenuItem">
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>App_Code\Menu.cs</FileName>
-      <HashCode>AAQCAAAAAAAAAAAAAABQQABAAASAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>App_Code\MenuItem.cs</FileName>
+      <HashCode>AAcCAABAAAAAAAAAAARQQABAAAWAAAAACAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="CurrentUser">
     <Position X="0.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\CurrentUser.cs</FileName>
-      <HashCode>gAAAAAAAAAAAABAAAgAAAAAAAAABABAAEAAAAAAAIAA=</HashCode>
+      <HashCode>gAABAAAAAAAAABAAAgAABAAAACABABAAAAAAAIAAIAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="Users">
-    <Position X="0.5" Y="5.25" Width="1.5" />
+  <Class Name="VariantCaptcha">
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>App_Code\Users.cs</FileName>
-      <HashCode>AAIAAAAAAQAAAAAAAAAAAQAgAAFAAAAEAAAAAAAAAIA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PostCategories">
-    <Position X="5.75" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>App_Code\PostCategories.cs</FileName>
-      <HashCode>AAIAAAEAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAACAAIA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Posts">
-    <Position X="4" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>App_Code\Posts.cs</FileName>
-      <HashCode>AgIAAAAAAAhAAAAAAAAAgAAAAAEAAAAAAEAAAAAAAIA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MenuItems">
-    <Position X="2.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>App_Code\MenuItems.cs</FileName>
-      <HashCode>AAMAAABAAAAAAAAAAAQAAAAAAAEAAAAAAAAAAAAAAIA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Comments">
-    <Position X="7.5" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>App_Code\Comments.cs</FileName>
-      <HashCode>AAIAAAIAAAAAAAAEAAAAAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Code\VariantCaptcha.cs</FileName>
+      <HashCode>ABACABAAAAAAAABAAAAAAAAAAAgAgAAEAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
 </ClassDiagram>

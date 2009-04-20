@@ -21,9 +21,9 @@ public partial class AddPost : System.Web.UI.Page
     }
     private void LoadCategories()
     {
-        List<PostCategory> cats = PostCategories.GetAll();
+        List<Category> cats = Category.GetAll();
 
-        foreach(PostCategory cat in cats)
+        foreach(Category cat in cats)
         {
             DropDownListCats.Items.Add(new ListItem(cat.Name, cat.Id.ToString()));
         }
@@ -34,8 +34,9 @@ public partial class AddPost : System.Web.UI.Page
         if (errors.Count == 0)
         {
             Post newpost = new Post();
-
-            newpost.Category = PostCategories.GetById(Convert.ToInt32(DropDownListCats.SelectedValue));
+            List<Category> cats = new List<Category>();
+            cats.Add(Category.GetById(Convert.ToInt32(DropDownListCats.SelectedValue)));
+            newpost.Cats = cats;
             newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
             newpost.Description = Server.HtmlEncode(TextBoxDesc.Text);
             newpost.Text = Server.HtmlEncode(TextBoxText.Text);
@@ -43,7 +44,7 @@ public partial class AddPost : System.Web.UI.Page
             newpost.Author = CurrentUser.User;
             newpost.Attached = CheckBoxAttached.Checked;
 
-            Posts.Add(newpost);
+            Post.Add(newpost);
             Response.Redirect(FormsAuthentication.DefaultUrl);
         } else
         {
