@@ -25,10 +25,10 @@ public partial class _Default : System.Web.UI.Page
         int cat_id = GetCatId();
         if (cat_id > 0)
         {
-            posts = Posts.GetPostsByCat(page_num, Global.PostsCount, cat_id);
+            posts = Post.GetPostsByCat(page_num, Global.PostsCount, cat_id);
         } else
         {
-            posts = Posts.GetPosts(page_num, Global.PostsCount);
+            posts = Post.GetPosts(page_num, Global.PostsCount);
         }
         RepeaterPosts.DataSource = posts;
         RepeaterPosts.DataBind();
@@ -38,5 +38,16 @@ public partial class _Default : System.Web.UI.Page
         int id = -1;
         Int32.TryParse(Request.QueryString["cat"], out id);
         return id;
+    }
+    protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        RepeaterItem item = e.Item;
+        if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+        {
+            Repeater RepeaterPostCategories = (Repeater)item.FindControl("RepeaterPostCategories");
+            Post current = (Post)item.DataItem;
+            RepeaterPostCategories.DataSource = Category.GetPostCategrories(current);
+            RepeaterPostCategories.DataBind();
+        }
     }
 }

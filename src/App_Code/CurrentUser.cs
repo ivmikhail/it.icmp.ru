@@ -41,7 +41,7 @@ public static class CurrentUser
     /// <param name="pass">Пароль</param>
     public static User LogIn(string login, string pass, bool remember)
     {        
-        User user = Users.GetUserByLogin(login);
+        User user = User.GetUserByLogin(login);
         string hashedPass = HashPass(pass, login); 
    
         if(user.Id > 0 && user.Pass == hashedPass)
@@ -114,7 +114,7 @@ public static class CurrentUser
         user.Pass = HashPass(pass, login);
         user.Email = email;
 
-        return Users.Add(user);
+        return User.Add(user);
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public static class CurrentUser
             LogOut();
         } else
         {
-            user = Users.GetUserByLogin(ticket.Name);
+            user = User.GetUserByLogin(ticket.Name);
         }
         return user;
     }

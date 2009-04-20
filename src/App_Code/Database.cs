@@ -298,7 +298,7 @@ public class Database
         connection.Close();
         return result;
     }
-    public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort)
+    public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort, String name)
     {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsAdd", connection);
@@ -313,6 +313,9 @@ public class Database
         cmd.Parameters.Add("@sort", System.Data.SqlDbType.Int, 0);
         cmd.Parameters["@sort"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@sort"].Value = sort;
+        cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar, 32);
+        cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@name"].Value = name;
         System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
         System.Data.DataTable table = new DataTable();
 
@@ -424,7 +427,7 @@ public class Database
         connection.Close();
         return result;
     }
-    public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort)
+    public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort, String name)
     {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsUpdate", connection);
@@ -441,11 +444,14 @@ public class Database
         cmd.Parameters["@url"].Value = url;
         cmd.Parameters.Add("@sort", System.Data.SqlDbType.Int, 0);
         cmd.Parameters["@sort"].Direction = System.Data.ParameterDirection.Input;
-        cmd.Parameters["@sort"].Value = sort; int result = cmd.ExecuteNonQuery();
+        cmd.Parameters["@sort"].Value = sort;
+        cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar, 32);
+        cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@name"].Value = name; int result = cmd.ExecuteNonQuery();
         connection.Close();
         return result;
     }
-    public static DataRow PostAdd(String title, String desc, String text, Int32 cat_id, Byte attached, String source, Int32 user_id)
+    public static DataRow PostAdd(String title, String desc, String text, Byte attached, String source, Int32 user_id)
     {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostAdd", connection);
@@ -460,9 +466,6 @@ public class Database
         cmd.Parameters.Add("@text", System.Data.SqlDbType.VarChar, 2048);
         cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@text"].Value = text;
-        cmd.Parameters.Add("@cat_id", System.Data.SqlDbType.Int, 0);
-        cmd.Parameters["@cat_id"].Direction = System.Data.ParameterDirection.Input;
-        cmd.Parameters["@cat_id"].Value = cat_id;
         cmd.Parameters.Add("@attached", System.Data.SqlDbType.TinyInt, 0);
         cmd.Parameters["@attached"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@attached"].Value = attached;
@@ -497,6 +500,21 @@ public class Database
             result = null;
         }
         reader.Close();
+        connection.Close();
+        return result;
+    }
+    public static int PostAttachCategories(Int32 post_id, String query)
+    {
+        SqlConnection connection = OpenConnection();
+        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostAttachCategories", connection);
+        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+        cmd.Parameters.Add("@post_id", System.Data.SqlDbType.Int, 0);
+        cmd.Parameters["@post_id"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@post_id"].Value = post_id;
+        cmd.Parameters.Add("@query", System.Data.SqlDbType.VarChar, 1024);
+        cmd.Parameters["@query"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@query"].Value = query; int result = cmd.ExecuteNonQuery();
         connection.Close();
         return result;
     }
@@ -657,6 +675,40 @@ public class Database
         connection.Close();
         return result;
     }
+    public static DataTable PostGetCategories(Int32 post_id)
+    {
+        SqlConnection connection = OpenConnection();
+        System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetCategories", connection);
+        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+        cmd.Parameters.Add("@post_id", System.Data.SqlDbType.Int, 0);
+        cmd.Parameters["@post_id"].Direction = System.Data.ParameterDirection.Input;
+        cmd.Parameters["@post_id"].Value = post_id;
+        System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+        System.Data.DataTable table = new DataTable();
+
+        for (int i = 0; (i < reader.FieldCount); i++)
+        {
+            System.Type __type;
+            string __name;
+            __type = reader.GetFieldType(i);
+            __name = reader.GetName(i);
+            table.Columns.Add(__name, __type);
+        }
+
+        while (reader.Read())
+        {
+            System.Data.DataRow row = table.NewRow();
+            object[] rowdata = new object[reader.FieldCount];
+            reader.GetValues(rowdata);
+            row.ItemArray = rowdata;
+            table.Rows.Add(row);
+        }
+        reader.Close();
+        DataTable result = table;
+        connection.Close();
+        return result;
+    }
     public static DataTable PostGetTop(Int32 period, Int32 count)
     {
         SqlConnection connection = OpenConnection();
@@ -694,7 +746,7 @@ public class Database
         connection.Close();
         return result;
     }
-    public static int PostUpdate(Int32 id, String title, String desc, String text, Int32 cat_id, Byte attached, String source, Int32 comments_count)
+    public static int PostUpdate(Int32 id, String title, String desc, String text, Byte attached, String source, Int32 comments_count)
     {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostUpdate", connection);
@@ -712,9 +764,6 @@ public class Database
         cmd.Parameters.Add("@text", System.Data.SqlDbType.VarChar, 2048);
         cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@text"].Value = text;
-        cmd.Parameters.Add("@cat_id", System.Data.SqlDbType.Int, 0);
-        cmd.Parameters["@cat_id"].Direction = System.Data.ParameterDirection.Input;
-        cmd.Parameters["@cat_id"].Value = cat_id;
         cmd.Parameters.Add("@attached", System.Data.SqlDbType.TinyInt, 0);
         cmd.Parameters["@attached"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@attached"].Value = attached;
