@@ -50,7 +50,7 @@ public partial class _Default : System.Web.UI.Page
         NewsPager.CatId = cat_id;
         NewsPager.PageQueryString = "page";
         NewsPager.CurrrentPage = current_page;
-        NewsPager.TotalPages = Convert.ToInt32(Math.Round((decimal)total_records / Global.PostsCount));
+        NewsPager.TotalPages = Convert.ToInt32(Math.Ceiling((decimal)total_records/Global.PostsCount));
     }
     private int GetCatId()
     {

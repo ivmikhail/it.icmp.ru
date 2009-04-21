@@ -8,6 +8,13 @@
                 <asp:DropDownList ID="DropDownListCats" runat="server" CssClass="input-text"/>
             </label>
         </li>
+        <li>        
+            <h2>
+                <label>
+                    Прикреплено <asp:CheckBox ID="CheckBoxAttached" runat="server" />
+                </label>
+            </h2>
+        </li>
         <li>
             <h2>Заголовок</h2>
             <label>
@@ -31,13 +38,7 @@
             <label>                
                 <asp:TextBox ID="TextBoxSource" runat="server" CssClass="input-text" MaxLength="256"/> 
             </label>
-        </li>        
-        <li>
-            <h2>Прикреплено</h2>
-            <label>
-                <asp:CheckBox ID="CheckBoxAttached" runat="server" />
-            </label>        
-        </li>
+        </li>    
         <li>
             <h2>Картинки</h2>
             <label>
