@@ -66,7 +66,7 @@ public partial class News : System.Web.UI.Page
     private void WritePostCategories(Post post)
     {
         string result = String.Empty;
-        foreach (Category cat in Category.GetPostCategrories(post))
+        foreach (Category cat in Category.GetPostCategrories(post.Id))
         {
             if (result.Length > 0)
             {

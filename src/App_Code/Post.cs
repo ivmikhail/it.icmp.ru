@@ -95,7 +95,7 @@ public class Post
     {
         get
         {
-            return Category.GetPostCategrories(this);
+            return _cats;
         }
         set
         {
@@ -162,7 +162,7 @@ public class Post
         Database.PostUpdateViews(_id);
     }
 
-    public Post(int id, string title, string description, string text, DateTime cdate, int userId, bool attached, int views, string source, int commentsCount)
+    public Post(int id, string title, string description, string text, DateTime cdate, int userId, bool attached, int views, string source, int commentsCount, List<Category> cats)
     {
         _id = id;
         _title = title;
@@ -174,6 +174,7 @@ public class Post
         _views = views;
         _source = source;
         _commentsCount = commentsCount;
+        _cats = cats;
     }
 
     public Post() {
@@ -204,7 +205,7 @@ public class Post
     /// </summary>
     /// <param name="cats">Категории</param>
     /// <param name="post_id">Новость</param>
-    public static void PostAttachCategories(List<Category> cats, Post post)
+    private static void PostAttachCategories(List<Category> cats, Post post)
     {
         // лучше не придумалось
         string query = "INSERT INTO post_cat(post_id, cat_id) VALUES";
@@ -226,9 +227,9 @@ public class Post
     /// </summary>
     /// <param name="page">Страница которая нам нужна</param>
     /// <param name="count">Кол-во постов на страницу</param>
-    public static List<Post> GetPosts(int page, int count)
+    public static List<Post> GetPosts(int page, int count, ref int posts_count)
     {
-        return GetPostsFromTable(Database.PostGet(page, count));
+        return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
     }
     /// <summary>
     /// Забираем посты постранично, с учетом даты, аттачей и категории
@@ -236,9 +237,9 @@ public class Post
     /// <param name="page">Страница которая нам нужна</param>
     /// <param name="count">Кол-во постов на страницу</param>
     /// <param name="count">id категории</param>
-    public static List<Post> GetPostsByCat(int page, int count, int cat_id)
+    public static List<Post> GetPostsByCat(int page, int count, int cat_id, ref int posts_count)
     {
-        return GetPostsFromTable(Database.PostGetByCat(page, count, cat_id));
+        return GetPostsFromTable(Database.PostGetByCat(page, count, cat_id, ref posts_count));
     }
 
 
@@ -265,7 +266,10 @@ public class Post
                                       Convert.ToByte(post.Attached),
                                       post.Source,
                                       post.Author.Id);
-        return GetPostFromRow(dr);
+        List<Category> cats = post.Cats;
+        Post newpost = GetPostFromRow(dr);
+        PostAttachCategories(cats, newpost);
+        return newpost;
     }
 
     private static List<Post> GetPostsFromTable(DataTable dt)
@@ -286,7 +290,8 @@ public class Post
             post = new Post();
         } else
         {
-            post = new Post(Convert.ToInt32(dr["id"]),
+            int id = Convert.ToInt32(dr["id"]);
+            post = new Post(id,
                          Convert.ToString(dr["title"]),
                          Convert.ToString(dr["description"]),
                          Convert.ToString(dr["text"]),
@@ -295,7 +300,8 @@ public class Post
                          Convert.ToBoolean(dr["attached"]),
                          Convert.ToInt32(dr["views"]),
                          Convert.ToString(dr["source"]),
-                         Convert.ToInt32(dr["comments_count"]));
+                         Convert.ToInt32(dr["comments_count"]),
+                         Category.GetPostCategrories(id)); //TODO: MZFK
         }
         return post;
     }

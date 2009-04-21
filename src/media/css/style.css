@@ -128,3 +128,42 @@ div#dynamic-content #comments
 {
 	list-style-type:none;
 }
+
+.pager li{
+	border:0;
+	margin:0;
+	padding:0;
+	float:left;
+	font-size:11px;
+	list-style:none;
+}
+.pager a{
+	display:block;
+	border:solid 1px #ddd;
+	margin-right:2px;
+}
+.pager a:link,
+.pager a:visited {
+	color:#0063e3;
+	padding:3px 6px;
+	text-decoration:none;
+}
+.pager a:hover{
+	border:solid 1px #666;
+}
+.pager .previous-off,
+.pager .next-off {
+	color:#666666;
+	font-weight:bold;
+	padding:3px 4px;
+}
+.pager .next a,
+.pager .previous a {
+	font-weight:bold;
+	border:solid 1px #fff;
+}
+.pager .active{
+	color:#ff0084;
+	font-weight:bold;
+	padding:4px 6px;
+}
