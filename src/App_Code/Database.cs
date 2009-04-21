@@ -512,7 +512,7 @@ public class Database
         cmd.Parameters.Add("@post_id", System.Data.SqlDbType.Int, 0);
         cmd.Parameters["@post_id"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@post_id"].Value = post_id;
-        cmd.Parameters.Add("@query", System.Data.SqlDbType.VarChar, 1024);
+        cmd.Parameters.Add("@query", System.Data.SqlDbType.NVarChar, 1024);
         cmd.Parameters["@query"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@query"].Value = query; int result = cmd.ExecuteNonQuery();
         connection.Close();
@@ -530,7 +530,7 @@ public class Database
         connection.Close();
         return result;
     }
-    public static DataTable PostGet(Int32 page, Int32 count)
+    public static DataTable PostGet(Int32 page, Int32 count, ref Int32 posts_count)
     {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGet", connection);
@@ -542,6 +542,9 @@ public class Database
         cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
         cmd.Parameters["@count"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@count"].Value = count;
+        cmd.Parameters.Add("@posts_count", System.Data.SqlDbType.Int, 0);
+        cmd.Parameters["@posts_count"].Direction = System.Data.ParameterDirection.InputOutput;
+        cmd.Parameters["@posts_count"].Value = posts_count;
         System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
         System.Data.DataTable table = new DataTable();
 
@@ -563,7 +566,7 @@ public class Database
             table.Rows.Add(row);
         }
         reader.Close();
-        DataTable result = table;
+        DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
         connection.Close();
         return result;
     }
@@ -598,7 +601,7 @@ public class Database
         connection.Close();
         return result;
     }
-    public static DataTable PostGetByCat(Int32 page, Int32 count, Int32 cat_id)
+    public static DataTable PostGetByCat(Int32 page, Int32 count, Int32 cat_id, ref Int32 posts_count)
     {
         SqlConnection connection = OpenConnection();
         System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetByCat", connection);
@@ -613,6 +616,9 @@ public class Database
         cmd.Parameters.Add("@cat_id", System.Data.SqlDbType.Int, 0);
         cmd.Parameters["@cat_id"].Direction = System.Data.ParameterDirection.Input;
         cmd.Parameters["@cat_id"].Value = cat_id;
+        cmd.Parameters.Add("@posts_count", System.Data.SqlDbType.Int, 0);
+        cmd.Parameters["@posts_count"].Direction = System.Data.ParameterDirection.InputOutput;
+        cmd.Parameters["@posts_count"].Value = posts_count;
         System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
         System.Data.DataTable table = new DataTable();
 
@@ -634,7 +640,7 @@ public class Database
             table.Rows.Add(row);
         }
         reader.Close();
-        DataTable result = table;
+        DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
         connection.Close();
         return result;
     }

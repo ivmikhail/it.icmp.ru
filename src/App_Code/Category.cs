@@ -87,9 +87,9 @@ public class Category
     /// <summary>
     /// Берем все категории новости
     /// </summary>
-    public static List<Category> GetPostCategrories(Post post)
+    public static List<Category> GetPostCategrories(int postId)
     {
-        return GetCategoryFromTable(Database.PostGetCategories(post.Id));
+        return GetCategoryFromTable(Database.PostGetCategories(postId));
     }
 
     /// <summary>

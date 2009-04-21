@@ -70,7 +70,7 @@ public partial class AddPost : System.Web.UI.Page
         {
             errors.Add("Количество символов в теле новости должно быть от 1 до 2048.");
         }
-        if (TextBoxSource.Text.Length < 256)
+        if (TextBoxSource.Text.Length > 256)
         {
             errors.Add("Количество символов в источнике должно быть от 0 до 256.");
         }

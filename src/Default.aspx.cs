@@ -12,32 +12,57 @@ using System.Collections.Generic;
 
 public partial class _Default : System.Web.UI.Page
 {
+    private List<Post> posts;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            LoadPosts(1);
+            LoadPosts();
         }
     }
-    private void LoadPosts(int page_num)
+   
+    private void LoadPosts()
     {
-        List<Post> posts = new List<Post>();
+        if (posts != null)
+        {
+            posts.Clear();
+        }
+        int total_records = 0;
         int cat_id = GetCatId();
+        int page = GetPage();
         if (cat_id > 0)
         {
-            posts = Post.GetPostsByCat(page_num, Global.PostsCount, cat_id);
+            posts = Post.GetPostsByCat(page, Global.PostsCount, cat_id, ref total_records);
         } else
         {
-            posts = Post.GetPosts(page_num, Global.PostsCount);
+            posts = Post.GetPosts(page, Global.PostsCount, ref total_records);
         }
         RepeaterPosts.DataSource = posts;
         RepeaterPosts.DataBind();
+
+        FillPager(cat_id, total_records, page);
+
+    }
+
+    private void FillPager(int cat_id, int total_records, int current_page)
+    {
+        NewsPager.PagerPage = "default.aspx";
+        NewsPager.CatId = cat_id;
+        NewsPager.PageQueryString = "page";
+        NewsPager.CurrrentPage = current_page;
+        NewsPager.TotalPages = Convert.ToInt32(Math.Round((decimal)total_records / Global.PostsCount));
     }
     private int GetCatId()
     {
         int id = -1;
         Int32.TryParse(Request.QueryString["cat"], out id);
         return id;
+    }
+    private int GetPage()
+    {
+        int page_num;
+        Int32.TryParse(Request.QueryString["page"], out page_num);
+        return page_num == 0 ? 1 : page_num;
     }
     protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
@@ -46,7 +71,7 @@ public partial class _Default : System.Web.UI.Page
         {
             Repeater RepeaterPostCategories = (Repeater)item.FindControl("RepeaterPostCategories");
             Post current = (Post)item.DataItem;
-            RepeaterPostCategories.DataSource = Category.GetPostCategrories(current);
+            RepeaterPostCategories.DataSource = Category.GetPostCategrories(current.Id);
             RepeaterPostCategories.DataBind();
         }
     }

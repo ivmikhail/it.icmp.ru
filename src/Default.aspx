@@ -1,4 +1,5 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" Title="Ykt IT Community | Главная" %>
+<%@ Register Src="~/controls/Pager.ascx" TagName="Pager" TagPrefix="uc" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <h2>Новости</h2>
     <asp:Repeater ID="RepeaterPosts" runat="server" OnItemDataBound="RepeaterPosts_ItemDataBound">
@@ -43,5 +44,6 @@
             </ul>
         </FooterTemplate>
     </asp:Repeater>
+    <uc:Pager id="NewsPager" runat="server" />
 </asp:Content>
 
