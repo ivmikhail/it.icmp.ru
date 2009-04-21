@@ -73,12 +73,8 @@ div#dynamic-content p {
 	line-height: 1.6em;
 	text-indent: 2em;
 }
-ul,ol {
-	padding-left: 30px;
-}
 label {
 	display: block;
-	text-align: center;
 }
 div#dynamic-content .input-text {
 	display: block;

@@ -91,8 +91,13 @@ public partial class Pager : System.Web.UI.UserControl
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        Links.Text = "<ul class='pager'>" + PrevLink() + Pages() + NextLink() + "</ul>";
+        if (total_pages > 1)
+        {
+            Links.Text = "<ul class='pager'>" + PrevLink() + Pages() + NextLink() + "</ul>";
+        } else
+        {
+            Links.Text = "";
+        }
      
     }
     private string Pages()
