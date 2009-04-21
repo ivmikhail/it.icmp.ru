@@ -97,14 +97,24 @@ public partial class Pager : System.Web.UI.UserControl
     }
     private string Pages()
     {
-        string result = String.Empty;
-        for (int i = 0; i < total_pages; i++)
+        int start = (current_page / 10) * 10;
+        if (start != 0)
         {
+            start -= 1;
+        }
+        int end = start + 10;
+        string result = String.Empty;
+        while (start < end)
+        {
+            if (start == total_pages)
+            {
+                break;
+            }
             if (result.Length > 0)
             {
                 result += "";
             }
-            int page = i + 1;
+            int page = start + 1;
             if (current_page == page)
             {
                 result += "<li class='active'> " + page + "</li>";
@@ -112,6 +122,7 @@ public partial class Pager : System.Web.UI.UserControl
             {
                 result += "<li><a href='" + pager_page + "?" + query_string + "=" + page + CategoryParam() + "' title='Страница " + page + "'>" + page + "</a></li>";
             }
+            start++;
         }
         return result;
     }
@@ -128,12 +139,12 @@ public partial class Pager : System.Web.UI.UserControl
     private string PrevLink()
     {
         string previous_link;
-        if (current_page < 11)
+        if (current_page == 1)
         {
-            previous_link = "<li class='previous-off'>Предыдущие</li>";
+            previous_link = "<li class='previous-off'>Предыдущая</li>";
         } else
         {
-            previous_link = "<li class='previous'><a href='" + pager_page + "?" + query_string + "=" + (current_page - 10) + CategoryParam() + "' title='Предыдущие 10 страниц'>Предыдущие</a></li>";
+            previous_link = "<li class='previous'><a href='" + pager_page + "?" + query_string + "=" + (current_page - 1) + CategoryParam() + "' title='Предыдущая страница'>Предыдущая</a></li>";
 
         }
         return previous_link;
@@ -142,12 +153,12 @@ public partial class Pager : System.Web.UI.UserControl
     private string NextLink()
     {
         string next_link;
-        if (current_page > 9 && current_page <= total_pages)
+        if (current_page == total_pages)
         {
-            next_link = "<li class='next-off'>Следующие</li>";
+            next_link = "<li class='next-off'>Следующая</li>";
         } else
         {
-            next_link = "<li class='next'><a href='" + pager_page + "?" + query_string + "=" + (current_page + 10) + CategoryParam() + "' title='Следующие 10 страниц'>Следующие</a></li>";
+            next_link = "<li class='next'><a href='" + pager_page + "?" + query_string + "=" + (current_page + 1) + CategoryParam() + "' title='Следующая страница'>Следующая</a></li>";
 
         }
         return next_link;
