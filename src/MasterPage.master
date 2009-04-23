@@ -7,8 +7,16 @@
 <head runat="server">
     <title>Ykt IT Community</title>
     <link rel="shortcut icon" href="media/img/itc.ico"     type="image/vnd.microsoft.icon" />
-    <link rel="stylesheet"    href="media/css/style.css?1"   type="text/css" />
-    <link rel="stylesheet"    href="media/css/default.css?1" type="text/css" />
+    <link rel="stylesheet"    href="media/css/style.css"   type="text/css" />
+    <link rel="stylesheet"    href="media/css/default.css" type="text/css" />
+    
+    <script src="media/js/mootools-core.js" type="text/javascript"></script>
+    <script src="media/js/mootools-more.js" type="text/javascript"></script>
+    
+    <!--    
+    <script src="media/js/mootools-core-yui.js" type="text/javascript"></script>
+    <script src="media/js/mootools-more-yui.js" type="text/javascript"></script>  
+    -->
 </head>
 <body>
     <form id="MainForm" runat="server">

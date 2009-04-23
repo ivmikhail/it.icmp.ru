@@ -27,7 +27,7 @@ public class Global : System.Web.HttpApplication
                 System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
                 string[] roles = id.Ticket.UserData.Split(','); // на самом деле у чела не может быть по 2 роли одновременно
                 Context.User = new System.Security.Principal.GenericPrincipal(id, roles);
-                
+
             }
         }
     }
@@ -115,6 +115,88 @@ public class Global : System.Web.HttpApplication
                 _lastRegisteredCount = Convert.ToInt32(ConfigurationManager.AppSettings["LastRegisteredCount"].ToString()); ;
             }
             return _lastRegisteredCount;
+        }
+    }
+
+    private static string _postImageOptions = String.Empty;
+    public static string PostImageOptions
+    {
+        get
+        {
+            if (_postImageOptions == String.Empty)
+            {
+                _postImageOptions = "Размер до " + ConfigurationManager.AppSettings["PostImgWidth"].ToString() + "x" + ConfigurationManager.AppSettings["PostImgHeight"].ToString() + "; обьем до " + (Math.Round((decimal.Parse(ConfigurationManager.AppSettings["PostImgSize"])) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).";
+            }
+
+            return _postImageOptions;
+        }
+    }
+    private static int _postImageSize = 0;
+    public static int PostImageSize
+    {
+        get
+        {
+            if (_postImageSize == 0)
+            {
+                _postImageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgSize"]);
+            }
+
+            return _postImageSize;
+        }
+    }
+    private static int _postImageHeight = 0;
+    public static int PostImageHeight
+    {
+        get
+        {
+            if (_postImageHeight == 0)
+            {
+                _postImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgHeight"]);
+            }
+
+            return _postImageHeight;
+        }
+    }
+
+    private static int _postImageWidth = 0;
+    public static int PostImageWidth
+    {
+        get
+        {
+            if (_postImageWidth == 0)
+            {
+                _postImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgWidth"]);
+            }
+
+            return _postImageWidth;
+        }
+    }
+
+    private static int _maxThumbWidth = 0;
+    public static int MaxThumbWidth
+    {
+        get
+        {
+            if (_maxThumbWidth == 0)
+            {
+                _maxThumbWidth = Convert.ToInt32(ConfigurationManager.AppSettings["MaxThumbWidth"]);
+            }
+
+            return _maxThumbWidth;
+        }
+    }
+
+    private static string _postImagesFolder = "";
+    public static string PostImagesFolder
+    {
+        get
+        {
+            if (_postImagesFolder == "")
+            {
+                _postImagesFolder = ConfigurationManager.AppSettings["PostImagesFolder"].ToString();
+            }
+
+            return _postImagesFolder;
         }
     }
 }
