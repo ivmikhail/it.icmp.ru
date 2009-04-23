@@ -120,6 +120,10 @@ div#dynamic-content #comments
 {
 	color:Red;
 }
+.note
+{
+	font-size: 0.8em;
+}
 .list
 {
 	list-style-type:none;
@@ -162,4 +166,10 @@ div#dynamic-content #comments
 	color:#ff0084;
 	font-weight:bold;
 	padding:4px 6px;
+}
+
+div#uploadImagesList img
+{
+	padding: 10px;	
+	float:left;
 }
