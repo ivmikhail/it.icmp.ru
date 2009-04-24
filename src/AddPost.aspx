@@ -67,9 +67,10 @@
                     $('uploadImagesList').appendChild(imageObject);   
                 }
                 function PopulateList(obj) 
-                { 
+                {   
                     CallServer(obj.value,'');    
                 }
+                  
             </script>
             <h2>Картинки</h2>
                 <p class="note">
@@ -77,8 +78,8 @@
                 </p>
                 <input id="list" type="hidden" runat="server"/>    
                 <h3>Выберите:</h3> 
-                <input id="image_upload" onchange="PopulateList(this)" name="image_upload" type="file" />  
-                
+                <input id="image_upload" onchange="PopulateList(this)" name="image_upload" type="file" />
+
                 <h3>Загруженные:</h3>                     
                 <p class="note">                   
                         Не добавленные в новость картинки будут удалены автоматически

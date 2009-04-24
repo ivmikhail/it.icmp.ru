@@ -1,23 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\...\src\", "..\..\..\..\..\..\projects\my\itcommunity\trunk\src\", "{2B8CC985-F4BB-45AC-95EA-E0AC783BA366}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\...\src\", "src\", "{77823C71-1A81-4A92-A0EE-C4F86D5B7D58}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.VirtualPath = "/src"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\projects\my\itcommunity\trunk\src\"
+		Debug.AspNetCompiler.PhysicalPath = "src\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\src\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/src"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\projects\my\itcommunity\trunk\src\"
+		Release.AspNetCompiler.PhysicalPath = "src\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\src\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "4174"
+		VWDPort = "1142"
 	EndProjectSection
 EndProject
 Global
@@ -25,8 +25,8 @@ Global
 		Debug|.NET = Debug|.NET
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B8CC985-F4BB-45AC-95EA-E0AC783BA366}.Debug|.NET.ActiveCfg = Debug|.NET
-		{2B8CC985-F4BB-45AC-95EA-E0AC783BA366}.Debug|.NET.Build.0 = Debug|.NET
+		{77823C71-1A81-4A92-A0EE-C4F86D5B7D58}.Debug|.NET.ActiveCfg = Debug|.NET
+		{77823C71-1A81-4A92-A0EE-C4F86D5B7D58}.Debug|.NET.Build.0 = Debug|.NET
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -29,6 +29,10 @@ public class Post
         {
             return _id;
         }
+        set
+        {
+            _id = value;
+        }
     }
 
     public string Title
@@ -83,6 +87,7 @@ public class Post
     {
         get
         {
+            //TODO: переделать!!!
             return User.GetById(_userId);
         }
         set
@@ -147,12 +152,19 @@ public class Post
     }
 
     /// <summary>
-    /// Обновляем. 
+    /// Обновляем новость и его категории
+    /// </summary>
+    public void UpdateWithCategories()
+    {
+        Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
+        Post.PostAttachCategories(_cats, this);
+    }
+    /// <summary>
+    /// Обновляем только новость
     /// </summary>
     public void Update()
     {
         Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
-        Post.PostAttachCategories(_cats, this);
     }
     /// <summary>
     /// Обновляем кол-в просмотров
