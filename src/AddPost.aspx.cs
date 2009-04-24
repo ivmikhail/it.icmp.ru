@@ -30,6 +30,10 @@ public partial class AddPost : System.Web.UI.Page, ICallbackEventHandler
     protected string returnValue = String.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
+        //Post post = new Post();
+        //post.Author = CurrentUser.User;
+        //post.Id = 0;
+        //Picture.GetByPost(post);
         if (!IsPostBack)
         {
             LoadCategories();
@@ -66,7 +70,10 @@ public partial class AddPost : System.Web.UI.Page, ICallbackEventHandler
     public string GetCallbackResult()
     {
         string result = "";
-        Picture pic = Picture.UploadImage(returnValue, CurrentUser.User.Id, 0);
+        Post post = new Post();
+        post.Id = 0;
+        post.Author = CurrentUser.User;
+        Picture pic = Picture.UploadImage(returnValue, post);
         if (pic.Name != "")
         {
             result = pic.ThumbUrl;
@@ -107,15 +114,15 @@ public partial class AddPost : System.Web.UI.Page, ICallbackEventHandler
             cats.Add(Category.GetById(Convert.ToInt32(DropDownListCats.SelectedValue)));
             newpost.Cats = cats;
             newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
-            newpost.Description = Server.HtmlEncode(TextBoxDesc.Text);
-            newpost.Text = Server.HtmlEncode(TextBoxText.Text);
+            // TODO: Сделать буйню которая будет ескейпить тока некоторые указанные теги
+            newpost.Description = TextBoxDesc.Text;
+            newpost.Text = TextBoxText.Text;
             newpost.Source = Server.HtmlEncode(TextBoxSource.Text);
             newpost.Author = CurrentUser.User;
             newpost.Attached = CheckBoxAttached.Checked;
             Post current = Post.Add(newpost);
 
-            //После добавления новости переименовываюм временную папку postimages/userid/0 в postimages/userid/postid
-            Picture.FixImages(current, CurrentUser.User.Id);
+            Picture.FixImages(current);
         } else
         {
             WriteErrors(errors, "Новость не добавлена");
