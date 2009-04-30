@@ -7,196 +7,236 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using ITCommunity;
 
-/// <summary>
-/// Мега-глобал класс
-/// </summary>
-public class Global : System.Web.HttpApplication
+namespace ITCommunity
 {
-    public Global()
+    /// <summary>
+    /// Мега-глобал класс
+    /// </summary>
+    public class Global : System.Web.HttpApplication
     {
-    }
-
-    public void Application_AuthenticateRequest(Object src, EventArgs e)
-    {
-        //Note: Здесь нельзя получить доступ к сессии
-        if (HttpContext.Current.Request.IsAuthenticated)
+        public Global()
         {
-            if (HttpContext.Current.User.Identity.AuthenticationType == "Forms")
-            {
-                System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
-                string[] roles = id.Ticket.UserData.Split(','); // на самом деле у чела не может быть по 2 роли одновременно
-                Context.User = new System.Security.Principal.GenericPrincipal(id, roles);
+        }
 
+        public void Application_AuthenticateRequest(Object src, EventArgs e)
+        {
+            //Note: Здесь нельзя получить доступ к сессии
+            if (HttpContext.Current.Request.IsAuthenticated)
+            {
+                if (HttpContext.Current.User.Identity.AuthenticationType == "Forms")
+                {
+                    System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
+                    string[] roles = id.Ticket.UserData.Split(','); // на самом деле у чела не может быть по 2 роли одновременно
+                    Context.User = new System.Security.Principal.GenericPrincipal(id, roles);
+
+                }
             }
         }
-    }
 
-    private static string _connectionString = "";
-    public static string ConnectionString
-    {
-        get
+        private static string _connectionString = "";
+        public static string ConnectionString
         {
-            if (_connectionString == "")
+            get
             {
-                _connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                if (_connectionString == "")
+                {
+                    _connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                }
+                return _connectionString;
             }
-            return _connectionString;
         }
-    }
-    private static int _postsCount = -1;
-    public static int PostsCount
-    {
-        get
+        private static int _messageCount = -1;
+        public static int MaxMessageCount
         {
-            if (_postsCount == -1)
+            get
             {
-                _postsCount = Convert.ToInt32(ConfigurationManager.AppSettings["PostsCount"].ToString()); ;
+                if (_messageCount == -1)
+                {
+                    _messageCount = Convert.ToInt32(ConfigurationManager.AppSettings["MaxMessageCount"].ToString()); ;
+                }
+                return _messageCount;
             }
-            return _postsCount;
         }
-    }
-    private static int _lastCommentsCount = -1;
-    public static int LastCommentsCount
-    {
-        get
+        private static int _notesCount = -1;
+        public static int MaxNotesCount
         {
-            if (_lastCommentsCount == -1)
+            get
             {
-                _lastCommentsCount = Convert.ToInt32(ConfigurationManager.AppSettings["LastCommentsCount"].ToString()); ;
+                if (_notesCount == -1)
+                {
+                    _notesCount = Convert.ToInt32(ConfigurationManager.AppSettings["MaxNotesCount"].ToString()); ;
+                }
+                return _notesCount;
             }
-            return _lastCommentsCount;
         }
-    }
-    private static int _popularPostsCount = -1;
-    public static int PopularPostsCount
-    {
-        get
+        private static int _postsCount = -1;
+        public static int PostsCount
         {
-            if (_popularPostsCount == -1)
+            get
             {
-                _popularPostsCount = Convert.ToInt32(ConfigurationManager.AppSettings["PopularPostsCount"].ToString()); ;
+                if (_postsCount == -1)
+                {
+                    _postsCount = Convert.ToInt32(ConfigurationManager.AppSettings["PostsCount"].ToString()); ;
+                }
+                return _postsCount;
             }
-            return _popularPostsCount;
         }
-    }
+        private static int _favCount = -1;
+        public static int FavoritesCount
+        {
+            get
+            {
+                if (_favCount == -1)
+                {
+                    _favCount = Convert.ToInt32(ConfigurationManager.AppSettings["FavoritesCount"].ToString()); ;
+                }
+                return _favCount;
+            }
+        }
+        private static int _lastCommentsCount = -1;
+        public static int LastCommentsCount
+        {
+            get
+            {
+                if (_lastCommentsCount == -1)
+                {
+                    _lastCommentsCount = Convert.ToInt32(ConfigurationManager.AppSettings["LastCommentsCount"].ToString()); ;
+                }
+                return _lastCommentsCount;
+            }
+        }
+        private static int _popularPostsCount = -1;
+        public static int PopularPostsCount
+        {
+            get
+            {
+                if (_popularPostsCount == -1)
+                {
+                    _popularPostsCount = Convert.ToInt32(ConfigurationManager.AppSettings["PopularPostsCount"].ToString()); ;
+                }
+                return _popularPostsCount;
+            }
+        }
 
-    private static int _popularPostsPeriod = -1;
-    public static int PopularPostsPeriod
-    {
-        get
+        private static int _popularPostsPeriod = -1;
+        public static int PopularPostsPeriod
         {
-            if (_popularPostsPeriod == -1)
+            get
             {
-                _popularPostsPeriod = Convert.ToInt32(ConfigurationManager.AppSettings["PopularPostsPeriod"].ToString()); ;
+                if (_popularPostsPeriod == -1)
+                {
+                    _popularPostsPeriod = Convert.ToInt32(ConfigurationManager.AppSettings["PopularPostsPeriod"].ToString()); ;
+                }
+                return _popularPostsPeriod;
             }
-            return _popularPostsPeriod;
         }
-    }
-    private static int _topPostersCount = -1;
-    public static int TopPostersCount
-    {
-        get
+        private static int _topPostersCount = -1;
+        public static int TopPostersCount
         {
-            if (_topPostersCount == -1)
+            get
             {
-                _topPostersCount = Convert.ToInt32(ConfigurationManager.AppSettings["TopPostersCount"].ToString()); ;
+                if (_topPostersCount == -1)
+                {
+                    _topPostersCount = Convert.ToInt32(ConfigurationManager.AppSettings["TopPostersCount"].ToString()); ;
+                }
+                return _topPostersCount;
             }
-            return _topPostersCount;
         }
-    }
-    private static int _lastRegisteredCount = -1;
-    public static int LastRegisteredCount
-    {
-        get
+        private static int _lastRegisteredCount = -1;
+        public static int LastRegisteredCount
         {
-            if (_lastRegisteredCount == -1)
+            get
             {
-                _lastRegisteredCount = Convert.ToInt32(ConfigurationManager.AppSettings["LastRegisteredCount"].ToString()); ;
+                if (_lastRegisteredCount == -1)
+                {
+                    _lastRegisteredCount = Convert.ToInt32(ConfigurationManager.AppSettings["LastRegisteredCount"].ToString()); ;
+                }
+                return _lastRegisteredCount;
             }
-            return _lastRegisteredCount;
         }
-    }
 
-    private static string _postImageOptions = String.Empty;
-    public static string PostImageOptions
-    {
-        get
+        private static string _postImageOptions = String.Empty;
+        public static string PostImageOptions
         {
-            if (_postImageOptions == String.Empty)
+            get
             {
-                _postImageOptions = "Размер до " + ConfigurationManager.AppSettings["PostImgWidth"].ToString() + "x" + ConfigurationManager.AppSettings["PostImgHeight"].ToString() + "; обьем до " + (Math.Round((decimal.Parse(ConfigurationManager.AppSettings["PostImgSize"])) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).";
-            }
+                if (_postImageOptions == String.Empty)
+                {
+                    _postImageOptions = "Размер до " + ConfigurationManager.AppSettings["PostImgWidth"].ToString() + "x" + ConfigurationManager.AppSettings["PostImgHeight"].ToString() + "; обьем до " + (Math.Round((decimal.Parse(ConfigurationManager.AppSettings["PostImgSize"])) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).";
+                }
 
-            return _postImageOptions;
+                return _postImageOptions;
+            }
         }
-    }
-    private static int _postImageSize = 0;
-    public static int PostImageSize
-    {
-        get
+        private static int _postImageSize = 0;
+        public static int PostImageSize
         {
-            if (_postImageSize == 0)
+            get
             {
-                _postImageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgSize"]);
-            }
+                if (_postImageSize == 0)
+                {
+                    _postImageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgSize"]);
+                }
 
-            return _postImageSize;
+                return _postImageSize;
+            }
         }
-    }
-    private static int _postImageHeight = 0;
-    public static int PostImageHeight
-    {
-        get
+        private static int _postImageHeight = 0;
+        public static int PostImageHeight
         {
-            if (_postImageHeight == 0)
+            get
             {
-                _postImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgHeight"]);
-            }
+                if (_postImageHeight == 0)
+                {
+                    _postImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgHeight"]);
+                }
 
-            return _postImageHeight;
+                return _postImageHeight;
+            }
         }
-    }
 
-    private static int _postImageWidth = 0;
-    public static int PostImageWidth
-    {
-        get
+        private static int _postImageWidth = 0;
+        public static int PostImageWidth
         {
-            if (_postImageWidth == 0)
+            get
             {
-                _postImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgWidth"]);
-            }
+                if (_postImageWidth == 0)
+                {
+                    _postImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["PostImgWidth"]);
+                }
 
-            return _postImageWidth;
+                return _postImageWidth;
+            }
         }
-    }
 
-    private static int _maxThumbWidth = 0;
-    public static int MaxThumbWidth
-    {
-        get
+        private static int _maxThumbWidth = 0;
+        public static int MaxThumbWidth
         {
-            if (_maxThumbWidth == 0)
+            get
             {
-                _maxThumbWidth = Convert.ToInt32(ConfigurationManager.AppSettings["MaxThumbWidth"]);
-            }
+                if (_maxThumbWidth == 0)
+                {
+                    _maxThumbWidth = Convert.ToInt32(ConfigurationManager.AppSettings["MaxThumbWidth"]);
+                }
 
-            return _maxThumbWidth;
+                return _maxThumbWidth;
+            }
         }
-    }
 
-    private static string _postImagesFolder = "";
-    public static string PostImagesFolder
-    {
-        get
+        private static string _postImagesFolder = "";
+        public static string PostImagesFolder
         {
-            if (_postImagesFolder == "")
+            get
             {
-                _postImagesFolder = ConfigurationManager.AppSettings["PostImagesFolder"].ToString();
-            }
+                if (_postImagesFolder == "")
+                {
+                    _postImagesFolder = ConfigurationManager.AppSettings["PostImagesFolder"].ToString();
+                }
 
-            return _postImagesFolder;
+                return _postImagesFolder;
+            }
         }
     }
 }

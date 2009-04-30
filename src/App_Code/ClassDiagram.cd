@@ -1,63 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Font Name="Tahoma" Size="8.25" />
-  <Class Name="User">
+  <Class Name="ITCommunity.User">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\User.cs</FileName>
-      <HashCode>AAYCAAAIASQAABAAEABAAQAgABPAAAAEAAABAAABAIE=</HashCode>
+      <HashCode>AAYCAAAIASQAABAAEADAAQAgABPAAAAEAAABAAABAIE=</HashCode>
     </TypeIdentifier>
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="User.Roles" Collapsed="true">
+      <Enum Name="ITCommunity.User.Roles">
         <TypeIdentifier>
           <NewMemberFileName>App_Code\User.cs</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
     </NestedTypes>
   </Class>
-  <Class Name="Post">
+  <Class Name="ITCommunity.Post">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Post.cs</FileName>
-      <HashCode>AgYCAAAKAsggAEAEgABGhAAAAAEQAQAIAGABCAAAgIA=</HashCode>
+      <HashCode>AgYCABAqAsgggEAEgAhGhAAAAAEQAQAIAGABCAAAgIA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="Comment">
+  <Class Name="ITCommunity.Comment">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Comment.cs</FileName>
       <HashCode>AAICAAIIAAAAAAAEgABAAARAGAEAAAAIAAABCAAAIAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="MenuItem">
+  <Class Name="ITCommunity.MenuItem">
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\MenuItem.cs</FileName>
       <HashCode>AAcCIABAAAAAAAAAAARQQARAAAWAAAAACAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="CurrentUser">
-    <Position X="0.5" Y="7" Width="1.5" />
+  <Class Name="ITCommunity.CurrentUser">
+    <Position X="0.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\CurrentUser.cs</FileName>
       <HashCode>gAABAAAAAAAAABAAAgAABAAAACABABAAAAAAAIAAIAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="VariantCaptcha">
+  <Class Name="ITCommunity.VariantCaptcha">
     <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\VariantCaptcha.cs</FileName>
       <HashCode>ABACABAAAAAAAABAAAAAAAAAAAgAgAAEAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="Picture">
+  <Class Name="ITCommunity.Picture">
     <Position X="7.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Picture.cs</FileName>
-      <HashCode>AAAAIAIgACAAAAGAAAAABAxAAIAAAAAAAQAAEABAAAA=</HashCode>
+      <HashCode>AAAAIAIgACAEAAQgAAAABAwCCIEAAAAAAQAAEABAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ITCommunity.Message">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>App_Code\Message.cs</FileName>
+      <HashCode>AAACAAAIEIgAAEAAAEBgAEAAAACEAIEIAAAJDIAIAKA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ITCommunity.Note">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>App_Code\Note.cs</FileName>
+      <HashCode>AAICAAAMAIAAAEBAAABAAAgAAAEAAAAJABABCAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ITCommunity.Rfc">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>App_Code\Rfc.cs</FileName>
+      <HashCode>AAACAAAAAIAAAEAAAEBAAAAAAAAAAAAAAAAAAIBAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
 </ClassDiagram>

@@ -8,20 +8,25 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using ITCommunity;
 
-public partial class UserProfile : System.Web.UI.UserControl
+namespace ITCommunity
 {
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class UserProfile : System.Web.UI.UserControl
     {
-        if (!IsPostBack)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            LabelUserLogin.Text = CurrentUser.User.Nick;
-            LabelUserRole.Text = CurrentUser.User.Role.ToString();
+            if (!IsPostBack)
+            {
+                LabelUserLogin.Text = CurrentUser.User.Nick;
+                LabelUserRole.Text = CurrentUser.User.Role.ToString();
+                MessagesLink.Text = "<a href='mailview.aspx' title='Мои сообщения' >Сообщения(" + Message.GetNewCount(CurrentUser.User.Id) + ")</a>";
+            }
         }
-    }
-    protected void LinkButtonExit_Click(object sender, EventArgs e)
-    {
-        CurrentUser.LogOut();
-        Response.Redirect("Default.aspx");
+        protected void LinkButtonExit_Click(object sender, EventArgs e)
+        {
+            CurrentUser.LogOut();
+            Response.Redirect("Default.aspx");
+        }
     }
 }

@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeFile="LoginForm.ascx.cs" Inherits="LoginForm" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="LoginForm.ascx.cs" Inherits="ITCommunity.LoginForm" %>
 <div id="auth_panel">
 <h2>Авторизация</h2>
     <div id="auth_data">
@@ -6,13 +6,13 @@
             <li>   
                 логин        
                 <label>
-                    <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateAuthData" />
+                    <asp:TextBox ID="TextBoxLogin" runat="server"  Width="100%" ValidationGroup="ValidateAuthData" />
                 </label>
             </li>            
             <li>     
                 пароль       
                 <label>
-                    <asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateAuthData" TextMode="Password"/>
+                    <asp:TextBox ID="TextBoxPass" runat="server" Width="100%" ValidationGroup="ValidateAuthData" TextMode="Password"/>
                 </label>
             </li>
             

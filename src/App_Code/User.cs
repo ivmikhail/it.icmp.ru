@@ -5,251 +5,255 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Data;
 using System.Collections.Generic;
+using ITCommunity;
 
-/// <summary>
-/// Пользователь хранящийся в БД
-/// </summary>
-
-public class User
+namespace ITCommunity
 {
-    private int _id;
-    private string _pass;
-    private string _nick;
-    private string _email;
-    private int _role;
-    private DateTime _cdate;
-
-    public void Update()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public enum Roles
-    {
-        Admin = 1,
-        Poster = 2,
-        User = 3
-    }
-
-    public int Id
-    {
-        get
-        {
-            return _id;
-        }
-    }
-
-    public string Pass
-    {
-        get
-        {
-            return _pass;
-        }
-        set
-        {
-            _pass = value;
-        }
-    }
-
-    public string Email
-    {
-        get
-        {
-            return _email;
-        }
-        set
-        {
-            _email = value;
-        }
-    }
-
-    public User.Roles Role
-    {
-        get
-        {
-            return (Roles) Enum.ToObject(typeof (Roles), _role);
-        }
-        set
-        {
-            _role = (int)value;
-        }
-    }
-
-    public string Nick
-    {
-        get
-        {
-            return _nick;
-        }
-        set
-        {
-            _nick = value;
-        }
-    }
-
-    public DateTime CreateDate
-    {
-        get
-        {
-            return _cdate;
-        }
-        set
-        {
-            _cdate = value;
-        }
-    }
     /// <summary>
-    /// Забанен ли данный пользователь по login'у
+    /// Пользователь хранящийся в БД
     /// </summary>
-    public bool IsBanned
+
+    public class User
     {
-        get
+        private int _id;
+        private string _pass;
+        private string _nick;
+        private string _email;
+        private int _role;
+        private DateTime _cdate;
+
+        public void Update()
         {
             throw new System.NotImplementedException();
         }
-        set
+
+        public enum Roles
         {
-            throw new System.NotImplementedException();
-        }
-    }
-
-    public User(int id, string nick, string pass, DateTime cdate, User.Roles role, string email)
-    {
-        _id    = id;
-        _nick  = nick;
-        _pass  = pass;
-        _cdate = cdate;
-        _role  = (int)role;
-        _email = email;
-    }
-
-    public User() 
-    {
-        _id = -1;
-        _nick = "anonymous";
-        _pass = "";
-        _cdate = DateTime.Now;
-        _role = 3;
-        _email = "bill@microsoft.com";
-    }
-
-    /// <summary>
-    /// Получаем пользователя из базы по логину
-    /// </summary>
-    /// <param name="login">login он же nick</param>
-    public static User GetUserByLogin(string login)
-    {
-        return GetUserFromRow(Database.UserGetByLogin(login));
-    }
-
-    /// <summary>
-    /// Получаем пользователя по идентификатору
-    /// </summary>
-    /// <param name="userId">Идентификатор</param>
-    public static User GetById(int userId)
-    {
-        return GetUserFromRow(Database.UserGetById(userId));
-    }
-
-    /// <summary>
-    /// Получаем пользователей по ролям
-    /// </summary>
-    /// <param name="role">Роль получаемых пользователей</param>
-    public static List<User> GetByRole(User.Roles role)
-    {
-        return GetUsersFromTable(Database.UserGetByRole((int)role));
-    }
-
-    /// <summary>
-    /// Получаем последних зарегистрировашихся
-    /// </summary>
-    /// <param name="count">Количество нужных пользователей</param>
-    public static List<User> GetLastRegistered(int count)
-    {
-        return GetUsersFromTable(Database.UserGetLastRegistered(count));
-
-    }
-
-    /// <summary>
-    /// Получаем самых активных постеров
-    /// </summary>
-    /// <param name="count">Кол-во нужных пользователей</param>
-    public static List<KeyValuePair<string, string>> GetTopPosters(int count)
-    {
-        List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
-        DataTable dt = Database.UserGetTopPosters(count);
-        for (int i = 0; i < dt.Rows.Count; i++)
-        {
-            string username = dt.Rows[i]["usernick"].ToString();
-            string text = dt.Rows[i]["postcount"].ToString();
-            top.Add(new KeyValuePair<string, string>(username, text));
+            Admin = 1,
+            Poster = 2,
+            User = 3
         }
 
-        return top;
-    }
-
-    /// <summary>
-    /// Получаем статистику по пользователям(кол-во пользователей, админов, постеров)
-    /// </summary>
-    public static List<KeyValuePair<string, string>> GetStats()
-    {
-        //TODO:Закешировать
-        List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
-        DataTable dt = Database.UserGetStat();
-        for (int i = 0; i < dt.Rows.Count; i++)
+        public int Id
         {
-            string key = dt.Rows[i]["key"].ToString();
-            string value = dt.Rows[i]["value"].ToString();
-            top.Add(new KeyValuePair<string, string>(key, value));
+            get
+            {
+                return _id;
+            }
         }
 
-        return top;
-    }
-
-    /// <summary>
-    /// Удаляем аккаунт
-    /// </summary>
-    /// <param name="userId">Идентификатор пользователя</param>
-    public static void Delete(int userId)
-    {
-        Database.UserDel(userId);
-    }
-
-    /// <summary>
-    /// Добавляем аккаунт в бд
-    /// </summary>
-    /// <param name="User">Пользователь которого хотим добавить в базу</param>
-    public static User Add(User user)
-    {
-        DataRow dr = Database.UserAdd(user.Nick, user.Pass, (byte)user.Role, user.Email);
-        return GetUserFromRow(dr);
-    }
-
-    private static List<User> GetUsersFromTable(DataTable dt)
-    {
-        List<User> users = new List<User>();
-        for (int i = 0; i < dt.Rows.Count; i++)
+        public string Pass
         {
-            users.Add(GetUserFromRow(dt.Rows[i]));
+            get
+            {
+                return _pass;
+            }
+            set
+            {
+                _pass = value;
+            }
         }
-        return users;
-    }
 
-    private static User GetUserFromRow(DataRow dr)
-    {
-        User user;
-        if (dr == null)
+        public string Email
         {
-            user = new User();
-        } else
-        {
-            user = new User(Convert.ToInt32(dr["id"]),
-                                 Convert.ToString(dr["nick"]),
-                                 Convert.ToString(dr["pass"]),
-                                 Convert.ToDateTime(dr["cdate"]),
-                                 (User.Roles)Convert.ToInt16(dr["role"]),
-                                 Convert.ToString(dr["email"]));
+            get
+            {
+                return _email;
+            }
+            set
+            {
+                _email = value;
+            }
         }
-        return user;
+
+        public User.Roles Role
+        {
+            get
+            {
+                return (Roles)Enum.ToObject(typeof(Roles), _role);
+            }
+            set
+            {
+                _role = (int)value;
+            }
+        }
+
+        public string Nick
+        {
+            get
+            {
+                return _nick;
+            }
+            set
+            {
+                _nick = value;
+            }
+        }
+
+        public DateTime CreateDate
+        {
+            get
+            {
+                return _cdate;
+            }
+            set
+            {
+                _cdate = value;
+            }
+        }
+        /// <summary>
+        /// Забанен ли данный пользователь по login'у
+        /// </summary>
+        public bool IsBanned
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        public User(int id, string nick, string pass, DateTime cdate, User.Roles role, string email)
+        {
+            _id = id;
+            _nick = nick;
+            _pass = pass;
+            _cdate = cdate;
+            _role = (int)role;
+            _email = email;
+        }
+
+        public User()
+        {
+            _id = -1;
+            _nick = "anonymous";
+            _pass = "";
+            _cdate = DateTime.Now;
+            _role = 3;
+            _email = "bill@microsoft.com";
+        }
+
+        /// <summary>
+        /// Получаем пользователя из базы по логину
+        /// </summary>
+        /// <param name="login">login он же nick</param>
+        public static User GetByLogin(string login)
+        {
+            return GetUserFromRow(Database.UserGetByLogin(login));
+        }
+
+        /// <summary>
+        /// Получаем пользователя по идентификатору
+        /// </summary>
+        /// <param name="userId">Идентификатор</param>
+        public static User GetById(int userId)
+        {
+            return GetUserFromRow(Database.UserGetById(userId));
+        }
+
+        /// <summary>
+        /// Получаем пользователей по ролям
+        /// </summary>
+        /// <param name="role">Роль получаемых пользователей</param>
+        public static List<User> GetByRole(User.Roles role)
+        {
+            return GetUsersFromTable(Database.UserGetByRole((int)role));
+        }
+
+        /// <summary>
+        /// Получаем последних зарегистрировашихся
+        /// </summary>
+        /// <param name="count">Количество нужных пользователей</param>
+        public static List<User> GetLastRegistered(int count)
+        {
+            return GetUsersFromTable(Database.UserGetLastRegistered(count));
+
+        }
+
+        /// <summary>
+        /// Получаем самых активных постеров
+        /// </summary>
+        /// <param name="count">Кол-во нужных пользователей</param>
+        public static List<KeyValuePair<string, string>> GetTopPosters(int count)
+        {
+            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+            DataTable dt = Database.UserGetTopPosters(count);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                string username = dt.Rows[i]["usernick"].ToString();
+                string text = dt.Rows[i]["postcount"].ToString();
+                top.Add(new KeyValuePair<string, string>(username, text));
+            }
+
+            return top;
+        }
+
+        /// <summary>
+        /// Получаем статистику по пользователям(кол-во пользователей, админов, постеров)
+        /// </summary>
+        public static List<KeyValuePair<string, string>> GetStats()
+        {
+            //TODO:Закешировать
+            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+            DataTable dt = Database.UserGetStat();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                string key = dt.Rows[i]["key"].ToString();
+                string value = dt.Rows[i]["value"].ToString();
+                top.Add(new KeyValuePair<string, string>(key, value));
+            }
+
+            return top;
+        }
+
+        /// <summary>
+        /// Удаляем аккаунт
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        public static void Delete(int userId)
+        {
+            Database.UserDel(userId);
+        }
+
+        /// <summary>
+        /// Добавляем аккаунт в бд
+        /// </summary>
+        /// <param name="User">Пользователь которого хотим добавить в базу</param>
+        public static User Add(User user)
+        {
+            DataRow dr = Database.UserAdd(user.Nick, user.Pass, (byte)user.Role, user.Email);
+            return GetUserFromRow(dr);
+        }
+
+        private static List<User> GetUsersFromTable(DataTable dt)
+        {
+            List<User> users = new List<User>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                users.Add(GetUserFromRow(dt.Rows[i]));
+            }
+            return users;
+        }
+
+        private static User GetUserFromRow(DataRow dr)
+        {
+            User user;
+            if (dr == null)
+            {
+                user = new User();
+            } else
+            {
+                user = new User(Convert.ToInt32(dr["id"]),
+                                     Convert.ToString(dr["nick"]),
+                                     Convert.ToString(dr["pass"]),
+                                     Convert.ToDateTime(dr["cdate"]),
+                                     (User.Roles)Convert.ToInt16(dr["role"]),
+                                     Convert.ToString(dr["email"]));
+            }
+            return user;
+        }
     }
 }

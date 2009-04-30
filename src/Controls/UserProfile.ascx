@@ -1,19 +1,22 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserProfile.ascx.cs" Inherits="UserProfile" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserProfile.ascx.cs" Inherits="ITCommunity.UserProfile" %>
 <div id="user_profile">
 <h2>Aloha <asp:Label ID="LabelUserLogin" runat="server" Text="usernick" />!</h2>
     <ul class="list">
         <li>
-            UserRole - <asp:Label ID="LabelUserRole" runat="server" Text="userrole" />
+            UserRole - <asp:Literal ID="LabelUserRole" runat="server" Text="userrole" />
         </li>        
-        <li>
-            <asp:LinkButton ID="LinkButtonNotepad" runat="server">Блокнот</asp:LinkButton> 
+        <li>            
+            <a href="notepad.aspx" title="Посмотреть записи">Блокнот</a>
         </li>
         <li>
-            <asp:LinkButton ID="LinkButtonMessages" runat="server">Сообщения</asp:LinkButton> 
+            <asp:Literal ID="MessagesLink" runat="server" />
         </li>
         <li>
-            <asp:LinkButton ID="LinkButtonFavorite" runat="server">Избранное</asp:LinkButton> 
-        </li>        
+            <a href="favorites.aspx" title="Статьи которые я отметил">Избранное</a>
+        </li>       
+        <li>
+            <a href="addpost.aspx" title="Написать статью">Добавить пост</a>
+        </li>  
         <li>
             <asp:LinkButton ID="LinkButtonExit" runat="server" OnClick="LinkButtonExit_Click">Выйти</asp:LinkButton>        
         </li>
