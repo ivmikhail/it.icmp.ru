@@ -8,50 +8,54 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using ITCommunity;
 
-public partial class LoginForm : System.Web.UI.UserControl
+namespace ITCommunity
 {
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class LoginForm : System.Web.UI.UserControl
     {
-
-    }
-    bool UserDataIsValid()
-    {
-        bool status = false;
-
-        RequiredLogin.Validate();
-        RequiredPass.Validate();
-
-        if (RequiredLogin.IsValid && RequiredPass.IsValid)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            status = true;
+
         }
-        return status;
-    }
+        bool UserDataIsValid()
+        {
+            bool status = false;
 
-    //TODO: υμμμ
-    protected void LogInButton_Click(object sender, EventArgs e)
-    {
-        string login = TextBoxLogin.Text;
-        string pass = TextBoxPass.Text;
-        bool remember = CheckBoxIsRemember.Checked;
-        if (!UserDataIsValid())
-        {
-            return;
+            RequiredLogin.Validate();
+            RequiredPass.Validate();
+
+            if (RequiredLogin.IsValid && RequiredPass.IsValid)
+            {
+                status = true;
+            }
+            return status;
         }
-        User user = CurrentUser.LogIn(login, pass, remember);
-        if (user.Id > 0)
+
+        //TODO: υμμμ
+        protected void LogInButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
-            
-            //Response.Redirect("Default.aspx");
-            //FormsAuthentication.RedirectFromLoginPage(login, remember);
-            //System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
-            //id.Ticket.UserData = Convert.ToString((int)user.Role);
-            //FormsAuthentication.RenewTicketIfOld(new FormsAuthenticationTicket(1, user.Nick, DateTime.Now, ticketExpiration, remember, Convert.ToString((int)user.Role)));
-        } else
-        {
-            WrongAccount.IsValid = false;
+            string login = TextBoxLogin.Text;
+            string pass = TextBoxPass.Text;
+            bool remember = CheckBoxIsRemember.Checked;
+            if (!UserDataIsValid())
+            {
+                return;
+            }
+            User user = CurrentUser.LogIn(login, pass, remember);
+            if (user.Id > 0)
+            {
+                Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
+
+                //Response.Redirect("Default.aspx");
+                //FormsAuthentication.RedirectFromLoginPage(login, remember);
+                //System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
+                //id.Ticket.UserData = Convert.ToString((int)user.Role);
+                //FormsAuthentication.RenewTicketIfOld(new FormsAuthenticationTicket(1, user.Nick, DateTime.Now, ticketExpiration, remember, Convert.ToString((int)user.Role)));
+            } else
+            {
+                WrongAccount.IsValid = false;
+            }
         }
     }
 }

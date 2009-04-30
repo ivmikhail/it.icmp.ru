@@ -8,18 +8,21 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using ITCommunity;
 
-public partial class Register : System.Web.UI.Page
+namespace ITCommunity
 {
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class Register : System.Web.UI.Page
     {
-        if (CurrentUser.isAuth)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            RegUser.Visible = false;
-            AboutRegister.Text = "Вы уже зарегистрированы.";
-        } else
-        {
-            AboutRegister.Text = @"<h2>При регистрации Вы получите доступ к следующим разделам сайта:</h2>
+            if (CurrentUser.isAuth)
+            {
+                RegUser.Visible = false;
+                AboutRegister.Text = "Вы уже зарегистрированы.";
+            } else
+            {
+                AboutRegister.Text = @"<h2>При регистрации Вы получите доступ к следующим разделам сайта:</h2>
                                 <ul type='square'>
                                     <li>Электронные книги</li>
                                     <li>Видео курсы</li>
@@ -29,7 +32,8 @@ public partial class Register : System.Web.UI.Page
                                     <li>Оставлять комменты к новостям</li>
                                     <li>Оставлять отзывы</li>
                                 <ul>";
-        }
+            }
 
+        }
     }
 }

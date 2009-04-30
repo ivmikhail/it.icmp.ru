@@ -8,76 +8,81 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using ITCommunity;
 
-public partial class RegUserForm : System.Web.UI.UserControl
+namespace ITCommunity
 {
-    protected void Page_Load(object sender, EventArgs e)
+
+    public partial class RegUserForm : System.Web.UI.UserControl
     {
-    }
-    protected void RegisterButton_Click(object sender, EventArgs e)
-    {
-        if (!AllIsValid())
+        protected void Page_Load(object sender, EventArgs e)
         {
-            return;
+        }
+        protected void RegisterButton_Click(object sender, EventArgs e)
+        {
+            if (!AllIsValid())
+            {
+                return;
+            }
+
+            string login = TextBoxLogin.Text.Trim();
+            string pass = TextBoxPass.Text;
+            string email = TextBoxEmail.Text.Trim().ToLower();
+
+            User user = CurrentUser.Register(login, pass, email);
+
+            if (user.Id > 0)
+            {
+                CurrentUser.LogIn(login, pass, true);
+                FormsAuthentication.RedirectFromLoginPage(login, true);
+            } else
+            {
+                RegisterFailed.IsValid = false;
+            }
         }
 
-        string login = TextBoxLogin.Text.Trim();
-        string pass = TextBoxPass.Text;
-        string email = TextBoxEmail.Text.Trim().ToLower();
-
-        User user = CurrentUser.Register(login, pass, email);
-        
-        if (user.Id > 0)
+        bool AllIsValid()
         {
-            CurrentUser.LogIn(login, pass, true);
-            FormsAuthentication.RedirectFromLoginPage(login, true);
-        } else
-        {
-            RegisterFailed.IsValid = false;
-        }
-    }
-
-    bool AllIsValid()
-    {
-        if (!RegIsValid())
-        {
-            return false;
-        }
-        if (TextBoxPass.Text != TextBoxPassConf.Text)
-        {
-            ConfirmPassword.IsValid = false;
-            return false;
-        }
-        return LoginIsValid();
-    }
-
-    bool RegIsValid()
-    {
-        RequiredLogin.Validate();
-        LoginValidator.Validate();
-        RequiredEmail.Validate();
-        EmailValidator.Validate();
-        RequiredPass.Validate();
-        ConfirmPassword.Validate();
-
-        return  RequiredLogin.IsValid  &&
-                LoginValidator.IsValid &&
-                RequiredEmail.IsValid  &&
-                EmailValidator.IsValid &&
-                ConfirmPassword.IsValid;
-    }
-
-    bool LoginIsValid()
-    {
-        bool status = true;
-
-        string login = TextBoxLogin.Text.Trim();
-        User user = User.GetUserByLogin(login);
-        if (user.Id > 0)
-        {
-            status = AccountExist.IsValid = false;
+            if (!RegIsValid())
+            {
+                return false;
+            }
+            if (TextBoxPass.Text != TextBoxPassConf.Text)
+            {
+                ConfirmPassword.IsValid = false;
+                return false;
+            }
+            return LoginIsValid();
         }
 
-        return status;
+        bool RegIsValid()
+        {
+            RequiredLogin.Validate();
+            LoginValidator.Validate();
+            RequiredEmail.Validate();
+            EmailValidator.Validate();
+            RequiredPass.Validate();
+            ConfirmPassword.Validate();
+
+            return RequiredLogin.IsValid &&
+                    LoginValidator.IsValid &&
+                    RequiredEmail.IsValid &&
+                    EmailValidator.IsValid &&
+                    ConfirmPassword.IsValid;
+        }
+
+        bool LoginIsValid()
+        {
+            bool status = true;
+
+            string login = TextBoxLogin.Text.Trim();
+            User user = User.GetByLogin(login);
+            if (user.Id > 0)
+            {
+                status = AccountExist.IsValid = false;
+            }
+
+            return status;
+        }
     }
 }

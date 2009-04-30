@@ -118,7 +118,7 @@ div#dynamic-content #comments
 
 .error-message 
 {
-	color:Red;
+	color:red;
 }
 .note
 {
@@ -128,7 +128,6 @@ div#dynamic-content #comments
 {
 	list-style-type:none;
 }
-
 .pager li{
 	border:0;
 	margin:0;
