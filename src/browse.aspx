@@ -14,7 +14,7 @@
         <ItemTemplate>
           <tr>
             <td>
-              1
+              <%# Eval("Name") %>
             </td>
             <td>
               
@@ -24,7 +24,7 @@
         <AlternatingItemTemplate>
           <tr>
             <td>
-              
+              <%# Eval("Name") %>
             </td>
             <td>
               
