@@ -82,7 +82,7 @@
         <asp:CustomValidator ID="AccountExist" 
                              runat="server" 
                              Display="None" 
-                             ErrorMessage="Пользователь с таким логином уже зарегистрирован." 
+                             ErrorMessage="Пользователь с таким логином/email'ом уже зарегистрирован." 
                              ValidationGroup="ValidateRegData" />
                              
         <asp:CustomValidator ID="RegisterFailed" 

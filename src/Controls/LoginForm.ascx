@@ -24,7 +24,10 @@
             </li>
             <li>            
                 <asp:LinkButton ID="LogInButton" runat="server" OnClick="LogInButton_Click" ValidationGroup="ValidateAuthData">Вход</asp:LinkButton>
-                <asp:HyperLink  ID="RegisterButton" runat="server" NavigateUrl="~/Register.aspx">Регистрация</asp:HyperLink>
+                <a href="register.aspx" title="Присоединиться к этому чудесному сообществу">Регистрация</a>              
+            </li>
+            <li>
+                <a href="recovery.aspx" title="Жми сюда если забыл пароль">Я забыл пароль</a>
             </li>
         </ul>        
      </div>

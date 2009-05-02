@@ -23,7 +23,7 @@
     <form id="MainForm" runat="server">
         <div id="container">
             <div id="header">
-                <a href="Default.aspx"><img src="media/img/logo.jpg" alt="Ykt It Community" /></a>
+                <a href="default.aspx"><img src="media/img/logo.jpg" alt="Ykt It Community" /></a>
             </div>
             <div id="wrapper">
                 <div id="dynamic-content">   

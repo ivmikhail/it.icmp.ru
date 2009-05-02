@@ -15,8 +15,7 @@ namespace ITCommunity
             if (ConfigurationManager.ConnectionStrings[Environment.MachineName] != null)
             {
                 connectionString = ConfigurationManager.ConnectionStrings[Environment.MachineName].ConnectionString;
-            }
-            else
+            } else
             {
                 connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             }
@@ -87,8 +86,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -168,8 +166,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -215,8 +212,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -336,8 +332,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -403,7 +398,8 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort, String name, Byte new_window) {
+        public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort, String name, Byte new_window)
+        {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -426,7 +422,8 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++) {
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -435,13 +432,15 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read()) {
+            if (reader.Read())
+            {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else {
+            } else
+            {
                 result = null;
             }
             reader.Close();
@@ -489,8 +488,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -532,7 +530,8 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort, String name, Byte new_window) {
+        public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort, String name, Byte new_window)
+        {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsUpdate", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -596,8 +595,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -658,8 +656,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -815,8 +812,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -908,8 +904,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -961,8 +956,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -1140,8 +1134,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -1277,6 +1270,95 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
+        public static DataRow RecoveryAdd(String identifier, Int32 user_id)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryAdd", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters["@identifier"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@identifier"].Value = identifier;
+            cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@user_id"].Value = user_id;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            DataRow result;
+            if (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                result = row;
+            } else
+            {
+                result = null;
+            }
+            reader.Close();
+            connection.Close();
+            return result;
+        }
+        public static int RecoveryDel(String identifier)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryDel", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters["@identifier"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@identifier"].Value = identifier; int result = cmd.ExecuteNonQuery();
+            connection.Close();
+            return result;
+        }
+        public static DataRow RecoveryGetByIdentifier(String identifier)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryGetByIdentifier", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters["@identifier"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@identifier"].Value = identifier;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            DataRow result;
+            if (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                result = row;
+            } else
+            {
+                result = null;
+            }
+            reader.Close();
+            connection.Close();
+            return result;
+        }
         public static DataTable RfcGetByNum(String num)
         {
             SqlConnection connection = OpenConnection();
@@ -1349,8 +1431,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -1367,6 +1448,43 @@ namespace ITCommunity
             cmd.Parameters.Add("@userId", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@userId"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@userId"].Value = userId; int result = cmd.ExecuteNonQuery();
+            connection.Close();
+            return result;
+        }
+        public static DataRow UserGetByEmail(String email)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByEmail", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@email", System.Data.SqlDbType.VarChar, 512);
+            cmd.Parameters["@email"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@email"].Value = email;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            DataRow result;
+            if (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                result = row;
+            } else
+            {
+                result = null;
+            }
+            reader.Close();
             connection.Close();
             return result;
         }
@@ -1399,8 +1517,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
@@ -1437,8 +1554,7 @@ namespace ITCommunity
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
+            } else
             {
                 result = null;
             }
