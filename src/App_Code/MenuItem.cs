@@ -23,6 +23,7 @@ namespace ITCommunity
         private string _url;
         private int _sort;
         private string _name;
+        private byte _newWindow; // не 0 открывать ссылку в новом окне
 
         public int Id
         {
@@ -88,19 +89,28 @@ namespace ITCommunity
                 _sort = value;
             }
         }
+        public bool NewWIndow {
+            get {
+                return _newWindow != 0;
+            }
+            set {
+                _newWindow = value ? (byte)1 : (byte)0;
+            }
+        }
 
         public void Update()
         {
-            Database.MenuItemsUpdate(this._id, this._parentId, this._url, this._sort, this._name);
+            Database.MenuItemsUpdate(this._id, this._parentId, this._url, this._sort, this._name, this._newWindow);
         }
 
-        public MenuItem(int id, int parentId, string url, int sort, string name)
+        public MenuItem(int id, int parentId, string url, int sort, string name, byte isInNewWindow)
         {
             _id = id;
             _parentId = parentId;
             _url = url;
             _sort = sort;
             _name = name;
+            _newWindow = isInNewWindow;
         }
 
         public MenuItem()
@@ -144,7 +154,7 @@ namespace ITCommunity
         /// <param name="MenuItem">ƒобавл€емый пункт</param>
         public static MenuItem Add(MenuItem item)
         {
-            return GetItemFromRow(Database.MenuItemsAdd(item.Parent.Id, item.Url, item.Sort, item.Name));
+            return GetItemFromRow(Database.MenuItemsAdd(item.Parent.Id, item.Url, item.Sort, item.Name, item._newWindow));
         }
 
         private static List<MenuItem> GetItemsFromTable(DataTable dt)
@@ -169,7 +179,8 @@ namespace ITCommunity
                                      Convert.ToInt32(dr["parent_id"]),
                                      Convert.ToString(dr["url"]),
                                      Convert.ToInt32(dr["sort"]),
-                                     Convert.ToString(dr["name"]));
+                                     Convert.ToString(dr["name"]),
+                                     Convert.ToByte(dr["new_window"]));
             }
             return item;
         }

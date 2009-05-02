@@ -95,6 +95,14 @@ namespace ITCommunity
                 RepeaterSubMenu.DataBind();
             }
         }
+        protected String isBlank(object dataItem) {
+            bool isInNew = (bool)DataBinder.Eval(dataItem, "newWindow");
+            if(isInNew) {
+                return "_blank";
+            } else {
+                return "_self";
+            }
+        }
     }
 
 }

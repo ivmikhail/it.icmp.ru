@@ -64,7 +64,10 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <li>
-                                        <a href='<%# Eval("url")%>' target="_blank"><%# Eval("name")%></a> 
+                                        <asp:HyperLink ID="hplLink" runat="Server" Text='<%# Eval("name")%>' NavigateUrl='<%# Eval("url")%>'
+                                            Target="<%# isBlank(Container.DataItem)%>"
+                                         />
+                                        
                                     </li>
                                 </ItemTemplate>
                                 <FooterTemplate>
