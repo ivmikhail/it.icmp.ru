@@ -36,7 +36,7 @@
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\MenuItem.cs</FileName>
-      <HashCode>AAcCIABAAAAAAAAAAARQQARAAAWAAAAACAAAAAAAAIA=</HashCode>
+      <HashCode>AAdCIABAAAAAAAAAAARQQARQAAWAAAAACAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="ITCommunity.CurrentUser">
@@ -78,7 +78,14 @@
     <Position X="11" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Rfc.cs</FileName>
-      <HashCode>AAACAAAAAIAAAEAAAEBAAAAAAAAAAAAAAAAAAIBAAAA=</HashCode>
+      <HashCode>AAACAAAAAIAAAEAAAEBAAAAIAAAABAAAAAAAAIBgAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ITCommunity.RecoveryPass">
+    <Position X="13.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>App_Code\RecoveryPass.cs</FileName>
+      <HashCode>AAADAAAAAAgAAAAAAAAAAAAAAAAAAAAQEAAAQAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
 </ClassDiagram>

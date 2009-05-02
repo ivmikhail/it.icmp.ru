@@ -33,7 +33,8 @@ namespace ITCommunity
 
         private string GetFavoritesAction()
         {
-            return Request.QueryString["a"];
+            string res = Request.QueryString["a"];
+            return res == null ? "" : res; 
         }
 
         private int GetFavoritesActionPost()

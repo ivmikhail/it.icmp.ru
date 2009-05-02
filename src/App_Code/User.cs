@@ -24,7 +24,7 @@ namespace ITCommunity
 
         public void Update()
         {
-            throw new System.NotImplementedException();
+            Database.UserUpdate(this._id, this._pass, (byte)this._role, this._email);
         }
 
         public enum Roles
@@ -143,6 +143,15 @@ namespace ITCommunity
         public static User GetByLogin(string login)
         {
             return GetUserFromRow(Database.UserGetByLogin(login));
+        }
+
+        /// <summary>
+        /// Получаем пользователя из базы по емейлу(емейлы уникальны)
+        /// </summary>
+        /// <param name="email">электропочта</param>
+        public static User GetByEmail(string email)
+        {
+            return GetUserFromRow(Database.UserGetByEmail(email.Trim()));
         }
 
         /// <summary>

@@ -69,7 +69,7 @@ namespace ITCommunity
             return user;
         }
 
-        private static string HashPass(string pass, string login)
+        public static string HashPass(string pass, string login)
         {
             string preparedPass = login + pass;
             string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass.ToUpper(), "SHA1");

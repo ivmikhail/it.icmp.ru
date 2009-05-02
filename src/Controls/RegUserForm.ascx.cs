@@ -41,7 +41,7 @@ namespace ITCommunity
             }
         }
 
-        bool AllIsValid()
+        private bool AllIsValid()
         {
             if (!RegIsValid())
             {
@@ -52,10 +52,10 @@ namespace ITCommunity
                 ConfirmPassword.IsValid = false;
                 return false;
             }
-            return LoginIsValid();
+            return LoginIsValid() && EmailIsValid();
         }
 
-        bool RegIsValid()
+        private bool RegIsValid()
         {
             RequiredLogin.Validate();
             LoginValidator.Validate();
@@ -71,12 +71,25 @@ namespace ITCommunity
                     ConfirmPassword.IsValid;
         }
 
-        bool LoginIsValid()
+        private bool LoginIsValid()
         {
             bool status = true;
 
             string login = TextBoxLogin.Text.Trim();
             User user = User.GetByLogin(login);
+            if (user.Id > 0)
+            {
+                status = AccountExist.IsValid = false;
+            }
+
+            return status;
+        }
+        private bool EmailIsValid()
+        {
+            bool status = true;
+
+            string email = TextBoxEmail.Text.Trim();
+            User user = User.GetByEmail(email);
             if (user.Id > 0)
             {
                 status = AccountExist.IsValid = false;
