@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using ITCommunity;
+using System.IO;
 
 namespace ITCommunity
 {
@@ -236,6 +237,22 @@ namespace ITCommunity
                 }
 
                 return _postImagesFolder;
+            }
+        }
+        private static string _filesFolder = "";
+        public static string FilesFolder {
+            get {
+                if (_filesFolder == "") {
+                    _filesFolder = ConfigurationManager.AppSettings["FilesFolder"].ToString();
+                    if(!Directory.Exists(_filesFolder)) {
+                        throw new Exception("Folder in Web.config FilesFolder not exist");
+                    }
+                    if(!_filesFolder.EndsWith("\\")) {
+                        _filesFolder += "\\";
+                    }
+                }
+
+                return _filesFolder;
             }
         }
     }

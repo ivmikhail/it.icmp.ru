@@ -403,8 +403,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort, String name)
-        {
+        public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort, String name, Byte new_window) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -421,11 +420,13 @@ namespace ITCommunity
             cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar, 32);
             cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@name"].Value = name;
+            cmd.Parameters.Add("@new_window", System.Data.SqlDbType.TinyInt, 0);
+            cmd.Parameters["@new_window"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@new_window"].Value = new_window;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -434,16 +435,13 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            }
-            else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
@@ -534,8 +532,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort, String name)
-        {
+        public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort, String name, Byte new_window) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsUpdate", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -554,7 +551,10 @@ namespace ITCommunity
             cmd.Parameters["@sort"].Value = sort;
             cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar, 32);
             cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@name"].Value = name; int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@name"].Value = name;
+            cmd.Parameters.Add("@new_window", System.Data.SqlDbType.TinyInt, 0);
+            cmd.Parameters["@new_window"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@new_window"].Value = new_window; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }

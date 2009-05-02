@@ -118,6 +118,7 @@ namespace ITCommunity
                 newpost.Author = CurrentUser.User;
                 newpost.Attached = CheckBoxAttached.Checked;
                 Post current = Post.Add(newpost);
+                Response.Redirect("default.aspx");
 
                 //Picture.FixImages(current);
             } else
