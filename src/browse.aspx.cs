@@ -20,10 +20,7 @@ public partial class browse : System.Web.UI.Page
         if(!dirOk(dir)) {
             return;
         }
-        String[] files = Directory.GetDirectories(dir);
-        DirectoryInfo di = new DirectoryInfo(dir);
-        FileInfo[] fi = di.GetFiles();
-        rptFiles.DataSource = files;
+        rptFiles.DataSource = BrowseItem.GetList(dir);
         rptFiles.DataBind();
     }
 
