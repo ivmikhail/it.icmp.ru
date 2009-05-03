@@ -23,7 +23,7 @@ namespace ITCommunity
 
         private void LoadRfc(string query)
         {
-            if( Regex.IsMatch(query, "[0-9]+"))
+            if (Regex.IsMatch(query, "[0-9]+"))
             {
                 RepeaterRfc.DataSource = Rfc.GetByNum(query);
             } else
@@ -38,5 +38,21 @@ namespace ITCommunity
             string query = TextBoxSearch.Text;
             LoadRfc(query);
         }
-}
+
+        public static string FormURL(string number)
+        {
+            if(number.StartsWith("000"))
+            {
+                number = number.Substring(3);
+            } else if (number.StartsWith("00"))
+            {
+                number = number.Substring(2);
+            } else if (number.StartsWith("0")) 
+            {
+                number = number.Substring(1);
+            }
+
+            return "/" + Global.RfcFolder + "/rfc" + number + ".txt";
+        }
+    }
 }

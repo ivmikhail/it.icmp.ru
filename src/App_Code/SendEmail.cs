@@ -33,7 +33,7 @@ namespace ITCommunity
                                "Ссылка активна в течении 3-4 дней." + "\n\n" + 
                                "______ \n" +
                                "С уважением, команда поддержки сайта http://it.icmp.ru";
-                SmtpClient client = new SmtpClient();
+                SmtpClient client = new SmtpClient(); // используются параметры из web.config
                 client.EnableSsl = true;
                 client.Send(message);
             } catch (Exception ex)
