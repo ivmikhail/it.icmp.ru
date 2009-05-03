@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="rfc.aspx.cs" Inherits="ITCommunity.RfcPage" Title="Ykt IT Community" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="rfc.aspx.cs" Inherits="ITCommunity.RfcPage" Title="Ykt IT Community" EnableViewState="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
 <div id="rfc-search">
@@ -14,8 +14,10 @@
         <ItemTemplate>
             <li>
                 <div class="rfc"> 
-                    <h2><%# Eval("number")%></h2>
-                    <div>
+                     <h2> 
+                        <a href='<%# FormURL(Eval("number").ToString())%>' title="Посмотреть полный текст"><%# Eval("number")%></a>
+                    </h2>
+                    <div class="rfc-title">
                         <%# Eval("title")%>
                     </div>
                 <div>

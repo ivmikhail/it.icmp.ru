@@ -48,6 +48,18 @@ namespace ITCommunity
                 return _connectionString;
             }
         }
+        private static string _rfcFolder = "";
+        public static string RfcFolder
+        {
+            get
+            {
+                if (_rfcFolder == "")
+                {
+                    _rfcFolder = ConfigurationManager.AppSettings["RfcFolder"];
+                }
+                return _rfcFolder;
+            }
+        }
         private static int _messageCount = -1;
         public static int MaxMessageCount
         {

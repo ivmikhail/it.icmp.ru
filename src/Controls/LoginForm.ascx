@@ -6,13 +6,13 @@
             <li>   
                 логин        
                 <label>
-                    <asp:TextBox ID="TextBoxLogin" runat="server"  Width="100%" ValidationGroup="ValidateAuthData" />
+                    <asp:TextBox ID="TextBoxLogin" runat="server"  Width="50%" ValidationGroup="ValidateAuthData" />
                 </label>
             </li>            
             <li>     
                 пароль       
                 <label>
-                    <asp:TextBox ID="TextBoxPass" runat="server" Width="100%" ValidationGroup="ValidateAuthData" TextMode="Password"/>
+                    <asp:TextBox ID="TextBoxPass" runat="server" Width="50%" ValidationGroup="ValidateAuthData" TextMode="Password"/>
                 </label>
             </li>
             

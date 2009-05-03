@@ -68,8 +68,7 @@ namespace ITCommunity
 
         public static List<Rfc> Search(string query)
         {
-            List<Rfc> finded = new List<Rfc>();
-            return finded;
+            return GetRfcFromTable(Database.RfcSearchByTitle(query));
         }
         public static List<Rfc> GetByNum(string number)
         {

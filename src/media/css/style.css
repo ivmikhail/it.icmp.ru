@@ -116,6 +116,16 @@ div#dynamic-content #comments
 	margin: 20px;
 }
 
+div#dynamic-content .rfc
+{
+	padding:10px;
+}
+
+div#dynamic-content .rfc-title
+{
+	width:90%;
+}
+
 .error-message 
 {
 	color:red;
