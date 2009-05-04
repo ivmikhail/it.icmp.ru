@@ -5,22 +5,15 @@
         <ul class="list">
             <li>   
                 логин        
-                <label>
-                    <asp:TextBox ID="TextBoxLogin" runat="server"  Width="50%" ValidationGroup="ValidateAuthData" />
-                </label>
+                <asp:TextBox ID="TextBoxLogin" runat="server"  CssClass="short-input" ValidationGroup="ValidateAuthData" />
             </li>            
             <li>     
                 пароль       
-                <label>
-                    <asp:TextBox ID="TextBoxPass" runat="server" Width="50%" ValidationGroup="ValidateAuthData" TextMode="Password"/>
-                </label>
+                <asp:TextBox ID="TextBoxPass" runat="server" CssClass="short-input" ValidationGroup="ValidateAuthData" TextMode="Password"/>
             </li>
             
             <li>   
-                запомнить         
-                <label>
-                    <asp:CheckBox ID="CheckBoxIsRemember" runat="server" />     
-                </label>
+                запомнить <asp:CheckBox ID="CheckBoxIsRemember" runat="server" />    
             </li>
             <li>            
                 <asp:LinkButton ID="LogInButton" runat="server" OnClick="LogInButton_Click" ValidationGroup="ValidateAuthData">¬ход</asp:LinkButton>

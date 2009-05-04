@@ -5,9 +5,8 @@
     <h2>¬ведите номер RFC или ключевое слово</h2>
     <asp:TextBox ID="TextBoxSearch" runat="server" /> <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click">»скать</asp:LinkButton>
     <asp:RequiredFieldValidator ID="SearchRequiredFieldValidator" runat="server" ErrorMessage="¬ведите чего-нибудь" ControlToValidate="TextBoxSearch" />
-</div> 
-    
- <asp:Repeater ID="RepeaterRfc" runat="server">
+</div>     
+    <asp:Repeater ID="RepeaterRfc" runat="server">
         <HeaderTemplate>
             <ul id="rfc-list" class="list">
         </HeaderTemplate>
