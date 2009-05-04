@@ -44,7 +44,7 @@ namespace ITCommunity
             {
                 string identifier = Guid.NewGuid().ToString("N");
                 bool sended = SendEmail.SendRecoveryEmail(user.Email, identifier);
-                string message = "Письмо отправлено.";
+                string message = "URL для сброса пароля зайемелен на указанную при регистрации электропочту";
                 if (sended)
                 {
                     RecoveryPass.Add(identifier, user.Id);

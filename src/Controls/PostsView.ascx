@@ -8,7 +8,7 @@
                 <div class="post"> 
                     <div class="post-title">
                         <h2>
-                            <a href='news.aspx?id=<%# Eval("id")%>#cut'><%# Eval("title")%></a>     
+                            <a href='news.aspx?id=<%# Eval("id")%>'><%# Eval("title")%></a>     
                             <asp:Repeater ID="RepeaterPostCategories" runat="server">
                                 <HeaderTemplate>
                                     (

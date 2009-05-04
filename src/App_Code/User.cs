@@ -31,7 +31,8 @@ namespace ITCommunity
         {
             Admin = 1,
             Poster = 2,
-            User = 3
+            User = 3,
+            Banned = 4
         }
 
         public int Id
@@ -169,6 +170,7 @@ namespace ITCommunity
         /// <param name="role">Роль получаемых пользователей</param>
         public static List<User> GetByRole(User.Roles role)
         {
+            //TODO: Закешировать админов и постеров?
             return GetUsersFromTable(Database.UserGetByRole((int)role));
         }
 

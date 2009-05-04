@@ -37,7 +37,7 @@ namespace ITCommunity
         {
             int rightAnswer;
             int answer;
-            return Int32.TryParse(hdnRightAnswer.Value, out rightAnswer) && Int32.TryParse(ddlVariants.SelectedValue, out answer) && rightAnswer == answer;
+           return Int32.TryParse(hdnRightAnswer.Value, out rightAnswer) && Int32.TryParse(ddlVariants.SelectedValue, out answer) && rightAnswer == answer;
         }
         public void SetErrorMessageVisible()
         {
