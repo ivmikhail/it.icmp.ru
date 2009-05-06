@@ -20,11 +20,12 @@ namespace ITCommunity
         private string pager_page;
         private string page_params;
         private int current_page;
-
+        private int total_records;
+        private int records_per_page;
 
 
         /// <summary>
-        /// Идентификатор категории, если не нужно то ничего не присваиваем.
+        /// Номер текущей страницы
         /// </summary>
         public int CurrentPage
         {
@@ -38,17 +39,28 @@ namespace ITCommunity
             }
         }
         /// <summary>
-        /// Всего страниц
+        /// Всего найденных записей
         /// </summary>
-        public int TotalPages
+        public int TotalRecords
         {
             get
             {
-                return total_pages;
+                return total_records;
             }
             set
             {
-                total_pages = value;
+                total_records = value;
+            }
+        }
+        public int RecordsPerPage
+        {
+            get
+            {
+                return records_per_page;
+            }
+            set
+            {
+                records_per_page = value;
             }
         }
         /// <summary>
@@ -95,6 +107,14 @@ namespace ITCommunity
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (records_per_page == 0)
+            {
+                total_pages = 1;
+            } else
+            {
+                total_pages = Convert.ToInt32(Math.Ceiling((decimal)total_records / records_per_page));
+            }
+            
             if (total_pages > 1)
             {
                 Links.Text = "<ul class='pager'>" + PrevLink() + Pages() + NextLink() + "</ul>";
