@@ -64,7 +64,8 @@ namespace ITCommunity
             FavoritesPager.PageParams = pageparams;
             FavoritesPager.PageQueryString = "page";
             FavoritesPager.CurrentPage = current_pagenum;
-            FavoritesPager.TotalPages = Convert.ToInt32(Math.Ceiling((decimal)total_records / Global.PostsCount));
+            FavoritesPager.TotalRecords = total_records;
+            FavoritesPager.RecordsPerPage = Global.PostsCount;
         }
     }
 }

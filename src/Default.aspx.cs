@@ -28,10 +28,10 @@ namespace ITCommunity
             int page = GetPage();
             if (cat_id > 0)
             {
-                PostsView.PostSource = Post.GetPostsByCat(page, Global.PostsCount, cat_id, ref total_records);
+                PostsView.PostSource = Post.GetByCategory(page, Global.PostsCount, cat_id, ref total_records);
             } else
             {
-                PostsView.PostSource = Post.GetPosts(page, Global.PostsCount, ref total_records);
+                PostsView.PostSource = Post.Get(page, Global.PostsCount, ref total_records);
             }
 
             FillPager(total_records, page, "&cat=" + cat_id);
@@ -44,7 +44,8 @@ namespace ITCommunity
             NewsPager.PageParams = pageparams;
             NewsPager.PageQueryString = "page";
             NewsPager.CurrentPage = current_pagenum;
-            NewsPager.TotalPages = Convert.ToInt32(Math.Ceiling((decimal)total_records / Global.PostsCount));
+            NewsPager.TotalRecords = total_records;
+            NewsPager.RecordsPerPage = Global.PostsCount;
         }
         private int GetCatId()
         {
@@ -58,5 +59,9 @@ namespace ITCommunity
             Int32.TryParse(Request.QueryString["page"], out page_num);
             return page_num == 0 ? 1 : page_num;
         }
-    }
+        protected void LinkButtonSearch_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("search.aspx?q=" + TextBoxQuery.Text);
+        }
+}
 }

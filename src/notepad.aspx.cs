@@ -34,7 +34,8 @@ namespace ITCommunity
             NotesPager.PageParams = pageparams;
             NotesPager.PageQueryString = "page";
             NotesPager.CurrentPage = current_pagenum;
-            NotesPager.TotalPages = Convert.ToInt32(Math.Ceiling((decimal)total_records / Global.PostsCount));
+            NotesPager.TotalRecords = total_records;
+            NotesPager.RecordsPerPage = Global.MaxNotesCount;
         }
         private int GetPage()
         {

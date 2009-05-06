@@ -1228,6 +1228,49 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
+        public static DataTable PostSearch(String query, Int32 page, Int32 count, ref Int32 posts_count)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostSearch", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@query", System.Data.SqlDbType.VarChar, 512);
+            cmd.Parameters["@query"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@query"].Value = query;
+            cmd.Parameters.Add("@page", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@page"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@page"].Value = page;
+            cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@count"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@count"].Value = count;
+            cmd.Parameters.Add("@posts_count", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@posts_count"].Direction = System.Data.ParameterDirection.InputOutput;
+            cmd.Parameters["@posts_count"].Value = posts_count;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            while (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                table.Rows.Add(row);
+            }
+            reader.Close();
+            DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
+            connection.Close();
+            return result;
+        }
         public static int PostUpdate(Int32 id, String title, String desc, String text, Byte attached, String source, Int32 comments_count)
         {
             SqlConnection connection = OpenConnection();

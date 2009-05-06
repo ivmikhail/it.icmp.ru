@@ -271,11 +271,23 @@ namespace ITCommunity
         }
 
         /// <summary>
+        /// ѕоиск по постам, учитываем title, desc, text
+        /// </summary>
+        /// <param name="page">текуща€ страница</param>
+        /// <param name="count">кол-во постов на страницу</param>
+        /// <param name="query">запрос</param>
+        /// <param name="posts_count">кол-во найденных постов</param>
+        /// <returns>—писок найденных постов</returns>
+        public static List<Post> Search(int page, int count, string query, ref int posts_count)
+        {
+            return GetPostsFromTable(Database.PostSearch(query, page, count, ref posts_count));
+        }
+        /// <summary>
         /// «абираем посты постранично, с учетом даты и аттачей
         /// </summary>
         /// <param name="page">—траница котора€ нам нужна</param>
         /// <param name="count"> ол-во постов на страницу</param>
-        public static List<Post> GetPosts(int page, int count, ref int posts_count)
+        public static List<Post> Get(int page, int count, ref int posts_count)
         {
             return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
         }
@@ -285,7 +297,7 @@ namespace ITCommunity
         /// <param name="page">—траница котора€ нам нужна</param>
         /// <param name="count"> ол-во постов на страницу</param>
         /// <param name="count">id категории</param>
-        public static List<Post> GetPostsByCat(int page, int count, int cat_id, ref int posts_count)
+        public static List<Post> GetByCategory(int page, int count, int cat_id, ref int posts_count)
         {
             return GetPostsFromTable(Database.PostGetByCat(page, count, cat_id, ref posts_count));
         }

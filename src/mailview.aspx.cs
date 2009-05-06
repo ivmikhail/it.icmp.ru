@@ -41,7 +41,8 @@ namespace ITCommunity
             MessagePager.PageParams = pageparams;
             MessagePager.PageQueryString = "page";
             MessagePager.CurrentPage = current_pagenum;
-            MessagePager.TotalPages = Convert.ToInt32(Math.Ceiling((decimal)total_records / Global.PostsCount));
+            MessagePager.TotalRecords = total_records;
+            MessagePager.RecordsPerPage = Global.MaxMessageCount;
         }
         private int GetPage()
         {

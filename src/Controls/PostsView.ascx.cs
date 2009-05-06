@@ -15,23 +15,16 @@ namespace ITCommunity
 {
     public partial class controls_PostsView : System.Web.UI.UserControl
     {
-        private List<Post> posts;
-
         public List<Post> PostSource
         {
-            get
-            {
-                return posts;
-            }
             set
             {
-                posts = value;
+                RepeaterPosts.DataSource = value;
+                RepeaterPosts.DataBind();
             }
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            RepeaterPosts.DataSource = posts;
-            RepeaterPosts.DataBind();
 
         }
         protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e)
