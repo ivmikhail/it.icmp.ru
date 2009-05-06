@@ -170,7 +170,7 @@ namespace ITCommunity
         {
             get
             {
-                string value = "<a href='register.aspx?returnUrl=default.aspx?p=fav&a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/non-fav.png' class='fixPNG' /></a>"; ;
+                string value = "<a href='register.aspx?favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/non-fav.png' class='fixPNG' /></a>"; ;
                 if (CurrentUser.isAuth)
                 {
                     if (IsFavorites(CurrentUser.User.Id))
