@@ -1,4 +1,4 @@
-<%@ Page Language="C#" EnableViewState="false" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="news.aspx.cs" Inherits="ITCommunity.News" Title="Ykt It Community | " %>
+<%@ Page Language="C#" EnableViewState="true" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="news.aspx.cs" Inherits="ITCommunity.News" Title="Ykt It Community | " Trace="true"%>
 <%@ Register src="~/controls/ItCaptcha.ascx" tagname="ItCaptcha" tagprefix="uc" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="post"> 
@@ -43,7 +43,7 @@
             Автор - <asp:Literal ID="author_login" runat="server" />
             <br />
             <br />
-            <uc:ItCaptcha ID="captcha" runat="server" Visible="false"/>           
+            <uc:ItCaptcha ID="captcha" runat="server" Visible="false" EnableViewState="true"/>           
             <div id="write-comment"> 
                 <asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="5" Width="100%" MaxLength="512" ValidationGroup="Comment"/>                
                 <asp:RequiredFieldValidator ID="RequiredFieldValidatorComment" runat="server" ErrorMessage="Введите комментарий" ControlToValidate="TextBoxComment" ValidationGroup="Comment"/>
