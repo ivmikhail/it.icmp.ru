@@ -5,29 +5,36 @@
         <HeaderTemplate>
           <table>
             <tr>
+            <th></th>
               <th>
-                Name</th>
+                Название</th>
               <th>
-                Description</th>
+                Размер</th>
             </tr>
         </HeaderTemplate>
         <ItemTemplate>
           <tr>
             <td>
-              <%# Eval("Name") %>
+              <img src='media/img/<%# Eval("Icon") %>' />
             </td>
             <td>
-              
+              <a href='<%# Eval("Link") %>' title='<%# Eval("Description") %>'><%# Eval("Name") %></a>
+            </td>
+            <td>
+              <%# Eval("Size") %>
             </td>
           </tr>
         </ItemTemplate>
         <AlternatingItemTemplate>
           <tr>
             <td>
-              <%# Eval("Name") %>
+              <img src='media/img/<%# Eval("Icon") %>' />
             </td>
             <td>
-              
+              <a href='<%# Eval("Link") %>' title='<%# Eval("Description") %>'><%# Eval("Name") %></a>
+            </td>
+            <td>
+              <%# Eval("Size") %>
             </td>
           </tr>
         </AlternatingItemTemplate>

@@ -256,15 +256,24 @@ namespace ITCommunity
             get {
                 if (_filesFolder == "") {
                     _filesFolder = ConfigurationManager.AppSettings["FilesFolder"].ToString();
-                    if(!Directory.Exists(_filesFolder)) {
+                    if (!Directory.Exists(_filesFolder)) {
                         throw new Exception("Folder in Web.config FilesFolder not exist");
                     }
-                    if(!_filesFolder.EndsWith("\\")) {
+                    if (!_filesFolder.EndsWith("\\")) {
                         _filesFolder += "\\";
                     }
                 }
-
                 return _filesFolder;
+            }
+        }
+        private static string _filesLink = "";
+        public static string FilesLink {
+            get {
+                if (_filesLink == "") {
+                    _filesLink = ConfigurationManager.AppSettings["FilesLink"].ToString();
+                }
+
+                return _filesLink;
             }
         }
     }
