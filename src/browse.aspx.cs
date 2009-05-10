@@ -10,24 +10,33 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.IO;
 using ITCommunity;
+using System.Diagnostics;
 
 public partial class browse : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        String dir = Request.QueryString["dir"] == null ? Global.FilesFolder : Global.FilesFolder + Request.QueryString["dir"].ToString();
-        dir = Path.GetFullPath(dir);
-        if(!dirOk(dir)) {
-            return;
+        String dir = Request.QueryString["dir"] ?? "";
+        String linkTypeQuery = Request.QueryString["cat"] ?? "files";
+        LinkType linkType = LinkType.Files;
+        try {
+            linkType = (LinkType)Enum.Parse(linkType.GetType(), linkTypeQuery, true);
+        } catch(ArgumentException ex) {
+            Debug.Print(ex.Message);
+            linkType = LinkType.Files;
         }
-        rptFiles.DataSource = BrowseItem.GetList(dir);
-        rptFiles.DataBind();
+        dir = BrowseItem.GetRealPathOfLink(linkType, dir);
+        if(dirOk(dir)) {
+            rptFiles.DataSource = BrowseItem.GetList(dir);
+            rptFiles.DataBind();
+        }
     }
 
     private bool dirOk(string dir) {
         if(!Directory.Exists(dir)) {
             return false;
         }
+        dir = Path.GetFullPath(dir);
         if(dir.StartsWith(Global.FilesFolder)) {
             return true;
         }
