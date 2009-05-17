@@ -33,9 +33,9 @@
                     <div class="post-info">
                         <%# Eval("createdate")%> /                          
                         <%# Eval("favoritesaction") %>  / 
-                        автор: <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>"><%# Eval("author.nick")%></a> / 
+                        автор: <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение"><%# Eval("author.nick")%></a> / 
                         просмотров: <%# Eval("views")%> / 
-                        <a href='News.aspx?id=<%# Eval("id")%>#comments'>комментарии(<%# Eval("commentscount")%>)</a>         
+                        <a href='news.aspx?id=<%# Eval("id")%>#comments' title="Посмотреть комментарии">комментарии(<%# Eval("commentscount")%>)</a>
                     </div>
                 <div>
             </li>

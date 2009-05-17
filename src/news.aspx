@@ -1,5 +1,6 @@
 <%@ Page Language="C#" EnableViewState="true" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="news.aspx.cs" Inherits="ITCommunity.News" Title="Ykt It Community | " Trace="true"%>
 <%@ Register src="~/controls/ItCaptcha.ascx" tagname="ItCaptcha" tagprefix="uc" %>
+<%@ Register src="~/controls/PostManage.ascx" tagname="PostManage" tagprefix="uc" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="post"> 
         <div class="post-title">
@@ -15,8 +16,11 @@
             </div>
         </div>                    
         <div class="post-info">
-              <asp:Literal ID="date" runat="server" /> / автор:  <asp:Literal ID="author" runat="server" /> / просмотров:  <asp:Literal ID="views" runat="server" /> / источник: <asp:Literal ID="source" runat="server" />          
+              <asp:Literal ID="date" runat="server" /> / автор:  <asp:Literal ID="author" runat="server" /> / просмотров:  <asp:Literal ID="views" runat="server" /> / <asp:Literal ID="source" runat="server" />          
          </div>
+         
+         <uc:PostManage ID="PostManageControls" runat="server"/> 
+        
         <div id="comments" class="post-comments">
             <h2>Комментарии(<asp:Literal ID="comments_count" runat="server" />)</h2>
                 <asp:Repeater ID="RepeaterComments" runat="server">

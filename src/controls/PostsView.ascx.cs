@@ -25,7 +25,7 @@ namespace ITCommunity
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-
+                
         }
         protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -34,8 +34,10 @@ namespace ITCommunity
             {
                 Repeater RepeaterPostCategories = (Repeater)item.FindControl("RepeaterPostCategories");
                 Post current = (Post)item.DataItem;
+
                 RepeaterPostCategories.DataSource = Category.GetPostCategrories(current.Id);
                 RepeaterPostCategories.DataBind();
+
             }
         }
     }
