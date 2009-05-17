@@ -154,6 +154,23 @@ namespace ITCommunity
                 _commentsCount = value;
             }
         }
+
+        public bool IsPostOwner(User user)
+        {
+            bool is_owner = false;
+            if (user.Id > 0)
+            {
+                if (user.Id == this.Author.Id)
+                {
+                    is_owner = true;
+                }
+            }
+            if (this.Id < 1)
+            {
+                is_owner = true;
+            }
+            return is_owner;
+        }
         /// <summary>
         /// Выясняем является ли статья избранным для данного пользователя
         /// </summary>

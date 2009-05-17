@@ -10,7 +10,7 @@ using ITCommunity;
 namespace ITCommunity
 {
 
-    public class Picture
+    public class Picture 
     {
         private string _name;
         private string _fullurl;
@@ -64,12 +64,17 @@ namespace ITCommunity
                 _post = value;
             }
         }
-        public Picture(Post post, string name)
+        public Picture(Post post, string name, bool is_temp_folder)
         {
             _post = post;
             _name = name;
-            _fullurl = Global.PostImagesFolder + "/" + post.Author.Id + "/" + post.Id + "/full/" + name;
-            _thumburl = Global.PostImagesFolder + "/" + post.Author.Id + "/" + post.Id + "/thumb/" + name;
+            int post_id = -1;
+            if (!is_temp_folder)
+            {
+                post_id = post.Id; 
+            }
+            _fullurl = Global.PostImagesFolder + "/" + post.Author.Id + "/" + post_id + "/full/" + name;
+            _thumburl = Global.PostImagesFolder + "/" + post.Author.Id + "/" + post_id + "/thumb/" + name;
         }
         public Picture()
         {
@@ -82,12 +87,15 @@ namespace ITCommunity
         {
             int user_id = post.Author.Id;
             List<Picture> pics = new List<Picture>();
-            string path = Global.PostImagesFolder + "/" + user_id + "/" + post.Id + "/thumb";
-            string[] files = Directory.GetFiles(HttpContext.Current.Request.MapPath(path));
-
+            string path = HttpContext.Current.Request.MapPath(Global.PostImagesFolder + "/" + user_id + "/" + post.Id + "/thumb");
+            string[] files = new string[0];
+            if (Directory.Exists(path))
+            {
+                files = Directory.GetFiles(path);
+            }
             foreach (string file in files)
             {
-                pics.Add(new Picture(post, Path.GetFileName(file)));
+                pics.Add(new Picture(post, Path.GetFileName(file), false));
             }
 
             return pics;
@@ -104,17 +112,22 @@ namespace ITCommunity
         public static string CreateFolder(int user_id, int post_id, string folder)
         {
             string current_folder = HttpContext.Current.Request.MapPath(Global.PostImagesFolder + "/" + user_id + "/" + post_id + "/" + folder);
-            Directory.CreateDirectory(current_folder);
+            if (!Directory.Exists(current_folder))
+            {
+                Directory.CreateDirectory(current_folder);
+            }
             return current_folder;
         }
 
-        public static Picture UploadImage(string value, Post post)
+        public static Picture UploadImage(HttpPostedFile img, Post post)
         {
-            string filename = Guid.NewGuid().ToString("N") + Path.GetExtension(value);
+            string filename = Guid.NewGuid().ToString("N") + Path.GetExtension(img.FileName);
             filename = filename.ToLower();
-            string fullpath = CreateFolder(post.Author.Id, 0, "full") + "/" + filename;
-            string thumbpath = CreateFolder(post.Author.Id, 0, "thumb") + "/" + filename;
-            Stream stream = File.OpenRead(value);
+
+            string fullpath = CreateFolder(post.Author.Id, -1, "full") + "/" + filename;
+            string thumbpath = CreateFolder(post.Author.Id, -1, "thumb") + "/" + filename;
+
+            Stream stream = img.InputStream;
             byte[] buffer = new byte[stream.Length];
             stream.Read(buffer, 0, (int)stream.Length);
             int len = (int)stream.Length;
@@ -156,7 +169,7 @@ namespace ITCommunity
             int max = Global.MaxThumbWidth;
             int height = source_bmp.Height;
             int width = source_bmp.Width;
-            if (width > max)
+            if (width > max) //TODO: проверить на правильность
             {
                 float x;
                 float y;
@@ -188,7 +201,7 @@ namespace ITCommunity
             {
                 source_bmp.Save(folder);
             }
-            return new Picture(post, filename);
+            return new Picture(post, filename, true);
         }
         /// <summary>
         /// Данный метод вызывается после добавления поста, чтобы прибить изображения:
@@ -200,8 +213,7 @@ namespace ITCommunity
         /// <param name="user_id">Кюррент юзер</param>
         public static void FixImages(Post post)
         {
-            // Переименовываем
-            RenameTempFolder(post);
+            MergeTempAndPostFolder(post);
             // Изменяем ссылки на картинки в новости, так как новость получила свой айдишник + удаляем ненужные картинки
             CheckImgInNews(post);
         }
@@ -219,12 +231,12 @@ namespace ITCommunity
 
             foreach (Picture pic in pics)
             {
-                if (text.Contains(pic.Name))
+                if (text.Contains(pic.Name) || desc.Contains(pic.Name))
                 {
-                    full_oldval = Global.PostImagesFolder + "/" + post.Author.Id + "/" + 0 + "/full/" + pic.Name;
+                    full_oldval = Global.PostImagesFolder + "/" + post.Author.Id + "/" + -1 + "/full/" + pic.Name;
                     full_newval = Global.PostImagesFolder + "/" + post.Author.Id + "/" + post.Id + "/full/" + pic.Name;
 
-                    thumb_oldval = Global.PostImagesFolder + "/" + post.Author.Id + "/" + 0 + "/thumb/" + pic.Name;
+                    thumb_oldval = Global.PostImagesFolder + "/" + post.Author.Id + "/" + -1 + "/thumb/" + pic.Name;
                     thumb_newval = Global.PostImagesFolder + "/" + post.Author.Id + "/" + post.Id + "/thumb/" + pic.Name;
 
                     desc = desc.Replace(full_oldval, full_newval);
@@ -242,20 +254,56 @@ namespace ITCommunity
             post.Update();
 
         }
-        private static void RenameTempFolder(Post post)
+        private static void MergeTempAndPostFolder(Post post)
         {
-            //temp folder = 0
-            string path = HttpContext.Current.Request.MapPath(Global.PostImagesFolder + "/" + post.Author.Id + "/");
+            //temp folder = -1
+            string path = Global.PostImagesFolder + "/" + post.Author.Id + "/";
+            string truepath = HttpContext.Current.Request.MapPath(path);
 
-            //Тут можно заюзать Directory.Move(), но че то там ругалось, переделал.
-            CopyFolder(path + 0, path + post.Id);
-            Directory.Delete(path + 0, true);
+            if (Directory.Exists(truepath + -1))
+            {
+                MergeFolders(truepath + -1, truepath + post.Id);
+                DeleteTempFolderFiles(post);
+            }
         }
 
-        private static void CopyFolder(string source, string destination)
+        public static void DeleteTempFolderFiles(Post post)
+        {
+            //temp folder = -1
+            DirectoryInfo dir = new DirectoryInfo(HttpContext.Current.Request.MapPath(Global.PostImagesFolder + "/" + post.Author.Id + "/" + -1 + "/"));
+            if (dir.Exists)
+            {
+                DeleteFiles(dir);
+            }
+        }
+        /// <summary>
+        /// Удаляет все файлы внутри директории(включая в субдерикториях)
+        /// </summary>
+        /// <param name="dir">директория</param>
+        private static void DeleteFiles(DirectoryInfo dir)
+        {
+
+            DirectoryInfo[] subDirectories = dir.GetDirectories();
+            if (subDirectories.Length > 0)
+            {
+                for (int i = 0; i < subDirectories.Length; i++)
+                {
+                    FileInfo[] files = subDirectories[i].GetFiles();
+                    foreach (FileInfo file in files)
+                    {
+                        file.Delete();
+                    }
+                    DeleteFiles(subDirectories[i]);
+                }
+            }
+        }
+         
+        private static void MergeFolders(string source, string destination)
         {
             if (!Directory.Exists(destination))
+            {
                 Directory.CreateDirectory(destination);
+            }
             string[] files = Directory.GetFiles(source);
             foreach (string file in files)
             {
@@ -268,7 +316,7 @@ namespace ITCommunity
             {
                 string name = Path.GetFileName(folder);
                 string dest = Path.Combine(destination, name);
-                CopyFolder(folder, dest);
+                MergeFolders(folder, dest);
             }
         }
     }

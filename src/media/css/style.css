@@ -109,6 +109,7 @@ div#dynamic-content .post-info
 	line-height: 1.3em;
 	width:90%;
 }
+
 div#dynamic-content #write-comment
 {
 	margin-top:10px;
@@ -189,6 +190,11 @@ div#uploadImagesList img
 {
 	padding: 10px;	
 	float:left;
+}
+div#uploadImagesList img:hover
+{
+	padding: 8px;	
+	border:2px solid #aaaaff;
 }
 
 #accounts-tabs 

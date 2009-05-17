@@ -15,79 +15,44 @@ using ITCommunity;
 
 namespace ITCommunity
 {
-    public partial class AddPost : System.Web.UI.Page, ICallbackEventHandler
+    public partial class EditPost : System.Web.UI.Page
     {
-        protected string returnValue = String.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Post post = new Post();
-            //post.Author = CurrentUser.User;
-            //post.Id = 0;
-            //Picture.GetByPost(post);
             if (!IsPostBack)
             {
                 LoadCategories();
-                if (User.IsInRole("1"))
-                {
-                    CheckBoxAttached.Enabled = true;
-                }
+                CheckBoxAttached.Enabled = CurrentUser.User.Role == ITCommunity.User.Roles.Admin;
                 ImageOptions.Text = Global.PostImageOptions;
-            }
 
-            /*
-            string[] filePaths = null;
-            if (!String.IsNullOrEmpty(list.Value))
-            {
-                filePaths = list.Value.Split('|');
+                InitPostData();
             }
-            */
-            /*
-            // register the callback script 
-            string sbReference = ClientScript.GetCallbackEventReference(this, "arg", "ReceiveServerData", "context");
-            string cbScript = String.Empty;
-
-            // check if the script is already registered or not 
-            if (!ClientScript.IsClientScriptBlockRegistered("CallServer"))
-            {
-                cbScript = @" function CallServer(arg,context) { " + sbReference + "}";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "CallServer", cbScript, true);
-            }
-             */ 
         }
-
-        /// <summary>
-        /// Загружаем картинку
-        /// </summary>
-        /// <returns>Урл по которому доступна картинка</returns>
-        public string GetCallbackResult()
+        private void InitPostData()
         {
-            /*
-            string result = "";
-            Post post = new Post();
-            post.Id = 0;
-            post.Author = CurrentUser.User;
-            Picture pic = Picture.UploadImage(returnValue, post);
-            if (pic.Name != "")
-            {
-                result = pic.ThumbUrl;
-            }
-            return result;
-             */
-            return "";
-        }
+            User current_user = CurrentUser.User;
+            Post post = Post.GetById(GetPostId());
+            Post current_post = new Post();
 
-        /// <summary>
-        /// Получаем что отправил нам клиент
-        /// </summary>
-        /// <param name="eventArgument">Путь к файлу на компе юзера</param>
-        public void RaiseCallbackEvent(string eventArgument)
-        {
-            /*
-            if (!String.IsNullOrEmpty(eventArgument))
+            if (post.IsPostOwner(CurrentUser.User) || current_user.Role == ITCommunity.User.Roles.Admin)
             {
-                returnValue = eventArgument;
+                current_post = post;
+                Picture.DeleteTempFolderFiles(current_post);
+                LoadImages(current_post);
             }
-             */ 
+
+            List<Category> cats = current_post.Cats;
+            if (cats.Count != 0)
+            {
+                //TODO: Категории не сделаны. Надо чтобы показывались все категории данной новости
+                DropDownListCats.SelectedValue = cats[0].Id.ToString();
+            }
+            TextBoxTitle.Text = current_post.Title;
+            TextBoxDesc.Text = current_post.Description;
+            TextBoxText.Text = current_post.Text;
+            TextBoxSource.Text = current_post.Source;
+            CheckBoxAttached.Checked = current_post.Attached;
+
         }
 
         private void LoadCategories()
@@ -99,14 +64,13 @@ namespace ITCommunity
                 DropDownListCats.Items.Add(new ListItem(cat.Name, cat.Id.ToString()));
             }
         }
+
         protected void LinkButtonAdd_Click(object sender, EventArgs e)
         {
-
-
             List<string> errors = ValidateData();
             if (errors.Count == 0)
             {
-                Post newpost = new Post();
+                Post newpost = Post.GetById(GetPostId());
                 List<Category> cats = new List<Category>();
                 cats.Add(Category.GetById(Convert.ToInt32(DropDownListCats.SelectedValue)));
                 newpost.Cats = cats;
@@ -117,10 +81,20 @@ namespace ITCommunity
                 newpost.Source = Server.HtmlEncode(TextBoxSource.Text);
                 newpost.Author = CurrentUser.User;
                 newpost.Attached = CheckBoxAttached.Checked;
-                Post current = Post.Add(newpost);
-                Response.Redirect("default.aspx");
 
-                //Picture.FixImages(current);
+                Post addedpost = new Post();
+                if (newpost.Id > 0)
+                {
+                    newpost.Update();
+                    addedpost = newpost;
+                }
+                else
+                {
+                    newpost.Author = CurrentUser.User;
+                    addedpost = Post.Add(newpost);
+                }
+                Picture.FixImages(addedpost);
+                Response.Redirect("default.aspx");
             } else
             {
                 WriteErrors(errors, "Новость не добавлена");
@@ -163,6 +137,38 @@ namespace ITCommunity
             text += "</ul>";
             AddPostMessages.Text = text;
             LinkButtonAdd.Focus();
+        }
+        private int GetPostId()
+        {
+            int id;
+            Int32.TryParse(Request.QueryString["id"], out id);
+            return id;
+        }
+
+        protected void AttachImageButton_Click(object sender, EventArgs e)
+        {
+            Post post = Post.GetById(GetPostId());
+            if(post.Id < 1)
+            {
+                post.Author = CurrentUser.User;
+            }
+            Picture pic = Picture.UploadImage(UploadImage.PostedFile, post);
+            if (pic.Name == "")
+            {
+                UploadImageError.Text = "Картинка не добавилась. Видимо плохая картинка.";
+            } else
+            {
+                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' class='uploaded-image'/>";
+            }
+        }
+
+        private void LoadImages(Post post)
+        {
+            List<Picture> pics = Picture.GetByPost(post);
+            foreach (Picture pic in pics)
+            {
+                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' class='uploaded-image'/>";
+            }            
         }
     }
 }

@@ -15,7 +15,7 @@
             <a href="favorites.aspx" title="Статьи которые я отметил">Избранное</a>
         </li>       
         <li>
-            <a href="addpost.aspx" title="Написать статью">Добавить пост</a>
+            <a href="editpost.aspx" title="Написать статью">Добавить пост</a>
         </li>  
         <li>
             <asp:LinkButton ID="LinkButtonExit" runat="server" OnClick="LinkButtonExit_Click">Выйти</asp:LinkButton>        

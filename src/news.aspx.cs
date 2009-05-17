@@ -59,9 +59,14 @@ namespace ITCommunity
                 text.Text = post.Text;
                 comments_count.Text = post.CommentsCount.ToString();
                 date.Text = post.CreateDate.ToString();
-                source.Text = post.Source;
+                if (post.Source != "")
+                {
+                    source.Text = "источник: " + post.Source;
+                }
                 author.Text = post.Author.Nick;
                 views.Text = post.Views.ToString();
+
+                PostManageControls.Post = post;
             } else
             {
                 Response.Redirect(FormsAuthentication.DefaultUrl);
@@ -76,7 +81,7 @@ namespace ITCommunity
                 {
                     result += ", ";
                 }
-                result += "<a href='default.aspx?cat='" + cat.Id + ">" + cat.Name + "</a>";
+                result += "<a href='default.aspx?cat=" + cat.Id + "'>" + cat.Name + "</a>";
             }
             LinksPostCategories.Text = result;
         }
@@ -105,6 +110,7 @@ namespace ITCommunity
                 } else
                 {
                     captcha.SetErrorMessageVisible();
+                    LinkButtonAddComment.Focus();
                 }
             } else
             {
