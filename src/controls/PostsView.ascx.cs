@@ -35,7 +35,7 @@ namespace ITCommunity
                 Repeater RepeaterPostCategories = (Repeater)item.FindControl("RepeaterPostCategories");
                 Post current = (Post)item.DataItem;
 
-                RepeaterPostCategories.DataSource = Category.GetPostCategrories(current.Id);
+                RepeaterPostCategories.DataSource = Category.GetPostCategories(current.Id);
                 RepeaterPostCategories.DataBind();
 
             }

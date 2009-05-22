@@ -70,6 +70,25 @@ namespace ITCommunity
         }
 
         /// <summary>
+        /// Проверяем, есть ли категория с данным айдишником
+        /// </summary>
+        /// <param name="cat_id">Данный айдишник</param>
+        public static bool IsCategoryExist(int cat_id)
+        {
+            bool is_exist = false;
+            List<Category> cats = GetAll();
+            foreach (Category cat in cats)
+            {
+                if (cat._id == cat_id)
+                {
+                    is_exist = true;
+                    break;
+                }
+            }
+            return is_exist;
+        }
+
+        /// <summary>
         /// Берем по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор категории</param>
@@ -91,7 +110,7 @@ namespace ITCommunity
         /// <summary>
         /// Берем все категории новости
         /// </summary>
-        public static List<Category> GetPostCategrories(int postId)
+        public static List<Category> GetPostCategories(int postId)
         {
             return GetCategoryFromTable(Database.PostGetCategories(postId));
         }

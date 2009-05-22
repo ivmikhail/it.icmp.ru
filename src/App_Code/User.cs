@@ -22,11 +22,6 @@ namespace ITCommunity
         private int _role;
         private DateTime _cdate;
 
-        public void Update()
-        {
-            Database.UserUpdate(this._id, this._pass, (byte)this._role, this._email);
-        }
-
         public enum Roles
         {
             Admin = 1,
@@ -102,20 +97,6 @@ namespace ITCommunity
                 _cdate = value;
             }
         }
-        /// <summary>
-        /// Забанен ли данный пользователь по login'у
-        /// </summary>
-        public bool IsBanned
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-                throw new System.NotImplementedException();
-            }
-        }
 
         public User(int id, string nick, string pass, DateTime cdate, User.Roles role, string email)
         {
@@ -135,6 +116,22 @@ namespace ITCommunity
             _cdate = DateTime.Now;
             _role = 3;
             _email = "bill@microsoft.com";
+        }
+
+
+
+        /// <summary>
+        /// Проверяем забанен ли текущий пользователь
+        /// </summary>
+        public bool IsBanned()
+        {
+            return (this.Role == Roles.Banned);
+        }
+
+
+        public void Update()
+        {
+            Database.UserUpdate(this._id, this._pass, (byte)this._role, this._email);
         }
 
         /// <summary>
@@ -226,7 +223,9 @@ namespace ITCommunity
         /// <param name="userId">Идентификатор пользователя</param>
         public static void Delete(int userId)
         {
-            Database.UserDel(userId);
+            throw new NotImplementedException();
+            //А надо ли удалять? Юзер оставил посты и т.п их же не удалить.
+            //Database.UserDel(userId);
         }
 
         /// <summary>

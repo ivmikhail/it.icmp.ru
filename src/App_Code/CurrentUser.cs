@@ -120,14 +120,6 @@ namespace ITCommunity
             return User.Add(user);
         }
 
-        /// <summary>
-        /// ѕровер€ем забанен ли текущий пользователь по IP
-        /// </summary>
-        public static bool IsBanned()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public static bool isAuth
         {
             get

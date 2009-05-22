@@ -185,7 +185,10 @@ div#dynamic-content .rfc-title
 	font-weight:bold;
 	padding:4px 6px;
 }
-
+div#SelectedCategoriesNames 
+{
+	width:100%;
+}
 div#uploadImagesList img
 {
 	padding: 10px;	
