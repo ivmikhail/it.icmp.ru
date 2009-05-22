@@ -42,10 +42,15 @@ namespace ITCommunity
             }
 
             List<Category> cats = current_post.Cats;
-            if (cats.Count != 0)
+            foreach (Category cat in cats)
             {
-                //TODO: Категории не сделаны. Надо чтобы показывались все категории данной новости
-                DropDownListCats.SelectedValue = cats[0].Id.ToString();
+                CatNamesLiteral.Text += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать' name='" + cat.Id + "' </a>" + cat.Name + "</a> ";
+
+                if (SelectedCategoriesIds.Value != "")
+                {
+                    SelectedCategoriesIds.Value += ";";
+                }
+                SelectedCategoriesIds.Value += cat.Id;
             }
             TextBoxTitle.Text = current_post.Title;
             TextBoxDesc.Text = current_post.Description;
@@ -58,7 +63,7 @@ namespace ITCommunity
         private void LoadCategories()
         {
             List<Category> cats = Category.GetAll();
-
+            DropDownListCats.Items.Add(new ListItem("Выбрать...", "-1"));
             foreach (Category cat in cats)
             {
                 DropDownListCats.Items.Add(new ListItem(cat.Name, cat.Id.ToString()));
@@ -68,14 +73,17 @@ namespace ITCommunity
         protected void LinkButtonAdd_Click(object sender, EventArgs e)
         {
             List<string> errors = ValidateData();
+            List<Category> cats = GetCategoriesFromPost();
+            if (cats.Count == 0)
+            {
+                errors.Add("Категория не выбрана"); //TODO: Наверно надо переделать? 
+            }
             if (errors.Count == 0)
             {
                 Post newpost = Post.GetById(GetPostId());
-                List<Category> cats = new List<Category>();
-                cats.Add(Category.GetById(Convert.ToInt32(DropDownListCats.SelectedValue)));
                 newpost.Cats = cats;
                 newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
-                // TODO: Сделать буйню которая будет ескейпить тока некоторые указанные теги
+                // TODO: Сделать буйню которая не будет ескейпить тока некоторые указанные теги
                 newpost.Description = TextBoxDesc.Text;
                 newpost.Text = TextBoxText.Text;
                 newpost.Source = Server.HtmlEncode(TextBoxSource.Text);
@@ -85,7 +93,7 @@ namespace ITCommunity
                 Post addedpost = new Post();
                 if (newpost.Id > 0)
                 {
-                    newpost.Update();
+                    newpost.UpdateWithCategories();
                     addedpost = newpost;
                 }
                 else
@@ -97,14 +105,37 @@ namespace ITCommunity
                 Response.Redirect("default.aspx");
             } else
             {
+                SelectedCategoriesIds.Value = "";
+                CatNamesLiteral.Text = "";
                 WriteErrors(errors, "Новость не добавлена");
             }
+        }
+
+        private List<Category> GetCategoriesFromPost()
+        {
+            List<Category> cats = new List<Category>();
+            string[] cat_ids = SelectedCategoriesIds.Value.Split(';');
+
+            foreach (string string_cat_id in cat_ids)
+            {
+                int cat_id = -1;
+                Int32.TryParse(string_cat_id, out cat_id); 
+                if (cat_id > 0 && Category.IsCategoryExist(cat_id))
+                {
+                    Category category = Category.GetById(cat_id);
+                    if (!cats.Contains(category))
+                    {
+                        cats.Add(category);
+                    }
+                }
+            }
+            return cats;
         }
 
         private List<string> ValidateData()
         {
             List<string> errors = new List<string>();
-            if (DropDownListCats.SelectedValue == "-1")
+            if (DropDownListCats.SelectedValue == "-1") 
             {
                 errors.Add("Выберите категорию");
             }

@@ -75,7 +75,7 @@ namespace ITCommunity
         private void WritePostCategories(Post post)
         {
             string result = String.Empty;
-            foreach (Category cat in Category.GetPostCategrories(post.Id))
+            foreach (Category cat in Category.GetPostCategories(post.Id))
             {
                 if (result.Length > 0)
                 {

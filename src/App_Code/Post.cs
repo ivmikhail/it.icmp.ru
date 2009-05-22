@@ -273,15 +273,25 @@ namespace ITCommunity
         private static void PostAttachCategories(List<Category> cats, Post post)
         {
             // лучше не придумалось
-            string query = "INSERT INTO post_cat(post_id, cat_id) VALUES";
+
+            /* формируется запрос вида
+                INSERT INTO post_cat(post_id, cat_id) 
+                SELECT 1,2 
+                UNION ALL
+                SELECT 1,3
+                UNION ALL
+                SELECT 1,4
+             (множественная вставка как в мускле не прокатывает)
+             */
+            string query = "INSERT INTO post_cat(post_id, cat_id) ";
             string param = String.Empty;
             foreach (Category cat in cats)
             {
                 if (param.Length > 0)
                 {
-                    param += ", ";
+                    param += " UNION ALL ";
                 }
-                param += "(" + post.Id + "," + cat.Id + ")";
+                param += "SELECT " + post.Id + "," + cat.Id ;
             }
             query += param;
             Database.PostAttachCategories(post.Id, query);
@@ -397,7 +407,7 @@ namespace ITCommunity
                              Convert.ToInt32(dr["views"]),
                              Convert.ToString(dr["source"]),
                              Convert.ToInt32(dr["comments_count"]),
-                             Category.GetPostCategrories(id)); //TODO: MZFK
+                             Category.GetPostCategories(id)); //TODO: MZFK
             }
             return post;
         }

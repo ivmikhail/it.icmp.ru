@@ -32,7 +32,7 @@ namespace ITCommunity
                                " http://it.icmp.ru/recovery.aspx?id=" + guid + " \n\n" +
                                "Ссылка активна в течении 3-4 дней." + "\n\n" + 
                                "______ \n" +
-                               "С уважением, команда поддержки сайта http://it.icmp.ru";
+                               "С уважением, робот находящийся в рабстве у держателей сайта http://it.icmp.ru";
                 SmtpClient client = new SmtpClient(); // используются параметры из web.config
                 client.EnableSsl = true;
                 client.Send(message);

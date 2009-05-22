@@ -3,24 +3,85 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
 <script type="text/javascript">
 
+    function deleteCategory(el)
+    {    
+	    alert("delete category не сделан");
+	    /*
+	    cat_name.firstChild.nodeValue.replace("")
+	    cat_ids.firstChild.nodeValue.replace("")	
+	    */             
+    }
     window.addEvent('domready', function(){
-    
-	    $$('.uploaded-image').each(function(el) {
-	
+        // Загрузка изображений        
+        var insert_place = $('<%= TextBoxText.ClientID %>');
+        
+	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
-		         $('ctl00_ContentPlaceHolder1_TextBoxText').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+this.src+"' /></a>\n", false);        
+		         insert_place.insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+this.src+"' /></a>\n", false);        
 		    });
-		});
+		});		
+		
+		var cat_dropdown = $('<%= DropDownListCats.ClientID %>');
+	    var cat_names    = $('<%= SelectedCategoriesNames.ClientID %>'); 
+	    var cat_ids      = $('<%= SelectedCategoriesIds.ClientID %>'); 
+	    
+		// Выбор категорий
+	    
+		cat_dropdown.addEvent('change', function(e) {
+		    var cat_name = cat_dropdown.options[cat_dropdown.selectedIndex].text;
+		    var cat_id = cat_dropdown.options[cat_dropdown.selectedIndex].value;
+		    		    
+		    if(cat_dropdown.options[0].value == -1)
+		    {
+		        cat_dropdown.remove(0);
+		    }
+		    
+		    if(cat_id > 0)
+		    {
+		        if(CategoryIsSelected(cat_ids, cat_id))
+		        {		    
+		            alert('Категория уже выбрана');
+		        } else {
+		            if(cat_ids.value != "")
+		            {
+		                cat_ids.value += ";";
+		            }		    
+		            cat_ids.value += cat_id;
+                    cat_names.innerHTML += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать' name='" + cat_id + " '>" + cat_name + "</a>" + " ";
+		        }
+		    }
+		});		
+		
+		function CategoryIsSelected(cat_ids, cat_id)
+		{		
+		    var status = false;
+		    var cats = cat_ids.value.split(";");
+		    
+		    for(i = 0; i < cats.length; i++)
+		    {
+		        if(cats[i] == cat_id)
+		        {		        
+		            status = true;
+		            break;
+		        }
+		    };	    
+		    return status;
+		}
 	});
-
 </script>
 <div id="add_post">
     <ul class="list">
         <li>
-            <h2>Выберите категорию</h2>
+            <h2>Категория</h2>
+            <h3>Выберите категорию(можно несколько)</h3>
             <label>
                 <asp:DropDownList ID="DropDownListCats" runat="server" CssClass="input-text"/>
             </label>
+            <h3>Категории данной новости</h3>
+            <div id="SelectedCategoriesNames" runat="server" enableviewstate="true">
+                <asp:Literal ID="CatNamesLiteral" runat="server" EnableViewState="true" />
+            </div>            
+            <asp:HiddenField ID="SelectedCategoriesIds" runat="server"  />
         </li>
         <li>        
             <h2>
@@ -32,7 +93,7 @@
         <li>
             <h2>Заголовок</h2>
             <label>
-                <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="32"/>  
+                <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="32" />  
              </label>
         </li>
         <li>
