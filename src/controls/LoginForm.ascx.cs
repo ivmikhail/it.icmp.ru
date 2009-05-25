@@ -45,14 +45,15 @@ namespace ITCommunity
             User user = CurrentUser.LogIn(login, pass, remember);
             if (user.Id > 0)
             {
-                Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
-
-                //Response.Redirect("Default.aspx");
-                //FormsAuthentication.RedirectFromLoginPage(login, remember);
-                //System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
-                //id.Ticket.UserData = Convert.ToString((int)user.Role);
-                //FormsAuthentication.RenewTicketIfOld(new FormsAuthenticationTicket(1, user.Nick, DateTime.Now, ticketExpiration, remember, Convert.ToString((int)user.Role)));
-            } else
+                if (user.Role == User.Roles.Banned)
+                {
+                    UserIsBanned.IsValid = false;
+                    CurrentUser.LogOut();
+                } else
+                {
+                    Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
+                }
+            } else 
             {
                 WrongAccount.IsValid = false;
             }

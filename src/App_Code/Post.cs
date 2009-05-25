@@ -100,7 +100,7 @@ namespace ITCommunity
             }
         }
 
-        public List<Category> Cats
+        public List<Category> Categories
         {
             get
             {
@@ -140,6 +140,17 @@ namespace ITCommunity
             }
             set
             {
+                //TODO: Накладывает кое-какие ограничения.
+                if (value.Length != 0)
+                {
+                    if (0 < value.Length && value.Length < 8)
+                    {
+                        value = "http://" + value;
+                    } else if(value.Substring(0, 7) != "http://")
+                    {
+                        value = "http://" + value;
+                    }
+                }
                 _source = value;
             }
         }
@@ -353,7 +364,7 @@ namespace ITCommunity
                                           Convert.ToByte(post.Attached),
                                           post.Source,
                                           post.Author.Id);
-            List<Category> cats = post.Cats;
+            List<Category> cats = post.Categories;
             Post newpost = GetPostFromRow(dr);
             PostAttachCategories(cats, newpost);
             return newpost;

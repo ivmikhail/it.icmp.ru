@@ -15,10 +15,13 @@
             <a href="favorites.aspx" title="Статьи которые я отметил">Избранное</a>
         </li>       
         <li>
-            <a href="editpost.aspx" title="Написать статью">Добавить пост</a>
+            <asp:HyperLink ID="AddPostLink" runat="server" NavigateUrl="~/editpost.aspx" Visible="false">Добавить пост</asp:HyperLink>
         </li>  
         <li>
             <asp:LinkButton ID="LinkButtonExit" runat="server" OnClick="LinkButtonExit_Click">Выйти</asp:LinkButton>        
+        </li>
+        <li>
+            <asp:HyperLink ID="ManageAccountsLink" runat="server" NavigateUrl="~/accounts.aspx" Visible="false">Пользователи</asp:HyperLink>
         </li>
     </ul>   
 </div>

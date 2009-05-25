@@ -31,6 +31,10 @@ namespace ITCommunity
                         currentUser = GetUserFromCookie();
                     }
 
+                    if (currentUser.Role == User.Roles.Banned)
+                    {
+                        CurrentUser.LogOut();
+                    }
                 }
                 return currentUser;
             }
@@ -59,7 +63,7 @@ namespace ITCommunity
                 {
                     ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout); // υμμ
                 }
-                FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, remember, Convert.ToString((int)user.Role));
+                FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, remember, user.Role.ToString());
 
                 HttpCookie authCookie = FormsAuthentication.GetAuthCookie(login, false);
                 authCookie.Value = FormsAuthentication.Encrypt(newTicket);

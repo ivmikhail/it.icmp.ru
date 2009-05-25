@@ -34,6 +34,6 @@
         <asp:CustomValidator ID="WrongAccount" runat="server" Display="None" 
             ErrorMessage="Неправильный логин/пароль." ValidationGroup="ValidateAuthData" />
         <asp:CustomValidator ID="UserIsBanned" runat="server" Display="None" 
-            ErrorMessage="Вы забанены." ValidationGroup="ValidateAuthData" />
+            ErrorMessage="Ваш аккаунт забанен. Вы не можете авторизоваться" ValidationGroup="ValidateAuthData" />
      </div>     
 </div>
