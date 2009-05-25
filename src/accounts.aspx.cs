@@ -19,8 +19,11 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            FillDropDown();
-            FillUsersList();
+            if (!IsPostBack)
+            {
+                FillDropDown();
+                FillUsersList();
+            }
         }
 
         private void FillUsersList()
@@ -43,12 +46,12 @@ namespace ITCommunity
             ITCommunity.User.Roles newrole = (ITCommunity.User.Roles)Enum.ToObject(typeof(ITCommunity.User.Roles), int_role);
             ITCommunity.User mod_user = ITCommunity.User.GetByLogin(UserLogin.Text.Trim());
 
-            if (mod_user.Id < 0)
+            if (mod_user.Id < 1)
             {
                 message = "Такой пользователь не зарегистрирован.";
             } else if (mod_user.Role == ITCommunity.User.Roles.Admin)
             {
-                message = "Данный пользователь админ. Нам ним нельзя производить никаких действий.";
+                message = "Данный пользователь админ. Над ним нельзя производить никаких действий.";
             } else
             {
                 mod_user.Role = newrole;

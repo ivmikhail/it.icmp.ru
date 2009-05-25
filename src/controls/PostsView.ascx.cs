@@ -25,15 +25,21 @@ namespace ITCommunity
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-                
+  
         }
         protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             RepeaterItem item = e.Item;
             if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
             {
+                Image AttachedImage = (Image)item.FindControl("AttachedImage");
                 Repeater RepeaterPostCategories = (Repeater)item.FindControl("RepeaterPostCategories");
                 Post current = (Post)item.DataItem;
+
+                if (current.Attached)
+                {
+                    AttachedImage.Visible = true;
+                }
 
                 RepeaterPostCategories.DataSource = Category.GetPostCategories(current.Id);
                 RepeaterPostCategories.DataBind();

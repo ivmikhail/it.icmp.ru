@@ -41,14 +41,14 @@ namespace ITCommunity
                 LoadImages(current_post);
             }
 
-            List<Category> cats = current_post.Cats;
+            List<Category> cats = current_post.Categories;
             foreach (Category cat in cats)
             {
-                CatNamesLiteral.Text += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать' name='" + cat.Id + "' </a>" + cat.Name + "</a> ";
+                CatNamesLiteral.Text += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать' id='" + cat.Id + "' </a>" + cat.Name + "</a> ";
 
                 if (SelectedCategoriesIds.Value != "")
                 {
-                    SelectedCategoriesIds.Value += ";";
+                    SelectedCategoriesIds.Value += ",";
                 }
                 SelectedCategoriesIds.Value += cat.Id;
             }
@@ -81,7 +81,7 @@ namespace ITCommunity
             if (errors.Count == 0)
             {
                 Post newpost = Post.GetById(GetPostId());
-                newpost.Cats = cats;
+                newpost.Categories = cats;
                 newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
                 // TODO: Сделать буйню которая не будет ескейпить тока некоторые указанные теги
                 newpost.Description = TextBoxDesc.Text;
@@ -114,7 +114,7 @@ namespace ITCommunity
         private List<Category> GetCategoriesFromPost()
         {
             List<Category> cats = new List<Category>();
-            string[] cat_ids = SelectedCategoriesIds.Value.Split(';');
+            string[] cat_ids = SelectedCategoriesIds.Value.Split(',');
 
             foreach (string string_cat_id in cat_ids)
             {
@@ -135,10 +135,6 @@ namespace ITCommunity
         private List<string> ValidateData()
         {
             List<string> errors = new List<string>();
-            if (DropDownListCats.SelectedValue == "-1") 
-            {
-                errors.Add("Выберите категорию");
-            }
             if (TextBoxTitle.Text.Length == 0 && TextBoxTitle.Text.Length < 32)
             {
                 errors.Add("Количество символов в заголовке должно быть от 1 до 32.");

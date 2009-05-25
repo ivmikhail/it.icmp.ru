@@ -61,7 +61,7 @@ namespace ITCommunity
                 date.Text = post.CreateDate.ToString();
                 if (post.Source != "")
                 {
-                    source.Text = "источник: " + post.Source;
+                    source.Text = "<a href='" + post.Source + "' target='_blank'>источник</a>";
                 }
                 author.Text = post.Author.Nick;
                 views.Text = post.Views.ToString();

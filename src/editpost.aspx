@@ -1,16 +1,8 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | Добавление новости"  %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | Добавление новости" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
 <script type="text/javascript">
 
-    function deleteCategory(el)
-    {    
-	    alert("delete category не сделан");
-	    /*
-	    cat_name.firstChild.nodeValue.replace("")
-	    cat_ids.firstChild.nodeValue.replace("")	
-	    */             
-    }
     window.addEvent('domready', function(){
         // Загрузка изображений        
         var insert_place = $('<%= TextBoxText.ClientID %>');
@@ -44,30 +36,50 @@
 		        } else {
 		            if(cat_ids.value != "")
 		            {
-		                cat_ids.value += ";";
+		                cat_ids.value += ",";
 		            }		    
 		            cat_ids.value += cat_id;
-                    cat_names.innerHTML += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать' name='" + cat_id + " '>" + cat_name + "</a>" + " ";
+                    cat_names.innerHTML += "<a href='#' id='" + cat_id + "' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать'>" + cat_name + "</a> ";
 		        }
 		    }
 		});		
 		
-		function CategoryIsSelected(cat_ids, cat_id)
-		{		
-		    var status = false;
-		    var cats = cat_ids.value.split(";");
-		    
-		    for(i = 0; i < cats.length; i++)
-		    {
-		        if(cats[i] == cat_id)
-		        {		        
-		            status = true;
-		            break;
-		        }
-		    };	    
-		    return status;
-		}
-	});
+	});	
+	
+	function CategoryIsSelected(cat_ids, cat_id)
+	{		
+	    var status = false;
+	    var cats = cat_ids.value.split(",");
+	    
+	    for(i = 0; i < cats.length; i++)
+	    {
+	        if(cats[i] == cat_id)
+	        {		        
+	            status = true;
+	            break;
+	        }
+	    };	    
+	    return status;
+	}
+	
+    function deleteCategory(el)
+    {    
+	    var cat_ids = $('<%= SelectedCategoriesIds.ClientID %>');    
+	    var cats = cat_ids.value.split(",");
+	    
+	    var true_cats = new Array();
+	    
+	    for(i = 0, j = 0 ; i < cats.length; i++, j++)
+	    {
+	        if(cats[i] != el.id)
+	        {   
+	            true_cats[j] = cats[i];
+	        }
+	    };	            
+	    cat_ids.value = true_cats.join(",");        
+        $(el.id).destroy();
+    }
+    
 </script>
 <div id="add_post">
     <ul class="list">
@@ -78,8 +90,8 @@
                 <asp:DropDownList ID="DropDownListCats" runat="server" CssClass="input-text"/>
             </label>
             <h3>Категории данной новости</h3>
-            <div id="SelectedCategoriesNames" runat="server" enableviewstate="true">
-                <asp:Literal ID="CatNamesLiteral" runat="server" EnableViewState="true" />
+            <div id="SelectedCategoriesNames" runat="server">
+                <asp:Literal ID="CatNamesLiteral" runat="server"/>
             </div>            
             <asp:HiddenField ID="SelectedCategoriesIds" runat="server"  />
         </li>

@@ -19,8 +19,19 @@ namespace ITCommunity
             if (!IsPostBack)
             {
                 LabelUserLogin.Text = CurrentUser.User.Nick;
-                LabelUserRole.Text = CurrentUser.User.Role.ToString();
+
+                ITCommunity.User.Roles role = CurrentUser.User.Role;                
+                LabelUserRole.Text = role.ToString();
+                if (role == User.Roles.Admin)
+                {
+                    ManageAccountsLink.Visible = true;
+                    AddPostLink.Visible = true;
+                } else if (role == User.Roles.Poster)
+                {
+                    AddPostLink.Visible = true;
+                }
                 MessagesLink.Text = "<a href='mailview.aspx' title='Мои сообщения' >Сообщения(" + Message.GetNewCount(CurrentUser.User.Id) + ")</a>";
+
             }
         }
         protected void LinkButtonExit_Click(object sender, EventArgs e)

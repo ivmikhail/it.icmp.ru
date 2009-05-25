@@ -7,7 +7,8 @@
             <li>
                 <div class="post"> 
                     <div class="post-title">
-                        <h2>
+                        <h2>                     
+                            <asp:Image ID="AttachedImage" runat="server" ImageUrl="../media/img/attached.jpg" Visible="false" CssClass="attached-image"/>
                             <a href='news.aspx?id=<%# Eval("id")%>'><%# Eval("title")%></a>     
                             <asp:Repeater ID="RepeaterPostCategories" runat="server">
                                 <HeaderTemplate>
@@ -20,7 +21,7 @@
                                     )
                                 </FooterTemplate>
                                 <SeparatorTemplate>,</SeparatorTemplate>
-                            </asp:Repeater>
+                            </asp:Repeater>                       
                         </h2>
                         <div class="post-desc">
                             <%# Eval("description")%>                        

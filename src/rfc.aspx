@@ -3,9 +3,11 @@
 
 <div id="rfc-search">
     <h2>¬ведите номер RFC или ключевое слово</h2>
-    <asp:TextBox ID="TextBoxSearch" runat="server" /> <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click">»скать</asp:LinkButton>
-    <asp:RequiredFieldValidator ID="SearchRequiredFieldValidator" runat="server" ErrorMessage="¬ведите чего-нибудь" ControlToValidate="TextBoxSearch" />
+    <asp:TextBox ID="TextBoxSearch" runat="server" /> 
+    <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click" ValidationGroup="ValidateRfcSearch">»скать</asp:LinkButton>
+     <asp:RequiredFieldValidator ID="SearchRequiredFieldValidator" runat="server" ErrorMessage="¬ведите чего-нибудь" ControlToValidate="TextBoxSearch" ValidationGroup="ValidateRfcSearch"/>
 </div>     
+<div id="rfc-search-result">
     <asp:Repeater ID="RepeaterRfc" runat="server">
         <HeaderTemplate>
             <ul id="rfc-list" class="list">
@@ -26,5 +28,6 @@
             </ul>
         </FooterTemplate>
     </asp:Repeater>
+</div>
 </asp:Content>
 
