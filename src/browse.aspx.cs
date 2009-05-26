@@ -26,9 +26,14 @@ public partial class browse : System.Web.UI.Page
             linkType = LinkType.Files;
         }
         dir = BrowseItem.GetRealPathOfLink(linkType, dir);
-        if(dirOk(dir)) {
+        if (dirOk(dir))
+        {
             rptFiles.DataSource = BrowseItem.GetList(dir);
             rptFiles.DataBind();
+        }
+        else
+        {
+            throw new Exception("Error reading directory: " + dir);
         }
     }
 
