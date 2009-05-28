@@ -105,23 +105,23 @@
         <li>
             <h2>Заголовок</h2>
             <label>
-                <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="32" />  
+                <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="64" />  
              </label>
         </li>
         <li>
             <h2>Краткое описание</h2>
             <label>               
-                <asp:TextBox ID="TextBoxDesc" runat="server" TextMode="MultiLine" Rows="20" Width="100%" MaxLength="512"/>  
+                <asp:TextBox ID="TextBoxDesc" runat="server" TextMode="MultiLine" Rows="20" Width="100%" MaxLength="2048"/>  
             </label>
         </li>        
         <li>
             <h2>Текст новости</h2>      
-            <asp:TextBox ID="TextBoxText" runat="server" TextMode="MultiLine" Rows="35" Width="100%" MaxLength="2048"/>  
+            <asp:TextBox ID="TextBoxText" runat="server" TextMode="MultiLine" Rows="35" Width="100%" MaxLength="8000"/>  
         </li>        
         <li>
             <h2>Источник(откуда стырили)</h2>
             <label>                
-                <asp:TextBox ID="TextBoxSource" runat="server" CssClass="input-text" MaxLength="256"/> 
+                <asp:TextBox ID="TextBoxSource" runat="server" CssClass="input-text" MaxLength="1024"/> 
             </label>
         </li>            
         <li>

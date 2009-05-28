@@ -11,11 +11,14 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Receiver.Text = GetReceiver();
+            if (!IsPostBack)
+            {
+                MessageReceiver.Text = GetReceiver();
+            }
         }
         protected void LinkButtonSend_Click(object sender, EventArgs e)
         {
-            ITCommunity.User receiver = ITCommunity.User.GetByLogin(Receiver.Text);
+            ITCommunity.User receiver = ITCommunity.User.GetByLogin(MessageReceiver.Text);
             if (receiver.Id > 0)
             {
                 Message.Send(receiver.Id, CurrentUser.User.Id, Server.HtmlEncode(MessageTitle.Text), Server.HtmlEncode(MessageText.Text));

@@ -10,7 +10,7 @@
     <link rel="stylesheet"    href="media/css/style.css"   type="text/css" />
     <link rel="stylesheet"    href="media/css/default.css" type="text/css" />   
      
-    <script src="media/js/clientcide-trunk-2.0.3.js"            type="text/javascript"></script>
+    <script src="media/js/clientcide-trunk-2.0.3.js"       type="text/javascript"></script>
     <!--
     <script src="media/js/clientcide-trunk-2.0.3.compressed.js" type="text/javascript"></script>   
     -->
@@ -60,10 +60,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <li>
-                                        <asp:HyperLink ID="hplLink" runat="Server" Text='<%# Eval("name")%>' NavigateUrl='<%# Eval("url")%>'
-                                            Target="<%# isBlank(Container.DataItem)%>"
-                                         />
-                                        
+                                        <asp:HyperLink ID="hplLink" runat="Server" Text='<%# Eval("name")%>' NavigateUrl='<%# Eval("url")%>' Target="<%# isBlank(Container.DataItem)%>" />                                        
                                     </li>
                                 </ItemTemplate>
                                 <FooterTemplate>

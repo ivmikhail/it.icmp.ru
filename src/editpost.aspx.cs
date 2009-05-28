@@ -135,21 +135,21 @@ namespace ITCommunity
         private List<string> ValidateData()
         {
             List<string> errors = new List<string>();
-            if (TextBoxTitle.Text.Length == 0 && TextBoxTitle.Text.Length < 32)
+            if (TextBoxTitle.Text.Length == 0 && TextBoxTitle.Text.Length < 64)
             {
-                errors.Add("Количество символов в заголовке должно быть от 1 до 32.");
+                errors.Add("Количество символов в заголовке должно быть от 1 до 64.");
             }
             if (TextBoxDesc.Text.Length == 0 && TextBoxDesc.Text.Length < 512)
             {
-                errors.Add("Количество символов в описании должно быть от 1 до 512.");
+                errors.Add("Количество символов в описании должно быть от 1 до 2048.");
             }
             if (TextBoxText.Text.Length == 0 && TextBoxText.Text.Length < 2048)
             {
-                errors.Add("Количество символов в теле новости должно быть от 1 до 2048.");
+                errors.Add("Количество символов в теле новости должно быть от 1 до 8000.");
             }
-            if (TextBoxSource.Text.Length > 256)
+            if (TextBoxSource.Text.Length > 1024)
             {
-                errors.Add("Количество символов в источнике должно быть от 0 до 256.");
+                errors.Add("Количество символов в источнике должно быть от 0 до 1024.");
             }
 
             return errors;

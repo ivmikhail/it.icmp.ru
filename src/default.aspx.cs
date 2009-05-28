@@ -34,10 +34,11 @@ namespace ITCommunity
                 PostsView.PostSource = Post.Get(page, Global.PostsCount, ref total_records);
             }
 
-            FillPager(total_records, page, "&cat=" + cat_id);
+            NewsPager.Fill("default.aspx", "&cat=" + cat_id, "page", page, total_records, Global.PostsCount);
+            //FillPager(total_records, page, "&cat=" + cat_id);
 
         }
-
+        /*
         private void FillPager(int total_records, int current_pagenum, string pageparams)
         {
             NewsPager.PagerPage = "default.aspx";
@@ -47,6 +48,7 @@ namespace ITCommunity
             NewsPager.TotalRecords = total_records;
             NewsPager.RecordsPerPage = Global.PostsCount;
         }
+         */
         private int GetCatId()
         {
             int id = -1;

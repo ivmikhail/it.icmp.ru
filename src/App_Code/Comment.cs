@@ -5,6 +5,8 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
+using System.Web.Caching;
+
 using ITCommunity;
 
 namespace ITCommunity
@@ -145,19 +147,25 @@ namespace ITCommunity
         public static List<Comment> GetLasts(int count)
         {
             //TODO:закешировать
-            DataTable dt = Database.CommentGetLasts(count);
-            List<Comment> comments = new List<Comment>();
-            for (int i = 0; i < dt.Rows.Count; i++)
+            List<Comment> comments = (List<Comment>)HttpContext.Current.Cache.Get("last_comments");
+
+            if (comments == null)
             {
-                string username = dt.Rows[i]["usernick"].ToString() == "" ? "anonymous" : dt.Rows[i]["usernick"].ToString();
-                string text = dt.Rows[i]["text"].ToString();
-                string post_id = dt.Rows[i]["post_id"].ToString();
-                if (text.Length > 30)
+                DataTable dt = Database.CommentGetLasts(count);
+                comments = new List<Comment>();
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    text = text.Substring(0, 30) + "...";
+                    string username = dt.Rows[i]["usernick"].ToString() == "" ? "anonymous" : dt.Rows[i]["usernick"].ToString();
+                    string text = dt.Rows[i]["text"].ToString();
+                    string post_id = dt.Rows[i]["post_id"].ToString();
+                    if (text.Length > 30)
+                    {
+                        text = text.Substring(0, 30) + "...";
+                    }
+                    // ХАК! см. коммент в конце метода
+                    comments.Add(new Comment(-1, -1, -1, DateTime.Now, "-1", username + ": " + "<a href='news.aspx?id=" + post_id + "#comments' alt='Посмотреть все комментарии'>" + text + "</a>"));
                 }
-                // хехе см. коммент в конце метода
-                comments.Add(new Comment(-1, -1, -1, DateTime.Now, "-1", username + ": " + "<a href='News.aspx?id=" + post_id + "#comments' alt='Посмотреть все комментарии'>" + text + "</a>"));
+                HttpContext.Current.Cache.Add("last_comments", comments, null, DateTime.Now.Add(new TimeSpan(0, 1, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
             return comments;
 
@@ -168,7 +176,7 @@ namespace ITCommunity
          
                  .aspx:
                  <asp:Repeater ID="PopularPosts" runat="server" >
-                        <%# Eval(что здесь должно быть?)%>
+                        <%# Eval(что здесь должно быть если сделать по нормальному?)%>
                  </asp:Repeater>
              */
         }

@@ -23,12 +23,12 @@ namespace ITCommunity
         private void LoadMessage()
         {
             Message mess = Message.GetById(GetMessageId());
-            if (mess.Receiver.Id == CurrentUser.User.Id)
+            if (mess.Receiver.Id == CurrentUser.User.Id || mess.Sender.Id == CurrentUser.User.Id)
             {
                 Sender.Text = mess.Receiver.Nick;
                 MessageTitle.Text = mess.Title;
                 MessageText.Text = mess.Text;
-                ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Receiver.Nick + "'>Ответить</a>";
+                ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Sender.Nick + "'>Ответить</a>";
                 mess.MarkAsRead();
             } else
             {

@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using System.Collections.Generic;
 using ITCommunity;
 
 namespace ITCommunity
@@ -16,34 +17,49 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoadMessages();
+            if (!IsPostBack)
+            {
+                LoadMessages();
+            }
         }
         private void LoadMessages()
         {
             int total_records = 0;
             int page = GetPage();
+            List<Message> messages = new List<Message>();
+            string pageparam = "";
             if (IsOutput())
             {
                 ListTitle.Text = "Исходящие";
-                RepeaterMessages.DataSource = Message.GetBySender(CurrentUser.User.Id, page, Global.MaxMessageCount, ref total_records);
+                messages = Message.GetBySender(CurrentUser.User.Id, page, Global.MaxMessageCount, ref total_records);
+                pageparam = "&a=output";
             } else
             {
                 ListTitle.Text = "Входящие";
-                RepeaterMessages.DataSource = Message.GetByReceiver(CurrentUser.User.Id, page, Global.MaxMessageCount, ref total_records);
+                messages = Message.GetByReceiver(CurrentUser.User.Id, page, Global.MaxMessageCount, ref total_records);
             }
+            RepeaterMessages.DataSource = messages;
             RepeaterMessages.DataBind();
+            MessagePager.Fill("mailview.aspx", pageparam, "page", page, total_records, Global.MaxMessageCount);
+        }
 
-            FillPager(total_records, page, "");
-        }
-        private void FillPager(int total_records, int current_pagenum, string pageparams)
+        protected void RepeaterMessages_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            MessagePager.PagerPage = "default.aspx";
-            MessagePager.PageParams = pageparams;
-            MessagePager.PageQueryString = "page";
-            MessagePager.CurrentPage = current_pagenum;
-            MessagePager.TotalRecords = total_records;
-            MessagePager.RecordsPerPage = Global.MaxMessageCount;
+            RepeaterItem item = e.Item;
+            if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+            {
+                Message current = (Message)item.DataItem;
+                Literal who = (Literal)item.FindControl("Who");
+                if (IsOutput())
+                {
+                    who.Text = "получатель: <a href='mailsend.aspx?receiver=" + current.Receiver.Nick + "' title='Отправить сообщение'>" + current.Receiver.Nick + "</a>";
+                } else
+                {
+                    who.Text = "автор: <a href='mailsend.aspx?receiver=" + current.Sender.Nick + "' title='Отправить сообщение'>" + current.Sender.Nick + "</a>"; 
+                }
+            }
         }
+
         private int GetPage()
         {
             int page_num;

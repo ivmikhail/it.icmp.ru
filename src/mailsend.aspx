@@ -5,7 +5,7 @@
         <li>
             <h2>Кому</h2>
             <label>
-                <asp:TextBox ID="Receiver" runat="server" MaxLength="20" Width="100%"/>
+                <asp:TextBox ID="MessageReceiver" runat="server" MaxLength="20" Width="100%"/>
             </label>
         </li>
         <li>

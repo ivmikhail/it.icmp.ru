@@ -25,17 +25,7 @@ namespace ITCommunity
             int records_count = 0;
             RepeaterNotes.DataSource = Note.Get(GetPage(), Global.MaxNotesCount, CurrentUser.User.Id, ref records_count);
             RepeaterNotes.DataBind();
-            FillPager(records_count, GetPage(), "");
-        }
-
-        private void FillPager(int total_records, int current_pagenum, string pageparams)
-        {
-            NotesPager.PagerPage = "notepad.aspx";
-            NotesPager.PageParams = pageparams;
-            NotesPager.PageQueryString = "page";
-            NotesPager.CurrentPage = current_pagenum;
-            NotesPager.TotalRecords = total_records;
-            NotesPager.RecordsPerPage = Global.MaxNotesCount;
+            NotesPager.Fill("notepad.aspx", "", "page", GetPage(), records_count, Global.MaxNotesCount);
         }
         private int GetPage()
         {
