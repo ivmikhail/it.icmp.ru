@@ -22,7 +22,27 @@ namespace ITCommunity
         private int current_page;
         private int total_records;
         private int records_per_page;
-
+        
+        //в коснтруктор нада пихнуть чтоли
+        /// <summary>
+        /// Обязательно надо вызвать данный метод
+        /// </summary>
+        /// <param name="page">Страница на которой находится пейджер, например default.aspx</param>
+        /// <param name="page_params">GET параметры страницы на которой находится пейджер, будут прицеплены в конце урла. В формате &cat_id=9&jopa=true</param>
+        /// <param name="query">Параметр в урле, например page(page=1)</param>
+        /// <param name="current_page">Номер текущей страницы</param>
+        /// <param name="total_records">Всего найденных записей</param>
+        /// <param name="records_per_page"></param>
+        public void Fill(string page, string page_params, string query, int current_page, int total_records, int records_per_page)
+        {
+            this.pager_page = page;
+            this.page_params = page_params;
+            this.query_string = query;
+            this.current_page = current_page;
+            this.total_records = total_records;
+            this.records_per_page = records_per_page;
+        }
+        /*
 
         /// <summary>
         /// Номер текущей страницы
@@ -105,6 +125,7 @@ namespace ITCommunity
                 page_params = value;
             }
         }
+         */
         protected void Page_Load(object sender, EventArgs e)
         {
             if (records_per_page == 0)

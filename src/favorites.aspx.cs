@@ -56,16 +56,8 @@ namespace ITCommunity
             int page = GetPage();
             PostsView.PostSource = Post.GetFavorites(CurrentUser.User.Id, page, Global.FavoritesCount, ref total_records);
 
-            FillPager(total_records, page, "");
-        }
-        private void FillPager(int total_records, int current_pagenum, string pageparams)
-        {
-            FavoritesPager.PagerPage = "favorites.aspx";
-            FavoritesPager.PageParams = pageparams;
-            FavoritesPager.PageQueryString = "page";
-            FavoritesPager.CurrentPage = current_pagenum;
-            FavoritesPager.TotalRecords = total_records;
-            FavoritesPager.RecordsPerPage = Global.PostsCount;
+
+            FavoritesPager.Fill("favorites.aspx", "", "page", page, total_records, Global.PostsCount);
         }
     }
 }

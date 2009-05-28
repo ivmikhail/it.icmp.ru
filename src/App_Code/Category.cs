@@ -5,6 +5,8 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
+using System.Web.Caching;
+
 using ITCommunity;
 
 namespace ITCommunity
@@ -53,6 +55,7 @@ namespace ITCommunity
         public void Update()
         {
             throw new System.NotImplementedException();
+            //RemoveCatsCache();
         }
 
         public Category(int id, string name, int sort)
@@ -79,7 +82,7 @@ namespace ITCommunity
             List<Category> cats = GetAll();
             foreach (Category cat in cats)
             {
-                if (cat._id == cat_id)
+                if (cat.Id == cat_id)
                 {
                     is_exist = true;
                     break;
@@ -94,8 +97,18 @@ namespace ITCommunity
         /// <param name="id">Идентификатор категории</param>
         public static Category GetById(int id)
         {
-            //TODO: закешировать
-            return GetCategoryFromRow(Database.CategoryGetById(id));
+            List<Category> cats = GetCatsFromCache();
+            Category result = new Category();
+            foreach (Category cat in cats)
+            {
+                if (cat.Id == id)
+                {
+                    result = cat;
+                    break;
+                }
+            }
+            return result;
+            //return GetCategoryFromRow(Database.CategoryGetById(id));
         }
 
         /// <summary>
@@ -103,8 +116,7 @@ namespace ITCommunity
         /// </summary>
         public static List<Category> GetAll()
         {
-            //TODO: Закешировать
-            return GetCategoryFromTable(Database.CategoryGetAll());
+            return GetCatsFromCache();
         }
 
         /// <summary>
@@ -112,6 +124,7 @@ namespace ITCommunity
         /// </summary>
         public static List<Category> GetPostCategories(int postId)
         {
+            //NOTE: Узкое место
             return GetCategoryFromTable(Database.PostGetCategories(postId));
         }
 
@@ -121,7 +134,7 @@ namespace ITCommunity
         /// <param name="id">Идентификатор категории</param>
         public static void Delete(int id)
         {
-            //TODO: сбросить кеш
+            RemoveCatsCache();
             Database.CategoryDel(id);
         }
 
@@ -131,8 +144,31 @@ namespace ITCommunity
         /// <param name="category">Сама категория</param>
         public static Category Add(Category category)
         {
-            //TODO: сбросить кеш
+            RemoveCatsCache();
             return GetCategoryFromRow(Database.CategoryAdd(category.Name, category.Sort));
+        }
+
+        private static List<Category> LoadCatsToCache()
+        {
+            List<Category> cats = GetCategoryFromTable(Database.CategoryGetAll());
+            //интересно, заменится ли если уже есть?
+            HttpContext.Current.Cache.Add("categories", cats, null, DateTime.Now.Add(new TimeSpan(7, 0, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+            return cats;
+        }
+
+        private static void RemoveCatsCache()
+        {
+            HttpContext.Current.Cache.Remove("categories");
+        }
+
+        private static List<Category> GetCatsFromCache()
+        {
+            List<Category> cats = (List<Category>)HttpContext.Current.Cache.Get("categories");
+            if (cats == null)
+            {
+                cats = LoadCatsToCache();
+            }
+            return cats;
         }
 
         private static List<Category> GetCategoryFromTable(DataTable dt)

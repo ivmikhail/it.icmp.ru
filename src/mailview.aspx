@@ -7,7 +7,7 @@
 <a href='mailview.aspx?a=output'>Исходящие</a>
 
 <h1><asp:Literal ID="ListTitle" runat="server" /></h1>
-<asp:Repeater ID="RepeaterMessages" runat="server">
+    <asp:Repeater ID="RepeaterMessages" runat="server" OnItemDataBound="RepeaterMessages_ItemDataBound">
         <HeaderTemplate>
             <ul id="mail-list" class="list">
         </HeaderTemplate>
@@ -18,7 +18,7 @@
                        <a href='mail.aspx?id=<%# Eval("id")%>'><%# Eval("title")%></a>     
                     </h2>
                     <div class="message-info">
-                       <%# Eval("CreateDate")%> / автор: <a href="mailsend.aspx?receiver=<%# Eval("sender.nick")%>"><%# Eval("sender.nick")%></a>        
+                       <%# Eval("CreateDate")%> / <asp:Literal ID="Who" runat="server" />
                     </div>
                 <div>
             </li>

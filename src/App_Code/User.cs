@@ -5,6 +5,7 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Data;
 using System.Collections.Generic;
+using System.Web.Caching;
 using ITCommunity;
 
 namespace ITCommunity
@@ -187,15 +188,20 @@ namespace ITCommunity
         /// <param name="count">Кол-во нужных пользователей</param>
         public static List<KeyValuePair<string, string>> GetTopPosters(int count)
         {
-            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
-            DataTable dt = Database.UserGetTopPosters(count);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)HttpContext.Current.Cache.Get("top_posters");
+            if (top == null)
             {
-                string username = dt.Rows[i]["usernick"].ToString();
-                string text = dt.Rows[i]["postcount"].ToString();
-                top.Add(new KeyValuePair<string, string>(username, text));
+                top = new List<KeyValuePair<string, string>>();
+                DataTable dt = Database.UserGetTopPosters(count);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string username = dt.Rows[i]["usernick"].ToString();
+                    string text = dt.Rows[i]["postcount"].ToString();
+                    top.Add(new KeyValuePair<string, string>(username, text));
+                }
+                HttpContext.Current.Cache.Add("top_posters", top, null, DateTime.Now.Add(new TimeSpan(1, 0, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+       
             }
-
             return top;
         }
 
@@ -204,16 +210,19 @@ namespace ITCommunity
         /// </summary>
         public static List<KeyValuePair<string, string>> GetStats()
         {
-            //TODO:Закешировать
-            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
-            DataTable dt = Database.UserGetStat();
-            for (int i = 0; i < dt.Rows.Count; i++)
+            List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)HttpContext.Current.Cache.Get("stats");
+            if (top == null)
             {
-                string key = dt.Rows[i]["key"].ToString();
-                string value = dt.Rows[i]["value"].ToString();
-                top.Add(new KeyValuePair<string, string>(key, value));
+                top = new List<KeyValuePair<string, string>>();
+                DataTable dt = Database.UserGetStat();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string key = dt.Rows[i]["key"].ToString();
+                    string value = dt.Rows[i]["value"].ToString();
+                    top.Add(new KeyValuePair<string, string>(key, value));
+                }
+                HttpContext.Current.Cache.Add("stats", top, null, DateTime.Now.Add(new TimeSpan(1, 0, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);       
             }
-
             return top;
         }
 
