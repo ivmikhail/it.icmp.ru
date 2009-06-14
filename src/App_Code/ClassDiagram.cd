@@ -22,7 +22,7 @@
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\Post.cs</FileName>
-      <HashCode>AgaCABAqAsgggEBEgAhGhAAAAAEQAQAIACABCAAggIA=</HashCode>
+      <HashCode>AgaCABAoAsgggEBEgAhGhAAAAAEQEQAIACABCAAggIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="ITCommunity.Comment">
@@ -36,11 +36,11 @@
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\MenuItem.cs</FileName>
-      <HashCode>AAdCIABAAAAAAAAAAARQQARQAAWAAAAACAAAAAAAAIA=</HashCode>
+      <HashCode>AAdCIABAAAgAAAAAAARQQARQAAWAQAAACAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="ITCommunity.CurrentUser">
-    <Position X="2.25" Y="5.25" Width="1.5" />
+    <Position X="2.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>App_Code\CurrentUser.cs</FileName>
       <HashCode>gAABAAAAAAAAAAAAAgAABAAAACABABAAAAAAAIAAIAA=</HashCode>

@@ -1,23 +1,46 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | Добавление новости" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
-<script type="text/javascript">
 
+<script type="text/javascript">
     window.addEvent('domready', function(){
+        //Text Editor text
+	    new nicEditor({buttonList : ['bold',
+                                     'italic',
+                                     'underline',                                         
+                                     'strikethrough',
+                                     'left',
+                                     'center',
+                                     'right',
+                                     'justify',
+                                     'ol',
+                                     'ul',
+                                     'subscript',
+                                     'superscript',
+                                     'removeformat',
+                                     'indent',
+                                     'outdent',
+                                     'hr',
+                                     'forecolor',
+                                     'bgcolor', 
+                                     'image']}
+        ).panelInstance('TextAreaPostText').SetASPNetHiddenField($("<%= HiddenPostText.ClientID %>").id);
+
         // Загрузка изображений        
-        var insert_place = $('<%= TextBoxText.ClientID %>');
-        
+        //var img_insert_place = $('TextAreaPostText');        
 	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
-		         insert_place.insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+this.src+"' /></a>\n", false);        
+	             var textEditor = nicEditors.findEditor('TextAreaPostText');
+		         textEditor.setContent(textEditor.getContent() + "<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+this.src+"' /></a>\n", false);        
 		    });
 		});		
 		
-		var cat_dropdown = $('<%= DropDownListCats.ClientID %>');
-	    var cat_names    = $('<%= SelectedCategoriesNames.ClientID %>'); 
-	    var cat_ids      = $('<%= SelectedCategoriesIds.ClientID %>'); 
 	    
 		// Выбор категорий
+		
+	    var cat_dropdown = $('<%= DropDownListCats.ClientID %>');
+	    var cat_names    = $('<%= SelectedCategoriesNames.ClientID %>'); 
+	    var cat_ids      = $('<%= SelectedCategoriesIds.ClientID %>');
 	    
 		cat_dropdown.addEvent('change', function(e) {
 		    var cat_name = cat_dropdown.options[cat_dropdown.selectedIndex].text;
@@ -110,13 +133,14 @@
         </li>
         <li>
             <h2>Краткое описание</h2>
-            <label>               
-                <asp:TextBox ID="TextBoxDesc" runat="server" TextMode="MultiLine" Rows="20" Width="100%" MaxLength="2048"/>  
-            </label>
+            <asp:TextBox ID="TextBoxDesc" runat="server" TextMode="MultiLine" Rows="20" Width="100%" MaxLength="2048"/>
         </li>        
-        <li>
-            <h2>Текст новости</h2>      
-            <asp:TextBox ID="TextBoxText" runat="server" TextMode="MultiLine" Rows="35" Width="100%" MaxLength="8000"/>  
+        <li>        
+            <h2>Текст новости</h2>  
+            <textarea id="TextAreaPostText" cols="90" rows="30">
+                <asp:Literal ID="LiteralPostText" runat="server" />
+            </textarea>
+            <asp:HiddenField ID="HiddenPostText" runat="server" />  
         </li>        
         <li>
             <h2>Источник(откуда стырили)</h2>
