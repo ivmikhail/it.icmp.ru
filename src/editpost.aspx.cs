@@ -54,7 +54,7 @@ namespace ITCommunity
             }
             TextBoxTitle.Text = current_post.Title;
             TextBoxDesc.Text = current_post.Description;
-            TextBoxText.Text = current_post.Text;
+            LiteralPostText.Text = current_post.Text;
             TextBoxSource.Text = current_post.Source;
             CheckBoxAttached.Checked = current_post.Attached;
 
@@ -85,7 +85,7 @@ namespace ITCommunity
                 newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
                 // TODO: Сделать буйню которая не будет ескейпить тока некоторые указанные теги
                 newpost.Description = TextBoxDesc.Text;
-                newpost.Text = TextBoxText.Text;
+                newpost.Text = HiddenPostText.Value;
                 newpost.Source = Server.HtmlEncode(TextBoxSource.Text);
                 newpost.Author = CurrentUser.User;
                 newpost.Attached = CheckBoxAttached.Checked;
@@ -107,6 +107,7 @@ namespace ITCommunity
             {
                 SelectedCategoriesIds.Value = "";
                 CatNamesLiteral.Text = "";
+                LiteralPostText.Text = HiddenPostText.Value;
                 WriteErrors(errors, "Новость не добавлена");
             }
         }
@@ -139,11 +140,11 @@ namespace ITCommunity
             {
                 errors.Add("Количество символов в заголовке должно быть от 1 до 64.");
             }
-            if (TextBoxDesc.Text.Length == 0 && TextBoxDesc.Text.Length < 512)
+            if (TextBoxDesc.Text.Length == 0 && TextBoxDesc.Text.Length < 2048)
             {
                 errors.Add("Количество символов в описании должно быть от 1 до 2048.");
             }
-            if (TextBoxText.Text.Length == 0 && TextBoxText.Text.Length < 2048)
+            if (HiddenPostText.Value.Length == 0 && HiddenPostText.Value.Length < 8000)
             {
                 errors.Add("Количество символов в теле новости должно быть от 1 до 8000.");
             }
