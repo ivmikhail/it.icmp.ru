@@ -266,7 +266,7 @@ var nicEditorConfig = bkClass.extend({
 		'removeformat' : {name : __('Remove Formatting'), command : 'removeformat', noActive : true},
 		'indent' : {name : __('Indent Text'), command : 'indent', noActive : true},
 		'outdent' : {name : __('Remove Indent'), command : 'outdent', noActive : true},
-		'hr' : {name : __('Horizontal Rule'), command : 'insertHorizontalRule', noActive : true}
+		'hr' : {name : __('Horizontal Rule(hr)'), command : 'insertHorizontalRule', noActive : true}
 	},
 	iconsPath : 'media/img/nicEditorIcons.gif',
 	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],

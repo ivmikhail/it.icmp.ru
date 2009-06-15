@@ -24,7 +24,7 @@
                             </asp:Repeater>                       
                         </h2>
                         <div class="post-desc">
-                            <%# Eval("description")%>                        
+                            <%# (Eval("description").ToString() == "") ? Eval("text") : Eval("description") %>                        
                         </div>
                         <div class="post-read-link">
                             <a href='news.aspx?id=<%# Eval("id")%>#cut'>Читать далее &rarr;</a>
