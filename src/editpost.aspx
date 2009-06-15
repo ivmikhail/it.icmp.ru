@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
 
 <script type="text/javascript">
-    window.addEvent('domready', function(){
+    bkLib.onDomLoaded(function() {     
         //Text Editor text
 	    new nicEditor({buttonList : ['bold',
                                      'italic',
@@ -18,16 +18,19 @@
                                      'subscript',
                                      'superscript',
                                      'removeformat',
+                                     'fontFormat', 
                                      'indent',
                                      'outdent',
                                      'hr',
                                      'forecolor',
                                      'bgcolor', 
-                                     'image']}
-        ).panelInstance('TextAreaPostText').SetASPNetHiddenField($("<%= HiddenPostText.ClientID %>").id);
-
-        // Загрузка изображений        
-        //var img_insert_place = $('TextAreaPostText');        
+                                     'image'],
+                              maxHeight:400}
+        ).panelInstance('TextAreaPostText').SetASPNetHiddenField($("<%= HiddenPostText.ClientID %>").name);
+    });
+    
+    window.addEvent('domready', function(){ 
+        // Загрузка изображений             
 	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
 	             var textEditor = nicEditors.findEditor('TextAreaPostText');
@@ -113,6 +116,9 @@
                 <asp:DropDownList ID="DropDownListCats" runat="server" CssClass="input-text"/>
             </label>
             <h3>Категории данной новости</h3>
+            <p class="note">                   
+                Категории выбирайте в последнюю очередь(состояние не сохраняется)
+            </p>
             <div id="SelectedCategoriesNames" runat="server">
                 <asp:Literal ID="CatNamesLiteral" runat="server"/>
             </div>            
@@ -130,14 +136,13 @@
             <label>
                 <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="64" />  
              </label>
-        </li>
-        <li>
-            <h2>Краткое описание</h2>
-            <asp:TextBox ID="TextBoxDesc" runat="server" TextMode="MultiLine" Rows="20" Width="100%" MaxLength="2048"/>
-        </li>        
+        </li>    
         <li>        
             <h2>Текст новости</h2>  
-            <textarea id="TextAreaPostText" cols="90" rows="30">
+            <p class="note">                   
+                Описание и текст разделяется разделителем(&#60;hr&#62;). Если разделитель не вставите, то на главной появится весь текст новости, иначе только описание.
+            </p>
+            <textarea id="TextAreaPostText" name="TextAreaPostText" cols="85" rows="40">
                 <asp:Literal ID="LiteralPostText" runat="server" />
             </textarea>
             <asp:HiddenField ID="HiddenPostText" runat="server" />  

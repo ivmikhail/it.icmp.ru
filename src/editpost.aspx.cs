@@ -53,8 +53,7 @@ namespace ITCommunity
                 SelectedCategoriesIds.Value += cat.Id;
             }
             TextBoxTitle.Text = current_post.Title;
-            TextBoxDesc.Text = current_post.Description;
-            LiteralPostText.Text = current_post.Text;
+            LiteralPostText.Text = current_post.Description + current_post.Text;
             TextBoxSource.Text = current_post.Source;
             CheckBoxAttached.Checked = current_post.Attached;
 
@@ -84,8 +83,23 @@ namespace ITCommunity
                 newpost.Categories = cats;
                 newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
                 // TODO: Сделать буйню которая не будет ескейпить тока некоторые указанные теги
-                newpost.Description = TextBoxDesc.Text;
-                newpost.Text = HiddenPostText.Value;
+
+                string post_content = HiddenPostText.Value;
+                int index = post_content.ToLower().IndexOf("<hr>");
+                string post_desc = "";
+                string post_text = "";
+                if (index > 0)
+                {
+                    post_desc = post_content.Substring(0, index);
+                    post_text = post_content.Substring(index);
+                } else
+                {
+                    post_desc = "";
+                    post_text = post_content;
+                }
+
+                newpost.Description = post_desc;
+                newpost.Text = post_text;
                 newpost.Source = Server.HtmlEncode(TextBoxSource.Text);
                 newpost.Author = CurrentUser.User;
                 newpost.Attached = CheckBoxAttached.Checked;
@@ -140,10 +154,6 @@ namespace ITCommunity
             {
                 errors.Add("Количество символов в заголовке должно быть от 1 до 64.");
             }
-            if (TextBoxDesc.Text.Length == 0 && TextBoxDesc.Text.Length < 2048)
-            {
-                errors.Add("Количество символов в описании должно быть от 1 до 2048.");
-            }
             if (HiddenPostText.Value.Length == 0 && HiddenPostText.Value.Length < 8000)
             {
                 errors.Add("Количество символов в теле новости должно быть от 1 до 8000.");
@@ -188,6 +198,7 @@ namespace ITCommunity
             {
                 UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' class='uploaded-image'/>";
             }
+            AttachImageButton.Focus();
         }
 
         private void LoadImages(Post post)
