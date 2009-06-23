@@ -14,7 +14,7 @@ namespace ITCommunity
 {
 
     /// <summary>
-    /// Summary description for SendEmail
+    /// Класс отсылающий емейлы
     /// </summary>
     public static class SendEmail
     {

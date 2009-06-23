@@ -5,6 +5,7 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
+using System.Web.Caching;
 using ITCommunity;
 
 namespace ITCommunity
@@ -166,6 +167,11 @@ namespace ITCommunity
             }
         }
 
+        /// <summary>
+        /// Выясняем является ли данный пользователь автором(создателем) новости
+        /// </summary>
+        /// <param name="user">Пользователь</param>
+        /// <returns>да/нет</returns>
         public bool IsPostOwner(User user)
         {
             bool is_owner = false;
@@ -182,32 +188,35 @@ namespace ITCommunity
             }
             return is_owner;
         }
+
         /// <summary>
         /// Выясняем является ли статья избранным для данного пользователя
         /// </summary>
         /// <param name="user_id">Данный пользователь</param>
-        /// <returns>бул</returns>
+        /// <returns>Булеан</returns>
         public bool IsFavorites(int user_id)
         {
             return Convert.ToBoolean(Database.PostIsFavorite(user_id, this.Id));
         }
+
         /// <summary>
         /// Возвращает ссылку на удаление/добавление новости из/в избранное
         /// </summary>
         public string FavoritesAction
         {
+            //TODO: Переделать!
             get
             {
-                string value = "<a href='register.aspx?favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/non-fav.png' class='fixPNG' /></a>"; ;
+                string value = "<a href='register.aspx?favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/design/non-fav.png' class='fixPNG favorites-link' /></a>"; ;
                 if (CurrentUser.isAuth)
                 {
                     if (IsFavorites(CurrentUser.User.Id))
                     {
 
-                        value = "<a href='favorites.aspx?&a=del&post=" + this.Id + "' title='Убрать из избранного'><img src='media/img/is-fav.png' class='fixPNG' /></a>";
+                        value = "<a href='favorites.aspx?&a=del&post=" + this.Id + "' title='Убрать из избранного'><img src='media/img/design/is-fav.png' class='fixPNG' /></a>";
                     } else
                     {
-                        value = "<a href='favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/non-fav.png' class='fixPNG' /></a>";
+                        value = "<a href='favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/design/non-fav.png' class='fixPNG' /></a>";
                     }
                 }
                 return value;
@@ -216,21 +225,41 @@ namespace ITCommunity
 
         /// <summary>
         /// Обновляем новость и его категории
+        /// 
+        /// Обновляются такие атрибуты как:
+        /// * title - Название 
+        /// * description - Краткое описание
+        /// * text - Текст новости
+        /// * attached - Прикреплено ли
+        /// * source - Источник(ссылка на оригинал)
+        /// 
+        /// * categories - категории новости(отдельные таблицы)
         /// </summary>
         public void UpdateWithCategories()
         {
             Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
             Post.PostAttachCategories(_cats, this);
         }
+
         /// <summary>
-        /// Обновляем только новость
+        /// Обновляем только новость(категории и кол-во просмотров не обновляются)
+        /// 
+        /// Обновляются такие атрибуты как:
+        /// * title - Название 
+        /// * description - Краткое описание
+        /// * text - Текст новости
+        /// * attached - Прикреплено ли
+        /// * source - Источник(ссылка на оригинал)
+        /// 
         /// </summary>
+
         public void Update()
         {
             Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
         }
+
         /// <summary>
-        /// Обновляем кол-в просмотров
+        /// Увеличиваем кол-во просмотров новости на 1 единицу
         /// </summary>
         public void UpdateViews()
         {
@@ -285,14 +314,17 @@ namespace ITCommunity
         {
             // лучше не придумалось
 
-            /* формируется запрос вида
+            /* 
+                Формируется запрос вида                
+             
                 INSERT INTO post_cat(post_id, cat_id) 
                 SELECT 1,2 
                 UNION ALL
                 SELECT 1,3
                 UNION ALL
                 SELECT 1,4
-             (множественная вставка как в мускле не прокатывает)
+              
+                (множественная вставка как в мускле не прокатывает)
              */
             string query = "INSERT INTO post_cat(post_id, cat_id) ";
             string param = String.Empty;
@@ -309,7 +341,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Поиск по постам, учитываем title, desc, text
+        /// Полнотекстовый поиск по постам, учитываем title, desc, text
         /// </summary>
         /// <param name="page">текущая страница</param>
         /// <param name="count">кол-во постов на страницу</param>
@@ -320,6 +352,7 @@ namespace ITCommunity
         {
             return GetPostsFromTable(Database.PostSearch(query, page, count, ref posts_count));
         }
+
         /// <summary>
         /// Забираем посты постранично, с учетом даты и аттачей
         /// </summary>
@@ -329,6 +362,7 @@ namespace ITCommunity
         {
             return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
         }
+
         /// <summary>
         /// Забираем посты постранично, с учетом даты, аттачей и категории
         /// </summary>
@@ -340,17 +374,19 @@ namespace ITCommunity
             return GetPostsFromTable(Database.PostGetByCat(page, count, cat_id, ref posts_count));
         }
 
-
-
         /// <summary>
-        /// Популярные посты
+        /// Популярные посты. Т.к хранится в кеше, то возможны задержки при изменении 
+        /// параметров period и count в течении жизни кеша
         /// </summary>
-        /// <param name="period">Период, в днях. Например популярные посты за последние N дней.</param>
+        /// <param name="period">Период, в днях. Например, популярные посты за последние N дней.</param>
         /// <param name="count">Кол-во нужных постов</param>
         public static List<Post> GetTop(int period, int count)
         {
-            return GetPostsFromTable(Database.PostGetTop(period, count));
+            return GetTopPostsFromCache(period, count);
+            //return GetPostsFromTable(Database.PostGetTop(period, count));
         }
+
+
 
         /// <summary>
         /// Добавление нового поста
@@ -369,22 +405,33 @@ namespace ITCommunity
             PostAttachCategories(cats, newpost);
             return newpost;
         }
+
         /// <summary>
-        /// Избранные посты
+        /// Получаем избранные посты пользователя
         /// </summary>
-        /// <param name="user_id"></param>
-        /// <returns></returns>
+        /// <param name="user_id">идентификатор пользователя</param>
+        /// <returns>список постов</returns>
         public static List<Post> GetFavorites(int user_id, int page, int count, ref int total_records)
         {
             return GetPostsFromTable(Database.FavoriteGetByUser(user_id, page, count, ref total_records));
         }
 
+        /// <summary>
+        /// Убираем новость из "избранных" данного пользователя
+        /// </summary>
+        /// <param name="post_id">идентификатор поста</param>
+        /// <param name="user_id">идентификатор пользователя</param>
         public static void FavoriteDelete(int post_id, int user_id)
         {
             Database.FavoriteDel(post_id, user_id);
         }
 
-        public static Post FavoriteAdd(int user_id, int post_id)
+        /// <summary>
+        /// Добавляем посты в "избранное" пользователя
+        /// </summary>
+        /// <param name="post_id">идентификатор поста</param>
+        /// <param name="user_id">идентификатор пользователя</param>
+        public static Post FavoriteAdd(int post_id, int user_id)
         {
             return GetPostFromRow(Database.FavoriteAdd(user_id, post_id));
         }
@@ -421,6 +468,28 @@ namespace ITCommunity
                              Category.GetPostCategories(id)); //TODO: MZFK
             }
             return post;
+        }
+
+        private static List<Post> LoadTopPostsToCache(int period, int count)
+        {
+            List<Post> posts = GetPostsFromTable(Database.PostGetTop(period, count));
+            HttpContext.Current.Cache.Add("top_posts", posts, null, DateTime.Now.Add(new TimeSpan(0, 1, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+            return posts;
+        }
+
+        private static void RemoveTopPostsFromCache()
+        {
+            HttpContext.Current.Cache.Remove("top_posts");
+        }
+
+        private static List<Post> GetTopPostsFromCache(int period, int count)
+        {
+            List<Post> posts = (List<Post>)HttpContext.Current.Cache.Get("top_posts");
+            if (posts == null)
+            {
+                posts = LoadTopPostsToCache(period, count);
+            }
+            return posts;
         }
     }
 }

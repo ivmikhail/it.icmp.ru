@@ -120,8 +120,10 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Берем все категории новости
+        /// Получаем категории данной новости
         /// </summary>
+        /// <param name="postId">Идентификатор новости</param>
+        /// <returns>Список категорий</returns>
         public static List<Category> GetPostCategories(int postId)
         {
             //NOTE: Узкое место
@@ -151,7 +153,6 @@ namespace ITCommunity
         private static List<Category> LoadCatsToCache()
         {
             List<Category> cats = GetCategoryFromTable(Database.CategoryGetAll());
-            //интересно, заменится ли если уже есть?
             HttpContext.Current.Cache.Add("categories", cats, null, DateTime.Now.Add(new TimeSpan(7, 0, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             return cats;
         }

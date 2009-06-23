@@ -49,16 +49,20 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Пустой юзер если коммент оставил аноним
+        /// Пользователь оставивший комментарий, если это сделал не авторизованный человек,
+        /// то возвращается "пустой" пользователь(конструктор по умолчанию)
         /// </summary>
         public User Author
         {
             get
             {
-                User user = new User();
+                User user;
                 if (_userId > 0)
                 {
                     user = User.GetById(_userId);
+                } else
+                {
+                    user = new User();
                 }
                 return user;
             }
@@ -112,6 +116,7 @@ namespace ITCommunity
             _ip = ip;
             _text = text;
         }
+
         public Comment()
         {
             _id = -1;
@@ -141,12 +146,34 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Забираем последние комментарии в формате "author: commenttext"
+        /// Забираем последние комментарии в формате "author: commenttext". Да да, именно в таком формате!
+        /// 
+        /// В этом методе использовался грязный хак. Возвращается список комментариев, 
+        /// в тексте каждого комментария хранится хрень типа %username%:first 30 symbols of comment
+        /// 
+        /// id, usernick, post_id каждого комментария забиты чушью.
+        /// 
+        /// Обьяснение индусского кода в теле метода.  
         /// </summary>
         /// <param name="count">Кол-во нужных комментов</param>
         public static List<Comment> GetLasts(int count)
         {
-            //TODO:закешировать
+            /*            
+            Вот почему так сделано
+            .cs:
+                LastComments.DataSource = Comments.GetLasts(Global.LastCommentsCount);
+                // Comments.GetLasts допустим возвращает List<string>, иначе слишком затратно вытаскивать отдельно автора
+                LastComments.DataBind();
+       
+            .aspx:
+                <asp:Repeater ID="PopularPosts" runat="server" >
+                    <%# Eval(что здесь должно быть если сделать по нормальному?)%>
+                </asp:Repeater>
+            */
+
+
+            //TODO: ПЕРЕДЕЛАТЬ БЛЯТЬ! хранить в кеше че нить типа KeyValuePair<User, Comment>
+
             List<Comment> comments = (List<Comment>)HttpContext.Current.Cache.Get("last_comments");
 
             if (comments == null)
@@ -158,9 +185,9 @@ namespace ITCommunity
                     string username = dt.Rows[i]["usernick"].ToString() == "" ? "anonymous" : dt.Rows[i]["usernick"].ToString();
                     string text = dt.Rows[i]["text"].ToString();
                     string post_id = dt.Rows[i]["post_id"].ToString();
-                    if (text.Length > 30)
+                    if (text.Length > 25)
                     {
-                        text = text.Substring(0, 30) + "...";
+                        text = text.Substring(0, 25) + "...";
                     }
                     // ХАК! см. коммент в конце метода
                     comments.Add(new Comment(-1, -1, -1, DateTime.Now, "-1", username + ": " + "<a href='news.aspx?id=" + post_id + "#comments' alt='Посмотреть все комментарии'>" + text + "</a>"));
@@ -168,21 +195,10 @@ namespace ITCommunity
                 HttpContext.Current.Cache.Add("last_comments", comments, null, DateTime.Now.Add(new TimeSpan(0, 1, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
             return comments;
-
-            /*
-                  .cs:
-                  LastComments.DataSource = Comments.GetLasts(Global.LastCommentsCount); // GetLasts возвращает List<string> 
-                  LastComments.DataBind();
-         
-                 .aspx:
-                 <asp:Repeater ID="PopularPosts" runat="server" >
-                        <%# Eval(что здесь должно быть если сделать по нормальному?)%>
-                 </asp:Repeater>
-             */
         }
 
         /// <summary>
-        /// Добавление комментария в базу
+        /// Добавление комментария в базу. Кол-во комментариев поста обновляется на уровне базы
         /// </summary>
         /// <param name="comment">Сам коммент</param>
         public static Comment Add(Comment comment)

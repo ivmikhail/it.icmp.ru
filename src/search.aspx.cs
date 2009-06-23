@@ -18,10 +18,13 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string query = GetQuery();
-            if (query != "")
+            if (!IsPostBack)
             {
-                LoadPosts(query);
+                string query = GetQuery();
+                if (query != "")
+                {
+                    LoadPosts(query);
+                }
             }
         }
 

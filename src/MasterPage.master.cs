@@ -18,6 +18,17 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ShowUserData();
+            LoadCategories();
+            LoadLastComments();
+            LoadLinks();
+            LoadPopularPosts();
+            LoadLastRegistered();
+            LoadTopPosters();
+            LoadStat();
+        }
+        private void ShowUserData()
+        {
             if (CurrentUser.isAuth)
             {
                 UserProfile.Visible = true;
@@ -25,14 +36,6 @@ namespace ITCommunity
             {
                 LoginForm.Visible = true;
             }
-            LoadLinks();
-            LoadLastComments();
-            LoadCategories();
-            LoadPopularPosts();
-            LoadTopPosters();
-            LoadLastRegistered();
-            LoadStat();
-
         }
         private void LoadLinks()
         {
@@ -95,13 +98,20 @@ namespace ITCommunity
                 RepeaterSubMenu.DataBind();
             }
         }
-        protected String isBlank(object dataItem) {
+        protected String IsBlank(object dataItem) {
+
+            string result = "_self";
             bool isInNew = (bool)DataBinder.Eval(dataItem, "newWindow");
+
             if(isInNew) {
-                return "_blank";
-            } else {
-                return "_self";
+                result = "_blank";
             }
+
+            return result;
+        }
+        protected void LinkButtonSearch_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("search.aspx?q=" + TextBoxQuery.Text);
         }
     }
 
