@@ -23,7 +23,7 @@ namespace ITCommunity
         private int total_records;
         private int records_per_page;
         
-        //в коснтруктор нада пихнуть чтоли
+        //TODO: наверное надо очеловечить инициализацию
         /// <summary>
         /// Обязательно надо вызвать данный метод
         /// </summary>
@@ -42,90 +42,7 @@ namespace ITCommunity
             this.total_records = total_records;
             this.records_per_page = records_per_page;
         }
-        /*
 
-        /// <summary>
-        /// Номер текущей страницы
-        /// </summary>
-        public int CurrentPage
-        {
-            get
-            {
-                return current_page;
-            }
-            set
-            {
-                current_page = value;
-            }
-        }
-        /// <summary>
-        /// Всего найденных записей
-        /// </summary>
-        public int TotalRecords
-        {
-            get
-            {
-                return total_records;
-            }
-            set
-            {
-                total_records = value;
-            }
-        }
-        public int RecordsPerPage
-        {
-            get
-            {
-                return records_per_page;
-            }
-            set
-            {
-                records_per_page = value;
-            }
-        }
-        /// <summary>
-        /// Параметр в урле, например page(page=1)
-        /// </summary>
-        public string PageQueryString
-        {
-            get
-            {
-                return query_string;
-            }
-            set
-            {
-                query_string = value;
-            }
-        }
-        /// <summary>
-        /// Страница на которой находится пейджер, например default.aspx
-        /// </summary>
-        public string PagerPage
-        {
-            get
-            {
-                return pager_page;
-            }
-            set
-            {
-                pager_page = value;
-            }
-        }
-        /// <summary>
-        /// GET параметры страницы на которой находится пейджер, будут прицеплены в конце урла. В формате &cat_id=9&jopa=true
-        /// </summary>
-        public string PageParams
-        {
-            get
-            {
-                return page_params;
-            }
-            set
-            {
-                page_params = value;
-            }
-        }
-         */
         protected void Page_Load(object sender, EventArgs e)
         {
             if (records_per_page == 0)

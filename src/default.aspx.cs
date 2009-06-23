@@ -61,9 +61,5 @@ namespace ITCommunity
             Int32.TryParse(Request.QueryString["page"], out page_num);
             return page_num == 0 ? 1 : page_num;
         }
-        protected void LinkButtonSearch_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("search.aspx?q=" + TextBoxQuery.Text);
-        }
-}
+    }
 }

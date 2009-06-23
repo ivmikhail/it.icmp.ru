@@ -3693,8 +3693,8 @@ var Request = new Class({
 		emulation: true,
 		urlEncoded: true,
 		encoding: 'utf-8',
-		evalScripts: false,
-		evalResponse: false,
+		evalScripts: true,
+		evalResponse: true,
 		noCache: false
 	},
 

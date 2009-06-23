@@ -1,8 +1,8 @@
 ﻿body
 {
-	font: 90% Verdana, Arial, Helvetica, sans-serif;
+	font: 95% Verdana, Arial, Helvetica, sans-serif;
     color: #373737;
-    background: #fff;   
+    background: #fff;  
 }
 a
 {
@@ -10,17 +10,118 @@ a
 }
 a:hover
 {
-    color: blue;
+	color: #3366cc;
 }
+
 p
 {
 	margin:0 10px 10px;
 }
 
+h1 {
+	margin: 12px 0 13px 0;
+	font-size: 1.6em;
+	font-weight: 300;
+}
+h2 {
+	font-size: 1.4em;
+	padding: 8px 0 8px 0;
+	font-weight: 200;
+}
+h3 {
+	font-size: 1.2em;
+	margin: 4px 0 3px 0;
+	font-weight: 100;
+}
+
+.user-profile a
+{
+	color: #3366cc;
+	text-decoration:none;
+}
+.user-profile a:hover
+{
+	background-color: #3366cc;
+	color: #ffffff;
+	text-decoration:none;
+}
+.categories-links a
+{
+	color: #3366cc;
+	text-decoration:none;
+}
+.categories-links a:hover
+{
+	background-color: #008080;
+	color: #ffffff;
+	text-decoration:none;
+}
+.menu-links a
+{
+	color: #3366cc;
+	text-decoration:none;
+}
+.menu-links a:hover
+{
+	background-color: #3366cc;
+	color: #ffffff;
+	text-decoration:none;
+}
+.lastcomments-links a
+{
+	color: #3366cc;
+	text-decoration:none;
+}
+.lastcomments-links a:hover
+{
+	background-color: #3366cc;
+	color: #ffffff;
+	text-decoration:none;
+}
+.topposts-links a
+{
+	color: #3366cc;
+	text-decoration:none;
+}
+.topposts-links a:hover
+{
+	background-color: #3366cc;
+	color: #ffffff;
+	text-decoration:none;
+}
+
+div#wrapper
+{
+	float:left;
+	width:100%;
+}
+
+div#header:hover
+{
+	cursor:pointer;
+}
+
 div#header
 {
-	background-image: url(../../media/img/top_image.jpg);
+	font: 100% Monospace, Lucida Console;
+	padding: 2% 0 1% 0;
+	text-align:center;
+	font-size:3.5em;	
+	font-weight:bold;
 }
+div#header .code-class
+{
+	color:#2b91af;
+}
+div#header .code-comment
+{
+	color:#008000;
+}
+#divider-header 
+{
+	background: url(../../media/img/design/divider.jpg) bottom left repeat-x;
+}
+
 div#navigate
 {
 	float:left;
@@ -34,40 +135,22 @@ div#dynamic-content
 }
 
 div#stats
-{
+{	
 	float:left;
 	width:25%;
 	margin-left:-25%;
 }
+
 div#footer
 {
-	padding:50px 0 0 0;
+	
+	background: url(../../media/img/design/divider.jpg) top right repeat-x;
+	padding:50px 0 20px 0;
 	clear:left;
 	width:100%;
 	text-align:center;
 }
 
-div#wrapper
-{
-	float:left;
-	width:100%;
-}
-
-h1 {
-	margin: 20px 0 15px 0;
-	font-size: 1.6em;
-	font-weight: 500;
-}
-h2 {
-	font-size: 1.4em;
-	padding: 15px 0 10px 0;
-	font-weight: 500;
-}
-h3 {
-	font-size: 1.2em;
-	margin: 10px 0 5px 0;
-	font-weight: 500;
-}
 div#dynamic-content p {
 	margin-bottom: 0.7em;
 	line-height: 1.6em;
@@ -83,6 +166,12 @@ div#dynamic-content .input-text {
 	text-align: center;
 	margin-top: 5px;
 }
+
+div#dynamic-content .post-category-link:hover
+{
+	color:#008080;
+}
+
 div#dynamic-content .post-desc 
 {
 	margin: 10px 0 0 20px;
@@ -99,12 +188,32 @@ div#dynamic-content .post-read-link
 }
 div#dynamic-content .post-info
 {
-	background: #f3f3f3; 
 	border: 1px dotted gray;
 	padding: 5px;
 	margin:10px;
 	line-height: 1.3em;
 	width:90%;
+}
+
+div#dynamic-content .post-info a
+{
+	text-decoration:none;
+}
+
+div#dynamic-content .post-info a:hover
+{
+	text-decoration:none;
+}
+
+div#dynamic-content .post-author-link:hover
+{
+	background:red;
+	color:#ffffff;
+}
+div#dynamic-content .post-comments-link:hover
+{
+	background:green;
+	color:#ffffff;
 }
 div#dynamic-content .attached-image
 {
@@ -139,13 +248,18 @@ div#dynamic-content .rfc-title
 {
 	color:red;
 }
-.note
+div#dynamic-content .note
 {
 	font-size: 0.8em;
 }
 .list
 {
 	list-style-type:none;
+}
+#pager-container
+{
+	text-align:right;
+	margin: 5% 0 0 0;
 }
 .pager li{
 	border:0;
@@ -180,8 +294,10 @@ div#dynamic-content .rfc-title
 	font-weight:bold;
 	border:solid 1px #fff;
 }
-.pager .active{
-	color:#ff0084;
+.pager .active
+{
+	background:#0063e3;
+	color:#ffffff;
 	font-weight:bold;
 	padding:4px 6px;
 }
@@ -209,7 +325,7 @@ div#uploadImagesList img:hover
 	padding: 0 0 0 6px;
 	height: 26px;
 	width: auto;
-	background: url(../../media/img/tab-bkg.gif) bottom left repeat-x;
+	background: url(../../media/img/design/tab-bkg.gif) bottom left repeat-x;
 }
 
 
@@ -219,14 +335,14 @@ div#uploadImagesList img:hover
 
 #accounts-tabs .tabSet li {
 	list-style-type: none;
-	background: url(../../media/img/tab-off-l.gif) top left no-repeat !important;
+	background: url(../../media/img/design/tab-off-l.gif) top left no-repeat !important;
 	float: left !important;
 	margin: 0 2px 0 0 !important;
 	padding: 0 0 0 14px !important;
 	cursor: pointer;
 }	
 #accounts-tabs .tabSet li a {
-	background: url(../../media/img/tab-off-r.gif) top right no-repeat !important;
+	background: url(../../media/img/design/tab-off-r.gif) top right no-repeat !important;
 	display: block !important;
 	float: left !important;
 	height: 24px !important;
@@ -241,10 +357,10 @@ div#uploadImagesList img:hover
 }
 
 #accounts-tabs .tabSet li.on {
-	background: url(../../media/img/tab-on-l.gif) top left no-repeat !important;
+	background: url(../../media/img/design/tab-on-l.gif) top left no-repeat !important;
 }	
 #accounts-tabs .tabSet li.on a {
-	background: url(../../media/img/tab-on-r.gif) top right no-repeat !important;
+	background: url(../../media/img/design/tab-on-r.gif) top right no-repeat !important;
 	color: #333;
 }
 
@@ -264,6 +380,7 @@ div#uploadImagesList img:hover
 	width:100%;
 	text-align:left;
 }
+
 #modify-user
 {
 	width:60%;

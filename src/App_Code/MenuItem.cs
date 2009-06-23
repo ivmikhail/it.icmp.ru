@@ -88,7 +88,7 @@ namespace ITCommunity
                 _sort = value;
             }
         }
-        public bool NewWIndow {
+        public bool NewWindow {
             get {
                 return _newWindow != 0;
             }
@@ -141,17 +141,27 @@ namespace ITCommunity
            // return GetItemFromRow(Database.MenuItemsGetById(id));
         }
 
+
+
         /// <summary>
-        /// Получаем пунктики по родительскому меню
+        /// Получаем пунктики по родителю
+        /// 
+        /// Чтобы получить верхний уровень нужно передать в качестве идентификатора родителя 0.
         /// </summary>
-        /// <param name="parentId">Родитель</param>
+        /// <param name="parentId">Идентификатор родительского пункта</param>
+        /// <returns>Список подпунктов. Если идентификатор не натуральное число возвращается верхний уровень</returns>
         public static List<MenuItem> GetByParent(int parentId)
         {
+            int parent = -1;
+            if (parentId > 0)
+            {
+                parent = parentId;
+            }
             List<MenuItem> menu_items = GetMenuFromCache();
             List<MenuItem> result = new List<MenuItem>();
             foreach (MenuItem menu in menu_items)
             {
-                if (menu.Parent.Id == parentId)
+                if (menu.Parent.Id == parent)
                 {
                     result.Add(menu);
                 }

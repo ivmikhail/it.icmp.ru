@@ -1,41 +1,17 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | Добавление новости" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
+<script type="text/javascript" src="media/js/whizzywig.js"></script>
+
 
 <script type="text/javascript">
-    bkLib.onDomLoaded(function() {     
-        //Text Editor text
-	    new nicEditor({buttonList : ['bold',
-                                     'italic',
-                                     'underline',                                         
-                                     'strikethrough',
-                                     'left',
-                                     'center',
-                                     'right',
-                                     'justify',
-                                     'ol',
-                                     'ul',
-                                     'subscript',
-                                     'superscript',
-                                     'removeformat',
-                                     'fontFormat', 
-                                     'indent',
-                                     'outdent',
-                                     'hr',
-                                     'forecolor',
-                                     'bgcolor', 
-                                     'image'],
-                              maxHeight:400}
-        ).panelInstance('TextAreaPostText').SetASPNetHiddenField($("<%= HiddenPostText.ClientID %>").name);
-    });
-    
     window.addEvent('domready', function(){ 
+        
         // Загрузка изображений             
 	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
-	             var textEditor = nicEditors.findEditor('TextAreaPostText');
-		         textEditor.setContent(textEditor.getContent() + "<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+this.src+"' /></a>\n", false);        
-		    });
+                    insHTML("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+this.src+"' /></a>");
+			    });
 		});		
 		
 	    
@@ -128,8 +104,11 @@
             <h2>
                 <label>
                     Прикреплено <asp:CheckBox ID="CheckBoxAttached" runat="server" Enabled="false"/>
-                </label>
+                </label>                
             </h2>
+            <p class="note">                   
+                Администраторы могу "прикреплять" важные посты. Важный пост всегда виден сверху.
+            </p>
         </li>
         <li>
             <h2>Заголовок</h2>
@@ -142,10 +121,8 @@
             <p class="note">                   
                 Описание и текст разделяется разделителем(&#60;hr&#62;). Если разделитель не вставите, то на главной появится весь текст новости, иначе только описание.
             </p>
-            <textarea id="TextAreaPostText" name="TextAreaPostText" cols="85" rows="40">
-                <asp:Literal ID="LiteralPostText" runat="server" />
+            <textarea id="TextAreaPostText" runat="server" cols="85" rows="40">
             </textarea>
-            <asp:HiddenField ID="HiddenPostText" runat="server" />  
         </li>        
         <li>
             <h2>Источник(откуда стырили)</h2>
@@ -159,7 +136,7 @@
             </div>
         </li>
         <li style="text-align:right;">
-            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click">Добавить</asp:LinkButton>
+            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click" OnClientClick="syncTextarea();">Добавить</asp:LinkButton>
         </li>
         <li>
             <h2>Картинки</h2>
