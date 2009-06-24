@@ -84,22 +84,10 @@ namespace ITCommunity
                 newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
                 // TODO: Сделать буйню которая не будет ескейпить тока некоторые указанные теги
 
-                string post_content = TextAreaPostText.Text;
-                int index = post_content.ToLower().IndexOf("[cut]");
-                string post_desc = "";
-                string post_text = "";
-                if (index > 0)
-                {
-                    post_desc = post_content.Substring(0, index);
-                    post_text = post_content.Substring(index);
-                } else
-                {
-                    post_desc = "";
-                    post_text = post_content;
-                }
+                List<string> post_content = SplitPostContent(TextAreaPostText.Text);
+                newpost.Description = post_content[0];
+                newpost.Text = post_content[1];
 
-                newpost.Description = post_desc;
-                newpost.Text = post_text;
                 newpost.Source = Server.HtmlEncode(TextBoxSource.Text);
                 newpost.Author = CurrentUser.User;
                 newpost.Attached = CheckBoxAttached.Checked;
@@ -150,13 +138,22 @@ namespace ITCommunity
         private List<string> ValidateData()
         {
             List<string> errors = new List<string>();
-            if (TextBoxTitle.Text.Length == 0 && TextBoxTitle.Text.Length < 64)
+
+            List<string> post_content = SplitPostContent(TextAreaPostText.Text);
+            string desc = post_content[0];
+            string text = post_content[1];
+
+            if (TextBoxTitle.Text.Length == 0 || TextBoxTitle.Text.Length > 64)
             {
                 errors.Add("Количество символов в заголовке должно быть от 1 до 64.");
             }
-            if (TextAreaPostText.Text.Length == 0 && TextAreaPostText.Text.Length < 8000)
+            if (desc.Length > 2000)
             {
-                errors.Add("Количество символов в теле новости должно быть от 1 до 8000.");
+                errors.Add("Количество символов в описании(краткое описание) новости должно быть до 2000.");
+            }
+            if (text.Length == 0 || text.Length > 8000)
+            {
+                errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 8000.");
             }
             if (TextBoxSource.Text.Length > 1024)
             {
@@ -208,6 +205,34 @@ namespace ITCommunity
             {
                 UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' class='uploaded-image'/>";
             }            
+        }
+
+        /// <summary>
+        /// Сплитит новость на краткое описание и текст
+        /// </summary>
+        /// <param name="content">Тело новости</param>
+        /// <returns>Возвращает лист строк. 0 - краткое описание, 1 - текст</returns>
+        private List<string> SplitPostContent(string content)
+        {
+            List<string> result = new List<string>();
+
+            int index = content.ToLower().IndexOf("<hr />");
+            string post_desc = "";
+            string post_text = "";
+            if (index > 0)
+            {
+                post_desc = content.Substring(0, index);
+                post_text = content.Substring(index);
+            } else
+            {
+                post_desc = "";
+                post_text = content;
+            }
+
+            result.Add(post_desc);
+            result.Add(post_text);
+
+            return result;
         }
     }
 }
