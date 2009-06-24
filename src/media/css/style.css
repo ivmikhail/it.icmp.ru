@@ -13,11 +13,6 @@ a:hover
 	color: #3366cc;
 }
 
-p
-{
-	margin:0 10px 10px;
-}
-
 h1 {
 	margin: 12px 0 13px 0;
 	font-size: 1.6em;
@@ -325,7 +320,7 @@ div#uploadImagesList img:hover
 	padding: 0 0 0 6px;
 	height: 26px;
 	width: auto;
-	background: url(../../media/img/design/tab-bkg.gif) bottom left repeat-x;
+	background: url(../../media/img/design/tab/tab-bkg.gif) bottom left repeat-x;
 }
 
 
@@ -335,14 +330,14 @@ div#uploadImagesList img:hover
 
 #accounts-tabs .tabSet li {
 	list-style-type: none;
-	background: url(../../media/img/design/tab-off-l.gif) top left no-repeat !important;
+	background: url(../../media/img/design/tab/tab-off-l.gif) top left no-repeat !important;
 	float: left !important;
 	margin: 0 2px 0 0 !important;
 	padding: 0 0 0 14px !important;
 	cursor: pointer;
 }	
 #accounts-tabs .tabSet li a {
-	background: url(../../media/img/design/tab-off-r.gif) top right no-repeat !important;
+	background: url(../../media/img/design/tab/tab-off-r.gif) top right no-repeat !important;
 	display: block !important;
 	float: left !important;
 	height: 24px !important;
@@ -357,10 +352,10 @@ div#uploadImagesList img:hover
 }
 
 #accounts-tabs .tabSet li.on {
-	background: url(../../media/img/design/tab-on-l.gif) top left no-repeat !important;
+	background: url(../../media/img/design/tab/tab-on-l.gif) top left no-repeat !important;
 }	
 #accounts-tabs .tabSet li.on a {
-	background: url(../../media/img/design/tab-on-r.gif) top right no-repeat !important;
+	background: url(../../media/img/design/tab/tab-on-r.gif) top right no-repeat !important;
 	color: #333;
 }
 
@@ -385,4 +380,8 @@ div#uploadImagesList img:hover
 {
 	width:60%;
 	text-align:left;
+}
+div#add_post p
+{
+	margin:0 10px 10px;
 }
