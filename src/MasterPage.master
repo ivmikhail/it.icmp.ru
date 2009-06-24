@@ -1,4 +1,4 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="ITCommunity.MasterPage" %>
+п»ї<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="ITCommunity.MasterPage" %>
 <%@ Register Src="~/controls/LoginForm.ascx"   TagName="LoginForm"   TagPrefix="uc" %>
 <%@ Register Src="~/controls/UserProfile.ascx" TagName="UserProfile" TagPrefix="uc" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
 <head runat="server">
     <title>Ykt IT Community</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="media/img/design/favicon.ico" type="image/vnd.microsoft.icon" />    
     <link rel="stylesheet"    href="media/css/default.css"        type="text/css" /> 
     <link rel="stylesheet"    href="media/css/style.css"          type="text/css" />  
@@ -28,11 +29,11 @@
 			    });
 		    });		
 	</script>
-    <form id="MainForm" runat="server">
+    <form id="MainForm" runat="server" >
         <div id="container">
             <div id="header">
                 <span class="code-class">IT</span> COMMUNITY;
-                <span class="code-comment">// якутский случай</span>
+                <span class="code-comment">// СЏРєСѓС‚СЃРєРёР№ СЃР»СѓС‡Р°Р№</span>
                 <div id="divider-header">&nbsp;</div>
             </div>
             <div id="wrapper">
@@ -44,14 +45,14 @@
                 <uc:LoginForm id="LoginForm" runat="server" Visible="false"/>
                 <uc:UserProfile id="UserProfile" runat="server" Visible="false"/>
                 
-                <h1>Категории</h1>                
+                <h1>РљР°С‚РµРіРѕСЂРёРё</h1>                
                 <asp:Repeater ID="NewsCategories" runat="server" >
                     <HeaderTemplate>
                         <ul class="list categories-links">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <a href='default.aspx?cat=<%# Eval("id")%>' title="Смотреть посты только этой категории" class="categories-link"><%# Eval("name")%></a>
+                            <a href='default.aspx?cat=<%# Eval("id")%>' title="РЎРјРѕС‚СЂРµС‚СЊ РїРѕСЃС‚С‹ С‚РѕР»СЊРєРѕ СЌС‚РѕР№ РєР°С‚РµРіРѕСЂРёРё" class="categories-link"><%# Eval("name")%></a>
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
@@ -59,7 +60,7 @@
                     </FooterTemplate>
                 </asp:Repeater>
                 
-                <h1>Ссылки</h1>
+                <h1>РЎСЃС‹Р»РєРё</h1>
                 <asp:Repeater ID="RepeaterMenu" runat="server" OnItemDataBound="RepeaterMenu_ItemDataBound" >
                     <HeaderTemplate>
                         <ul class="list menu-links">
@@ -88,7 +89,7 @@
                     </FooterTemplate>
                 </asp:Repeater>               
                 
-                <h1>Статистика</h1>
+                <h1>РЎС‚Р°С‚РёСЃС‚РёРєР°</h1>
                 <asp:Repeater ID="LastRegistered" runat="server" >
                     <HeaderTemplate>
                         <ul class="list">
@@ -109,13 +110,13 @@
                 </div>
             </div>
             <div id="stats">
-                <h1>Поиск</h1>
+                <h1>РџРѕРёСЃРє</h1>
                 <div id="search-panel">
                     <asp:TextBox ID="TextBoxQuery" runat="server" />   
-                    <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click">Найти</asp:LinkButton>
+                    <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click">РќР°Р№С‚Рё</asp:LinkButton>
                 </div>
                 
-                <h1>Последние комментарии</h1>
+                <h1>РџРѕСЃР»РµРґРЅРёРµ РєРѕРјРјРµРЅС‚Р°СЂРёРё</h1>
                 <asp:Repeater ID="LastComments" runat="server" >
                     <HeaderTemplate>
                         <ul class="list lastcomments-links">
@@ -130,7 +131,7 @@
                     </FooterTemplate>
                 </asp:Repeater>
                 
-                <h1>Активные постеры</h1>
+                <h1>РђРєС‚РёРІРЅС‹Рµ РїРѕСЃС‚РµСЂС‹</h1>
                 <asp:Repeater ID="TopPosters" runat="server" >
                     <HeaderTemplate>
                         <ul class="list">
@@ -145,7 +146,7 @@
                     </FooterTemplate>
                 </asp:Repeater>
                 
-                <h1>Популярные посты</h1>
+                <h1>РџРѕРїСѓР»СЏСЂРЅС‹Рµ РїРѕСЃС‚С‹</h1>
                 <asp:Repeater ID="PopularPosts" runat="server" >
                     <HeaderTemplate>
                         <ul class="list topposts-links">
