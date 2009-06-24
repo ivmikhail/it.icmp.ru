@@ -60,7 +60,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@name"].Value = name;
             cmd.Parameters.Add("@sort", System.Data.SqlDbType.Int, 0);
@@ -186,10 +186,10 @@ namespace ITCommunity
             cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@user_id"].Value = user_id;
-            cmd.Parameters.Add("@ip", System.Data.SqlDbType.VarChar, 50);
+            cmd.Parameters.Add("@ip", System.Data.SqlDbType.NVarChar, 50);
             cmd.Parameters["@ip"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@ip"].Value = ip;
-            cmd.Parameters.Add("@text", System.Data.SqlDbType.VarChar, 512);
+            cmd.Parameters.Add("@text", System.Data.SqlDbType.NVarChar, 512);
             cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@text"].Value = text;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -407,13 +407,13 @@ namespace ITCommunity
             cmd.Parameters.Add("@parent_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@parent_id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@parent_id"].Value = parent_id;
-            cmd.Parameters.Add("@url", System.Data.SqlDbType.VarChar, 256);
+            cmd.Parameters.Add("@url", System.Data.SqlDbType.NVarChar, 256);
             cmd.Parameters["@url"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@url"].Value = url;
             cmd.Parameters.Add("@sort", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@sort"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@sort"].Value = sort;
-            cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@name"].Value = name;
             cmd.Parameters.Add("@new_window", System.Data.SqlDbType.TinyInt, 0);
@@ -573,13 +573,13 @@ namespace ITCommunity
             cmd.Parameters.Add("@parent_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@parent_id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@parent_id"].Value = parent_id;
-            cmd.Parameters.Add("@url", System.Data.SqlDbType.VarChar, 256);
+            cmd.Parameters.Add("@url", System.Data.SqlDbType.NVarChar, 256);
             cmd.Parameters["@url"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@url"].Value = url;
             cmd.Parameters.Add("@sort", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@sort"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@sort"].Value = sort;
-            cmd.Parameters.Add("@name", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@name"].Value = name;
             cmd.Parameters.Add("@new_window", System.Data.SqlDbType.TinyInt, 0);
@@ -600,10 +600,10 @@ namespace ITCommunity
             cmd.Parameters.Add("@sender_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@sender_id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@sender_id"].Value = sender_id;
-            cmd.Parameters.Add("@title", System.Data.SqlDbType.VarChar, 64);
+            cmd.Parameters.Add("@title", System.Data.SqlDbType.NVarChar, 64);
             cmd.Parameters["@title"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@title"].Value = title;
-            cmd.Parameters.Add("@text", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters.Add("@text", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@text"].Value = text;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -814,10 +814,10 @@ namespace ITCommunity
             cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@user_id"].Value = user_id;
-            cmd.Parameters.Add("@title", System.Data.SqlDbType.VarChar, 30);
+            cmd.Parameters.Add("@title", System.Data.SqlDbType.NVarChar, 30);
             cmd.Parameters["@title"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@title"].Value = title;
-            cmd.Parameters.Add("@text", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters.Add("@text", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@text"].Value = text;
             cmd.Parameters.Add("@cdate", System.Data.SqlDbType.DateTime, 0);
@@ -949,19 +949,19 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@title", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@title", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@title"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@title"].Value = title;
-            cmd.Parameters.Add("@desc", System.Data.SqlDbType.VarChar, 512);
+            cmd.Parameters.Add("@desc", System.Data.SqlDbType.NVarChar, -1);
             cmd.Parameters["@desc"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@desc"].Value = desc;
-            cmd.Parameters.Add("@text", System.Data.SqlDbType.VarChar, 2048);
+            cmd.Parameters.Add("@text", System.Data.SqlDbType.NVarChar, -1);
             cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@text"].Value = text;
             cmd.Parameters.Add("@attached", System.Data.SqlDbType.TinyInt, 0);
             cmd.Parameters["@attached"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@attached"].Value = attached;
-            cmd.Parameters.Add("@source", System.Data.SqlDbType.VarChar, 256);
+            cmd.Parameters.Add("@source", System.Data.SqlDbType.NVarChar, 256);
             cmd.Parameters["@source"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@source"].Value = source;
             cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
@@ -1265,7 +1265,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostSearch", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@query", System.Data.SqlDbType.VarChar, 512);
+            cmd.Parameters.Add("@query", System.Data.SqlDbType.NVarChar, 512);
             cmd.Parameters["@query"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@query"].Value = query;
             cmd.Parameters.Add("@page", System.Data.SqlDbType.Int, 0);
@@ -1311,19 +1311,19 @@ namespace ITCommunity
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@id"].Value = id;
-            cmd.Parameters.Add("@title", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@title", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@title"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@title"].Value = title;
-            cmd.Parameters.Add("@desc", System.Data.SqlDbType.VarChar, 512);
+            cmd.Parameters.Add("@desc", System.Data.SqlDbType.NVarChar, -1);
             cmd.Parameters["@desc"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@desc"].Value = desc;
-            cmd.Parameters.Add("@text", System.Data.SqlDbType.VarChar, 2048);
+            cmd.Parameters.Add("@text", System.Data.SqlDbType.NVarChar, -1);
             cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@text"].Value = text;
             cmd.Parameters.Add("@attached", System.Data.SqlDbType.TinyInt, 0);
             cmd.Parameters["@attached"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@attached"].Value = attached;
-            cmd.Parameters.Add("@source", System.Data.SqlDbType.VarChar, 256);
+            cmd.Parameters.Add("@source", System.Data.SqlDbType.NVarChar, 256);
             cmd.Parameters["@source"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@source"].Value = source;
             cmd.Parameters.Add("@comments_count", System.Data.SqlDbType.Int, 0);
@@ -1350,7 +1350,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@identifier"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@identifier"].Value = identifier;
             cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
@@ -1390,7 +1390,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@identifier"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@identifier"].Value = identifier; int result = cmd.ExecuteNonQuery();
             connection.Close();
@@ -1402,7 +1402,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryGetByIdentifier", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters.Add("@identifier", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@identifier"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@identifier"].Value = identifier;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -1439,7 +1439,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RfcGetByNum", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@num", System.Data.SqlDbType.VarChar, 16);
+            cmd.Parameters.Add("@num", System.Data.SqlDbType.NVarChar, 16);
             cmd.Parameters["@num"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@num"].Value = num;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -1473,7 +1473,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RfcSearchByTitle", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@query", System.Data.SqlDbType.VarChar, 512);
+            cmd.Parameters.Add("@query", System.Data.SqlDbType.NVarChar, 512);
             cmd.Parameters["@query"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@query"].Value = query;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -1507,16 +1507,16 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@nick", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@nick", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@nick"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@nick"].Value = nick;
-            cmd.Parameters.Add("@pass", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters.Add("@pass", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@pass"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@pass"].Value = pass;
             cmd.Parameters.Add("@role", System.Data.SqlDbType.TinyInt, 0);
             cmd.Parameters["@role"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@role"].Value = role;
-            cmd.Parameters.Add("@email", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@email"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@email"].Value = email;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -1565,7 +1565,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByEmail", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@email", System.Data.SqlDbType.VarChar, 512);
+            cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar, 512);
             cmd.Parameters["@email"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@email"].Value = email;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -1639,7 +1639,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByLogin", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@login", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@login", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@login"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@login"].Value = login;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -1812,13 +1812,13 @@ namespace ITCommunity
             cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@user_id"].Value = user_id;
-            cmd.Parameters.Add("@pass", System.Data.SqlDbType.VarChar, 1024);
+            cmd.Parameters.Add("@pass", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@pass"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@pass"].Value = pass;
             cmd.Parameters.Add("@role", System.Data.SqlDbType.TinyInt, 0);
             cmd.Parameters["@role"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@role"].Value = role;
-            cmd.Parameters.Add("@email", System.Data.SqlDbType.VarChar, 32);
+            cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@email"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@email"].Value = email; int result = cmd.ExecuteNonQuery();
             connection.Close();
