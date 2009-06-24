@@ -1,16 +1,13 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | ƒобавление новости" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
-<script type="text/javascript" src="media/js/whizzywig.js"></script>
-
-
 <script type="text/javascript">
     window.addEvent('domready', function(){ 
         
-        // «агрузка изображений             
+        // ¬ставка загруженного изображени€             
 	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
-                    insHTML("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='ѕосмотреть картинку в оригинальном размере'><img src='"+this.src+"' /></a>");
+	                $('<%= TextAreaPostText.ClientID %>').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='ѕосмотреть картинку в оригинальном размере'><img src='"+ this.src +"' /></a>", false);  
 			    });
 		});		
 		
@@ -119,10 +116,9 @@
         <li>        
             <h2>“екст новости</h2>  
             <p class="note">                   
-                ќписание и текст раздел€етс€ разделителем(&#60;hr&#62;). ≈сли разделитель не вставите, то на главной по€витс€ весь текст новости, иначе только описание.
+                ќписание и текст раздел€етс€ разделителем(вставте "[cut]" без кавычек). ≈сли разделитель не вставите, то на главной по€витс€ весь текст новости, иначе только описание. ƒл€ форматировани€ используйте html-теги.
             </p>
-            <textarea id="TextAreaPostText" runat="server" cols="85" rows="40">
-            </textarea>
+            <asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" Width="100%" MaxLength="8000" TextMode="MultiLine" />
         </li>        
         <li>
             <h2>»сточник(откуда стырили)</h2>

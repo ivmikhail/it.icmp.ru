@@ -53,7 +53,7 @@ namespace ITCommunity
                 SelectedCategoriesIds.Value += cat.Id;
             }
             TextBoxTitle.Text = current_post.Title;
-            TextAreaPostText.Value = current_post.Description + current_post.Text;
+            TextAreaPostText.Text = current_post.Description + current_post.Text;
             TextBoxSource.Text = current_post.Source;
             CheckBoxAttached.Checked = current_post.Attached;
 
@@ -84,8 +84,8 @@ namespace ITCommunity
                 newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
                 // TODO: Сделать буйню которая не будет ескейпить тока некоторые указанные теги
 
-                string post_content = TextAreaPostText.Value;
-                int index = post_content.ToLower().IndexOf("<hr>");
+                string post_content = TextAreaPostText.Text;
+                int index = post_content.ToLower().IndexOf("[cut]");
                 string post_desc = "";
                 string post_text = "";
                 if (index > 0)
@@ -154,7 +154,7 @@ namespace ITCommunity
             {
                 errors.Add("Количество символов в заголовке должно быть от 1 до 64.");
             }
-            if (TextAreaPostText.Value.Length == 0 && TextAreaPostText.Value.Length < 8000)
+            if (TextAreaPostText.Text.Length == 0 && TextAreaPostText.Text.Length < 8000)
             {
                 errors.Add("Количество символов в теле новости должно быть от 1 до 8000.");
             }
