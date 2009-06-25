@@ -23,9 +23,9 @@ namespace ITCommunity
                 Note.Delete(delete_id);
             }
             int records_count = 0;
-            RepeaterNotes.DataSource = Note.Get(GetPage(), Global.MaxNotesCount, CurrentUser.User.Id, ref records_count);
+            RepeaterNotes.DataSource = Note.Get(GetPage(), Global.ConfigNumParam("MaxNotesCount"), CurrentUser.User.Id, ref records_count);
             RepeaterNotes.DataBind();
-            NotesPager.Fill("notepad.aspx", "", "page", GetPage(), records_count, Global.MaxNotesCount);
+            NotesPager.Fill("notepad.aspx", "", "page", GetPage(), records_count, Global.ConfigNumParam("MaxNotesCount"));
         }
         private int GetPage()
         {

@@ -363,6 +363,11 @@ namespace ITCommunity
             return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
         }
 
+        public static List<Post> GetLast(int count)
+        {
+            return GetPostsFromTable(Database.PostGetLast(count));
+        }
+
         /// <summary>
         /// Забираем посты постранично, с учетом даты, аттачей и категории
         /// </summary>

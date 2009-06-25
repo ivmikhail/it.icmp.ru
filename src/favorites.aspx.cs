@@ -54,10 +54,10 @@ namespace ITCommunity
         {
             int total_records = 0;
             int page = GetPage();
-            PostsView.PostSource = Post.GetFavorites(CurrentUser.User.Id, page, Global.FavoritesCount, ref total_records);
+            PostsView.PostSource = Post.GetFavorites(CurrentUser.User.Id, page, Global.ConfigNumParam("FavoritesCount"), ref total_records);
 
 
-            FavoritesPager.Fill("favorites.aspx", "", "page", page, total_records, Global.PostsCount);
+            FavoritesPager.Fill("favorites.aspx", "", "page", page, total_records, Global.ConfigNumParam("PostsCount"));
         }
     }
 }

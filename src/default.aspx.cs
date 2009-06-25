@@ -28,13 +28,13 @@ namespace ITCommunity
             int page = GetPage();
             if (cat_id > 0)
             {
-                PostsView.PostSource = Post.GetByCategory(page, Global.PostsCount, cat_id, ref total_records);
+                PostsView.PostSource = Post.GetByCategory(page, Global.ConfigNumParam("PostsCount"), cat_id, ref total_records);
             } else
             {
-                PostsView.PostSource = Post.Get(page, Global.PostsCount, ref total_records);
+                PostsView.PostSource = Post.Get(page, Global.ConfigNumParam("PostsCount"), ref total_records);
             }
 
-            NewsPager.Fill("default.aspx", "&cat=" + cat_id, "page", page, total_records, Global.PostsCount);
+            NewsPager.Fill("default.aspx", "&cat=" + cat_id, "page", page, total_records, Global.ConfigNumParam("PostsCount"));
             //FillPager(total_records, page, "&cat=" + cat_id);
 
         }
@@ -46,7 +46,7 @@ namespace ITCommunity
             NewsPager.PageQueryString = "page";
             NewsPager.CurrentPage = current_pagenum;
             NewsPager.TotalRecords = total_records;
-            NewsPager.RecordsPerPage = Global.PostsCount;
+            NewsPager.RecordsPerPage = Global.ConfigNumParam("PostsCount");
         }
          */
         private int GetCatId()

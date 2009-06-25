@@ -42,7 +42,7 @@ public partial class browse : System.Web.UI.Page
             return false;
         }
         dir = Path.GetFullPath(dir);
-        if(dir.StartsWith(Global.FilesFolder)) {
+        if(dir.StartsWith(Global.ConfigStringParam("FilesFolder"))) {
             return true;
         }
         return false;

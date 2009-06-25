@@ -44,12 +44,12 @@ namespace ITCommunity
         }
         private void LoadPopularPosts()
         {
-            PopularPosts.DataSource = Post.GetTop(Global.PopularPostsPeriod, Global.PopularPostsCount);
+            PopularPosts.DataSource = Post.GetTop(Global.ConfigNumParam("PopularPostsPeriod"), Global.ConfigNumParam("PopularPostsCount"));
             PopularPosts.DataBind();
         }
         private void LoadLastComments()
         {
-            LastComments.DataSource = Comment.GetLasts(Global.LastCommentsCount);
+            LastComments.DataSource = Comment.GetLasts(Global.ConfigNumParam("LastCommentsCount"));
             LastComments.DataBind();
         }
         private void LoadCategories()
@@ -62,12 +62,12 @@ namespace ITCommunity
         }
         private void LoadTopPosters()
         {
-            TopPosters.DataSource = User.GetTopPosters(Global.TopPostersCount);
+            TopPosters.DataSource = User.GetTopPosters(Global.ConfigNumParam("TopPostersCount"));
             TopPosters.DataBind();
         }
         private void LoadLastRegistered()
         {
-            LastRegistered.DataSource = User.GetLastRegistered(Global.LastRegisteredCount);
+            LastRegistered.DataSource = User.GetLastRegistered(Global.ConfigNumParam("LastRegisteredCount"));
             LastRegistered.DataBind();
         }
         private void LoadStat()

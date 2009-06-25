@@ -17,6 +17,8 @@ mailview.aspx?a=output просмотр списка отправленных сообщений
 mailview.aspx          просмотр списка полученных сообщений
 mail.aspx?id=1 		   просмотр одного сообщения
 
+rss.aspx 
+
 Переделать в:
 /posts/favorites/page/1
 /posts/favorites/del/999
@@ -27,6 +29,7 @@ mail.aspx?id=1 		   просмотр одного сообщения
 /posts/view/1
 /posts/del/1
 /posts/edit/1
+/posts/rss
 
 /message/send/nick
 /message/view/output

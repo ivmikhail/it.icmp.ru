@@ -52,7 +52,7 @@ namespace ITCommunity
                 number = number.Substring(1);
             }
 
-            return "/" + Global.RfcFolder + "/rfc" + number + ".txt";
+            return "/" + Global.ConfigStringParam("RfcFolder") + "/rfc" + number + ".txt";
         }
     }
 }
