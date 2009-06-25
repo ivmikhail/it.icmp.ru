@@ -31,16 +31,16 @@ namespace ITCommunity
             if (IsOutput())
             {
                 ListTitle.Text = "Исходящие";
-                messages = Message.GetBySender(CurrentUser.User.Id, page, Global.MaxMessageCount, ref total_records);
+                messages = Message.GetBySender(CurrentUser.User.Id, page, Global.ConfigNumParam("MaxMessageCount"), ref total_records);
                 pageparam = "&a=output";
             } else
             {
                 ListTitle.Text = "Входящие";
-                messages = Message.GetByReceiver(CurrentUser.User.Id, page, Global.MaxMessageCount, ref total_records);
+                messages = Message.GetByReceiver(CurrentUser.User.Id, page, Global.ConfigNumParam("MaxMessageCount"), ref total_records);
             }
             RepeaterMessages.DataSource = messages;
             RepeaterMessages.DataBind();
-            MessagePager.Fill("mailview.aspx", pageparam, "page", page, total_records, Global.MaxMessageCount);
+            MessagePager.Fill("mailview.aspx", pageparam, "page", page, total_records, Global.ConfigNumParam("MaxMessageCount"));
         }
 
         protected void RepeaterMessages_ItemDataBound(object sender, RepeaterItemEventArgs e)

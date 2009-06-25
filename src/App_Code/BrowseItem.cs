@@ -83,7 +83,7 @@ namespace ITCommunity {
         }
 
         private static string getLinkOfDir(string dir) {
-            String link = dir.Replace(Global.FilesFolder, "").Replace("\\", "/");
+            String link = dir.Replace(Global.ConfigStringParam("FilesFolder"), "").Replace("\\", "/");
             String cat = link.Substring(0, link.IndexOf("/"));
             String d = link.Substring(link.IndexOf("/"));
             link = "browse.aspx?dir=" + d + "&cat=" + cat;
@@ -110,14 +110,14 @@ namespace ITCommunity {
             
         }
         private static String getLinkOfPath(String path) {
-            String link = path.Replace(Global.FilesFolder, "");
-            return Global.FilesLink + "/" + link.Replace("\\", "/");
+            String link = path.Replace(Global.ConfigStringParam("FilesFolder"), "");
+            return Global.ConfigStringParam("FilesLink") + "/" + link.Replace("\\", "/");
         }
         public static String GetRealPathOfLink(LinkType linkType, String link) {
             if(!link.StartsWith("/")) {
                 link = "/" + link;
             }
-            String path = Global.FilesFolder + Enum.GetName(linkType.GetType(), linkType) + link.Replace("/", "\\");
+            String path = Global.ConfigStringParam("FilesFolder") + Enum.GetName(linkType.GetType(), linkType) + link.Replace("/", "\\");
             return path;
         }
     }

@@ -23,7 +23,7 @@ namespace ITCommunity
             {
                 LoadCategories();
                 CheckBoxAttached.Enabled = CurrentUser.User.Role == ITCommunity.User.Roles.Admin;
-                ImageOptions.Text = Global.PostImageOptions;
+                ImageOptions.Text = "Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).";
 
                 InitPostData();
             }
