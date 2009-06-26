@@ -1,9 +1,11 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="ITCommunity.MasterPage"  %>
-<%@ Register Src="~/controls/LoginForm.ascx"   TagName="LoginForm"   TagPrefix="uc" %>
-<%@ Register Src="~/controls/UserProfile.ascx" TagName="UserProfile" TagPrefix="uc" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ Register Src="~/controls/LoginForm.ascx"    TagName="LoginForm"    TagPrefix="uc" %>
+<%@ Register Src="~/controls/UserControl.ascx"  TagName="UserControl"  TagPrefix="uc" %>
+<%@ Register Src="~/controls/AdminControl.ascx" TagName="AdminControl" TagPrefix="uc" %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
+
 <head runat="server">
     <title>Ykt IT Community</title>
     <meta http-equiv="content-language" content="ru" />
@@ -43,8 +45,8 @@
                 </div>
             </div>
             <div id="navigate">
-                <uc:LoginForm id="LoginForm" runat="server" Visible="false"/>
-                <uc:UserProfile id="UserProfile" runat="server" Visible="false"/>
+                <uc:LoginForm id="LoginForm" runat="server" />
+                <uc:UserControl id="UserControl" runat="server" />
                 
                 <h1>Категории</h1>                
                 <asp:Repeater ID="NewsCategories" runat="server" >
@@ -88,35 +90,9 @@
                     <FooterTemplate>
                         </ul>
                     </FooterTemplate>
-                </asp:Repeater>               
-                
-                <h1>Пользователи</h1>
-                <h2>Новые</h2>
-                <asp:Repeater ID="LastRegistered" runat="server" >
-                    <HeaderTemplate>
-                        <ul class="list">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li>
-                            <%# Eval("nick")%> <%# Eval("createdate")%> 
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
                 </asp:Repeater>
-                <h2>Статистика</h2>
-                <ul class="list">                
-                    <li>
-                        Всего : <asp:Literal ID="TotalUsers" runat="server" />
-                    </li>
-                    <li>
-                        Постеры : <asp:Literal ID="TotalPosters" runat="server" />
-                    </li>
-                    <li>
-                        Админы : <asp:Literal ID="TotalAdmins" runat="server" />
-                    </li>
-                </ul>
+                       
+                <uc:AdminControl id="AdminControl" runat="server" Visible="false"/>
             </div>
             <div id="stats">
                 <h1>Поиск</h1>
@@ -169,6 +145,34 @@
                         </ul>
                     </FooterTemplate>
                 </asp:Repeater>
+                
+                <h1>Пользователи</h1>
+                <h2>Новые</h2>
+                <asp:Repeater ID="LastRegistered" runat="server" >
+                    <HeaderTemplate>
+                        <ul class="list">
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <li>
+                            <%# Eval("createdate", "{0:dd MMMM yyyy}")%> <%# Eval("nick")%>
+                        </li>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        </ul>
+                    </FooterTemplate>
+                </asp:Repeater>
+                <h2>Статистика</h2>
+                <ul class="list">                
+                    <li>
+                        Всего : <asp:Literal ID="TotalUsers" runat="server" />
+                    </li>
+                    <li>
+                        Постеры : <asp:Literal ID="TotalPosters" runat="server" />
+                    </li>
+                    <li>
+                        Админы : <asp:Literal ID="TotalAdmins" runat="server" />
+                    </li>
+                </ul>
             </div>
             <div id="footer">
                 <h2>IT Community &copy; 2005 -

@@ -18,7 +18,6 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowUserData();
             LoadCategories();
             LoadLastComments();
             LoadLinks();
@@ -26,16 +25,6 @@ namespace ITCommunity
             LoadLastRegistered();
             LoadTopPosters();
             LoadStat();
-        }
-        private void ShowUserData()
-        {
-            if (CurrentUser.isAuth)
-            {
-                UserProfile.Visible = true;
-            } else
-            {
-                LoginForm.Visible = true;
-            }
         }
         private void LoadLinks()
         {

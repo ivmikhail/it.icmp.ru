@@ -84,6 +84,17 @@ h3 {
 	color: #ffffff;
 	text-decoration:none;
 }
+.admin-panel a
+{
+	color: #3366cc;
+	text-decoration:none;
+}
+.admin-panel a:hover
+{
+	background-color: red;
+	color: #ffffff;
+	text-decoration:none;
+}
 
 div#wrapper
 {
