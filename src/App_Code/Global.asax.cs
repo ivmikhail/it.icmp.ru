@@ -55,6 +55,16 @@ namespace ITCommunity
                 throw (new Exception("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex));
             }
         }
+        public static double ConfigDoubleParam(string param)
+        {
+            try
+            {
+                return Convert.ToDouble(ConfigurationManager.AppSettings[param]);
+            } catch (Exception ex)
+            {
+                throw (new Exception("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex));
+            }
+        }
 
         public void Application_AuthenticateRequest(Object src, EventArgs e)
         {

@@ -131,6 +131,7 @@ namespace ITCommunity
                 return HttpContext.Current.User.Identity.IsAuthenticated;
             }
         }
+
         static private User GetUserFromCookie()
         {
 
