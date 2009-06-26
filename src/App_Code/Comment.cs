@@ -5,7 +5,6 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
-using System.Web.Caching;
 
 using ITCommunity;
 
@@ -17,6 +16,9 @@ namespace ITCommunity
     /// 
     public class Comment
     {
+        //делегат метода загрузки последних комментов из базы, нужен для организации кеширования
+        private delegate object LastCommentsLoader(int count);
+
         private int _id;
         private int _postId;
         private int _userId;
@@ -106,6 +108,13 @@ namespace ITCommunity
                 _text = value;
             }
         }
+        public string ShortText
+        {
+            get
+            {
+                return (_text.Length > 20) ? _text.Substring(0, 20) + " ..." : _text;
+            }
+        }
 
         public Comment(int id, int postId, int userId, DateTime cdate, string ip, string text)
         {
@@ -142,59 +151,37 @@ namespace ITCommunity
         /// <param name="postId">Идентификатор поста</param>
         public static List<Comment> GetByPost(int postId)
         {
-            return GetCommentFromTable(Database.CommentGetByPost(postId));
+            return GetCommentsFromTable(Database.CommentGetByPost(postId));
         }
 
         /// <summary>
-        /// Забираем последние комментарии в формате "author: commenttext". Да да, именно в таком формате!
-        /// 
-        /// В этом методе использовался грязный хак. Возвращается список комментариев, 
-        /// в тексте каждого комментария хранится хрень типа %username%:first 30 symbols of comment
-        /// 
-        /// id, usernick, post_id каждого комментария забиты чушью.
-        /// 
-        /// Обьяснение индусского кода в теле метода.  
+        /// Забираем последние комментарии из кеша
         /// </summary>
         /// <param name="count">Кол-во нужных комментов</param>
-        public static List<Comment> GetLasts(int count)
+        public static List<KeyValuePair<User, Comment>> GetLasts(int count)
         {
-            /*            
-            Вот почему так сделано
-            .cs:
-                LastComments.DataSource = Comments.GetLasts(Global.LastCommentsCount);
-                // Comments.GetLasts допустим возвращает List<string>, иначе слишком затратно вытаскивать отдельно автора
-                LastComments.DataBind();
-       
-            .aspx:
-                <asp:Repeater ID="PopularPosts" runat="server" >
-                    <%# Eval(что здесь должно быть если сделать по нормальному?)%>
-                </asp:Repeater>
-            */
 
+            LastCommentsLoader loader = new LastCommentsLoader(GetLastCommentsFromDB);
+            List<KeyValuePair<User, Comment>> last_comments = (List<KeyValuePair<User, Comment>>)AppCache.Get(Global.ConfigStringParam("LastCommentsCacheName"), 
+                                                                                                              new object(), 
+                                                                                                              loader, 
+                                                                                                              new object[] { count }, 
+                                                                                                              DateTime.Now.AddHours(Global.ConfigDoubleParam("CacheLastComment")));
 
-            //TODO: ПЕРЕДЕЛАТЬ БЛЯТЬ! хранить в кеше че нить типа KeyValuePair<User, Comment>
+            return last_comments;
+        }
 
-            List<Comment> comments = (List<Comment>)HttpContext.Current.Cache.Get("last_comments");
+        private static List<KeyValuePair<User, Comment>> GetLastCommentsFromDB(int count)
+        {
+            List<Comment> comments = GetCommentsFromTable(Database.CommentGetLasts(count));
+            List<KeyValuePair<User, Comment>> last_comments = new List<KeyValuePair<User, Comment>>();
 
-            if (comments == null)
+            foreach (Comment comment in comments)
             {
-                DataTable dt = Database.CommentGetLasts(count);
-                comments = new List<Comment>();
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    string username = dt.Rows[i]["usernick"].ToString() == "" ? "anonymous" : dt.Rows[i]["usernick"].ToString();
-                    string text = dt.Rows[i]["text"].ToString();
-                    string post_id = dt.Rows[i]["post_id"].ToString();
-                    if (text.Length > 25)
-                    {
-                        text = text.Substring(0, 25) + "...";
-                    }
-                    // ХАК! см. коммент в конце метода
-                    comments.Add(new Comment(-1, -1, -1, DateTime.Now, "-1", username + ": " + "<a href='news.aspx?id=" + post_id + "#comments' alt='Посмотреть все комментарии'>" + text + "</a>"));
-                }
-                HttpContext.Current.Cache.Add("last_comments", comments, null, DateTime.Now.Add(new TimeSpan(0, 1, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                last_comments.Add(new KeyValuePair<User, Comment>(comment.Author, comment));
             }
-            return comments;
+
+            return last_comments;
         }
 
         /// <summary>
@@ -207,7 +194,7 @@ namespace ITCommunity
             return comm;
         }
 
-        private static List<Comment> GetCommentFromTable(DataTable dt)
+        private static List<Comment> GetCommentsFromTable(DataTable dt)
         {
             List<Comment> comments = new List<Comment>();
             for (int i = 0; i < dt.Rows.Count; i++)

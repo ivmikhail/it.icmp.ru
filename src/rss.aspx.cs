@@ -29,6 +29,7 @@ namespace ITCommunity
         private RssChannel GetChannel()
         {
             RssChannel channel = new RssChannel();
+
             string site_domain = Global.SiteAddress;
             List<Post> last_posts = Post.GetLast(Global.ConfigNumParam("RssPostsCount"));
             foreach (Post post in last_posts)
@@ -52,6 +53,7 @@ namespace ITCommunity
             channel.Language = "ru";
             channel.Generator = "RSS.NET - .NET class library for RSS/feeds";
             channel.Docs = "http://backend.userland.com/rss";
+
             return channel;
         }
     }

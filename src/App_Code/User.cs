@@ -16,6 +16,13 @@ namespace ITCommunity
 
     public class User
     {
+        //делегат метода загрузки посл. зарегистр. юзеров из базы, нужен для организации кеширования
+        private delegate object LastUsersLoader(int count);
+        //делегат метода загрузки посл. зарегистр. юзеров из базы, нужен для организации кеширования
+        private delegate object TopPostersLoader(int count);
+        //делегат метода загрузки статистики юзеров из базы, нужен для организации кеширования
+        private delegate object UsersStatLoader(); 
+
         private int _id;
         private string _pass;
         private string _nick;
@@ -178,50 +185,78 @@ namespace ITCommunity
         /// <param name="count">Количество нужных пользователей</param>
         public static List<User> GetLastRegistered(int count)
         {
-            return GetUsersFromTable(Database.UserGetLastRegistered(count));
+            LastUsersLoader loader = new LastUsersLoader(GetLastRegisteredFromDB);
+            List<User> cats = (List<User>)AppCache.Get(Global.ConfigStringParam("LastUsersCacheName"),
+                                                       new object(),
+                                                       loader,
+                                                       new object[] { count },
+                                                       DateTime.Now.AddHours(Global.ConfigDoubleParam("LastUsersCachePer")));
+            return cats;
+  
 
         }
 
+        private static List<User> GetLastRegisteredFromDB(int count)
+        {
+            return GetUsersFromTable(Database.UserGetLastRegistered(count));
+        }
+
         /// <summary>
-        /// Получаем самых активных постеров
+        /// Получаем самых активных постеров из кеша
         /// </summary>
         /// <param name="count">Кол-во нужных пользователей</param>
         public static List<KeyValuePair<string, string>> GetTopPosters(int count)
         {
-            List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)HttpContext.Current.Cache.Get("top_posters");
-            if (top == null)
+            TopPostersLoader loader = new TopPostersLoader(GetTopPostersFromDB);
+            List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)AppCache.Get(Global.ConfigStringParam("TopPostersCacheName"),
+                                                                                                      new object(),
+                                                                                                      loader,
+                                                                                                      new object[] { count },
+                                                                                                      DateTime.Now.AddHours(Global.ConfigDoubleParam("TopPostersCachePer")));
+
+            return top;
+   
+        }
+
+        private static List<KeyValuePair<string, string>> GetTopPostersFromDB(int count)
+        {
+            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+            DataTable dt = Database.UserGetTopPosters(count);
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                top = new List<KeyValuePair<string, string>>();
-                DataTable dt = Database.UserGetTopPosters(count);
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    string username = dt.Rows[i]["usernick"].ToString();
-                    string text = dt.Rows[i]["postcount"].ToString();
-                    top.Add(new KeyValuePair<string, string>(username, text));
-                }
-                HttpContext.Current.Cache.Add("top_posters", top, null, DateTime.Now.Add(new TimeSpan(1, 0, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-       
+                string username = dt.Rows[i]["usernick"].ToString();
+                string text = dt.Rows[i]["postcount"].ToString();
+                top.Add(new KeyValuePair<string, string>(username, text));
             }
+      
             return top;
         }
 
         /// <summary>
-        /// Получаем статистику по пользователям(кол-во пользователей, админов, постеров)
+        /// Получаем статистику по пользователям(кол-во пользователей, админов, постеров) из кеша
         /// </summary>
         public static List<KeyValuePair<string, string>> GetStats()
         {
-            List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)HttpContext.Current.Cache.Get("stats");
-            if (top == null)
+            UsersStatLoader loader = new UsersStatLoader(GetStatsFromDB);
+            List<KeyValuePair<string, string>> stat = (List<KeyValuePair<string, string>>)AppCache.Get(Global.ConfigStringParam("UsersStatCacheName"),
+                                                                                                      new object(),
+                                                                                                      loader,
+                                                                                                      null,
+                                                                                                      DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersStatCachePer")));
+
+            return stat;
+   
+        }
+
+        public static List<KeyValuePair<string, string>> GetStatsFromDB()
+        {
+            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+            DataTable dt = Database.UserGetStat();
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                top = new List<KeyValuePair<string, string>>();
-                DataTable dt = Database.UserGetStat();
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    string key = dt.Rows[i]["key"].ToString();
-                    string value = dt.Rows[i]["value"].ToString();
-                    top.Add(new KeyValuePair<string, string>(key, value));
-                }
-                HttpContext.Current.Cache.Add("stats", top, null, DateTime.Now.Add(new TimeSpan(1, 0, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);       
+                string key = dt.Rows[i]["key"].ToString();
+                string value = dt.Rows[i]["value"].ToString();
+                top.Add(new KeyValuePair<string, string>(key, value));
             }
             return top;
         }

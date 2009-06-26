@@ -90,7 +90,8 @@
                     </FooterTemplate>
                 </asp:Repeater>               
                 
-                <h1>Статистика</h1>
+                <h1>Пользователи</h1>
+                <h2>Новые</h2>
                 <asp:Repeater ID="LastRegistered" runat="server" >
                     <HeaderTemplate>
                         <ul class="list">
@@ -104,11 +105,18 @@
                         </ul>
                     </FooterTemplate>
                 </asp:Repeater>
-                <div>                
-                    TotalUsers   : <asp:Literal ID="TotalUsers" runat="server" />
-                    TotalPosters : <asp:Literal ID="TotalPosters" runat="server" />
-                    TotalAdmins  : <asp:Literal ID="TotalAdmins" runat="server" />
-                </div>
+                <h2>Статистика</h2>
+                <ul class="list">                
+                    <li>
+                        Всего : <asp:Literal ID="TotalUsers" runat="server" />
+                    </li>
+                    <li>
+                        Постеры : <asp:Literal ID="TotalPosters" runat="server" />
+                    </li>
+                    <li>
+                        Админы : <asp:Literal ID="TotalAdmins" runat="server" />
+                    </li>
+                </ul>
             </div>
             <div id="stats">
                 <h1>Поиск</h1>
@@ -124,7 +132,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <%# Eval("text")%>
+                            <%# Eval("value.shorttext")%> by <%# Eval("key.nick")%>
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
@@ -154,7 +162,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <a href='news.aspx?id=<%# Eval("id")%>'><%# Eval("title")%></a> by <%# Eval("author.nick")%> (<%# Eval("views")%>)
+                            <a href='news.aspx?id=<%# Eval("value.id")%>'><%# Eval("value.title")%></a> by <%# Eval("key.nick")%> (<%# Eval("value.views")%>)
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>

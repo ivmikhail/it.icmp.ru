@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
 using ITCommunity;
-using System.Web.Caching;
 
 namespace ITCommunity
 {
@@ -17,6 +16,9 @@ namespace ITCommunity
 
     public class MenuItem
     {
+        //делегат метода загрузки меню из базы, нужен для организации кеширования
+        private delegate object MenuLoader();
+
         private int _id;
         private int _parentId; // 0 значит родителей нету.
         private string _url;
@@ -100,7 +102,7 @@ namespace ITCommunity
         public void Update()
         {
             Database.MenuItemsUpdate(this._id, this._parentId, this._url, this._sort, this._name, this._newWindow);
-            RemoveMenuCache();
+            AppCache.Remove(Global.ConfigStringParam("MenuCacheName"));
         }
 
         public MenuItem(int id, int parentId, string url, int sort, string name, byte isInNewWindow)
@@ -127,7 +129,7 @@ namespace ITCommunity
         /// <param name="id">Идентификатор</param>
         public static MenuItem GetById(int id)
         {
-            List<MenuItem> menu_items = GetMenuFromCache();
+            List<MenuItem> menu_items = GetMenu();
             MenuItem result = new MenuItem();
             foreach (MenuItem menu in menu_items)
             {
@@ -157,7 +159,7 @@ namespace ITCommunity
             {
                 parent = parentId;
             }
-            List<MenuItem> menu_items = GetMenuFromCache();
+            List<MenuItem> menu_items = GetMenu();
             List<MenuItem> result = new List<MenuItem>();
             foreach (MenuItem menu in menu_items)
             {
@@ -171,26 +173,25 @@ namespace ITCommunity
             //return GetItemsFromTable(Database.MenuItemsGetByParent(parentId));
         }
 
-        private static List<MenuItem> LoadMenuItemsToCache()
+        /// <summary>
+        /// Забираем меню из кеша
+        /// </summary>
+        /// <returns>Список пунктов в меню, независимо от вложенности</returns>
+        private static List<MenuItem> GetMenu()
+        {
+            MenuLoader loader = new MenuLoader(GetMenuFromDB);
+            List<MenuItem> menu = (List<MenuItem>)AppCache.Get(Global.ConfigStringParam("MenuCacheName"), 
+                                                               new object(), 
+                                                               loader, 
+                                                               null, 
+                                                               DateTime.Now.AddHours(Global.ConfigDoubleParam("MenuCachePer")));
+            
+            return menu;
+        }
+
+        private static List<MenuItem> GetMenuFromDB()
         {
             List<MenuItem> menu_items = GetItemsFromTable(Database.MenuItemsGetAll());
-            //интересно, заменится ли если уже есть?
-            HttpContext.Current.Cache.Add("menu_items", menu_items, null, DateTime.Now.Add(new TimeSpan(7, 0, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-            return menu_items;
-        }
-
-        private static void RemoveMenuCache()
-        {
-            HttpContext.Current.Cache.Remove("menu_items");
-        }
-
-        private static List<MenuItem> GetMenuFromCache()
-        {
-            List<MenuItem> menu_items = (List<MenuItem>)HttpContext.Current.Cache.Get("menu_items");
-            if (menu_items == null)
-            {
-                menu_items = LoadMenuItemsToCache();
-            }
             return menu_items;
         }
 
@@ -201,17 +202,20 @@ namespace ITCommunity
         public static void Delete(int id)
         {
             Database.MenuItemsDel(id);
-            RemoveMenuCache();
+            AppCache.Remove(Global.ConfigStringParam("MenuCacheName"));
         }
 
         /// <summary>
-        /// Добавляем пункт
+        /// Добавляем пункт меню
         /// </summary>
         /// <param name="MenuItem">Добавляемый пункт</param>
+        /// <returns>Только что добавленный пункт в меню(из БД)</returns>
         public static MenuItem Add(MenuItem item)
         {
-            RemoveMenuCache();
-            return GetItemFromRow(Database.MenuItemsAdd(item.Parent.Id, item.Url, item.Sort, item.Name, item._newWindow));
+            MenuItem new_item = GetItemFromRow(Database.MenuItemsAdd(item.Parent.Id, item.Url, item.Sort, item.Name, item._newWindow));
+            AppCache.Remove(Global.ConfigStringParam("MenuCacheName"));
+
+            return new_item; 
         }
 
         private static List<MenuItem> GetItemsFromTable(DataTable dt)

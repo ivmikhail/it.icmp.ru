@@ -16,6 +16,11 @@ namespace ITCommunity
     /// </summary>
     public class Post
     {
+        //делегат метода загрузки последних постов из базы, нужен дл€ организации кешировани€
+        private delegate object LastPostsLoader(int count);
+        //делегат метода загрузки попул€рных постов из базы, нужен дл€ организации кешировани€
+        private delegate object TopPostsLoader(int period, int count);
+
         private int _id;
         private string _title;
         private string _description;
@@ -308,7 +313,7 @@ namespace ITCommunity
         /// <summary>
         /// —цепл€ем новость к категори€м
         /// </summary>
-        /// <param name="cats"> атегории</param>
+        /// <param name="menu"> атегории</param>
         /// <param name="post_id">Ќовость</param>
         private static void PostAttachCategories(List<Category> cats, Post post)
         {
@@ -363,7 +368,23 @@ namespace ITCommunity
             return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
         }
 
+        /// <summary>
+        /// ¬озвращает последние добавленные посты из кеша
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public static List<Post> GetLast(int count)
+        {
+            LastPostsLoader loader = new LastPostsLoader(GetLastPostsFromDB);
+            List<Post> lasts = (List<Post>)AppCache.Get(Global.ConfigStringParam("LastPostsCacheName"),
+                                                        new object(),
+                                                        loader,
+                                                        new object[] { count },
+                                                        DateTime.Now.AddHours(Global.ConfigDoubleParam("LastPostsCachePer")));
+            return lasts;
+        }
+
+        private static List<Post> GetLastPostsFromDB(int count)
         {
             return GetPostsFromTable(Database.PostGetLast(count));
         }
@@ -385,12 +406,28 @@ namespace ITCommunity
         /// </summary>
         /// <param name="period">ѕериод, в дн€х. Ќапример, попул€рные посты за последние N дней.</param>
         /// <param name="count"> ол-во нужных постов</param>
-        public static List<Post> GetTop(int period, int count)
+        public static List<KeyValuePair<User, Post>> GetTop(int period, int count)
         {
-            return GetTopPostsFromCache(period, count);
-            //return GetPostsFromTable(Database.PostGetTop(period, count));
+            TopPostsLoader loader = new TopPostsLoader(GetTopPostsFromDB);
+            List<KeyValuePair<User, Post>> top_posts = (List<KeyValuePair<User, Post>>)AppCache.Get(Global.ConfigStringParam("TopPostsCacheName"),
+                                                                                                    new object(),
+                                                                                                    loader,
+                                                                                                    new object[] { period, count},
+                                                                                                    DateTime.Now.AddHours(Global.ConfigDoubleParam("TopPostsCachePer")));
+
+            return top_posts;
         }
 
+        private static List<KeyValuePair<User, Post>> GetTopPostsFromDB(int period, int count)
+        {
+            List<Post> posts = GetPostsFromTable(Database.PostGetTop(period, count));
+            List<KeyValuePair<User, Post>> top = new List<KeyValuePair<User, Post>>();
+            foreach (Post post in posts)
+            {
+                top.Add(new KeyValuePair<User, Post>(post.Author, post));
+            }
+            return top;
+        }
 
 
         /// <summary>
@@ -473,28 +510,6 @@ namespace ITCommunity
                              Category.GetPostCategories(id)); //TODO: MZFK
             }
             return post;
-        }
-
-        private static List<Post> LoadTopPostsToCache(int period, int count)
-        {
-            List<Post> posts = GetPostsFromTable(Database.PostGetTop(period, count));
-            HttpContext.Current.Cache.Add("top_posts", posts, null, DateTime.Now.Add(new TimeSpan(0, 1, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-            return posts;
-        }
-
-        private static void RemoveTopPostsFromCache()
-        {
-            HttpContext.Current.Cache.Remove("top_posts");
-        }
-
-        private static List<Post> GetTopPostsFromCache(int period, int count)
-        {
-            List<Post> posts = (List<Post>)HttpContext.Current.Cache.Get("top_posts");
-            if (posts == null)
-            {
-                posts = LoadTopPostsToCache(period, count);
-            }
-            return posts;
         }
     }
 }

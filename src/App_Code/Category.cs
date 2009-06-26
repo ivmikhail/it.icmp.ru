@@ -5,7 +5,6 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
-using System.Web.Caching;
 
 using ITCommunity;
 
@@ -16,6 +15,9 @@ namespace ITCommunity
     /// </summary>
     public class Category
     {
+        //делегат метода загрузки категорий из базы, нужен для организации кеширования
+        private delegate object CategoriesLoader(); 
+
         private int _id;
         private string _name;
         private int _sort;
@@ -97,7 +99,7 @@ namespace ITCommunity
         /// <param name="id">Идентификатор категории</param>
         public static Category GetById(int id)
         {
-            List<Category> cats = GetCatsFromCache();
+            List<Category> cats = GetAll();
             Category result = new Category();
             foreach (Category cat in cats)
             {
@@ -112,11 +114,17 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Берем все категории новостей
+        /// Возвращаем все категории в списке из кеша
         /// </summary>
         public static List<Category> GetAll()
         {
-            return GetCatsFromCache();
+            CategoriesLoader loader = new CategoriesLoader(GetAllCategoriesFromDB);
+            List<Category> cats = (List<Category>)AppCache.Get(Global.ConfigStringParam("CategoriesCacheName"), 
+                                                               new object(), 
+                                                               loader, 
+                                                               null, 
+                                                               DateTime.Now.AddHours(Global.ConfigDoubleParam("CategoriesCachePer")));
+            return cats;
         }
 
         /// <summary>
@@ -127,7 +135,7 @@ namespace ITCommunity
         public static List<Category> GetPostCategories(int postId)
         {
             //NOTE: Узкое место
-            return GetCategoryFromTable(Database.PostGetCategories(postId));
+            return GetCategoriesFromTable(Database.PostGetCategories(postId));
         }
 
         /// <summary>
@@ -136,43 +144,28 @@ namespace ITCommunity
         /// <param name="id">Идентификатор категории</param>
         public static void Delete(int id)
         {
-            RemoveCatsCache();
             Database.CategoryDel(id);
+            AppCache.Remove(Global.ConfigStringParam("CategoriesCacheName"));
         }
 
         /// <summary>
-        /// Добавление категории в базу
+        /// Добавление категории в базу(кеш удаляется)
         /// </summary>
-        /// <param name="category">Сама категория</param>
+        /// <param name="category">Только что добавленная категория</param>
         public static Category Add(Category category)
-        {
-            RemoveCatsCache();
-            return GetCategoryFromRow(Database.CategoryAdd(category.Name, category.Sort));
+        {            
+            Category cat = GetCategoryFromRow(Database.CategoryAdd(category.Name, category.Sort));
+            AppCache.Remove(Global.ConfigStringParam("CategoriesCacheName"));
+
+            return cat;
         }
 
-        private static List<Category> LoadCatsToCache()
+        private static List<Category> GetAllCategoriesFromDB()
         {
-            List<Category> cats = GetCategoryFromTable(Database.CategoryGetAll());
-            HttpContext.Current.Cache.Add("categories", cats, null, DateTime.Now.Add(new TimeSpan(7, 0, 0, 0, 0)), Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-            return cats;
-        }
+            return GetCategoriesFromTable(Database.CategoryGetAll());
 
-        private static void RemoveCatsCache()
-        {
-            HttpContext.Current.Cache.Remove("categories");
         }
-
-        private static List<Category> GetCatsFromCache()
-        {
-            List<Category> cats = (List<Category>)HttpContext.Current.Cache.Get("categories");
-            if (cats == null)
-            {
-                cats = LoadCatsToCache();
-            }
-            return cats;
-        }
-
-        private static List<Category> GetCategoryFromTable(DataTable dt)
+        private static List<Category> GetCategoriesFromTable(DataTable dt)
         {
             List<Category> cats = new List<Category>();
             for (int i = 0; i < dt.Rows.Count; i++)
