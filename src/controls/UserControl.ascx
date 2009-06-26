@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserProfile.ascx.cs" Inherits="ITCommunity.UserProfile" %>
+<%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserControl.ascx.cs" Inherits="ITCommunity.UserControl" %>
 <div id="user_profile">
     <h1>Aloha <asp:Literal ID="LabelUserLogin" runat="server" Text="usernick" />!</h1>
     <ul class="list user-profile">
@@ -13,15 +13,9 @@
         </li>
         <li>
             <a href="favorites.aspx" title="Статьи которые я отметил">Избранное</a>
-        </li>       
-        <li>
-            <asp:HyperLink ID="AddPostLink" runat="server" NavigateUrl="~/editpost.aspx" Visible="false">Добавить пост</asp:HyperLink>
-        </li>  
+        </li>    
         <li>
             <asp:LinkButton ID="LinkButtonExit" runat="server" OnClick="LinkButtonExit_Click">Выйти</asp:LinkButton>        
-        </li>
-        <li>
-            <asp:HyperLink ID="ManageAccountsLink" runat="server" NavigateUrl="~/accounts.aspx" Visible="false">Пользователи</asp:HyperLink>
         </li>
     </ul>   
 </div>

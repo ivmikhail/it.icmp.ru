@@ -16,6 +16,16 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (CurrentUser.isAuth)
+                {
+                    this.Visible = false;
+                } else
+                {
+                    this.Visible = true;
+                }
+            }
 
         }
         bool UserDataIsValid()

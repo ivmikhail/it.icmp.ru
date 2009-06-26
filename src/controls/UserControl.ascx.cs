@@ -12,26 +12,22 @@ using ITCommunity;
 
 namespace ITCommunity
 {
-    public partial class UserProfile : System.Web.UI.UserControl
+    public partial class UserControl : System.Web.UI.UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                LabelUserLogin.Text = CurrentUser.User.Nick;
-
-                ITCommunity.User.Roles role = CurrentUser.User.Role;                
-                LabelUserRole.Text = role.ToString();
-                if (role == User.Roles.Admin)
+                if (CurrentUser.isAuth)
                 {
-                    ManageAccountsLink.Visible = true;
-                    AddPostLink.Visible = true;
-                } else if (role == User.Roles.Poster)
+                    LabelUserLogin.Text = CurrentUser.User.Nick;
+                    LabelUserRole.Text = CurrentUser.User.Role.ToString();
+                    MessagesLink.Text = "<a href='mailview.aspx' title='Мои сообщения' >Сообщения(" + Message.GetNewCount(CurrentUser.User.Id) + ")</a>";
+                    this.Visible = true;
+                } else
                 {
-                    AddPostLink.Visible = true;
+                    this.Visible = false;
                 }
-                MessagesLink.Text = "<a href='mailview.aspx' title='Мои сообщения' >Сообщения(" + Message.GetNewCount(CurrentUser.User.Id) + ")</a>";
-
             }
         }
         protected void LinkButtonExit_Click(object sender, EventArgs e)
