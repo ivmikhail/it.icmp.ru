@@ -43,7 +43,6 @@ namespace ITCommunity
 
                 RepeaterPostCategories.DataSource = Category.GetPostCategories(current.Id);
                 RepeaterPostCategories.DataBind();
-
             }
         }
     }

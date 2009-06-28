@@ -2,6 +2,7 @@
 <%@ Register Src="~/controls/LoginForm.ascx"    TagName="LoginForm"    TagPrefix="uc" %>
 <%@ Register Src="~/controls/UserControl.ascx"  TagName="UserControl"  TagPrefix="uc" %>
 <%@ Register Src="~/controls/AdminControl.ascx" TagName="AdminControl" TagPrefix="uc" %>
+<%@ Register Src="~/controls/Poll.ascx"         TagName="Poll"         TagPrefix="uc" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
@@ -46,8 +47,8 @@
             </div>
             <div id="navigate">
                 <uc:LoginForm id="LoginForm" runat="server" />
-                <uc:UserControl id="UserControl" runat="server" />
-                
+                <uc:UserControl id="UserControl" runat="server" />                
+
                 <h1>Категории</h1>                
                 <asp:Repeater ID="NewsCategories" runat="server" >
                     <HeaderTemplate>
@@ -70,7 +71,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <h2><%# Eval("name")%></h2>
+                            <h3><%# Eval("name")%></h3>
                             
                             <asp:Repeater ID="RepeaterSubMenu" runat="server">
                                 <HeaderTemplate>
@@ -101,6 +102,11 @@
                     <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click">Найти</asp:LinkButton>
                 </div>
                 
+                <h1>Голосование</h1>
+                <div id="poll_container">
+                    <uc:Poll id="Poll" runat="server" />
+                </div>                
+                
                 <h1>Последние комментарии</h1>
                 <asp:Repeater ID="LastComments" runat="server" >
                     <HeaderTemplate>
@@ -116,22 +122,9 @@
                     </FooterTemplate>
                 </asp:Repeater>
                 
-                <h1>Активные постеры</h1>
-                <asp:Repeater ID="TopPosters" runat="server" >
-                    <HeaderTemplate>
-                        <ul class="list">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li>
-                            <%# Eval("key")%>(<%# Eval("value")%>)
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                
-                <h1>Популярные посты</h1>
+                <h1>Статистика</h1>
+                                
+                <h2>Популярные посты</h2>
                 <asp:Repeater ID="PopularPosts" runat="server" >
                     <HeaderTemplate>
                         <ul class="list topposts-links">
@@ -146,22 +139,38 @@
                     </FooterTemplate>
                 </asp:Repeater>
                 
-                <h1>Пользователи</h1>
-                <h2>Новые</h2>
-                <asp:Repeater ID="LastRegistered" runat="server" >
+                
+                <h2>Активные постеры</h2>
+                <asp:Repeater ID="TopPosters" runat="server" >
                     <HeaderTemplate>
                         <ul class="list">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <%# Eval("createdate", "{0:dd MMMM yyyy}")%> <%# Eval("nick")%>
+                            <%# Eval("key")%>(<%# Eval("value")%>)
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
                         </ul>
                     </FooterTemplate>
                 </asp:Repeater>
-                <h2>Статистика</h2>
+                
+                <h1>Пользователи</h1>
+                <h3>Новые</h3>
+                <asp:Repeater ID="LastRegistered" runat="server" >
+                    <HeaderTemplate>
+                        <ul class="list">
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <li>
+                            <%# Eval("createdate", "{0:dd MMMM}")%> <%# Eval("nick")%>
+                        </li>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        </ul>
+                    </FooterTemplate>
+                </asp:Repeater>
+                <h3>Количество</h3>
                 <ul class="list">                
                     <li>
                         Всего : <asp:Literal ID="TotalUsers" runat="server" />

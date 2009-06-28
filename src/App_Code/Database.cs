@@ -943,6 +943,279 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
+        public static DataRow PollAdd(String topic, Int32 author_id, Byte is_multiselect, Byte is_open, String answers)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollAdd", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@topic", System.Data.SqlDbType.NVarChar, 30);
+            cmd.Parameters["@topic"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@topic"].Value = topic;
+            cmd.Parameters.Add("@author_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@author_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@author_id"].Value = author_id;
+            cmd.Parameters.Add("@is_multiselect", System.Data.SqlDbType.TinyInt, 0);
+            cmd.Parameters["@is_multiselect"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@is_multiselect"].Value = is_multiselect;
+            cmd.Parameters.Add("@is_open", System.Data.SqlDbType.TinyInt, 0);
+            cmd.Parameters["@is_open"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@is_open"].Value = is_open;
+            cmd.Parameters.Add("@answers", System.Data.SqlDbType.NVarChar, 1);
+            cmd.Parameters["@answers"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@answers"].Value = answers;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            DataRow result;
+            if (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                result = row;
+            } else
+            {
+                result = null;
+            }
+            reader.Close();
+            connection.Close();
+            return result;
+        }
+        public static int PollDel(Int32 poll_id)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollDel", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@poll_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@poll_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@poll_id"].Value = poll_id; int result = cmd.ExecuteNonQuery();
+            connection.Close();
+            return result;
+        }
+        public static DataTable PollGet(Int32 page, Int32 count, ref Int32 polls_count)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGet", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@page", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@page"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@page"].Value = page;
+            cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@count"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@count"].Value = count;
+            cmd.Parameters.Add("@polls_count", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@polls_count"].Direction = System.Data.ParameterDirection.InputOutput;
+            cmd.Parameters["@polls_count"].Value = polls_count;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            while (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                table.Rows.Add(row);
+            }
+            reader.Close();
+            DataTable result = table; polls_count = (Int32)(cmd.Parameters["@polls_count"].Value);
+            connection.Close();
+            return result;
+        }
+        public static DataTable PollGetAnswers(Int32 poll_id)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetAnswers", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@poll_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@poll_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@poll_id"].Value = poll_id;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            while (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                table.Rows.Add(row);
+            }
+            reader.Close();
+            DataTable result = table;
+            connection.Close();
+            return result;
+        }
+        public static DataTable PollGetAnswerVoters(Int32 answer_id)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetAnswerVoters", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@answer_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@answer_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@answer_id"].Value = answer_id;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            while (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                table.Rows.Add(row);
+            }
+            reader.Close();
+            DataTable result = table;
+            connection.Close();
+            return result;
+        }
+        public static DataRow PollGetById(Int32 id)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetById", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@id"].Value = id;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            DataRow result;
+            if (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                result = row;
+            } else
+            {
+                result = null;
+            }
+            reader.Close();
+            connection.Close();
+            return result;
+        }
+        public static DataRow PollGetLast()
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetLast", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            DataRow result;
+            if (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                result = row;
+            } else
+            {
+                result = null;
+            }
+            reader.Close();
+            connection.Close();
+            return result;
+        }
+        public static object PollIsUserVoted(Int32 user_id, Int32 poll_id)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollIsUserVoted", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@user_id"].Value = user_id;
+            cmd.Parameters.Add("@poll_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@poll_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@poll_id"].Value = poll_id; object result = cmd.ExecuteScalar();
+            connection.Close();
+            return result;
+        }
+        public static int PollVote(Int32 poll_id, Int32 user_id, String answers)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollVote", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@poll_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@poll_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@poll_id"].Value = poll_id;
+            cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@user_id"].Value = user_id;
+            cmd.Parameters.Add("@answers", System.Data.SqlDbType.NVarChar, 1);
+            cmd.Parameters["@answers"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@answers"].Value = answers; int result = cmd.ExecuteNonQuery();
+            connection.Close();
+            return result;
+        }
         public static DataRow PostAdd(String title, String desc, String text, Byte attached, String source, Int32 user_id)
         {
             SqlConnection connection = OpenConnection();

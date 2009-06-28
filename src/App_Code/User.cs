@@ -201,6 +201,19 @@ namespace ITCommunity
         }
 
         /// <summary>
+        /// Пользователи проголосовашие за данный вариант ответа в опросе.
+        /// 
+        /// Метод не учитывает "открытость" опроса. Как бы можно хакать.
+        /// Чтобы учитывать "открытость" используйте PollAnswer.GetUsers()
+        /// </summary>
+        /// <param name="answer_id">Идентификатор варианта ответа</param>
+        /// <returns>Список обьектов User</returns>
+        public static List<User> GetAnswerVoters(int answer_id)
+        {
+            return GetUsersFromTable(Database.PollGetAnswerVoters(answer_id));
+        }
+
+        /// <summary>
         /// Получаем самых активных постеров из кеша
         /// </summary>
         /// <param name="count">Кол-во нужных пользователей</param>
