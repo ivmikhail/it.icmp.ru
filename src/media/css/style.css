@@ -84,6 +84,17 @@ h3 {
 	color: #ffffff;
 	text-decoration:none;
 }
+#poll a
+{
+	color: #3366cc;
+	text-decoration:none;
+}
+#poll a:hover
+{
+	background-color: red;
+	color: #ffffff;
+	text-decoration:none;
+}
 .admin-panel a
 {
 	color: #3366cc;
@@ -162,7 +173,7 @@ div#dynamic-content p {
 	line-height: 1.6em;
 	text-indent: 2em;
 }
-label {
+div#dynamic-content label {
 	display: block;
 }
 div#dynamic-content .input-text {
@@ -254,9 +265,15 @@ div#dynamic-content .rfc-title
 {
 	color:red;
 }
-div#dynamic-content .note
+div#dynamic-content #add_post .note
 {
 	font-size: 0.8em;
+}
+div#poll .note
+{
+	padding:5px 0 5px 0;
+	width:70%;
+	font-size: 0.6em;
 }
 .list
 {
@@ -321,7 +338,6 @@ div#uploadImagesList img:hover
 	padding: 8px;	
 	border:2px solid #aaaaff;
 }
-
 #accounts-tabs 
 {
 	width: 70%;
