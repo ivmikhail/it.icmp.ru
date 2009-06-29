@@ -34,7 +34,7 @@ namespace ITCommunity
                 PostsView.PostSource = Post.Get(page, Global.ConfigNumParam("PostsCount"), ref total_records);
             }
 
-            NewsPager.Fill("default.aspx", "&cat=" + cat_id, "page", page, total_records, Global.ConfigNumParam("PostsCount"));
+            NewsPager.DataBind("default.aspx", "&cat=" + cat_id, "page", page, total_records, Global.ConfigNumParam("PostsCount"));
             //FillPager(total_records, page, "&cat=" + cat_id);
 
         }

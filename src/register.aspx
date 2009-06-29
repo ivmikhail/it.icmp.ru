@@ -3,6 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <uc:RegUserForm ID="RegUser" runat="server" />
+    <br />
     <asp:Literal ID="AboutRegister" runat="server" Text="Label"/>
 </asp:Content>
 

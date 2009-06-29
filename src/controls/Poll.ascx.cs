@@ -14,66 +14,101 @@ namespace ITCommunity
 {
     public partial class controls_Poll : System.Web.UI.UserControl
     {
+        private static Poll current;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                Poll current = Poll.GetActive();
-                LiteralPollTopic.Text = current.Topic;
-                List<PollAnswer> source = current.Answers;
-                if (current.IsOpen)
-                {
-                    LiteralNote.Text = "Ёто открытый опрос. ƒругие соучастнеги будут видеть, кто как проголосовал.";
-                } else
-                {
-                    LiteralNote.Text = "Ёто закрытый опрос.  то как проголосовал легально узнать нельз€.";
-                }
-                if (current.IsMultiSelect)
-                {
-                    CheckBoxListAnswer.Visible = true;
-                    RadioButtonListAnswer.Visible = false;
+                current = Poll.GetActive();
+                BindPollControlsAndData();
+            }
+            
+        }
 
-                    CheckBoxListAnswer.DataSource = source;
-                    CheckBoxListAnswer.DataBind();
-                } else
-                {
-                    CheckBoxListAnswer.Visible = false;
-                    RadioButtonListAnswer.Visible = true;
+        private void BindPollControlsAndData()
+        {
+            LiteralPollTopic.Text = current.Topic;
 
-                    RadioButtonListAnswer.DataSource = source;
-                    RadioButtonListAnswer.DataBind();
-                }
-            } 
+            if (current.IsOpen)
+            {
+                LiteralNote.Text = "Ёто открытый опрос. ƒругие соучастнеги будут видеть, кто как проголосовал.";
+            } else
+            {
+                LiteralNote.Text = "Ёто закрытый опрос.  то как проголосовал легально узнать нельз€.";
+            }
+
+            List<PollAnswer> source = current.Answers;
+
+            if (current.IsMultiSelect)
+            {
+                BindCheckBoxList(source);
+
+            } else
+            {
+                BindRadioButtonList(source);
+            }
+        }
+        private void BindCheckBoxList(List<PollAnswer> answers)
+        {
+            CheckBoxListAnswer.Visible = true;
+            RadioButtonListAnswer.Visible = false;
+
+            CheckBoxListAnswer.DataSource = answers;
+
+            CheckBoxListAnswer.DataValueField = "id";
+            CheckBoxListAnswer.DataTextField = "text";
+            CheckBoxListAnswer.DataBind();
+        }
+        private void BindRadioButtonList(List<PollAnswer> answers)
+        {
+            CheckBoxListAnswer.Visible = false;
+            RadioButtonListAnswer.Visible = true;
+
+            RadioButtonListAnswer.DataSource = answers;
+
+            RadioButtonListAnswer.DataValueField = "id";
+            RadioButtonListAnswer.DataTextField = "text";
+
+            RadioButtonListAnswer.DataBind();
         }
         protected void LinkButtonVote_Click(object sender, EventArgs e)
         {
-            Poll current = Poll.GetActive();
-            if(CurrentUser.isAuth)
+            if (CurrentUser.isAuth)
             {
-                string vote_ids = string.Empty;
-                if(current.IsMultiSelect)
-                {
-                    for (int i = 0; i < CheckBoxListAnswer.Items.Count; i++)
-                    {
-                        if (CheckBoxListAnswer.Items[i].Selected)
-                        {
-                            if (vote_ids.Length > 0)
-                            {
-                                vote_ids += ",";
-                            }
-                            vote_ids += CheckBoxListAnswer.Items[i].Value;				
-                        }
-                    }
-                } else 
-                {
-                    vote_ids = RadioButtonListAnswer.SelectedItem.Value;// SelectedValue;
-                }
+                string vote_ids = GetVotedIds();
                 if (vote_ids != string.Empty)
                 {
                     current.Vote(CurrentUser.User, vote_ids);
                 }
             }
+
+            BindPollControlsAndData();
         }
+
+        private string GetVotedIds()
+        {
+            string vote_ids = string.Empty;
+            if (current.IsMultiSelect)
+            {
+                foreach (ListItem item in CheckBoxListAnswer.Items)
+                {
+                    if (item.Selected)
+                    {
+                        if (vote_ids.Length > 0)
+                        {
+                            vote_ids += ",";
+                        }
+                        vote_ids += item.Value;
+                    }
+                }
+            } else
+            {
+                vote_ids = RadioButtonListAnswer.SelectedItem.Value;// SelectedValue;
+            }
+
+            return vote_ids;
+        }
+
         protected void LinkButtonResult_Click(object sender, EventArgs e)
         {
 

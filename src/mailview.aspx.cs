@@ -40,7 +40,7 @@ namespace ITCommunity
             }
             RepeaterMessages.DataSource = messages;
             RepeaterMessages.DataBind();
-            MessagePager.Fill("mailview.aspx", pageparam, "page", page, total_records, Global.ConfigNumParam("MaxMessageCount"));
+            MessagePager.DataBind("mailview.aspx", pageparam, "page", page, total_records, Global.ConfigNumParam("MaxMessageCount"));
         }
 
         protected void RepeaterMessages_ItemDataBound(object sender, RepeaterItemEventArgs e)

@@ -221,13 +221,7 @@ namespace ITCommunity
         {
             if (CanVote())
             {
-                if (this.IsMultiSelect)
-                {
-                    Database.PollVote(_id, user.Id, answers);
-                } else
-                {
-                    Database.PollVote(_id, user.Id, answers);
-                }
+                Database.PollVote(_id, user.Id, answers);
             }
         }
 

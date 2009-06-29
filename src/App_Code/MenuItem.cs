@@ -24,7 +24,7 @@ namespace ITCommunity
         private string _url;
         private int _sort;
         private string _name;
-        private byte _newWindow; // не 0 открывать ссылку в новом окне
+        private byte _newWindow; // не 0, открывать ссылку в новом окне
 
         public int Id
         {
@@ -99,6 +99,9 @@ namespace ITCommunity
             }
         }
 
+        /// <summary>
+        /// ќбновл€ем меню, кеш сбрасываетс€
+        /// </summary>
         public void Update()
         {
             Database.MenuItemsUpdate(this._id, this._parentId, this._url, this._sort, this._name, this._newWindow);

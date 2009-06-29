@@ -54,10 +54,13 @@ namespace ITCommunity
             }
         }
 
+        /// <summary>
+        /// Изменяем данную категорию, кеш сбрасывается.
+        /// </summary>
         public void Update()
         {
-            throw new System.NotImplementedException();
-            //RemoveCatsCache();
+            Database.CategoryUpdate(_id, _sort, _name);
+            AppCache.Remove(Global.ConfigStringParam("CategoriesCacheName"));
         }
 
         public Category(int id, string name, int sort)
@@ -80,17 +83,17 @@ namespace ITCommunity
         /// <param name="cat_id">Данный айдишник</param>
         public static bool IsCategoryExist(int cat_id)
         {
-            bool is_exist = false;
+            bool is_exists = false;
             List<Category> cats = GetAll();
             foreach (Category cat in cats)
             {
                 if (cat.Id == cat_id)
                 {
-                    is_exist = true;
+                    is_exists = true;
                     break;
                 }
             }
-            return is_exist;
+            return is_exists;
         }
 
         /// <summary>
@@ -144,6 +147,7 @@ namespace ITCommunity
         /// <param name="id">Идентификатор категории</param>
         public static void Delete(int id)
         {
+            // Что делать с новостями?
             Database.CategoryDel(id);
             AppCache.Remove(Global.ConfigStringParam("CategoriesCacheName"));
         }

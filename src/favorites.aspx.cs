@@ -17,18 +17,20 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string action = GetFavoritesAction();
-            int action_post = GetFavoritesActionPost();
+            if (!IsPostBack)
+            {
+                string action = GetFavoritesAction();
+                int action_post = GetFavoritesActionPost();
 
-            if (action == "del")
-            {
-                Post.FavoriteDelete(action_post, CurrentUser.User.Id);
+                if (action == "del")
+                {
+                    Post.FavoriteDelete(action_post, CurrentUser.User.Id);
+                } else if (action == "add" && action_post > 0)
+                {
+                    Post.FavoriteAdd(CurrentUser.User.Id, action_post);
+                }
+                LoadFavorites();
             }
-            else if (action == "add" && action_post > 0)
-            {
-                Post.FavoriteAdd(CurrentUser.User.Id, action_post);
-            }
-            LoadFavorites();
         }
 
         private string GetFavoritesAction()
@@ -57,7 +59,7 @@ namespace ITCommunity
             PostsView.PostSource = Post.GetFavorites(CurrentUser.User.Id, page, Global.ConfigNumParam("FavoritesCount"), ref total_records);
 
 
-            FavoritesPager.Fill("favorites.aspx", "", "page", page, total_records, Global.ConfigNumParam("PostsCount"));
+            FavoritesPager.DataBind("favorites.aspx", "", "page", page, total_records, Global.ConfigNumParam("FavoritesCount"));
         }
     }
 }

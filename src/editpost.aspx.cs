@@ -109,7 +109,6 @@ namespace ITCommunity
             {
                 SelectedCategoriesIds.Value = "";
                 CatNamesLiteral.Text = "";
-                //LiteralPostText.Text = HiddenPostText.Value;
                 WriteErrors(errors, "Новость не добавлена");
             }
         }
