@@ -18,13 +18,16 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoadCategories();
-            LoadLastComments();
-            LoadLinks();
-            LoadPopularPosts();
-            LoadLastRegistered();
-            LoadTopPosters();
-            LoadStat();
+            if (!IsPostBack)
+            {
+                LoadCategories();
+                LoadLastComments();
+                LoadLinks();
+                LoadPopularPosts();
+                LoadLastRegistered();
+                LoadTopPosters();
+                LoadStat();
+            }
         }
         private void LoadLinks()
         {

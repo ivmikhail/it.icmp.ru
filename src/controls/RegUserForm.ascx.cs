@@ -20,24 +20,30 @@ namespace ITCommunity
         }
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            if (!AllIsValid())
+            if (captcha.IsRightAnswer())
             {
-                return;
-            }
+                if (!AllIsValid())
+                {
+                    return;
+                }
 
-            string login = TextBoxLogin.Text.Trim();
-            string pass = TextBoxPass.Text;
-            string email = TextBoxEmail.Text.Trim().ToLower();
+                string login = TextBoxLogin.Text.Trim();
+                string pass = TextBoxPass.Text;
+                string email = TextBoxEmail.Text.Trim().ToLower();
 
-            User user = CurrentUser.Register(login, pass, email);
+                User user = CurrentUser.Register(login, pass, email);
 
-            if (user.Id > 0)
-            {
-                CurrentUser.LogIn(login, pass, true);
-                FormsAuthentication.RedirectFromLoginPage(login, true);
+                if (user.Id > 0)
+                {
+                    CurrentUser.LogIn(login, pass, true);
+                    FormsAuthentication.RedirectFromLoginPage(login, true);
+                } else
+                {
+                    RegisterFailed.IsValid = false;
+                }
             } else
             {
-                RegisterFailed.IsValid = false;
+                captcha.SetErrorMessageVisible();
             }
         }
 

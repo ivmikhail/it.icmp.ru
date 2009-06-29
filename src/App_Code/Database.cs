@@ -174,6 +174,24 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
+        public static int CategoryUpdate(Int32 id, Int32 sort, String name)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryUpdate", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@id"].Value = id;
+            cmd.Parameters.Add("@sort", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@sort"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@sort"].Value = sort;
+            cmd.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 32);
+            cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@name"].Value = name; int result = cmd.ExecuteNonQuery();
+            connection.Close();
+            return result;
+        }
         public static DataRow CommentAdd(Int32 post_id, Int32 user_id, String ip, String text)
         {
             SqlConnection connection = OpenConnection();
@@ -1210,7 +1228,7 @@ namespace ITCommunity
             cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@user_id"].Value = user_id;
-            cmd.Parameters.Add("@answers", System.Data.SqlDbType.NVarChar, 1);
+            cmd.Parameters.Add("@answers", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@answers"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@answers"].Value = answers; int result = cmd.ExecuteNonQuery();
             connection.Close();

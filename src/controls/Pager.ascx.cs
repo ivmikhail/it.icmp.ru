@@ -33,7 +33,7 @@ namespace ITCommunity
         /// <param name="current_page">Номер текущей страницы</param>
         /// <param name="total_records">Всего найденных записей</param>
         /// <param name="records_per_page"></param>
-        public void Fill(string page, string page_params, string query, int current_page, int total_records, int records_per_page)
+        public void DataBind(string page, string page_params, string query, int current_page, int total_records, int records_per_page)
         {
             this.pager_page = page;
             this.page_params = page_params;

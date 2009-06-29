@@ -39,7 +39,7 @@ namespace ITCommunity
             int page = GetPage();
             FindedPosts.PostSource = Post.Search(page, Global.ConfigNumParam("PostsCount"), query, ref total_records);
 
-            FindedPostsPager.Fill("search.aspx", "", "page", page, total_records, Global.ConfigNumParam("PostsCount"));
+            FindedPostsPager.DataBind("search.aspx", "", "page", page, total_records, Global.ConfigNumParam("PostsCount"));
         }
         private int GetPage()
         {
