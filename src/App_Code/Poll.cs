@@ -219,10 +219,7 @@ namespace ITCommunity
         /// <param name="answers">Идентификаторы ответов через запятую, если можно выбрать только один вариант, то за ответ возьмется первый(нулевой) член массива</param>
         public void Vote(User user, string answers)
         {
-            if (CanVote())
-            {
-                Database.PollVote(_id, user.Id, answers);
-            }
+            Database.PollVote(_id, user.Id, answers);
         }
 
         /// <summary>
@@ -252,7 +249,12 @@ namespace ITCommunity
         /// <returns></returns>
         public bool UserAlreadyVoted(User user)
         {
-            return (1 == (int)Database.PollIsUserVoted(user.Id, this.Id));
+            return (0 < (int)Database.PollIsUserVoted(user.Id, this.Id));
+        }
+
+        public static void Delete(int id)
+        {
+            Database.PollDel(id);
         }
     }
 }

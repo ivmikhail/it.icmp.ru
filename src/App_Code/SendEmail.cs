@@ -28,11 +28,11 @@ namespace ITCommunity
                 message.To.Add(new MailAddress(email));
                 message.Subject = "Ykt IT Community - восстановление парол€";
                 message.Body = "«дравствуй %username% ! \n\n" +
-                               "¬ы запросили сброс парол€ с сайта http://it.icmp.ru, сделать это можно перейд€ по ссылке:" + "\n" +
-                               " http://it.icmp.ru/recovery.aspx?id=" + guid + " \n\n" +
+                               "¬ы запросили сброс парол€ с сайта " + Global.SiteAddress + ", сделать это можно перейд€ по ссылке:" + "\n" +
+                               " " + Global.SiteAddress + "/recovery.aspx?id=" + guid + " \n\n" +
                                "—сылка активна в течении 3-4 дней." + "\n\n" + 
                                "______ \n" +
-                               "— уважением, робот наход€щийс€ в рабстве у держателей сайта http://it.icmp.ru";
+                               "— уважением, робот наход€щийс€ в рабстве у держателей сайта " + Global.SiteAddress;
                 SmtpClient client = new SmtpClient(); // используютс€ параметры из web.config
                 client.EnableSsl = true;
                 client.Send(message);

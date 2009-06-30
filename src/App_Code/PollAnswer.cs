@@ -37,7 +37,7 @@ namespace ITCommunity
         {
             get
             {
-                return Poll.GetById(_id);
+                return Poll.GetById(_poll_id);
             }
             set
             {

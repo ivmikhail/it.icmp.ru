@@ -9,7 +9,7 @@
        <asp:HyperLink ID="ManageAccounts" runat="server" NavigateUrl="~/accounts.aspx">Пользователи</asp:HyperLink>
     </li>
     <li>
-         <a href="#" title="Добавить голосование">Голосование</a>
+        <asp:HyperLink ID="AddPollLink" runat="server" NavigateUrl="~/addpoll.aspx">Голосование</asp:HyperLink>
     </li>     
     <li>
         <a href="#" title="Править категории">Категории</a>

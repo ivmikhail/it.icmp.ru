@@ -51,10 +51,11 @@ h3 {
 	padding: 30px 0 30px 0;
 	text-align:center;
 }
-.register-button a:
+.register-button a
 {
 	background: #3366cc;
-	color:#ffffff;
+	color:#ffffff;	
+	text-decoration:none;
 }
 .register-button a:hover
 {
@@ -382,6 +383,10 @@ div#uploadImagesList img:hover
 {
 	padding: 8px;	
 	border:2px solid #aaaaff;
+}
+#voters-data span 
+{
+	margin: 0 5px;
 }
 #accounts-tabs 
 {
