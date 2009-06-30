@@ -71,19 +71,6 @@ namespace ITCommunity
 
             RadioButtonListAnswer.DataBind();
         }
-        protected void LinkButtonVote_Click(object sender, EventArgs e)
-        {
-            if (CurrentUser.isAuth)
-            {
-                string vote_ids = GetVotedIds();
-                if (vote_ids != string.Empty)
-                {
-                    current.Vote(CurrentUser.User, vote_ids);
-                }
-            }
-
-            BindPollControlsAndData();
-        }
 
         private string GetVotedIds()
         {
@@ -109,9 +96,36 @@ namespace ITCommunity
             return vote_ids;
         }
 
+
+        protected void LinkButtonVote_Click(object sender, EventArgs e)
+        {
+            string poll_message = "Вы не можете голосовать, чтобы иметь такую возможность зарегистрируйтесь или авторизируйтесь.";
+            
+            if (CurrentUser.isAuth)
+            {
+                if (current.UserAlreadyVoted(CurrentUser.User))
+                {
+                    poll_message = "Ваш голос не защитан. Вы уже голосовали.";
+                } else
+                {
+                    string vote_ids = GetVotedIds();
+                    if (vote_ids == string.Empty)
+                    {
+                        poll_message = "Ваш голос не защитан. Нужно выбрать хотя бы один вариант ответа.";
+                    } else
+                    {
+                        current.Vote(CurrentUser.User, vote_ids);
+                        poll_message = "Ваш голос защитан. Спасибо за проявленную активность!";
+                    }
+                }
+            }
+            Session["poll_message"] = poll_message; // Note: бляха
+            Response.Redirect("pollresult.aspx");
+        }
+
         protected void LinkButtonResult_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("pollresult.aspx");
         }
 }
 }

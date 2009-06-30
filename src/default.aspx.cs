@@ -18,7 +18,10 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoadPosts();
+            if (!IsPostBack)
+            {
+                LoadPosts();
+            }
         }
 
         private void LoadPosts()
@@ -35,20 +38,7 @@ namespace ITCommunity
             }
 
             NewsPager.DataBind("default.aspx", "&cat=" + cat_id, "page", page, total_records, Global.ConfigNumParam("PostsCount"));
-            //FillPager(total_records, page, "&cat=" + cat_id);
-
         }
-        /*
-        private void FillPager(int total_records, int current_pagenum, string pageparams)
-        {
-            NewsPager.PagerPage = "default.aspx";
-            NewsPager.PageParams = pageparams;
-            NewsPager.PageQueryString = "page";
-            NewsPager.CurrentPage = current_pagenum;
-            NewsPager.TotalRecords = total_records;
-            NewsPager.RecordsPerPage = Global.ConfigNumParam("PostsCount");
-        }
-         */
         private int GetCatId()
         {
             int id = -1;
