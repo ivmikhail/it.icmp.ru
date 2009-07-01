@@ -39,6 +39,10 @@ h3 {
 	font-weight: 100;
 }
 
+b 
+{
+	font-weight:200;
+}
 .list
 {
 	margin:0;
@@ -169,22 +173,25 @@ div#header .code-comment
 div#navigate
 {
 	float:left;
-	width:14%;
-	margin-left:-97%;
+	width:13%;
+	padding: 0 5px;
+	margin-left:-99%;
 	overflow:hidden;
 }
 div#dynamic-content
 {
-	margin: 0 17%;
-	width:57%;
+	margin: 0 15%;
+	padding: 0 5px;
+	width:60%;
 	overflow:hidden;
 }
 
 div#stats
 {	
 	float:left;
-	width:25%;
-	margin-left:-25%;
+	width:22%;
+	margin-left:-23%;
+	overflow:hidden;
 }
 
 div#footer
@@ -199,6 +206,10 @@ div#footer
 
 div#dynamic-content label {
 	display: block;
+}
+div#newpoll label 
+{
+	display:inline;
 }
 div#dynamic-content .input-text {
 	display: block;

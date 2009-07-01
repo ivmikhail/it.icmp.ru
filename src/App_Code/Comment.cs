@@ -141,7 +141,7 @@ namespace ITCommunity
         /// </summary>
         /// <param name="id">Id коммента</param>
         public static void Delete(int id)
-        {
+        {            
             Database.CommentDel(id);
         }
 

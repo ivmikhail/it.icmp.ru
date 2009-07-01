@@ -23,14 +23,14 @@
         
         <div id="comments" class="post-comments">
             <h2>Комментарии(<asp:Literal ID="comments_count" runat="server" />)</h2>
-                <asp:Repeater ID="RepeaterComments" runat="server">
+                <asp:Repeater ID="RepeaterComments" runat="server" >
                     <HeaderTemplate>                        
                         <ul id="comments-list" class="list">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li class="comment">
                             <div class="comment-info">                                
-                                <%# Eval("createdate")%> / автор: <%# Eval("author.nick")%>
+                                <%# Eval("createdate")%> / автор: <%# Eval("author.nick")%> / <asp:LinkButton ID="LinkButtonDelComment" runat="server">удалить</asp:LinkButton>
                             </div>                    
                             <div class="comment-content">
                                 <p>

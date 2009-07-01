@@ -252,9 +252,27 @@ namespace ITCommunity
             return (0 < (int)Database.PollIsUserVoted(user.Id, this.Id));
         }
 
+        /// <summary>
+        /// Удалить опрос со всеми потрохами
+        /// </summary>
+        /// <param name="id">Идентификатор опроса</param>
         public static void Delete(int id)
         {
             Database.PollDel(id);
+        }
+
+        /// <summary>
+        /// Добавление нового опроса
+        /// </summary>
+        /// <param name="topic">Топик(вопрос)</param>
+        /// <param name="author_id">Идентификатор автора</param>
+        /// <param name="is_multiselect">Можно ли выбрать несколько вариантов ответа</param>
+        /// <param name="is_open">Является ли опрос открытым(можно смотерть кто как голосовал)</param>
+        /// <param name="answers">Вопросы через запятую</param>
+        /// <returns></returns>
+        public static Poll Add(string topic, int author_id, bool is_multiselect, bool is_open, string answers)
+        {
+            return GetPollFromRow(Database.PollAdd(topic, author_id, is_multiselect == true ? 1 : 0, is_open == true ? 1 : 0, answers));
         }
     }
 }

@@ -8,29 +8,55 @@
     <div id="newpoll">
         <ul class="list">
             <li>
-                Вопрос(топик)
+                <b>Вопрос(топик)</b>
             </li>
             <li>            
-                <asp:TextBox ID="TextBoxTopic" runat="server" Columns="60"/>
+                <asp:TextBox ID="TextBoxTopic" runat="server" Width="100%"/>
             </li>
             
             <li>
-                Варианты ответов(один вариант на одной строке)
+                <b>Варианты ответов(один вариант на одной строке)</b>
             </li>
             <li>            
-                <asp:TextBox ID="TextBoxAnswers" runat="server" TextMode="MultiLine" Rows="10" Columns="60" />
+                <asp:TextBox ID="TextBoxAnswers" runat="server" TextMode="MultiLine" Rows="10" Width="100%" />
+            </li>            
+            <li>            
+                <b>Сколько вариантов можно выбрать:</b>
+                <br />
+                <asp:RadioButtonList ID="RadioButtonListMultiselect" runat="server" RepeatDirection="horizontal">
+                    <asp:ListItem Selected="True" Text="только один" Value="0"/>
+                    <asp:ListItem Text="несколько" Value="1"/>
+                </asp:RadioButtonList>                
+                <br />
             </li>
-            
+            <li>            
+                <b>Тип опроса:</b>
+                <br />
+                <asp:RadioButtonList ID="RadioButtonListIsOpen" runat="server" RepeatDirection="horizontal">
+                    <asp:ListItem Selected="True" Text="закрытый" Value="0"/>
+                    <asp:ListItem Text="открытый" Value="1"/>
+                </asp:RadioButtonList>                
+                <br />
+            </li>
+            <li style="text-align:right;">            
+                <asp:LinkButton ID="LinkButtonAddPoll" runat="server" OnClick="LinkButtonAddPoll_Click">Добавить</asp:LinkButton>
+            </li>
             <li>
-            
-                Сколько вариантов можно выбрать:
-                <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatColumns="2" RepeatDirection="Vertical">
-                    <asp:ListItem Selected="True" Text="Только один" Value="0"/>
-                    <asp:ListItem Text="Несколько" Value="1"/>
-                </asp:RadioButtonList>
-            </li>
-            <li>            
-                <asp:LinkButton ID="LinkButtonAddPoll" runat="server">Добавить</asp:LinkButton>
+            <asp:ValidationSummary ID="ValidationSummaryAddpoll" runat="server" ValidationGroup="ValidatePoll" DisplayMode="List"  />
+        
+                <asp:RequiredFieldValidator     ID="RequiredTopic" 
+                                                runat="server" 
+                                                ControlToValidate="TextBoxTopic"
+                                                ErrorMessage="Введите название опроса." 
+                                                Display="None" 
+                                                ValidationGroup="ValidatePoll" />
+                                                
+                 <asp:RequiredFieldValidator    ID="RequiredAnswers" 
+                                                runat="server" 
+                                                ControlToValidate="TextBoxAnswers"
+                                                ErrorMessage="Введите варианты ответа." 
+                                                Display="None" 
+                                                ValidationGroup="ValidatePoll" />
             </li>
         </ul>
     </div>

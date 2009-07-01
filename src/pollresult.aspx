@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="pollresult.aspx.cs" Inherits="ITCommunity.Pollresult" Title="Ykt IT Community | Результаты опросы" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="pollresult.aspx.cs" Inherits="ITCommunity.PollResultPage" Title="Ykt IT Community | Результаты опросы" %>
 <%@ Register Src="~/controls/PollResults.ascx" TagName="PollResult" TagPrefix="uc" %>
 
 

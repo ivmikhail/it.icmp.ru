@@ -961,25 +961,25 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow PollAdd(String topic, Int32 author_id, Byte is_multiselect, Byte is_open, String answers)
+        public static DataRow PollAdd(String topic, Int32 author_id, Int32 is_multiselect, Int32 is_open, String answers)
         {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@topic", System.Data.SqlDbType.NVarChar, 30);
+            cmd.Parameters.Add("@topic", System.Data.SqlDbType.NVarChar, 120);
             cmd.Parameters["@topic"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@topic"].Value = topic;
             cmd.Parameters.Add("@author_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@author_id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@author_id"].Value = author_id;
-            cmd.Parameters.Add("@is_multiselect", System.Data.SqlDbType.TinyInt, 0);
+            cmd.Parameters.Add("@is_multiselect", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@is_multiselect"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@is_multiselect"].Value = is_multiselect;
-            cmd.Parameters.Add("@is_open", System.Data.SqlDbType.TinyInt, 0);
+            cmd.Parameters.Add("@is_open", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@is_open"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@is_open"].Value = is_open;
-            cmd.Parameters.Add("@answers", System.Data.SqlDbType.NVarChar, 1);
+            cmd.Parameters.Add("@answers", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@answers"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@answers"].Value = answers;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
