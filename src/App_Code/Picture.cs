@@ -141,7 +141,7 @@ namespace ITCommunity
             try
             {
                 Bitmap bmp = new Bitmap(fs);
-                if (fs.Length > Global.ConfigNumParam("PostImageSize") || bmp.Width > Global.ConfigNumParam("PostImageWidth") || bmp.Height > Global.ConfigNumParam("PostImageHeight"))
+                if (fs.Length > Global.ConfigNumParam("PostImgSize") || bmp.Width > Global.ConfigNumParam("PostImgWidth") || bmp.Height > Global.ConfigNumParam("PostImgHeight"))
                 {
                     throw new Exception("Размеры картинки недопустимы");
                 }

@@ -22,8 +22,8 @@ namespace ITCommunity
             if (!IsPostBack)
             {
                 FillDropDown();
-                FillUsersList();
             }
+            FillUsersList();
         }
 
         private void FillUsersList()
