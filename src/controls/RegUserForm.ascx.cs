@@ -20,6 +20,7 @@ namespace ITCommunity
         }
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
+            //TODO: Запретить регистрироваться с ником anounymous
             if (captcha.IsRightAnswer())
             {
                 if (!AllIsValid())

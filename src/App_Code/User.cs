@@ -274,7 +274,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Удаляем аккаунт
+        /// Удаляем аккаунт. Удаление не делать.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
         public static void Delete(int userId)

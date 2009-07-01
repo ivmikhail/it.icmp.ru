@@ -25,10 +25,13 @@ namespace ITCommunity
         private void CheckPollDel()
         {
             int del_id = GetDel();
-            Poll del_poll = Poll.GetById(del_id);
-            if (del_poll.Id > 0)
+            if (del_id > 0)
             {
-                Poll.Delete(del_poll.Id);
+                Poll del_poll = Poll.GetById(del_id);
+                if (del_poll.Id > 0)
+                {
+                    Poll.Delete(del_poll.Id);
+                }
             }
         }
         private void LoadPolls()
@@ -48,9 +51,42 @@ namespace ITCommunity
         }
         private int GetDel()
         {
-            int page_num;
-            Int32.TryParse(Request.QueryString["del"], out page_num);
-            return page_num == 0 ? 1 : page_num;
+            int id;
+            Int32.TryParse(Request.QueryString["del"], out id);
+            return id;
+        }
+        protected void LinkButtonAddPoll_Click(object sender, EventArgs e)
+        {
+            if (NewPollIsValid())
+            {
+                string topic = HttpUtility.HtmlEncode(TextBoxTopic.Text);
+                bool is_multiselect = RadioButtonListMultiselect.Items[1].Selected;
+                bool is_open = RadioButtonListIsOpen.Items[1].Selected;
+
+                string[] pre_answers = TextBoxAnswers.Text.Replace("\r", "").Split('\n');
+                string answers = "";
+                for (int i = 0; i < pre_answers.Length; i++)
+                {
+                    if (answers != "")
+                    {
+                        answers += ",";
+                    }
+                    if (pre_answers[i] != "")
+                    {
+                        answers += HttpUtility.HtmlEncode(pre_answers[i]);
+                    }
+                }
+
+                Poll.Add(topic, CurrentUser.User.Id, is_multiselect, is_open, answers);
+                Response.Redirect("addpoll.aspx");
+            }
+        }
+        private bool NewPollIsValid()
+        {
+            RequiredTopic.Validate();
+            RequiredAnswers.Validate();
+
+            return RequiredTopic.IsValid && RequiredAnswers.IsValid;
         }
     }
 }

@@ -10,7 +10,7 @@
               <th>
                  voters
               </th>
-              <th></th>
+              <th></th>       
             </thead>
             <tbody>
         </HeaderTemplate>
@@ -23,7 +23,7 @@
                     <%# Eval("votescount") %>
                 </td>
                 <td>
-                    <a href="addpoll.aspx?del='<%# Eval("id")%>'" title="удалить">удалить</a>
+                    <a href="pollresult.aspx?id=<%# Eval("id") %>" title="Посмотреть результаты">результаты</a>
                 </td>
             </tr> 
         </ItemTemplate>

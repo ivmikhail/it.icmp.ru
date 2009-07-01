@@ -9,7 +9,7 @@
 <uc:OpenFlashChartControl ID="OpenFlashChartControl" runat="server" EnableCache="false" Width="100%" LoadingMsg="Загрузка данных..."/>
 
 <div style="text-align:center;">
-    <asp:Literal ID="LiteralMulstiselect" runat="server" />
+    <asp:Literal ID="LiteralPollInfo" runat="server" />
 </div>
 
 <h2>
