@@ -76,6 +76,7 @@
                                     ErrorMessage="Введите пароль." 
                                     Display="None" 
                                     ValidationGroup="ValidateRegData" />
+                                    
         <asp:CompareValidator       ID="ConfirmPassword" 
                                     runat="server" 
                                     Display="None"
@@ -89,6 +90,12 @@
                              runat="server" 
                              Display="None" 
                              ErrorMessage="Пользователь с таким логином/email'ом уже зарегистрирован." 
+                             ValidationGroup="ValidateRegData" />
+                             
+       <asp:CustomValidator ID="AnonymousAccount" 
+                             runat="server" 
+                             Display="None" 
+                             ErrorMessage="Нельзя регистрировать аккаунт с логином 'anonymous', выберите другой логин" 
                              ValidationGroup="ValidateRegData" />
                              
         <asp:CustomValidator ID="RegisterFailed" 
