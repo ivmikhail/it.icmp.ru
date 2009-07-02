@@ -20,7 +20,7 @@ namespace ITCommunity
         }
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            //TODO: Запретить регистрироваться с ником anounymous
+            //TODO: Запретить регистрироваться с ником anonymous
             if (captcha.IsRightAnswer())
             {
                 if (!AllIsValid())
@@ -83,12 +83,17 @@ namespace ITCommunity
             bool status = true;
 
             string login = TextBoxLogin.Text.Trim();
-            User user = User.GetByLogin(login);
-            if (user.Id > 0)
+            if (login == "anonymous")
             {
-                status = AccountExist.IsValid = false;
+                status = AnonymousAccount.IsValid = false;                
+            } else
+            {
+                User user = User.GetByLogin(login);
+                if (user.Id > 0)
+                {
+                    status = AccountExist.IsValid = false;
+                }
             }
-
             return status;
         }
         private bool EmailIsValid()
