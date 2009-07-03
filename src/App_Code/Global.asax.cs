@@ -3,12 +3,11 @@ using System.Data;
 using System.Configuration;
 using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using ITCommunity;
 using System.IO;
+using System.IO.Compression;
+
+
+using ITCommunity;
 
 namespace ITCommunity
 {
@@ -78,6 +77,37 @@ namespace ITCommunity
                     Context.User = new System.Security.Principal.GenericPrincipal(id, roles);
 
                 }
+            }
+        }
+        
+        public void Application_PreRequestHandlerExecute(object sender, EventArgs e)
+        {
+            HttpApplication app = sender as HttpApplication;
+            string acceptEncoding = app.Request.Headers["Accept-Encoding"];
+            Stream prevUncompressedStream = app.Response.Filter;
+
+            if (!(app.Context.CurrentHandler is System.Web.UI.Page) ||
+                app.Request["HTTP_X_MICROSOFTAJAX"] != null)
+                return;
+
+            if (acceptEncoding == null || acceptEncoding.Length == 0)
+                return;
+
+            acceptEncoding = acceptEncoding.ToLower();
+
+            if (acceptEncoding.Contains("gzip"))
+            {
+                // gzip
+                app.Response.Filter = new GZipStream(prevUncompressedStream,
+                    CompressionMode.Compress);
+                app.Response.AppendHeader("Content-Encoding", "gzip");
+
+            } else if (acceptEncoding.Contains("deflate"))
+            {               
+                // deflate
+                app.Response.Filter = new DeflateStream(prevUncompressedStream,
+                    CompressionMode.Compress);
+                app.Response.AppendHeader("Content-Encoding", "deflate");
             }
         }
     }
