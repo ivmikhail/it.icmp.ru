@@ -18,12 +18,19 @@ namespace ITCommunity
         }
         protected void LinkButtonSend_Click(object sender, EventArgs e)
         {
+            //NOTE: bydlo-style code
             ITCommunity.User receiver = ITCommunity.User.GetByLogin(MessageReceiver.Text);
             if (receiver.Id > 0)
             {
-                Message.Send(receiver.Id, CurrentUser.User.Id, Server.HtmlEncode(MessageTitle.Text), Server.HtmlEncode(MessageText.Text));
-                Response.Redirect("mailview.aspx?a=output");
-            } else
+                if (receiver.Id == CurrentUser.User.Id)
+                {
+                    Errors.Text = "Зачем отправлять сообщение самому себе? Не хватает общения? У нас этого делать нельзя.";
+                } else
+                {
+                    Message.Send(receiver.Id, CurrentUser.User.Id, Server.HtmlEncode(MessageTitle.Text), Server.HtmlEncode(MessageText.Text));
+                    Response.Redirect("mailview.aspx?a=output");
+                }
+            } else 
             {
                 Errors.Text = "Пользователь с таким логином у нас не живет.";
             }

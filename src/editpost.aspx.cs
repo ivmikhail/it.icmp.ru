@@ -142,9 +142,9 @@ namespace ITCommunity
             string desc = post_content[0];
             string text = post_content[1];
 
-            if (TextBoxTitle.Text.Length == 0 || TextBoxTitle.Text.Length > 64)
+            if (TextBoxTitle.Text.Length == 0 || TextBoxTitle.Text.Length > 128)
             {
-                errors.Add("Количество символов в заголовке должно быть от 1 до 64.");
+                errors.Add("Количество символов в заголовке должно быть от 1 до 128.");
             }
             if (desc.Length > 2000)
             {

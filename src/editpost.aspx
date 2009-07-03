@@ -110,7 +110,7 @@
         <li>
             <h2>Заголовок</h2>
             <label>
-                <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="64" />  
+                <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="128" />  
              </label>
         </li>    
         <li>        

@@ -112,7 +112,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <%# Eval("value.shorttext")%> by <%# Eval("key.nick")%>
+                            <a href='news.aspx?id=<%# Eval("value.postid")%>#comments' title="Смотреть остальные комментарии поста" ><%# Eval("value.shorttext")%></a> by <%# Eval("key.nick")%>
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>

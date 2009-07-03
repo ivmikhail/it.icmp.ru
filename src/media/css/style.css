@@ -10,9 +10,10 @@
     padding: 0; 
     min-width: 900px;
 */
+	
+    font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 90%;
     color: #373737;   
-    font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 a
 {
@@ -23,6 +24,10 @@ a:hover
 	color: #3366cc;
 }
 
+p
+{
+	margin:0 10px 10px;
+}
 h1 {
 	margin: 12px 0 13px 0;
 	font-size: 1.6em;
@@ -37,11 +42,6 @@ h3 {
 	font-size: 1.2em;
 	margin: 4px 0 3px 0;
 	font-weight: 100;
-}
-
-b 
-{
-	font-weight:200;
 }
 .list
 {
@@ -110,6 +110,13 @@ b
 	background-color: #3366cc;
 	color: #ffffff;
 	text-decoration:none;
+}
+#comments-list li
+{
+}
+.comment-content
+{
+	padding: 10px 0 0 0;
 }
 .topposts-links a
 {
@@ -468,8 +475,4 @@ div#uploadImagesList img:hover
 {
 	width:60%;
 	text-align:left;
-}
-div#add_post p
-{
-	margin:0 10px 10px;
 }

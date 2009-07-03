@@ -21,8 +21,8 @@ namespace ITCommunity
             {
                 current = Poll.GetActive();
                 BindPollControlsAndData();
+                //LinkButtonVote.Enabled = !current.UserAlreadyVoted(CurrentUser.User);
             }
-            
         }
 
         private void BindPollControlsAndData()

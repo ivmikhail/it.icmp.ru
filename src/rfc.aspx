@@ -1,11 +1,11 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="rfc.aspx.cs" Inherits="ITCommunity.RfcPage" Title="Ykt IT Community" EnableViewState="false" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="rfc.aspx.cs" Inherits="ITCommunity.RfcPage" Title="Ykt IT Community" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
 <div id="rfc-search">
     <h2>¬ведите номер RFC или ключевое слово</h2>
     <asp:TextBox ID="TextBoxSearch" runat="server" /> 
     <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click" ValidationGroup="ValidateRfcSearch">»скать</asp:LinkButton>
-     <asp:RequiredFieldValidator ID="SearchRequiredFieldValidator" runat="server" ErrorMessage="¬ведите чего-нибудь" ControlToValidate="TextBoxSearch" ValidationGroup="ValidateRfcSearch"/>
+    <asp:RequiredFieldValidator ID="SearchRequiredFieldValidator" runat="server" ErrorMessage="¬ведите чего-нибудь" ControlToValidate="TextBoxSearch" ValidationGroup="ValidateRfcSearch"/>
 </div>     
 <div id="rfc-search-result">
     <asp:Repeater ID="RepeaterRfc" runat="server">

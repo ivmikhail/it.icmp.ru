@@ -18,7 +18,7 @@
                        <a href='mail.aspx?id=<%# Eval("id")%>'><%# Eval("title")%></a>     
                     </h2>
                     <div class="message-info">
-                       <%# Eval("CreateDate")%> / <asp:Literal ID="Who" runat="server" />
+                       <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <asp:Literal ID="Who" runat="server" />
                     </div>
                 <div>
             </li>
