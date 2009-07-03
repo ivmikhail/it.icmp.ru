@@ -29,9 +29,9 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li class="comment">
-                            <div class="comment-info">                                
-                                <%# Eval("createdate")%> / автор: <%# Eval("author.nick")%> / <asp:LinkButton ID="LinkButtonDelComment" runat="server">удалить</asp:LinkButton>
-                            </div>                    
+                            <div class="comment-info">  
+                                <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="post-author-link"><%# Eval("author.nick")%></a>
+                            </div>                   
                             <div class="comment-content">
                                 <p>
                                     <%# Eval("text")%>

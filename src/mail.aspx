@@ -3,21 +3,20 @@
     <h1>Просмотр сообщения</h1>
     <ul class="list">
         <li>
-            <h3>От кого</h3>
-            <asp:Literal ID="Sender" runat="server" />
+            <asp:Literal ID="LiteralWho" runat="server" />
         </li>
         <li>
-            <h3>Заголовок</h3>
+            <h2>Заголовок</h2>
             <asp:Literal ID="MessageTitle" runat="server" />
         </li>
         <li>
-            <h3>Текст</h3> 
-            <asp:Literal ID="MessageText" runat="server" />                
+            <h2>Текст</h2> 
+            <asp:Literal ID="MessageText" runat="server" />    
         </li>
         <li style="text-align:right;">
             <asp:LinkButton ID="DeleteLink" runat="server" OnClick="DeleteLink_Click">Удалить</asp:LinkButton>
             <asp:Literal ID="ReplyLink" runat="server" />
-            <a href="mailview.aspx">Вернуться к списку</a>
+            <asp:LinkButton ID="LinkButtonBack" runat="server" OnClick="LinkButtonBack_Click">Назад к списку</asp:LinkButton>
         </li>
     </ul>
 </asp:Content>

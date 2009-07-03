@@ -13,8 +13,11 @@ using ITCommunity;
 namespace ITCommunity
 {
 
+    //NOTE: bydlo style code
+
     public partial class Mail : System.Web.UI.Page
     {
+        private bool is_input;
         protected void Page_Load(object sender, EventArgs e)
         {
             LoadMessage();
@@ -25,11 +28,20 @@ namespace ITCommunity
             Message mess = Message.GetById(GetMessageId());
             if (mess.Receiver.Id == CurrentUser.User.Id || mess.Sender.Id == CurrentUser.User.Id)
             {
-                Sender.Text = mess.Receiver.Nick;
                 MessageTitle.Text = mess.Title;
                 MessageText.Text = mess.Text;
-                ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Sender.Nick + "'>Ответить</a>";
                 mess.MarkAsRead();
+
+                DeterminateIsInput(mess);
+
+                if (is_input)
+                {
+                    ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Sender.Nick + "'>Ответить</a>";
+                    LiteralWho.Text = "<h3>От кого</h3>" + mess.Sender.Nick;
+                } else
+                {
+                    LiteralWho.Text = "<h2>Получатель</h2>" + mess.Receiver.Nick;  
+                }
             } else
             {
                 Response.Redirect("mailview.aspx");
@@ -41,9 +53,49 @@ namespace ITCommunity
             Int32.TryParse(Request.QueryString["id"], out mess_id);
             return mess_id;
         }
+        private void DeterminateIsInput(Message mess)
+        {
+            if (mess.Receiver.Id == CurrentUser.User.Id)
+            {
+                is_input = true;
+            } else if (mess.Sender.Id == CurrentUser.User.Id)
+            {
+                is_input = false;
+            } else
+            {
+                Response.Redirect("mailview.aspx");
+            }
+        }
         protected void DeleteLink_Click(object sender, EventArgs e)
         {
-            Message.GetById(GetMessageId()).DeleteByReceiver();
+            Message mess = Message.GetById(GetMessageId()); 
+            DeleteMessage(mess);
+        }
+
+        private void DeleteMessage(Message mess)
+        {
+            if (is_input)
+            {
+                mess.DeleteByReceiver();
+            } else
+            {
+                mess.DeleteBySender();
+            }
+            Response.Redirect(GetBackUrl());
+        }
+        protected void LinkButtonBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(GetBackUrl());
+        }
+
+        private string GetBackUrl()
+        {
+            string url = "mailview.aspx";
+            if (!is_input)
+            {
+                url += "?a=output";
+            }
+            return url;
         }
 }
 }

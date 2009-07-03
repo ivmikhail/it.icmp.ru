@@ -1240,7 +1240,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@title", System.Data.SqlDbType.NVarChar, 32);
+            cmd.Parameters.Add("@title", System.Data.SqlDbType.NVarChar, 128);
             cmd.Parameters["@title"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@title"].Value = title;
             cmd.Parameters.Add("@desc", System.Data.SqlDbType.NVarChar, -1);
@@ -1252,7 +1252,7 @@ namespace ITCommunity
             cmd.Parameters.Add("@attached", System.Data.SqlDbType.TinyInt, 0);
             cmd.Parameters["@attached"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@attached"].Value = attached;
-            cmd.Parameters.Add("@source", System.Data.SqlDbType.NVarChar, 256);
+            cmd.Parameters.Add("@source", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@source"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@source"].Value = source;
             cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
@@ -1636,7 +1636,7 @@ namespace ITCommunity
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@id"].Value = id;
-            cmd.Parameters.Add("@title", System.Data.SqlDbType.NVarChar, 32);
+            cmd.Parameters.Add("@title", System.Data.SqlDbType.NVarChar, 128);
             cmd.Parameters["@title"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@title"].Value = title;
             cmd.Parameters.Add("@desc", System.Data.SqlDbType.NVarChar, -1);
@@ -1648,7 +1648,7 @@ namespace ITCommunity
             cmd.Parameters.Add("@attached", System.Data.SqlDbType.TinyInt, 0);
             cmd.Parameters["@attached"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@attached"].Value = attached;
-            cmd.Parameters.Add("@source", System.Data.SqlDbType.NVarChar, 256);
+            cmd.Parameters.Add("@source", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@source"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@source"].Value = source;
             cmd.Parameters.Add("@comments_count", System.Data.SqlDbType.Int, 0);
