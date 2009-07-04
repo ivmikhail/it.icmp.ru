@@ -3,7 +3,7 @@
     <asp:Label ID="lblInfo" runat="Server" />
     <asp:Repeater ID="rptFiles" runat="Server" >
         <HeaderTemplate>
-          <table>
+          <table border="0" width="100%">
             <tr>
             <th></th>
               <th>

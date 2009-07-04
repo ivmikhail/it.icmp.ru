@@ -9,6 +9,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 /// <summary>
 /// Summary description for BrowseItem
@@ -19,6 +20,8 @@ namespace ITCommunity {
         public const String FolderIcon = "folderclosed.gif";
         public const String ExeIcon = "exe.ico";
         public const String AnyIcon = "any.ico";
+        public const String UpIcon = "up.ico";
+        private const String descriptionFile = "descript.ion";
         private bool _isDir;
         public bool IsDir {
             get { return _isDir; }
@@ -60,32 +63,83 @@ namespace ITCommunity {
             this._link = link;
             this._name = name;
         }
-        public static List<BrowseItem> GetList(String dir) {
-            List<BrowseItem> result = new List<BrowseItem>();
+        public static List<BrowseItem> GetList(String dir, bool isViewRoot) {
 
-            String[] dirs = Directory.GetDirectories(dir);
-            for (int i = 0; i < dirs.Length; i++) {
-                BrowseItem bi = new BrowseItem(true, getLinkOfDir(dirs[i]), dirs[i].Substring(dirs[i].LastIndexOf("\\") + 1));
-                bi.Icon = FolderIcon;
+            List<BrowseItem> result = new List<BrowseItem>();
+            Dictionary<String, String> descriptions = getDescriptions(dir);
+            if(!isViewRoot) {
+                DirectoryInfo di = Directory.GetParent(dir);
+
+                BrowseItem bi = new BrowseItem(true, getLinkOfDir(di.Parent.FullName), "..");
+                bi.Icon = UpIcon;
+                bi.Description = "Выше";
                 result.Add(bi);
             }
             
+            String[] dirs = Directory.GetDirectories(dir);
+            for (int i = 0; i < dirs.Length; i++) {
+                String dirName = dirs[i].Substring(dirs[i].LastIndexOf("\\") + 1);
+                BrowseItem bi = new BrowseItem(true, getLinkOfDir(dirs[i]), dirName);
+                bi.Icon = FolderIcon;
+                descriptions.TryGetValue(dirName, out bi._description);
+                result.Add(bi);
+            }
             String[] files = Directory.GetFiles(dir);
             for (int i = 0; i < files.Length; i++) {
                 FileInfo fi = new FileInfo(files[i]);
-                BrowseItem bi = new BrowseItem(false, getLinkOfPath(files[i]), Path.GetFileName(files[i]));
+                if(fi.Name.ToLower()==descriptionFile) {
+                    continue;
+                }
+                BrowseItem bi = new BrowseItem(false, getLinkOfPath(files[i]), fi.Name);
                 bi.Size = setHumanSize(fi.Length);
                 bi.Icon = getIcon(fi.Extension);
+                descriptions.TryGetValue(fi.Name, out bi._description);
+                
                 result.Add(bi);
             }
             return result;
 
         }
-
+        private static Dictionary<String, String> getDescriptions(String dir) {
+            Dictionary<String, String> descriptions = new Dictionary<string, string>();
+            if (File.Exists(dir + descriptionFile)) {
+                String[] descs = File.ReadAllLines(dir + descriptionFile, Encoding.GetEncoding(866));
+                foreach (String line in descs) {
+                    String fname = null;
+                    String desc = null;
+                    int delimeter = -1;
+                    if (line[0] == '\"') {
+                        delimeter = line.IndexOf("\"", 1);
+                        if (delimeter > 0) {
+                            fname = line.Substring(1, delimeter - 1);
+                            delimeter = line.IndexOf(" ", delimeter);
+                            if (delimeter > 0) {
+                                desc = line.Substring(delimeter + 1);
+                            }
+                        }
+                    } else {
+                        delimeter = line.IndexOf(" ");
+                        if (delimeter > 0) {
+                            fname = line.Substring(0, delimeter);
+                            // TODO check for bad desc
+                            desc = line.Substring(delimeter + 1);
+                        }
+                    }
+                    if (fname != null && desc != null) {
+                        descriptions.Add(fname, desc);
+                    }
+                }
+            }
+            return descriptions;
+        }
         private static string getLinkOfDir(string dir) {
             String link = dir.Replace(Global.ConfigStringParam("FilesFolder"), "").Replace("\\", "/");
-            String cat = link.Substring(0, link.IndexOf("/"));
-            String d = link.Substring(link.IndexOf("/"));
+            int i = link.IndexOf("/");
+            if (i == -1) {
+                i = link.Length;
+            }
+            String cat = link.Substring(0, i);
+            String d = link.Substring(i);
             link = "browse.aspx?dir=" + d + "&cat=" + cat;
             return link;
         }
@@ -118,6 +172,9 @@ namespace ITCommunity {
                 link = "/" + link;
             }
             String path = Global.ConfigStringParam("FilesFolder") + Enum.GetName(linkType.GetType(), linkType) + link.Replace("/", "\\");
+            if(!path.EndsWith("\\")) {
+                path = path + "\\";
+            }
             return path;
         }
     }
