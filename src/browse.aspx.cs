@@ -25,15 +25,18 @@ public partial class browse : System.Web.UI.Page
             Debug.Print(ex.Message);
             linkType = LinkType.Files;
         }
+        bool isViewRootDir = dir == "";
+
         dir = BrowseItem.GetRealPathOfLink(linkType, dir);
         if (dirOk(dir))
         {
-            rptFiles.DataSource = BrowseItem.GetList(dir);
+            rptFiles.DataSource = BrowseItem.GetList(dir, isViewRootDir);
             rptFiles.DataBind();
         }
         else
         {
-            throw new Exception("Error reading directory: " + dir);
+            //throw new Exception("Error reading directory: " + dir);
+            return;
         }
     }
 
