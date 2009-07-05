@@ -1,21 +1,25 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="browse.aspx.cs" Inherits="browse" Title="File browser" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="browse.aspx.cs" Inherits="ITCommunity.Browse" Title="Ykt IT Community | Файлы" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:Label ID="lblInfo" runat="Server" />
     <asp:Repeater ID="rptFiles" runat="Server" >
         <HeaderTemplate>
           <table border="0" width="100%">
             <tr>
-            <th></th>
               <th>
-                Название</th>
+              
+              </th>
               <th>
-                Размер</th>
+                Название
+              </th>
+              <th>
+                Размер
+              </th>
             </tr>
         </HeaderTemplate>
         <ItemTemplate>
           <tr>
             <td>
-              <img src='media/img/<%# Eval("Icon") %>' />
+              <img src='media/img/browser/<%# Eval("Icon") %>' alt='<%# Eval("Name") %>' />
             </td>
             <td>
               <a href='<%# Eval("Link") %>' title='<%# Eval("Description") %>'><%# Eval("Name") %></a>
@@ -28,7 +32,7 @@
         <AlternatingItemTemplate>
           <tr>
             <td>
-              <img src='media/img/<%# Eval("Icon") %>' />
+              <img src='media/img/browser/<%# Eval("Icon") %>' alt='<%# Eval("Name") %>' />
             </td>
             <td>
               <a href='<%# Eval("Link") %>' title='<%# Eval("Description") %>'><%# Eval("Name") %></a>

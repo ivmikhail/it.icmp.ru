@@ -43,6 +43,10 @@ namespace ITCommunity
             {
                 return _id;
             }
+            set
+            {
+                _id = value;
+            }
         }
 
         public string Pass
