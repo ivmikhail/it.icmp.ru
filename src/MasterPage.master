@@ -18,13 +18,15 @@
     <meta name="language"    content="ru" />
     <meta name="doc-type"    content="web page" />
     
-    <link rel="shortcut icon" href="media/img/design/favicon.ico" type="image/vnd.microsoft.icon" />    
+    <link rel="shortcut icon" href="media/img/design/favicon.ico" type="image/vnd.microsoft.icon" />   
+    <link rel="alternate"     href="rss.aspx"                     type="application/rss+xml" charset="utf-8"  title="Ykt IT Community - http://it.icmp.ru" />    
+  
     <link rel="stylesheet"    href="media/css/default.css"        type="text/css"            charset="utf-8" /> 
     <link rel="stylesheet"    href="media/css/style.css"          type="text/css"            charset="utf-8" />
-    <link rel="alternate"     href="rss.aspx"                     type="application/rss+xml" charset="utf-8"  title="Ykt IT Community - http://it.icmp.ru" />    
-    
+    <link rel="stylesheet"    href="media/css/highlight-vs.css"   type="text/css"            charset="utf-8" />
+     
     <script type="text/javascript" src="media/js/clientcide-trunk-2.1.0.js" charset="utf-8"></script>     
-    
+    <script type="text/javascript" src="media/js/highlight.pack.js"         charset="utf-8"></script> 
 
     <!--    
     <script src="media/js/clientcide-trunk-2.1.0.compressed.js" type="text/javascript" charset="utf-8"></script>  
@@ -37,6 +39,8 @@
 	                window.location = "default.aspx";
 			    });
 		    });		
+		    
+        hljs.initHighlightingOnLoad();
 	</script>
     <form id="MainForm" runat="server" >
         <div id="container">
