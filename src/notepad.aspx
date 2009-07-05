@@ -17,7 +17,7 @@
                     </div>
                     
                     <div class="note-info">
-                        <%# Eval("createdate")%> / <a href='notepad.aspx?del=<%# Eval("id")%>'>Удалить</a>
+                        <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <a href='notepad.aspx?del=<%# Eval("id")%>'>Удалить</a>
                     </div>
                 <div>
             </li>

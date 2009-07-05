@@ -312,7 +312,7 @@ div#dynamic-content .rfc-title
 	padding: 5px 0 5px 0;
 	font-size: 0.6em;
 }
-div#dynamic-content #add_post .note
+.note
 {
 	font-size: 0.8em;
 }

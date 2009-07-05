@@ -73,6 +73,15 @@ namespace ITCommunity
             return user;
         }
 
+        /// <summary>
+        /// Шифруем пароль пользователя, в дальнейшем используем выходное значение функции
+        /// в качестве пароля пользователя.
+        /// 
+        /// Таким образом гарантируется что истинный пароль знает только сам пользователь.
+        /// </summary>
+        /// <param name="pass">Истинный пароль</param>
+        /// <param name="login">Логин пользователя</param>
+        /// <returns></returns>
         public static string HashPass(string pass, string login)
         {
             string preparedPass = login + pass;
@@ -91,6 +100,9 @@ namespace ITCommunity
             FormsAuthentication.SignOut();
         }
 
+        /// <summary>
+        /// IP текущего пользователя
+        /// </summary>
         public static string Ip
         {
             get
@@ -98,14 +110,6 @@ namespace ITCommunity
                 NameValueCollection serverVars = HttpContext.Current.Request.ServerVariables;
                 return serverVars["HTTP_X_FORWARDED_FOR"] ?? serverVars["REMOTE_ADDR"];
             }
-        }
-
-        /// <summary>
-        /// Валидируем логин
-        /// </summary>
-        private static bool ValidateLogin(string login)
-        {
-            throw new System.NotImplementedException();
         }
 
         /// <summary>

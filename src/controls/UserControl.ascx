@@ -4,15 +4,18 @@
     <ul class="list user-profile">
         <li>
             UserRole - <asp:Literal ID="LabelUserRole" runat="server" Text="userrole" />
-        </li>        
+        </li>    
+        <li>
+            <asp:Literal ID="MessagesLink" runat="server" />
+        </li>    
         <li>            
             <a href="notepad.aspx" title="Посмотреть записи">Блокнот</a>
         </li>
         <li>
-            <asp:Literal ID="MessagesLink" runat="server" />
-        </li>
-        <li>
             <a href="favorites.aspx" title="Статьи которые я отметил">Избранное</a>
+        </li>    
+        <li>
+            <a href="profile.aspx" title="Изменить email или пароль">Профиль</a>
         </li>    
         <li>
             <asp:LinkButton ID="LinkButtonExit" runat="server" OnClick="LinkButtonExit_Click">Выйти</asp:LinkButton>        
