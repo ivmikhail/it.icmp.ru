@@ -55,15 +55,16 @@ namespace ITCommunity
                 HyperLinkTitle.Text = post.Title;
                 HyperLinkTitle.NavigateUrl = "news.aspx?id=" + post.Id;
 
-                desc.Text = post.Description;
-                text.Text = post.Text;
+                desc.Text = post.DescriptionFormatted;
+                text.Text = post.TextFormatted;
                 comments_count.Text = post.CommentsCount.ToString();
-                date.Text = post.CreateDate.ToString();
+                date.Text = post.CreateDate.ToString("0:dd MMMM yyyy, HH:mm");
+                favorite.Text = post.FavoritesAction;
                 if (post.Source != "")
                 {
                     source.Text = "<a href='" + post.Source + "' target='_blank'>источник</a>";
                 }
-                author.Text = post.Author.Nick;
+                author.Text = "<a href='mailsend.aspx?receiver=" + post.Author.Nick + "' title='Отправить личное сообщение автору' class='post-author-link'>" + post.Author.Nick + "</a>";
                 views.Text = post.Views.ToString();
 
                 PostManageControls.Post = post;
@@ -125,7 +126,7 @@ namespace ITCommunity
             comm.CreateDate = DateTime.Now;
             comm.Ip = CurrentUser.Ip;
             comm.Post = post;
-            comm.Text = Server.HtmlEncode(TextBoxComment.Text);
+            comm.Text = TextBoxComment.Text;
             Comment.Add(comm);
             Response.Redirect("news.aspx?id=" + post.Id + "#comments");
         }

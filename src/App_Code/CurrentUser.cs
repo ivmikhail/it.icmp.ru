@@ -120,10 +120,11 @@ namespace ITCommunity
         /// <param name="email">электропочта</param>
         public static User Register(string login, string pass, string email)
         {
-            User user = new User();
-            user.Nick = login;
-            user.Pass = HashPass(pass, login);
+            User user  = new User();
+            user.Nick  = login;
+            user.Pass  = HashPass(pass, login);
             user.Email = email;
+            user.Role  = User.Roles.Poster;
 
             return User.Add(user);
         }

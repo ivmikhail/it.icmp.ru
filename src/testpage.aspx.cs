@@ -8,19 +8,20 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-using ITCommunity;
+using System.Text.RegularExpressions;
 
 namespace ITCommunity
 {
-    public partial class AdminControl : System.Web.UI.UserControl
+    public partial class TestPage : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
         }
-        protected void LinkButtonExit_Click(object sender, EventArgs e)
+
+        protected void Button_Click(object sender, EventArgs e)
         {
-            CurrentUser.LogOut();
-            Response.Redirect("Default.aspx");
+            Output.Text = BBCodeParser.Format(HttpUtility.HtmlEncode(Input.Text));
         }
-    }
+}
 }

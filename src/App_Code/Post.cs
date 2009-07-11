@@ -55,7 +55,9 @@ namespace ITCommunity
                 _title = value;
             }
         }
-
+        /// <summary>
+        /// Оригинальное описание, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
+        /// </summary>
         public string Description
         {
             get
@@ -68,6 +70,9 @@ namespace ITCommunity
             }
         }
 
+        /// <summary>
+        /// Оригинальный текст, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
+        /// </summary>
         public string Text
         {
             get
@@ -77,6 +82,28 @@ namespace ITCommunity
             set
             {
                 _text = value;
+            }
+        }
+
+        /// <summary>
+        /// Полностью форматированное в безопасный хтмл описание
+        /// </summary>
+        public string DescriptionFormatted
+        {
+            get
+            {
+                return BBCodeParser.Format(HttpUtility.HtmlEncode(_description));
+            }
+        }
+
+        /// <summary>
+        /// Полностью форматированный в безопасный хтмл текст
+        /// </summary>
+        public string TextFormatted
+        {
+            get
+            {
+                return BBCodeParser.Format(HttpUtility.HtmlEncode(_text));
             }
         }
 

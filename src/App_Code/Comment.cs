@@ -109,6 +109,7 @@ namespace ITCommunity
                 _ip = value;
             }
         }
+        // "as is", может содержать небезопасный хтмл, bbcode не учитывается.
         public string Text
         {
             get
@@ -120,11 +121,24 @@ namespace ITCommunity
                 _text = value;
             }
         }
+
+        /// <summary>
+        /// BBCode преобразован в безопасный хтмл, по идее xss не должно быть.
+        /// </summary>
+        public string TextFormatted
+        {
+            get
+            {
+                return BBCodeParser.Format(HttpUtility.HtmlEncode(_text));
+            }
+        }
+
         public string ShortText
         {
             get
             {
-                return (_text.Length > 20) ? _text.Substring(0, 20) + " ..." : _text;
+                string safely_text = HttpUtility.HtmlEncode(_text);
+                return (safely_text.Length > 20) ? safely_text.Substring(0, 20) + " ..." : safely_text;
             }
         }
 

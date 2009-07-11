@@ -49,10 +49,10 @@
         <asp:RegularExpressionValidator ID="LoginValidator" 
                                         runat="server" 
                                         ControlToValidate="TextBoxLogin" 
-                                        ErrorMessage="Логин может состоять только из латинских символов, цифр, знаков '-' и '-'. Длина должна быть от 2-х до 32-х символов." 
+                                        ErrorMessage="Логин может состоять только из латинских символов, цифр, знаков '-' и '_'. Длина должна быть от 3-х до 25-и символов." 
                                         Display="None" 
                                         ValidationGroup="ValidateRegData"
-                                        ValidationExpression="^[A-z0-9\-_!\. ]{2,32}$" /> 
+                                        ValidationExpression="^[A-z0-9\-_!\. ]{3,25}$" /> 
         
         
         <asp:RequiredFieldValidator     ID="RequiredEmail" 
