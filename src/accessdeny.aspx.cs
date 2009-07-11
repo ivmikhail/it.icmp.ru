@@ -16,8 +16,8 @@ namespace ITCommunity
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {                
-                LiteralMessage.Text = "ƒл€ получени€ доступа попробуйте авторизоватьс€ слева или <a href='register.aspx' title='«арегистрировать нового пользовател€'>зарегистрироватьс€</a>.";
+            {
+                LiteralMessage.Text = "ƒл€ получени€ доступа попробуйте авторизоватьс€ слева или <a href='register.aspx' title='«арегистрировать нового пользовател€'>зарегистрироватьс€</a>.<br /><br /> ¬озможно вы и не должны иметь доступ к этой странице...";
                 // Ќа вс€кий случай, забаненный не может авторизоватьс€
                 if (CurrentUser.User.Role == ITCommunity.User.Roles.Banned)
                 {

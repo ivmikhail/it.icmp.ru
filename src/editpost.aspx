@@ -1,4 +1,5 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | ƒобавление новости" EnableViewState="true" %>
+<%@ Register src="~/controls/TagsInfoControl.ascx" tagname="TagsInfo"   tagprefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
 <script type="text/javascript">
@@ -7,7 +8,8 @@
         // ¬ставка загруженного изображени€             
 	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
-	                $('<%= TextAreaPostText.ClientID %>').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='ѕосмотреть картинку в оригинальном размере'><img src='"+ this.src +"' /></a>", false);  
+	                //$('<%= TextAreaPostText.ClientID %>').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='ѕосмотреть картинку в оригинальном размере'><img src='"+ this.src +"' /></a>", false);  
+	                $('<%= TextAreaPostText.ClientID %>').insertAtCursor("[url=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/url]", false);  
 			    });
 		});		
 		
@@ -116,8 +118,9 @@
         <li>        
             <h2>“екст новости</h2>  
             <p class="note">                   
-                ќписание и текст раздел€етс€ разделителем(&lt;hr /&gt;). ≈сли разделитель не вставите, то на главной по€витс€ весь текст новости, иначе только описание. ƒл€ форматировани€ используйте html-теги.
+                ќписание и текст раздел€етс€ разделителем([hr]). ≈сли разделитель не вставите, то на главной по€витс€ весь текст новости, иначе только описание.
             </p>
+            <uc:TagsInfo ID="TagInfo" runat="server"/>
             <asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" Width="100%" MaxLength="10000" TextMode="MultiLine" />
         </li>        
         <li>

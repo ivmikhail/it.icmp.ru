@@ -22,15 +22,14 @@
                                 </FooterTemplate>
                                 <SeparatorTemplate>,</SeparatorTemplate>
                             </asp:Repeater>                       
-                        </h2>
-                        <div class="post-desc">
-                            <%# (Eval("description").ToString() == "") ? Eval("text") : Eval("description") %>                        
-                        </div>
-                        <div class="post-read-link">
-                            <a href='news.aspx?id=<%# Eval("id")%>#cut'>Читать далее &rarr;</a>
-                        </div>
+                        </h2>                        
                     </div>
-                    
+                    <div class="post-desc">
+                        <%# (Eval("descriptionformatted").ToString() == "") ? Eval("textformatted") : Eval("descriptionformatted") %>                        
+                    </div>
+                    <div class="post-read-link">
+                        <a href='news.aspx?id=<%# Eval("id")%>#cut'>Читать далее &rarr;</a>
+                    </div>                    
                     <div class="post-info">
                         <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> /                      
                         <%# Eval("favoritesaction") %> /

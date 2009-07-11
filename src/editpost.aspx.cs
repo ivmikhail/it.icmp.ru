@@ -17,12 +17,13 @@ namespace ITCommunity
 {
     public partial class EditPost : System.Web.UI.Page
     {
+        Post current_post = new Post();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 LoadCategories();
-                CheckBoxAttached.Enabled = CurrentUser.User.Role == ITCommunity.User.Roles.Admin;
+                CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
                 ImageOptions.Text = "Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).";
 
                 InitPostData();
@@ -32,7 +33,6 @@ namespace ITCommunity
         {
             User current_user = CurrentUser.User;
             Post post = Post.GetById(GetPostId());
-            Post current_post = new Post();
 
             if (post.IsPostOwner(CurrentUser.User) || current_user.Role == ITCommunity.User.Roles.Admin)
             {
@@ -79,10 +79,9 @@ namespace ITCommunity
             }
             if (errors.Count == 0)
             {
-                Post newpost = Post.GetById(GetPostId());
+                Post newpost = current_post;
                 newpost.Categories = cats;
                 newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
-                // TODO: Сделать буйню которая не будет ескейпить тока некоторые указанные теги
 
                 List<string> post_content = SplitPostContent(TextAreaPostText.Text);
                 newpost.Description = post_content[0];
@@ -181,7 +180,7 @@ namespace ITCommunity
 
         protected void AttachImageButton_Click(object sender, EventArgs e)
         {
-            Post post = Post.GetById(GetPostId());
+            Post post = current_post;
             if(post.Id < 1)
             {
                 post.Author = CurrentUser.User;
@@ -215,7 +214,7 @@ namespace ITCommunity
         {
             List<string> result = new List<string>();
 
-            int index = content.ToLower().IndexOf("<hr />");
+            int index = content.ToLower().IndexOf("[hr]");
             string post_desc = "";
             string post_text = "";
             if (index > 0)

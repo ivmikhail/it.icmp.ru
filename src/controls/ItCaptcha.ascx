@@ -1,8 +1,8 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="ItCaptcha.ascx.cs" Inherits="ITCommunity.ItCaptcha" %>
 <div class="captcha">
-    <p class="note">
+    <div class="note">
         ¬ведите пожалуйста ответ на данный вопрос, мы должны убедитьс€ что вы действительно имеете отношени€ с IT :)
-    </p>
+    </div>
     <asp:Literal ID="lblQuestion" runat="server" EnableViewState="False"> то придумал C#?</asp:Literal>
     <asp:DropDownList ID="ddlVariants" runat="server" />
     <span class="error-message">
