@@ -5,13 +5,14 @@
     <div id="reguser_data">
         <ul class="list">
             <li>
-                <h2>логин(аккаунт)</h2>  
+                <h2>логин(аккаунт)</h2>                  
                 <label> 
                     <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text" MaxLength="32"/>
                 </label>
             </li>        
             <li>
                  <h2>электропочта</h2>   
+                 <p class="note">Нигде не публикуется, используется для восстановления пароля</p>
                  <label>
                     <asp:TextBox ID="TextBoxEmail" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text" MaxLength="512"/>
                  </label>
@@ -31,13 +32,13 @@
             <li>            
                 <uc:ItCaptcha ID="captcha" runat="server" Visible="true" EnableViewState="true"/>
             </li>
-            <li class="register-button">            
+            <li class="big-button">            
                 <asp:LinkButton ID="RegisterButton" runat="server" ValidationGroup="ValidateRegData" OnClick="RegisterButton_Click">зарегистрируйте меня, я готов!</asp:LinkButton>
             </li>
          </ul>
          
      </div>
-     <div class="reguser_messages">
+     <div class="reguser_messages" style="text-align:center;">
         <asp:ValidationSummary ID="ValidationSummaryAuth" runat="server" ValidationGroup="ValidateRegData" DisplayMode="List"  />
         
         <asp:RequiredFieldValidator     ID="RequiredLogin" 

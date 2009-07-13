@@ -27,7 +27,8 @@ namespace ITCommunity
                 linkType = (LinkType)Enum.Parse(linkType.GetType(), linkTypeQuery, true);
             } catch (ArgumentException ex)
             {
-                Debug.Print(ex.Message);
+                //Debug.Print(ex.Message);
+                Logger.Log.Info("Неправильный queryString при обращении к браузеру файлов, пользователь - " + CurrentUser.User.Nick, ex);
                 linkType = LinkType.Files;
             }
             bool isViewRootDir = dir == "";

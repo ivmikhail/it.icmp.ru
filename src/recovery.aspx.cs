@@ -43,7 +43,7 @@ namespace ITCommunity
             if (user.Id > 0)
             {
                 string identifier = Guid.NewGuid().ToString("N");
-                bool sended = SendEmail.SendRecoveryEmail(user.Email, identifier);
+                bool sended = SendEmail.SendRecoveryEmail(user, identifier);
                 string message = "URL для сброса пароля зайемелен на указанную при регистрации электропочту";
                 if (sended)
                 {
