@@ -18,14 +18,14 @@ namespace ITCommunity
     /// </summary>
     public static class SendEmail
     {
-        public static bool SendRecoveryEmail(string email, string guid)
+        public static bool SendRecoveryEmail(User user, string guid)
         {
             bool status = true;
             try
             {
 
                 MailMessage message = new MailMessage();
-                message.To.Add(new MailAddress(email));
+                message.To.Add(new MailAddress(user.Email));
                 message.Subject = "Ykt IT Community - восстановление парол€";
                 message.Body = "«дравствуй %username% ! \n\n" +
                                "¬ы запросили сброс парол€ с сайта " + Global.SiteAddress + ", сделать это можно перейд€ по ссылке:" + "\n" +
@@ -36,10 +36,11 @@ namespace ITCommunity
                 SmtpClient client = new SmtpClient(); // используютс€ параметры из web.config
                 client.EnableSsl = true;
                 client.Send(message);
+                Logger.Log.Info("”спешно запрошен email дл€ смены парол€ дл€ пользовател€ " + user.Nick + " с адреса " + CurrentUser.Ip);
             } catch (Exception ex)
             {
-                string bla = ex.Message;
                 status = false;
+                Logger.Log.Error("Ќевозможно отправить email дл€ восстановлени€ парол€, запрошена смена парол€ дл€ пользовател€ " + CurrentUser.User.Nick + " с адреса " + CurrentUser.Ip, ex);
             }
             return status;
         }

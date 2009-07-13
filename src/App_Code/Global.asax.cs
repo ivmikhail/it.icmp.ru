@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.IO;
 using System.IO.Compression;
+using System.Diagnostics;
 
 
 using ITCommunity;
@@ -35,34 +36,57 @@ namespace ITCommunity
         /// <returns></returns>
         public static string ConfigStringParam(string param)
         {
+            string val = "";
             try
             {
-                return ConfigurationManager.AppSettings[param];
+               val =  ConfigurationManager.AppSettings[param];
             } catch (Exception ex)
             {
-                throw (new Exception("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex));
+                Logger.Log.Fatal("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex);
             }
+            return val;
         }
 
         public static int ConfigNumParam(string param)
         {
+            int val = -1;
             try
             {
-                return Convert.ToInt32(ConfigurationManager.AppSettings[param]);
+                val = Convert.ToInt32(ConfigurationManager.AppSettings[param]);
             } catch (Exception ex)
             {
-                throw (new Exception("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex));
+                Logger.Log.Fatal("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex);
             }
+            return val;
         }
         public static double ConfigDoubleParam(string param)
         {
+            double val = -1;
             try
             {
-                return Convert.ToDouble(ConfigurationManager.AppSettings[param]);
+                val = Convert.ToDouble(ConfigurationManager.AppSettings[param]);
             } catch (Exception ex)
             {
-                throw (new Exception("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex));
+                Logger.Log.Fatal("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex);
             }
+            return val;
+        }
+
+        public void Application_Start(object sender, EventArgs e)
+        {
+            Logger.Log.Info("Application started ...");
+        }
+
+        public void Application_End(object sender, EventArgs e)
+        {
+            Logger.Log.Info("Application stopped ...");
+        }
+
+        public void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError().GetBaseException();
+            Logger.Log.Error("Произошла непредвиденная ошибка, пользователь - " + CurrentUser.User.Nick  + "(" + CurrentUser.Ip + ")", ex);
+           
         }
 
         public void Application_AuthenticateRequest(Object src, EventArgs e)

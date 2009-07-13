@@ -42,7 +42,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Авторизация: запихиваем юзера в сессию
+        /// Авторизация: запихиваем юзера в сессию и куки(если надо)
         /// </summary>
         /// <param name="login">Логин, он же nick</param>
         /// <param name="pass">Пароль</param>
@@ -63,7 +63,7 @@ namespace ITCommunity
                 {
                     ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout); // хмм
                 }
-                FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, remember, user.Role.ToString());
+                FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, remember, user.Role.ToString(), FormsAuthentication.FormsCookiePath);
 
                 HttpCookie authCookie = FormsAuthentication.GetAuthCookie(login, false);
                 authCookie.Value = FormsAuthentication.Encrypt(newTicket);
@@ -95,7 +95,7 @@ namespace ITCommunity
         public static void LogOut()
         {
             HttpContext.Current.Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
-            HttpContext.Current.Session.Remove("CurrentUser");
+            HttpContext.Current.Session.Add("CurrentUser", new User());
             HttpContext.Current.Session.Abandon();
             FormsAuthentication.SignOut();
         }

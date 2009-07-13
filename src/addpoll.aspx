@@ -8,38 +8,30 @@
     <div id="newpoll">
         <ul class="list">
             <li>
-                <b>Вопрос(топик)</b>
-            </li>
-            <li>            
+                <h2>Вопрос(топик)</h2>
                 <asp:TextBox ID="TextBoxTopic" runat="server" Width="100%"/>
             </li>
             
             <li>
-                <b>Варианты ответов(один вариант на одной строке)</b>
-            </li>
-            <li>            
+                <h2>Варианты ответов(один вариант на одной строке)</h2>
                 <asp:TextBox ID="TextBoxAnswers" runat="server" TextMode="MultiLine" Rows="10" Width="100%" />
             </li>            
             <li>            
-                <b>Сколько вариантов можно выбрать:</b>
-                <br />
+                <h2>Сколько вариантов можно выбрать</h2>
                 <asp:RadioButtonList ID="RadioButtonListMultiselect" runat="server" RepeatDirection="horizontal">
                     <asp:ListItem Selected="True" Text="только один" Value="0"/>
                     <asp:ListItem Text="несколько" Value="1"/>
-                </asp:RadioButtonList>                
-                <br />
+                </asp:RadioButtonList>     
             </li>
             <li>            
-                <b>Тип опроса:</b>
-                <br />
+                <h2>Тип опроса</h2>
                 <asp:RadioButtonList ID="RadioButtonListIsOpen" runat="server" RepeatDirection="horizontal">
                     <asp:ListItem Selected="True" Text="закрытый" Value="0"/>
                     <asp:ListItem Text="открытый" Value="1"/>
-                </asp:RadioButtonList>                
-                <br />
+                </asp:RadioButtonList>       
             </li>
-            <li style="text-align:right;">            
-                <asp:LinkButton ID="LinkButtonAddPoll" runat="server" OnClick="LinkButtonAddPoll_Click">Добавить</asp:LinkButton>
+            <li class="big-button">            
+                <asp:LinkButton ID="LinkButtonAddPoll" runat="server" OnClick="LinkButtonAddPoll_Click">добавить</asp:LinkButton>
             </li>
             <li>
             <asp:ValidationSummary ID="ValidationSummaryAddpoll" runat="server" ValidationGroup="ValidatePoll" DisplayMode="List"  />

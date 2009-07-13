@@ -143,6 +143,7 @@ namespace ITCommunity
                 Bitmap bmp = new Bitmap(fs);
                 if (fs.Length > Global.ConfigNumParam("PostImgSize") || bmp.Width > Global.ConfigNumParam("PostImgWidth") || bmp.Height > Global.ConfigNumParam("PostImgHeight"))
                 {
+                    Logger.Log.Info("Пользователь(login - " + CurrentUser.User.Nick + ") пытается загрузить картинку не подходящую по размерам");
                     throw new Exception("Размеры картинки недопустимы");
                 }
                 pic = MakeThumbnail(bmp, filename, thumbpath, post);
@@ -154,10 +155,7 @@ namespace ITCommunity
                 fs.Dispose();
                 fs.Close();
                 File.Delete(fullpath);
-
-                // буагага, чтобы предупреждение про неиспользуемый экзепшн не вылезало
-                pic.Name = ex.Message;
-                pic.Name = "";
+                Logger.Log.Info("Изображение загруженное пользователем(login - " + CurrentUser.User.Nick + ") не сохранилась", ex);
             }
 
             return pic;

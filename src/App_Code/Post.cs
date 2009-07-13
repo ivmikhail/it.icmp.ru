@@ -202,20 +202,22 @@ namespace ITCommunity
         /// Выясняем является ли данный пользователь автором(создателем) новости
         /// </summary>
         /// <param name="user">Пользователь</param>
-        /// <returns>да/нет</returns>
+        /// <returns>Значение, если такой новости нет, возвращается труъ</returns>
         public bool IsPostOwner(User user)
         {
             bool is_owner = false;
-            if (user.Id > 0)
-            {
-                if (user.Id == this.Author.Id)
-                {
-                    is_owner = true;
-                }
-            }
             if (this.Id < 1)
             {
                 is_owner = true;
+            } else
+            {
+                if (user.Id > 0)
+                {
+                    if (user.Id == this.Author.Id)
+                    {
+                        is_owner = true;
+                    }
+                }
             }
             return is_owner;
         }

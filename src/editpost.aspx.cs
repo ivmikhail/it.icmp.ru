@@ -28,6 +28,7 @@ namespace ITCommunity
 
                 InitPostData();
             }
+
         }
         private void InitPostData()
         {
@@ -71,6 +72,7 @@ namespace ITCommunity
 
         protected void LinkButtonAdd_Click(object sender, EventArgs e)
         {
+            Post editable_post = Post.GetById(GetPostId());
             List<string> errors = ValidateData();
             List<Category> cats = GetCategoriesFromPost();
             if (cats.Count == 0)
@@ -79,30 +81,28 @@ namespace ITCommunity
             }
             if (errors.Count == 0)
             {
-                Post newpost = current_post;
-                newpost.Categories = cats;
-                newpost.Title = Server.HtmlEncode(TextBoxTitle.Text);
+                editable_post.Categories = cats;
+                editable_post.Title = Server.HtmlEncode(TextBoxTitle.Text);
 
                 List<string> post_content = SplitPostContent(TextAreaPostText.Text);
-                newpost.Description = post_content[0];
-                newpost.Text = post_content[1];
+                editable_post.Description = post_content[0];
+                editable_post.Text = post_content[1];
 
-                newpost.Source = Server.HtmlEncode(TextBoxSource.Text);
-                newpost.Author = CurrentUser.User;
-                newpost.Attached = CheckBoxAttached.Checked;
+                editable_post.Source = Server.HtmlEncode(TextBoxSource.Text);
+                editable_post.Author = CurrentUser.User;
+                editable_post.Attached = CheckBoxAttached.Checked;
 
-                Post addedpost = new Post();
-                if (newpost.Id > 0)
+                Post inserted_post = new Post();
+                if (editable_post.Id > 0) // Пост только что создали
                 {
-                    newpost.UpdateWithCategories();
-                    addedpost = newpost;
-                }
-                else
+                    editable_post.UpdateWithCategories();
+                    inserted_post = editable_post;
+                } else //пост редактируют
                 {
-                    newpost.Author = CurrentUser.User;
-                    addedpost = Post.Add(newpost);
+                    editable_post.Author = CurrentUser.User;
+                    inserted_post = Post.Add(editable_post);
                 }
-                Picture.FixImages(addedpost);
+                Picture.FixImages(inserted_post);
                 Response.Redirect("default.aspx");
             } else
             {
@@ -191,7 +191,7 @@ namespace ITCommunity
                 UploadImageError.Text = "Картинка не добавилась. Видимо плохая картинка.";
             } else
             {
-                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' class='uploaded-image'/>";
+                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
             }
             AttachImageButton.Focus();
         }
@@ -201,7 +201,7 @@ namespace ITCommunity
             List<Picture> pics = Picture.GetByPost(post);
             foreach (Picture pic in pics)
             {
-                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' class='uploaded-image'/>";
+                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
             }            
         }
 

@@ -29,15 +29,15 @@ namespace ITCommunity
         private void FillUsersList()
         {
             admins.Users = ITCommunity.User.GetByRole(ITCommunity.User.Roles.Admin);
-            posters.Users = ITCommunity.User.GetByRole(ITCommunity.User.Roles.Poster);
+            users.Users = ITCommunity.User.GetByRole(ITCommunity.User.Roles.User);
             banned.Users = ITCommunity.User.GetByRole(ITCommunity.User.Roles.Banned);
         }
 
         private void FillDropDown()
         {
-            DropDownListActions.Items.Add(new ListItem("сделать постером", "2"));
-            DropDownListActions.Items.Add(new ListItem("сделать простым смертным", "3"));
-            DropDownListActions.Items.Add(new ListItem("забанить", "4"));
+            DropDownListActions.Items.Add(new ListItem("poster", "2"));
+            DropDownListActions.Items.Add(new ListItem("user", "3"));
+            DropDownListActions.Items.Add(new ListItem("banned", "4"));
         }
         protected void ModifyUser_Click(object sender, EventArgs e)
         {

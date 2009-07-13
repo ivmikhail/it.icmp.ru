@@ -20,7 +20,6 @@ namespace ITCommunity
         }
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            //TODO: Запретить регистрироваться с ником anonymous
             if (captcha.IsRightAnswer())
             {
                 if (!AllIsValid())
@@ -37,7 +36,7 @@ namespace ITCommunity
                 if (user.Id > 0)
                 {
                     CurrentUser.LogIn(login, pass, true);
-                    FormsAuthentication.RedirectFromLoginPage(login, true);
+                    Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
                 } else
                 {
                     RegisterFailed.IsValid = false;
