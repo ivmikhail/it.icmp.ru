@@ -4,7 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-    <script type="text/javascript" src="media/js/float-pager.js" charset="utf-8"></script> -->
+    <script type="text/javascript" src="media/js/float-pager.js" charset="utf-8"></script>
     
     <div id="posts-container">
         <uc:PostsView id="PostsView" runat="server" />

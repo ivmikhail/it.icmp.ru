@@ -10,14 +10,16 @@
         </HeaderTemplate>
         <ItemTemplate>
             <li>
-                <div class="note"> 
+                    <div class="notes-view"> 
                         <h2>
-                            <a href='notepad.aspx?id=<%# Eval("id")%>#cut'><%# Eval("title")%></a>
+                            <%# Eval("title")%>
                         </h2>
+                        <p>
+                            <%# Eval("text")%>                            
+                        </p>
                     </div>
-                    
                     <div class="note-info">
-                        <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <a href='notepad.aspx?del=<%# Eval("id")%>'>Удалить</a>
+                            <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <a href='notepad.aspx?del=<%# Eval("id")%>'>Удалить</a>
                     </div>
                 <div>
             </li>

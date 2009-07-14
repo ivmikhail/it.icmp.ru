@@ -122,10 +122,5 @@ namespace ITCommunity
             Session["poll_message"] = poll_message; // Note: бляха
             Response.Redirect("pollresult.aspx");
         }
-
-        protected void LinkButtonResult_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("pollresult.aspx");
-        }
 }
 }

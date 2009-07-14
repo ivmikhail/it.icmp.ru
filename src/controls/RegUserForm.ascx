@@ -44,7 +44,7 @@
         <asp:RequiredFieldValidator     ID="RequiredLogin" 
                                         runat="server" 
                                         ControlToValidate="TextBoxLogin"
-                                        ErrorMessage="Введите логин." 
+                                        ErrorMessage="Введите логин" 
                                         Display="None" 
                                         ValidationGroup="ValidateRegData" />
         <asp:RegularExpressionValidator ID="LoginValidator" 
@@ -59,7 +59,7 @@
         <asp:RequiredFieldValidator     ID="RequiredEmail" 
                                         runat="server" 
                                         ControlToValidate="TextBoxEmail"
-                                        ErrorMessage="Введите e-mail." 
+                                        ErrorMessage="Введите e-mail" 
                                         Display="None" 
                                         ValidationGroup="ValidateRegData" />
         <asp:RegularExpressionValidator ID="EmailValidator" 
@@ -74,7 +74,7 @@
         <asp:RequiredFieldValidator ID="RequiredPass" 
                                     runat="server" 
                                     ControlToValidate="TextBoxPass"
-                                    ErrorMessage="Введите пароль." 
+                                    ErrorMessage="Введите пароль" 
                                     Display="None" 
                                     ValidationGroup="ValidateRegData" />
                                     
@@ -83,14 +83,14 @@
                                     Display="None"
                                     ControlToCompare="TextBoxPass" 
                                     ControlToValidate="TextBoxPassConf" 
-                                    ErrorMessage="Пароли не совпадают." 
+                                    ErrorMessage="Пароли не совпадают" 
                                     ValidationGroup="ValidateRegData" />
                                     
          
         <asp:CustomValidator ID="AccountExist" 
                              runat="server" 
                              Display="None" 
-                             ErrorMessage="Пользователь с таким логином/email'ом уже зарегистрирован." 
+                             ErrorMessage="Пользователь с таким логином/email'ом уже зарегистрирован" 
                              ValidationGroup="ValidateRegData" />
                              
        <asp:CustomValidator ID="AnonymousAccount" 
@@ -102,7 +102,7 @@
         <asp:CustomValidator ID="RegisterFailed" 
                              runat="server" 
                              Display="None"
-                             ErrorMessage="Ошибка, регистрация не прошла, обратитесь к администратору." 
+                             ErrorMessage="Ошибка, регистрация не прошла, обратитесь к администратору" 
                              ValidationGroup="ValidateRegData" />
      </div>     
 </div>

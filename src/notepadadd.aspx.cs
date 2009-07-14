@@ -23,5 +23,5 @@ namespace ITCommunity
             Note.Add(Server.HtmlEncode(NoteTitle.Text), Server.HtmlEncode(NoteText.Text), CurrentUser.User.Id, DateTime.Now);
             Response.Redirect("notepad.aspx");
         }
-}
+    }
 }
