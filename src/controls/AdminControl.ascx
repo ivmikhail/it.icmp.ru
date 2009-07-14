@@ -1,6 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="AdminControl.ascx.cs" Inherits="ITCommunity.AdminControl" %>
 
-<h1>Админ</h1>         
+<h1>Что-нибудь сделать</h1>         
 <ul class="list admin-panel">
     <li>
        <asp:HyperLink ID="AddPostLink" runat="server" NavigateUrl="~/editpost.aspx">Добавить пост</asp:HyperLink>
@@ -12,9 +12,9 @@
         <asp:HyperLink ID="AddPollLink" runat="server" NavigateUrl="~/addpoll.aspx">Голосование</asp:HyperLink>
     </li>     
     <li>
-        <a href="#" title="Править категории">Категории</a>
+        <asp:HyperLink ID="SiteStructureLink" runat="server" NavigateUrl="~/structure.aspx">Меню/Категории</asp:HyperLink>
     </li>       
     <li>
-        <a href="#" title="Править меню">Меню</a>
+        <a href="#" title="">Капча</a>
     </li> 
 </ul>   

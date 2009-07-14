@@ -457,7 +457,12 @@ div#uploadImagesList img:hover
 {
 	width: 70%;
 }
-#accounts-tabs .tabSet {
+#structure-tabs 
+{
+	width: 100%;
+	font-size: 9px;
+}
+.tabSet {
 	margin: 0;
 	padding: 0 0 0 6px;
 	height: 26px;
@@ -466,11 +471,11 @@ div#uploadImagesList img:hover
 }
 
 
-#accounts-tabs .tabSet li:before {
+.tabSet li:before {
 	content: "" !important;
 }
 
-#accounts-tabs .tabSet li {
+.tabSet li {
 	list-style-type: none;
 	background: url(../../media/img/design/tab/tab-off-l.gif) top left no-repeat !important;
 	float: left !important;
@@ -478,7 +483,7 @@ div#uploadImagesList img:hover
 	padding: 0 0 0 14px !important;
 	cursor: pointer;
 }	
-#accounts-tabs .tabSet li a {
+.tabSet li a {
 	background: url(../../media/img/design/tab/tab-off-r.gif) top right no-repeat !important;
 	display: block !important;
 	float: left !important;
@@ -493,22 +498,22 @@ div#uploadImagesList img:hover
 	text-decoration: none !important;
 }
 
-#accounts-tabs .tabSet li.on {
+.tabSet li.on {
 	background: url(../../media/img/design/tab/tab-on-l.gif) top left no-repeat !important;
 }	
-#accounts-tabs .tabSet li.on a {
+.tabSet li.on a {
 	background: url(../../media/img/design/tab/tab-on-r.gif) top right no-repeat !important;
 	color: #333;
 }
 
-#accounts-tabs .panelSet {
+.panelSet {
 	padding: 10px;
 	border:solid 1px #ccc;
 	border-top: 0px;
 	background: #fff;
 }
 
-#accounts-tabs .panelSet {
+.panelSet {
 	background: #fff;
 }
 
