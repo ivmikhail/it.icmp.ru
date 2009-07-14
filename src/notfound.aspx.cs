@@ -15,7 +15,14 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                string req_path = Request.QueryString["aspxerrorpath"];
+                if(!string.IsNullOrEmpty(req_path))
+                {
+                    LiteralReferrerUrl.Text = "<p>Запрошенный ресурс - " + Global.SiteAddress + req_path + "</p>" ;
+                }
+            }
         }
     }
 }
