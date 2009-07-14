@@ -11,6 +11,6 @@
     <p class="note" style="text-align:right;">    
         <a href="polls.aspx" title="Посмотреть архив опросов">архив опросов</a>
     </p>
-    <asp:LinkButton ID="LinkButtonResult" runat="server" OnClick="LinkButtonResult_Click" >результаты</asp:LinkButton>
+    <a href="pollresult.aspx" title="Смотреть результаты активного опроса">результаты</a>
     <asp:LinkButton ID="LinkButtonVote" runat="server" OnClick="LinkButtonVote_Click">голосовать</asp:LinkButton>
 </div>

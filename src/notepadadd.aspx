@@ -5,7 +5,7 @@
         <li>
             <h2>Заголовок</h2>
             <label>
-                <asp:TextBox ID="NoteTitle" runat="server" MaxLength="20" Width="100%"/>
+                <asp:TextBox ID="NoteTitle" runat="server" MaxLength="256" Width="100%"/>
             </label>
         </li>
         <li>
@@ -15,11 +15,30 @@
             </label>            
         </li>
         <li>
-             <div class="error-message"><asp:Literal ID="Errors" runat="server" /></div>
+            <asp:ValidationSummary ID="ValidationSummaryNoteAdd" 
+                                   runat="server" 
+                                   ValidationGroup="ValidateNoteAdd" 
+                                   HeaderText="Для добавления записи устраните следующие ошибки"/>
+                                   
+            <asp:RequiredFieldValidator ID="RequiredFieldValidatorTitle" 
+                                        runat="server" ControlToValidate="NoteTitle"  
+                                        ErrorMessage="Введите заголовок записи" 
+                                        ValidationGroup="ValidateNoteAdd"
+                                        Display="None" 
+                                        />
+                                        
+            <asp:RequiredFieldValidator ID="RequiredFieldValidatorText" 
+                                        runat="server" 
+                                        ControlToValidate="NoteText" 
+                                        ErrorMessage="Введите текст записи" 
+                                        ValidationGroup="ValidateNoteAdd"
+                                        Display="None" 
+                                        />
         </li>
         <li style="text-align:right;">
-            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click" >Добавить</asp:LinkButton>
+            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click" ValidationGroup="ValidateNoteAdd">Добавить</asp:LinkButton>
         </li>
     </ul>
+   
 </asp:Content>
 

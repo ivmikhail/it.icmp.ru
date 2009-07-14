@@ -20,14 +20,15 @@ namespace ITCommunity
             if (!IsPostBack)
             {
                 string action = GetFavoritesAction();
-                int action_post = GetFavoritesActionPost();
+                Post action_post = Post.GetById(GetFavoritesActionPost());
 
+                int user_id = CurrentUser.User.Id;
                 if (action == "del")
                 {
-                    Post.FavoriteDelete(action_post, CurrentUser.User.Id);
-                } else if (action == "add" && action_post > 0)
+                    Post.FavoriteDelete(action_post.Id, user_id);
+                } else if (action == "add" && action_post.Id > 0 && !action_post.IsFavorites(user_id))
                 {
-                    Post.FavoriteAdd(CurrentUser.User.Id, action_post);
+                    Post.FavoriteAdd(action_post.Id, user_id);
                 }
                 LoadFavorites();
             }
