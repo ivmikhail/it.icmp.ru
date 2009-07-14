@@ -73,7 +73,7 @@
                     </FooterTemplate>
                 </asp:Repeater>
                 
-                <h1>Ссылки</h1>
+                <h1>Меню</h1>
                 <asp:Repeater ID="RepeaterMenu" runat="server" OnItemDataBound="RepeaterMenu_ItemDataBound" >
                     <HeaderTemplate>
                         <ul class="list menu-links">
