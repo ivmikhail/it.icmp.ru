@@ -57,7 +57,7 @@
                          </table>
 	                </div>
 	                <br />
-	            	<asp:GridView ID="gv_categories" runat="server" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceCategories" PageSize="20" EnableSortingAndPagingCallbacks="True" CellPadding="5" CellSpacing="10">
+	            	<asp:GridView ID="gv_categories" runat="server" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSourceCategories" PageSize="20" EnableSortingAndPagingCallbacks="True" CellSpacing="5">
                             <Columns>         
                                 <asp:BoundField DataField="id"   HeaderText="id"   SortExpression="id" ReadOnly="True"/>         
                                 <asp:BoundField DataField="name" HeaderText="name" SortExpression="name"/>
@@ -121,7 +121,7 @@
                          
                          <br />
                          
-	            	    <asp:GridView ID="gv_menuitems" runat="server" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="SqlDataSourceMenu" PageSize="20" EnableSortingAndPagingCallbacks="True" CellPadding="5" CellSpacing="10">
+	            	    <asp:GridView ID="gv_menuitems" runat="server" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="SqlDataSourceMenu" PageSize="20" EnableSortingAndPagingCallbacks="True" CellSpacing="5">
                             <Columns>                  
                                 <asp:BoundField DataField="id" HeaderText="id" InsertVisible="False" ReadOnly="True"
                                     SortExpression="id" />

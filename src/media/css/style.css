@@ -19,6 +19,7 @@
 	color:#000;
 	background:#fff;
 }
+
 a
 {
 	color: #3366cc;
@@ -296,14 +297,24 @@ div#dynamic-content .post-info a:hover
 	text-decoration:none;
 }
 
-div#dynamic-content .post-author-link:hover
+.post-author-link:hover
 {
 	background:red;
 	color:#ffffff;
 }
-div#dynamic-content .post-comments-link:hover
+.post-comments-link:hover
 {
 	background:green;
+	color:#ffffff;
+}
+.user-pm-link
+{
+	text-decoration:none;
+}
+.user-pm-link:hover
+{	
+	text-decoration:none;
+	background:red;
 	color:#ffffff;
 }
 div#dynamic-content .attached-image
@@ -468,7 +479,6 @@ div#uploadImagesList img:hover
 #structure-tabs 
 {
 	width: 100%;
-	font-size: 9px;
 }
 .tabSet {
 	margin: 0;
@@ -564,4 +574,13 @@ hr
 {
 	margin: 10px 0 0px 20px;
 	list-style:none;
+}
+#search-notfound 
+{
+	margin: 15px 0 0 0;
+	padding: 5px;
+}
+.post-manage 
+{
+	padding: 0 0 0 20px;
 }

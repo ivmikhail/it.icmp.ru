@@ -9,5 +9,9 @@
     </div>
     <uc:PostsView id="FindedPosts" runat="server" />
     <uc:Pager     id="FindedPostsPager" runat="server" />
+    
+    <div id="search-notfound">
+        <asp:Literal ID="NotFoundText" runat="server" Visible="false" Text="Ничего не найдено..." />
+    </div>
 </asp:Content>
 

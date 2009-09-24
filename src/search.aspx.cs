@@ -24,6 +24,7 @@ namespace ITCommunity
                 if (query != "")
                 {
                     LoadPosts(query);
+                    TextBoxQuery.Text = query;
                 }
             }
         }
@@ -38,8 +39,15 @@ namespace ITCommunity
             int total_records = 0;
             int page = GetPage();
             FindedPosts.PostSource = Post.Search(page, Global.ConfigNumParam("PostsCount"), query, ref total_records);
-
             FindedPostsPager.DataBind("search.aspx", "", "page", page, total_records, Global.ConfigNumParam("PostsCount"));
+ 
+            if (total_records == 0)
+            {
+                NotFoundText.Visible = true;
+            } else
+            {
+                NotFoundText.Visible = false;
+            }
         }
         private int GetPage()
         {

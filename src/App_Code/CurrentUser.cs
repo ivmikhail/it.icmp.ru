@@ -25,10 +25,15 @@ namespace ITCommunity
                 User currentUser = new User();
                 if (isAuth)
                 {
-                    currentUser = (User)HttpContext.Current.Session["CurrentUser"];
+                    if (HttpContext.Current.Session != null)
+                    {
+                        currentUser = (User)HttpContext.Current.Session["CurrentUser"];
+                    }
+                    
                     if (currentUser == null)
                     {
                         currentUser = GetUserFromCookie();
+                        HttpContext.Current.Session["CurrentUser"] = currentUser;
                     }
 
                     if (currentUser.Role == User.Roles.Banned)
@@ -53,7 +58,7 @@ namespace ITCommunity
 
             if (user.Id > 0 && user.Pass == hashedPass)
             {
-                HttpContext.Current.Session.Add("CurrentUser", user);
+                HttpContext.Current.Session["CurrentUser"] = user;
 
                 DateTime ticketExpiration = DateTime.Now;
                 if (remember)

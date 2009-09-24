@@ -3,8 +3,8 @@
     <asp:Literal ID="LiteralPollTopic" runat="server" />
 </h3>
 <div id="poll">
-    <asp:CheckBoxList    ID="CheckBoxListAnswer"    runat="server" />
-    <asp:RadioButtonList ID="RadioButtonListAnswer" runat="server" />
+    <asp:CheckBoxList    ID="CheckBoxListAnswer"    runat="server" CellPadding="2" CellSpacing="2" />
+    <asp:RadioButtonList ID="RadioButtonListAnswer" runat="server" CellPadding="2" CellSpacing="2"  />
     <p class="note">
         <asp:Literal ID="LiteralNote" runat="server"/>
     </p>

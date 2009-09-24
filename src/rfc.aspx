@@ -28,6 +28,9 @@
             </ul>
         </FooterTemplate>
     </asp:Repeater>
+    <div id="search-notfound">
+        <asp:Literal ID="NotFoundText" runat="server" Visible="false" Text="Ничего не найдено..." />
+    </div>
 </div>
 </asp:Content>
 

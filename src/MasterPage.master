@@ -12,7 +12,7 @@
     <meta http-equiv="content-language" content="ru" />
     <meta http-equiv="content-type"     content="text/html; charset=utf-8" />
     
-    <meta name="keywords"    content="программирование, администратор, айти, якутск, саха, якутия, скачать, сеть, компьютеры, ит, виндовс, линух, репозиторий, programming, it, web, yakutsk, sakha, windows, linux" />
+    <meta name="keywords"    content="программирование, администратор, айти, якутск, саха, якутия, скачать, сеть, компьютеры, ит, виндовс, линух, репозиторий, programming, it, web, yakutsk, sakha, windows, linux, freebsd, говнокод, программист, java, c sharp" />
     <meta name="description" content="Ykt IT Community - сообщество IT-специалистов Якутска" />
     <meta name="author"      content="Ykt IT Community" />
     <meta name="language"    content="ru" />
@@ -25,12 +25,11 @@
     <link rel="stylesheet"    href="media/css/style.css"          type="text/css"            charset="utf-8" />
     <link rel="stylesheet"    href="media/css/highlight-vs.css"   type="text/css"            charset="utf-8" />
      
-    <script type="text/javascript" src="media/js/clientcide-trunk-2.1.0.js" charset="utf-8"></script>     
-    <script type="text/javascript" src="media/js/highlight.pack.js"         charset="utf-8"></script>
+    <script src="media/js/clientcide-trunk-2.1.0.js"              type="text/javascript"     charset="utf-8"></script>  
+    <script src="media/js/highlight.pack.js"                      type="text/javascript"     charset="utf-8"></script>
 
-    <!--    
-    <script src="media/js/clientcide-trunk-2.1.0.compressed.js" type="text/javascript" charset="utf-8"></script>  
-    -->
+      
+    
 </head>
 <body>
     <script type="text/javascript">
@@ -114,24 +113,24 @@
                 <h1>Голосование</h1>
                 <div id="poll_container">
                     <uc:Poll id="Poll" runat="server" />
-                </div>                
+                </div>    
                 
-                <h1>Последние комментарии</h1>
+                <h1>Статистика</h1>
+                
+                <h2>Последние комментарии</h2>
                 <asp:Repeater ID="LastComments" runat="server" >
                     <HeaderTemplate>
                         <ul class="list lastcomments-links">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <a href='news.aspx?id=<%# Eval("value.postid")%>#comments' title="Смотреть остальные комментарии поста" ><%# Eval("value.shorttext")%></a> by <%# Eval("key.nick")%>
+                            <a href='news.aspx?id=<%# Eval("value.postid")%>#comments' title="Смотреть остальные комментарии поста" ><%# Eval("value.shorttext")%></a> by <a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link"><%# Eval("key.nick")%></a>
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
                         </ul>
                     </FooterTemplate>
                 </asp:Repeater>
-                
-                <h1>Статистика</h1>
                                 
                 <h2>Популярные посты</h2>
                 <asp:Repeater ID="PopularPosts" runat="server" >
@@ -140,7 +139,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <a href='news.aspx?id=<%# Eval("value.id")%>'><%# Eval("value.title")%></a> by <%# Eval("key.nick")%> (<%# Eval("value.views")%>)
+                            <a href='news.aspx?id=<%# Eval("value.id")%>'><%# Eval("value.title")%></a> by <a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link"><%# Eval("key.nick")%></a> (<%# Eval("value.views")%>)
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
@@ -156,7 +155,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <%# Eval("key")%>(<%# Eval("value")%>)
+                            <a href="mailsend.aspx?receiver=<%# Eval("key") %>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("key")%></a> (<%# Eval("value")%>)
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
@@ -172,7 +171,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <%# Eval("createdate", "{0:dd MMMM}")%> <%# Eval("nick")%>
+                            <%# Eval("createdate", "{0:dd MMMM}")%>  <a href="mailsend.aspx?receiver=<%# Eval("nick") %>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("nick")%></a>
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
@@ -182,22 +181,21 @@
                 <h3>Количество</h3>
                 <ul class="list">                
                     <li>
-                        Всего : <asp:Literal ID="TotalUsers" runat="server" />
+                        Всего - <asp:Literal ID="TotalUsers" runat="server" />
                     </li>
                     <li>
-                        Постеры : <asp:Literal ID="TotalPosters" runat="server" />
+                        Постеры -  <asp:Literal ID="TotalPosters" runat="server" />
                     </li>
                     <li>
-                        Админы : <asp:Literal ID="TotalAdmins" runat="server" />
+                        Админы - <asp:Literal ID="TotalAdmins" runat="server" />
                     </li>
                 </ul>
             </div>
             <div id="footer">
-                <h2>IT Community &copy; 2005 -
-                <script type="text/javascript">
-                    document.write(new Date().getYear());
-                </script>
+                <h2>
+                    IT Community &copy; 2005 - <asp:Literal ID="ThisYear" runat="server" />
                 </h2>
+                Данный ресурс поддерживается сообществом АЙТИ коммунистов г.Якутска. Проект некоммерческий.
             </div>
         </div>    
     </form>

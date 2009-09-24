@@ -23,13 +23,29 @@ namespace ITCommunity
 
         private void LoadRfc(string query)
         {
-            if (Regex.IsMatch(query, "[0-9]+"))
+            /*
+            if (query.Length > 4)
             {
-                RepeaterRfc.DataSource = Rfc.GetByNum(query);
+                query = query.Substring(0, 4);
+            }
+             */
+            List<Rfc> finded;
+            if (Regex.IsMatch(query, "[0-9]+") && query.Length <= 4)
+            {
+                finded = Rfc.GetByNum(query);
             } else
             {
-                RepeaterRfc.DataSource = Rfc.Search(query);
+                finded = Rfc.Search(query);
             }
+            if (finded.Capacity > 0)
+            {
+                NotFoundText.Visible = false;
+            } else
+            {
+                NotFoundText.Visible = true;
+            }
+
+            RepeaterRfc.DataSource = finded;
             RepeaterRfc.DataBind();
 
         }
