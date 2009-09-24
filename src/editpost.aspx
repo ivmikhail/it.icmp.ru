@@ -134,9 +134,6 @@
                 <asp:Literal ID="AddPostMessages" runat="server" />
             </div>
         </li>
-        <li style="text-align:right;">
-            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click" OnClientClick="syncTextarea();">Добавить</asp:LinkButton>
-        </li>
         <li>
             <h2>Картинки</h2>
             <p class="note">
@@ -159,6 +156,9 @@
             <div id="uploadImagesList">
                <asp:Literal ID="UploadedImagesList" runat="server"/>
             </div>        
+        </li>        
+        <li class="big-button">
+            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click">Добавить</asp:LinkButton>
         </li>
     </ul>
 </div>

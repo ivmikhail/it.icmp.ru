@@ -20,6 +20,7 @@ namespace ITCommunity
         {
             if (!IsPostBack)
             {
+                ThisYear.Text = DateTime.Now.Year.ToString();
                 LoadCategories();
                 LoadLastComments();
                 LoadLinks();
