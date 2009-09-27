@@ -1,0 +1,7 @@
+C:\projects\my\itcommunity\trunk\tools\datamigrator\datamigrator\datamigrator\obj\Debug\ResolveAssemblyReference.cache
+C:\projects\my\itcommunity\trunk\tools\datamigrator\datamigrator\datamigrator\bin\Debug\datamigrator.exe
+C:\projects\my\itcommunity\trunk\tools\datamigrator\datamigrator\datamigrator\bin\Debug\datamigrator.pdb
+C:\projects\my\itcommunity\trunk\tools\datamigrator\datamigrator\datamigrator\obj\Debug\datamigrator.exe
+C:\projects\my\itcommunity\trunk\tools\datamigrator\datamigrator\datamigrator\obj\Debug\datamigrator.pdb
+c:\projects\my\itcommunity\trunk\tools\datamigrator\datamigrator\obj\Debug\datamigrator.exe
+c:\projects\my\itcommunity\trunk\tools\datamigrator\datamigrator\obj\Debug\datamigrator.pdb
