@@ -37,7 +37,7 @@
                         просмотров: <%# Eval("views")%> /
                         <a href='news.aspx?id=<%# Eval("id")%>#comments' title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a>
                     </div>
-                <div>
+                </div>
             </li>
         </ItemTemplate>
         <FooterTemplate>

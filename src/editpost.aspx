@@ -145,7 +145,7 @@
             
             <h3>Загруженные:</h3>                     
             <p class="note">                   
-                Не добавленные в новость картинки будут удалены автоматически
+                Не добавленные в новость картинки будут удалены автоматически. Чтобы добавить картинку в пост кликните на неё.
             </p>
             <span id="uploadImagesMessage" class="error-message">                
                <asp:Literal ID="UploadImageError" runat="server"/>
@@ -157,6 +157,9 @@
                <asp:Literal ID="UploadedImagesList" runat="server"/>
             </div>        
         </li>        
+        <li style="clear:both;">
+            &nbsp;
+        </li>
         <li class="big-button">
             <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click">Добавить</asp:LinkButton>
         </li>

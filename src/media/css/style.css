@@ -171,7 +171,7 @@ div#header:hover
 div#header
 {
 	font: 100% Monospace, Lucida Console;
-	padding: 2% 0 1% 0;
+	padding: 4% 0 1.5% 0;
 	text-align:center;
 	font-size:3.5em;	
 	font-weight:bold;
@@ -202,7 +202,7 @@ div#dynamic-content
 	margin: 0 15%;
 	padding: 0 5px;
 	width:60%;
-	overflow:hidden;
+	/*overflow:hidden;*/
 }
 
 div#stats
@@ -277,6 +277,10 @@ div#dynamic-content .post-info
 	margin: 30px 0px 25px 20px;
 	line-height: 1.3em;
 	width:90%;
+}
+div#dynamic-content .post-info img
+{
+	padding:0;
 }
 div#dynamic-content .note-info
 {
@@ -362,21 +366,47 @@ div#dynamic-content .rfc-title
 	padding: 5px 0 5px 0;
 	font-size: 0.7em;
 }
-#tags-info
+#tagsinfo
 {
 	font-size:0.8em;
 	background:#f0f0f0;
 	margin:5px 0 5px 0;
 	padding: 5px;
 }
-#tags-info dt {
+#tagsinfo .tags
+{
+	width:100%;
+}
+
+#tagsinfo .tags
+{
+	width:100%;
+}
+#tagsinfo .block-right
+{
+	width:40%;
+	float:right;
+	padding:5px;
+}
+
+#tagsinfo .block-left
+{
+	width:60%;
+}
+#tagsinfo dt {
 	color:#000;
 	font-weight: bold;
 	padding-bottom:5px;
 }
-#tags-info dd {
+#tagsinfo dd {
 	color:#000;
 	margin-bottom: 10px;
+}
+.tags-help-close 
+{
+	text-align:right;
+	width:100%;
+	margin:0;
 }
 .note
 {
@@ -583,4 +613,8 @@ hr
 .post-manage 
 {
 	padding: 0 0 0 20px;
+}
+.post img 
+{
+	padding:5px;
 }

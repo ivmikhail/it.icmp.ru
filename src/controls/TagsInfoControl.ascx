@@ -1,32 +1,21 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="TagsInfoControl.ascx.cs" Inherits="ITCommunity.controls_TagsInfoControl" %>
 <script type="text/javascript">
-    window.addEvent('domready', function(){ 
-        var slider = new Fx.Slide('tags-info', {
-             duration: 500,
-             transition: Fx.Transitions.linear
-        });
-        
-        slider.hide();
-        
-        $('tags-info-link').addEvent('click', function(e){            
-            e = new Event(e);
-            slider.toggle();
-            e.stop();
-	    });
-	    $('tags-info-close').addEvent('click', function(e){            
-            e = new Event(e);
-            slider.toggle();
-            e.stop();
-	    });
-	});		
+    function toggle_tags()
+	{
+	    $('tagsinfo').setStyle('display', $('tagsinfo').getStyle('display') == "none" ? "" : "none");    
+	    return false;
+	}
 </script>
-<p class="note">ћожно использовать <a id="tags-info-link" href="#" title="”знать как можно форматировать текст">bbcode-теги</a></p>
-<div id="tags-info">
-    <p style="text-align:right; width:100%;"><a id="tags-info-close" href="#" title="”брать с глаз долой, сами с усами">закрыть</a></p>
+<p class="note">
+    ћожно использовать <a id="tags-info-link" href="#" onclick="javascript: return toggle_tags();" title="”знать как можно форматировать текст">bbcode-теги</a>
+</p>
+<div id="tagsinfo" style="display:none;">
+    <p class="tags-help-close">
+        <a id="tags-info-close" href="#" onclick="javascript: return toggle_tags();" title="”брать с глаз долой, сами с усами">закрыть</a>
+    </p>
     <h3>“еги дл€ форматировани€</h3>
-    <table>
-            <tr>
-                <td style="padding-right:5px;">
+    <div class="tags">
+          <div class="block-right">
                     <dl>
                         <dt>
                             [b]<b>жирный текст</b>[/b]
@@ -35,7 +24,7 @@
                             <br />
                             [u]<u>underline</u>[/u]
                             <br />
-                            [s]<strike>зачеркнутый текст</strike>[/s]
+                            [s]<s>зачеркнутый текст</s>[/s]
                             <br />
                             [size=666px]размер шрифта[/size]
                         </dt>
@@ -61,9 +50,9 @@
                             определ€ет, по какой стороне будет выравниватьс€ элемент, при этом остальные элементы будут обтекать его с других сторон
                         </dd>
                     </dl>
-                </td>
-                <td>
-                    <dl>        
+          </div>
+          <div class="block-left">
+                     <dl>        
                         <dt>
                             [code][/code]
                             <br />
@@ -79,28 +68,32 @@
                         <dd>
                             тег дл€ вставки фото или картинок, мы любим картинки. ѕримеры использовани€:
                             <br />
+                            <br />
                             [img]http://ya.ru/logo.png[/img],
                             <br />
                             [img align=left]http://ya.ru/logo.png[/img],
                             <br />
                             [img=100x100px]http://ya.ru/logo.png[/img]
-                        </dd>
-        
+                            <br />
+                            <br />
+                            ѕожалуйста загружайте картинки на наш сайт, либо вставл€йте с бекбоновских ресурсов.
+                        </dd>        
                         <dt>
                             [url][/url]
                             <br />
                             [email][/email]
                         </dt>
                         <dd>
-                            внутри тегов [url] и [link] помещайте ссылки, а внутри [email] адрес электронной почты; 
+                            внутри тега [url] помещайте ссылки, а внутри [email] адрес электронной почты; 
                             так же [url] можно использовать в виде:
+                            <br />
                             <br />
                             [url=http://example.com]пример[/url],
                             <br />
-                            [url=http://test.ru][img]http://flickr.com/givemeimg.png[/img][/url]
+                            [url=http://test.ru][img]http://flickr.com/givemeimg.png[/img][/url]                            
+                            <br />
                         </dd>  
-                    </dl>
-                </td>
-            </tr>
-    </table>   
+                    </dl>                   
+          </div>
+    </div>
 </div>

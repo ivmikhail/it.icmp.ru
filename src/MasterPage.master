@@ -25,14 +25,15 @@
     <link rel="stylesheet"    href="media/css/style.css"          type="text/css"            charset="utf-8" />
     <link rel="stylesheet"    href="media/css/highlight-vs.css"   type="text/css"            charset="utf-8" />
      
-    <script src="media/js/clientcide-trunk-2.1.0.js"              type="text/javascript"     charset="utf-8"></script>  
-    <script src="media/js/highlight.pack.js"                      type="text/javascript"     charset="utf-8"></script>
+    <script src="media/js/highlight.pack.js"                     type="text/javascript"     charset="utf-8"></script>    
+    <script src="media/js/clientcide-trunk-2.1.0.compressed.js"  type="text/javascript"     charset="utf-8"></script>  
 
       
     
 </head>
 <body>
     <script type="text/javascript">
+   
         window.addEvent('domready', function(){ 
             $('header').addEvent('click', function(e){	                    
 	                window.location = "default.aspx";
@@ -40,6 +41,7 @@
 		    });		
 		    
         hljs.initHighlightingOnLoad();
+        
 	</script>
     <form id="MainForm" runat="server" >
         <div id="container">
