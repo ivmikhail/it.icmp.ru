@@ -191,6 +191,7 @@ namespace ITCommunity
                 UploadImageError.Text = "Картинка не добавилась. Видимо плохая картинка.";
             } else
             {
+                UploadImageError.Text = "";
                 UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
             }
             AttachImageButton.Focus();

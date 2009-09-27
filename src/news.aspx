@@ -1,4 +1,4 @@
-<%@ Page Language="C#" EnableViewState="true" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="news.aspx.cs" Inherits="ITCommunity.News" Title="Ykt It Community | " Trace="true"%>
+<%@ Page Language="C#" EnableViewState="true" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="news.aspx.cs" Inherits="ITCommunity.News" Title="Ykt It Community | " %>
 <%@ Register src="~/controls/ItCaptcha.ascx"       tagname="ItCaptcha"  tagprefix="uc" %>
 <%@ Register src="~/controls/PostManage.ascx"      tagname="PostManage" tagprefix="uc" %>
 <%@ Register src="~/controls/TagsInfoControl.ascx" tagname="TagsInfo"   tagprefix="uc" %>
