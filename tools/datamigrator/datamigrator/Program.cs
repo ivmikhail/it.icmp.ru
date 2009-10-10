@@ -25,10 +25,10 @@ namespace datamigrator
             WriteToLog("INFO    Ready, steady, GO!!!1");
 
             ClearTargetDB();
-           // MoveCategories();
-           // MoveUsers();
-           // MovePosts();
-           // MovePostComments();
+            MoveCategories();
+            MoveUsers();
+            MovePosts();
+            MovePostComments();
 
             writer.Flush();
             writer.Close();
