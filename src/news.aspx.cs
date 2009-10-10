@@ -58,7 +58,7 @@ namespace ITCommunity
                 desc.Text = post.DescriptionFormatted;
                 text.Text = post.TextFormatted;
                 comments_count.Text = post.CommentsCount.ToString();
-                date.Text = post.CreateDate.ToString("0:dd MMMM yyyy, HH:mm");
+                date.Text = post.CreateDate.ToString("dd MMMM yyyy, HH:mm");
                 favorite.Text = post.FavoritesAction;
                 if (post.Source != "")
                 {
