@@ -20,7 +20,7 @@
         <div class="post-info">
               <asp:Literal ID="date" runat="server" /> / 
               <asp:Literal ID="favorite" runat="server" /> /
-              автор:  <asp:Literal ID="author" runat="server" /> / 
+              <asp:Literal ID="author" runat="server" /> / 
               просмотров:  <asp:Literal ID="views" runat="server" /> / 
               <asp:Literal ID="source" runat="server" />          
         </div>
@@ -35,14 +35,14 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <div class="comment-info">  
-                                <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="post-author-link"><%# Eval("author.nick")%></a>
-                            </div>                   
                             <div class="comment-content">
                                 <p>
                                     <%# Eval("textformatted")%>
                                 </p> 
                             </div>
+                            <div class="comment-info">  
+                                <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="post-author-link"><%# Eval("author.nick")%></a>
+                            </div>   
                        <li>
                     </ItemTemplate>
                     <FooterTemplate>

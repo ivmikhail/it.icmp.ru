@@ -46,7 +46,6 @@ namespace ITCommunity
         {
             List<string> list = new List<string>();
             list.AddRange(new string[] {
-                "LOCAL_ADDR",
                 "REMOTE_ADDR",
                 "REMOTE_HOST",
 
