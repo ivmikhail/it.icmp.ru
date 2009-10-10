@@ -5,7 +5,8 @@
     <div id="reguser_data">
         <ul class="list">
             <li>
-                <h2>логин(аккаунт)</h2>                  
+                <h2>логин(аккаунт)</h2>   
+                <p class="note">RegExp паттерн валидного логина: ^[A-Za-z0-9_\-\.]{2,20}$ </p>                              
                 <label> 
                     <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text" MaxLength="32"/>
                 </label>
@@ -50,10 +51,10 @@
         <asp:RegularExpressionValidator ID="LoginValidator" 
                                         runat="server" 
                                         ControlToValidate="TextBoxLogin" 
-                                        ErrorMessage="Логин может состоять только из латинских символов, цифр, знаков '-' и '_'. Длина должна быть от 3-х до 25-и символов." 
+                                        ErrorMessage="Логин может состоять только из латинских букв, цифр, знаков '-','.' и '_'. Длина должна быть от 3-х до 25-и символов." 
                                         Display="None" 
                                         ValidationGroup="ValidateRegData"
-                                        ValidationExpression="^[A-z0-9\-_!\. ]{3,25}$" /> 
+                                        ValidationExpression="^[A-Za-z0-9_\-\.]{2,20}$" /> 
         
         
         <asp:RequiredFieldValidator     ID="RequiredEmail" 

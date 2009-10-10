@@ -90,8 +90,8 @@ namespace ITCommunity
         /// <returns></returns>
         public static string HashPass(string pass, string login)
         {
-            string preparedPass = login + pass;
-            string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass.ToUpper(), "SHA1");
+            string preparedPass = login.ToUpper() + pass;
+            string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass, "SHA1");
             return hashedPass;
         }
 
