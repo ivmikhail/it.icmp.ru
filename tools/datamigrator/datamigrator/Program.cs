@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Security;
+using System.Web;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
@@ -16,6 +17,7 @@ namespace datamigrator
         private static StreamWriter writer = new StreamWriter("itcommunity-migrate.log", false);
         private static SqlConnection targetConn;
         private static SqlConnection sourceConn;
+        private static List<string> notValidUsers = new List<string>();
         
         static void Main(string[] args)
         {
@@ -29,11 +31,39 @@ namespace datamigrator
             MoveUsers();
             MovePosts();
             MovePostComments();
+            UpdateNotValidLogins();
 
             writer.Flush();
             writer.Close();
         }
 
+        private static string Formatting(string text)
+        {
+            /*
+<li>
+ * <img>
+ * <a href>
+             */
+            string result = text;
+
+            result = Regex.Replace(result, "<b>(.*?)</b>", "[b]$1[/b]");
+            result = Regex.Replace(result, "<i>(.*?)</i>", "[i]$1[/i]");
+            result = Regex.Replace(result, "<s>(.*?)</s>", "[s]$1[/s]");
+            result = Regex.Replace(result, "<u>(.*?)</u>", "[u]$1[/u]");            
+            result = Regex.Replace(result, "<p>(.*?)</p>", "\n$1\n");
+
+            result = Regex.Replace(result, "<img(.*?)src=(\"|')(.*?)(\"|')(.*?)>", "[img]$3[/img]");
+            result = Regex.Replace(result, "<a(.*?)href=(\"|')(.*?)(\"|')(.*?)>(.*?)</a>", "[url=$3]$6[/url]");
+
+            result = Regex.Replace(result, "<ul>(.*?)</ul>", "[list]$2[/list]");
+            result = Regex.Replace(result, "<li>(.*?)</li>", "[*]$2");
+
+
+            result = Regex.Replace(result, "<br />", "\n");
+            result = Regex.Replace(result, "\"", "'");
+            result = HttpUtility.HtmlEncode(result);
+            return result;
+        }
         private static void ClearTargetDB()
         {
             WriteToLog("INFO    Clearing target tables start...");
@@ -74,7 +104,6 @@ namespace datamigrator
             string currLogin = "";
             string currEmail = "";
 
-            string validLogin = "";
             string validEmail = "";
 
             bool isCurrLoginValid = false;
@@ -90,13 +119,10 @@ namespace datamigrator
                 isCurrLoginValid = IsLoginValid(currLogin);
                 isCurrEmailValid = (currEmail != "");//IsEmailExist(currEmail);
 
-                if (isCurrLoginValid)
+                if (!isCurrLoginValid)
                 {
-                    validLogin = currLogin;
-                } else
-                {
-                    validLogin = "user" + rand.Next(99999);
-                }
+                    notValidUsers.Add(currLogin);
+                } 
 
                 if (isCurrEmailValid)
                 {
@@ -109,17 +135,12 @@ namespace datamigrator
                 ExecuteQuery(@"SET IDENTITY_INSERT users on; 
                         insert into users(id, nick, pass, cdate, role, email) values(" 
                         + sourceTable.Rows[i]["user_Id"] + "," +
-                        "'" + validLogin + "'," +
-                        "'" + HashUserPass(sourceTable.Rows[i]["password"].ToString(), validLogin) + "'," +
+                        "'" + currLogin + "'," +
+                        "'" + HashUserPass(sourceTable.Rows[i]["password"].ToString(), currLogin) + "'," +
                         "CONVERT(datetime, '" + sourceTable.Rows[i]["regdate"].ToString() + "', 104)," + 
                         "'" + sourceTable.Rows[i]["role"] + "'," +
                         "'" + validEmail + "')", targetConn);
 
-                if (currLogin != validLogin)
-                {
-                    WriteToLog("WARNING user login - '" + currLogin + "' is not valid, reset login to - '" + validLogin + "'");
-                    WriteToLog("WARNING all user(login - '" + currLogin + "') data mb will lost");
-                }
                 if (currEmail != validEmail)
                 {
                     if (currEmail == "")
@@ -162,13 +183,13 @@ namespace datamigrator
                     SqlParameter title = cmd.Parameters.Add("@title", SqlDbType.NVarChar);
                     //обрезаем слижком длинные тайтлы
                     string title_original = sourceTable.Rows[i]["title"].ToString();
-                    title.Value = title_original.Length > 128 ? title_original.Substring(0, 123) : title_original;
+                    title.Value = Formatting(title_original.Length > 100 ? title_original.Substring(0, 100) : title_original);
 
                     SqlParameter desc = cmd.Parameters.Add("@description", SqlDbType.NVarChar);
-                    desc.Value = sourceTable.Rows[i]["intro"].ToString();
+                    desc.Value = Formatting(sourceTable.Rows[i]["intro"].ToString());
 
                     SqlParameter text = cmd.Parameters.Add("@text", SqlDbType.NVarChar);
-                    text.Value = sourceTable.Rows[i]["main"].ToString();
+                    text.Value = Formatting(sourceTable.Rows[i]["main"].ToString());
 
                     SqlParameter date = cmd.Parameters.Add("@cdate", SqlDbType.DateTime);
                     date.Value = Convert.ToDateTime(sourceTable.Rows[i]["ndate"].ToString());
@@ -185,7 +206,7 @@ namespace datamigrator
                     SqlParameter source = cmd.Parameters.Add("@source", SqlDbType.NVarChar);
                     //обрезаем слижком длинные источники новостей
                     string source_original = sourceTable.Rows[i]["source"].ToString();
-                    source.Value = source_original.Length > 1024 ? source_original.Substring(0, 123) : source_original;
+                    source.Value = source_original.Length > 900 ? source_original.Substring(0, 900) : source_original;
 
                     SqlParameter comm_count = cmd.Parameters.Add("@comments_count", SqlDbType.Int);
                     comm_count.Value = ExecuteScalar("select count(*) from tblComment where cnews_id = '" + sourceTable.Rows[i]["news_id"] + "'", sourceConn);
@@ -238,7 +259,7 @@ namespace datamigrator
                     ip.Value = sourceTable.Rows[i]["ip"].ToString();
 
                     SqlParameter text = cmd.Parameters.Add("@text", SqlDbType.NVarChar);
-                    string comment_text = sourceTable.Rows[i]["comment"].ToString(); 
+                    string comment_text = Formatting(sourceTable.Rows[i]["comment"].ToString()); 
                     text.Value = comment_text.Length > 512 ? comment_text.Substring(0, 512) : comment_text;
 
                     cmd.ExecuteNonQuery();
@@ -256,6 +277,23 @@ namespace datamigrator
             ExecuteQuery("SET IDENTITY_INSERT comments off", targetConn);
             ResetIdentitySeed("comments");
             WriteToLog("INFO    data migrating 'tblComments -> comments' end");
+        }
+        private static void UpdateNotValidLogins()
+        {
+            WriteToLog("INFO    reset not valid logins...");
+            string validLogin = "";
+            string newpass = "";
+            Random rand = new Random();
+            foreach (string login in notValidUsers)
+            {
+                validLogin = "user" + rand.Next();
+                newpass = "" + rand.Next();
+                ExecuteQuery("update users set nick='" + validLogin + "', pass = '" + HashUserPass(newpass, validLogin) + "' where nick='" + login+ "'", targetConn);
+                WriteToLog("WARNING user login - '" + login + "' is not valid, reset login to - '" + validLogin + "' and reset pass to - " + newpass);
+      
+            }
+            notValidUsers.Clear();
+            WriteToLog("INFO    reset not valid logins end");
         }
 
 
@@ -289,7 +327,7 @@ namespace datamigrator
 
         private static void WriteToLog(string data)
         {
-            writer.WriteLine(DateTime.Now.ToString("HH:mm:ss") + "  " + data);
+            writer.WriteLine(DateTime.Now.ToString("HH:mm:ss:ffff") + "  " + data);
         }
 
         private static SqlConnection OpenConnection(string connString)
