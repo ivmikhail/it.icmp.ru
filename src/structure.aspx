@@ -66,7 +66,7 @@
                                 <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" EditText="edit" CancelText="cancel" DeleteText="del" UpdateText="upd" />
                             </Columns>
                        </asp:GridView>
-                       <asp:SqlDataSource ID="SqlDataSourceCategories" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                       <asp:SqlDataSource ID="SqlDataSourceCategories" runat="server" ConnectionString="<% =Global.ConnectionString() %>"
                                  ProviderName="<%$ ConnectionStrings:ConnectionString.providerName%>"
                                  SelectCommandType="StoredProcedure"
                                  SelectCommand="CategoryGetAll"
@@ -134,7 +134,7 @@
                 
                             </Columns>
                        </asp:GridView>
-                       <asp:SqlDataSource ID="SqlDataSourceMenu" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"
+                       <asp:SqlDataSource ID="SqlDataSourceMenu" runat="server" ConnectionString="<% =Global.ConnectionString() %>"
                                  ProviderName="<%$ ConnectionStrings:ConnectionString.providerName%>"
                                  SelectCommandType="StoredProcedure"
                                  SelectCommand="MenuItemsGetAll"
