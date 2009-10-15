@@ -15,6 +15,8 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.SqlDataSourceCategories.ConnectionString = this.SqlDataSourceMenu.ConnectionString = Global.ConnectionString();
+            
             if (!IsPostBack)
             {
                 RestoreNewCatData();

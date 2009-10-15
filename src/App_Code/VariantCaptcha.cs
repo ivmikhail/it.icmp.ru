@@ -76,5 +76,17 @@ namespace ITCommunity
             }
             return new VariantCaptcha(answer, variants, rightId);
         }
+        public static VariantCaptcha GetItCaptcha(int id) {
+            VariantCaptcha result = null;
+
+            DataRow row = Database.CaptchaQuestionGet(id);
+            if(row!=null) {
+                String text = row["text"].ToString();
+                List<String> variants = new List<string>();
+
+            }
+
+            return result;
+        }
     }
 }

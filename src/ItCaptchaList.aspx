@@ -6,7 +6,7 @@
         >
         <Columns>
             <asp:BoundField DataField="text" HeaderText="Вопрос" />
-            <asp:HyperLinkField Text="Изменить" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="~ItCaptchaEdit.aspx?id={0}"/>
+            <asp:HyperLinkField Text="Изменить" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="~/ItCaptchaEdit.aspx?id={0}"/>
         </Columns>
     </asp:GridView>
     <asp:HyperLink ID="hplAdd" runat="server" Text="Добавить" NavigateUrl="~/ItCaptchaEdit.aspx?new=1" EnableViewState="false" />

@@ -28,7 +28,21 @@ namespace ITCommunity
         {
             get { return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority); }
         }
-
+        private static String connectionString = null;
+        /// <summary>
+        /// Строка соединения с SQL сервером
+        /// </summary>
+        /// <returns></returns>
+        public static string ConnectionString() {
+            if (connectionString == null) {
+                if (ConfigurationManager.ConnectionStrings[Environment.MachineName] != null) {
+                    connectionString = ConfigurationManager.ConnectionStrings[Environment.MachineName].ConnectionString;
+                } else {
+                    connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                }
+            }
+            return connectionString;
+        }
         /// <summary>
         /// 
         /// </summary>

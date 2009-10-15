@@ -5,26 +5,31 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Configuration;
 using System.Web;
-namespace ITCommunity
-{
-    public class Database
-    {
-        private static SqlConnection OpenConnection()
-        {
+namespace ITCommunity {
+    public class Database {
+        private static SqlConnection OpenConnection() {
             string connectionString;
-            if (ConfigurationManager.ConnectionStrings[Environment.MachineName] != null)
-            {
+            if (ConfigurationManager.ConnectionStrings[Environment.MachineName] != null) {
                 connectionString = ConfigurationManager.ConnectionStrings[Environment.MachineName].ConnectionString;
-            } else
-            {
+            } else {
                 connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             }
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             return connection;
         }
-        public static int CaptchaAnswerDelete(Int32 id)
-        {
+        public static int CaptchaAnswerAdd(Int32 question_id) {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaAnswerAdd", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@question_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@question_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@question_id"].Value = question_id; int result = cmd.ExecuteNonQuery();
+            connection.Close();
+            return result;
+        }
+        public static int CaptchaAnswerDelete(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaAnswerDelete", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -35,8 +40,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable CaptchaAnswersList(Int32 id)
-        {
+        public static DataTable CaptchaAnswersList(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaAnswersList", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -47,8 +51,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -56,8 +59,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -69,8 +71,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int CaptchaAnswerUpdate(Int32 id, String text, Byte isRight)
-        {
+        public static int CaptchaAnswerUpdate(Int32 id, String text, Byte isRight) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaAnswerUpdate", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -87,8 +88,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int CaptchaDelete(Int32 id)
-        {
+        public static int CaptchaDelete(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaDelete", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -99,8 +99,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable CaptchaGet()
-        {
+        public static DataTable CaptchaGet() {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaGet", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -108,8 +107,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -117,8 +115,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -130,17 +127,79 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int CaptchaQuestionsList()
-        {
+        public static object CaptchaQuestionAdd(Int32 id) {
             SqlConnection connection = OpenConnection();
-            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaQuestionsList", connection);
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaQuestionAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            int result = cmd.ExecuteNonQuery();
+
+            cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@id"].Value = id; object result = cmd.ExecuteScalar();
             connection.Close();
             return result;
         }
-        public static int CaptchaQuestionUpdate(Int32 id, String text)
-        {
+        public static DataRow CaptchaQuestionGet(Int32 id) {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaQuestionGet", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@id"].Value = id;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++) {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            DataRow result;
+            if (reader.Read()) {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                result = row;
+            } else {
+                result = null;
+            }
+            reader.Close();
+            connection.Close();
+            return result;
+        }
+        public static DataTable CaptchaQuestionsList() {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaQuestionsList", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++) {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            while (reader.Read()) {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                table.Rows.Add(row);
+            }
+            reader.Close();
+            DataTable result = table;
+            connection.Close();
+            return result;
+        }
+        public static int CaptchaQuestionUpdate(Int32 id, String text) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaQuestionUpdate", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -154,8 +213,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow CategoryAdd(String name, Int32 sort)
-        {
+        public static DataRow CategoryAdd(String name, Int32 sort) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -169,8 +227,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -179,23 +236,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int CategoryDel(Int32 id)
-        {
+        public static int CategoryDel(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -206,8 +260,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable CategoryGetAll()
-        {
+        public static DataTable CategoryGetAll() {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryGetAll", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -215,8 +268,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -224,8 +276,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -237,8 +288,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow CategoryGetById(Int32 id)
-        {
+        public static DataRow CategoryGetById(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryGetById", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -249,8 +299,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -259,23 +308,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int CategoryUpdate(Int32 id, Int32 sort, String name)
-        {
+        public static int CategoryUpdate(Int32 id, Int32 sort, String name) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryUpdate", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -292,8 +338,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow CommentAdd(Int32 post_id, Int32 user_id, String ip, String text)
-        {
+        public static DataRow CommentAdd(Int32 post_id, Int32 user_id, String ip, String text) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -313,8 +358,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -323,23 +367,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int CommentDel(Int32 id)
-        {
+        public static int CommentDel(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -350,8 +391,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable CommentGetByPost(Int32 id)
-        {
+        public static DataTable CommentGetByPost(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentGetByPost", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -362,8 +402,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -371,8 +410,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -384,8 +422,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable CommentGetLasts(Int32 count)
-        {
+        public static DataTable CommentGetLasts(Int32 count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentGetLasts", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -396,8 +433,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -405,8 +441,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -418,8 +453,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow FavoriteAdd(Int32 user_id, Int32 post_id)
-        {
+        public static DataRow FavoriteAdd(Int32 user_id, Int32 post_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("FavoriteAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -433,8 +467,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -443,23 +476,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int FavoriteDel(Int32 post_id, Int32 user_id)
-        {
+        public static int FavoriteDel(Int32 post_id, Int32 user_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("FavoriteDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -473,8 +503,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable FavoriteGetByUser(Int32 user_id, Int32 page, Int32 count, ref Int32 posts_count)
-        {
+        public static DataTable FavoriteGetByUser(Int32 user_id, Int32 page, Int32 count, ref Int32 posts_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("FavoriteGetByUser", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -494,8 +523,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -503,8 +531,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -516,8 +543,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort, String name, Byte new_window)
-        {
+        public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort, String name, Byte new_window) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -540,8 +566,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -550,23 +575,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int MenuItemsDel(Int32 id)
-        {
+        public static int MenuItemsDel(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -577,8 +599,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable MenuItemsGetAll()
-        {
+        public static DataTable MenuItemsGetAll() {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsGetAll", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -586,8 +607,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -595,8 +615,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -608,8 +627,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow MenuItemsGetById(Int32 id)
-        {
+        public static DataRow MenuItemsGetById(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsGetById", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -620,8 +638,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -630,23 +647,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataTable MenuItemsGetByParent(Int32 parent_id)
-        {
+        public static DataTable MenuItemsGetByParent(Int32 parent_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsGetByParent", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -657,8 +671,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -666,8 +679,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -679,8 +691,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort, String name, Byte new_window)
-        {
+        public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort, String name, Byte new_window) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsUpdate", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -706,8 +717,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow MessageAdd(Int32 receiver_id, Int32 sender_id, String title, String text)
-        {
+        public static DataRow MessageAdd(Int32 receiver_id, Int32 sender_id, String title, String text) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -727,8 +737,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -737,23 +746,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int MessageDelByReceiver(Int32 mess_id)
-        {
+        public static int MessageDelByReceiver(Int32 mess_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageDelByReceiver", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -764,8 +770,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int MessageDelBySender(Int32 mess_id)
-        {
+        public static int MessageDelBySender(Int32 mess_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageDelBySender", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -776,8 +781,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow MessageGetById(Int32 id)
-        {
+        public static DataRow MessageGetById(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageGetById", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -788,8 +792,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -798,23 +801,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataTable MessageGetByReceiver(Int32 rec_id, Int32 page, Int32 count, ref Int32 mess_count)
-        {
+        public static DataTable MessageGetByReceiver(Int32 rec_id, Int32 page, Int32 count, ref Int32 mess_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageGetByReceiver", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -834,8 +834,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -843,8 +842,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -856,8 +854,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable MessageGetBySender(Int32 sender_id, Int32 page, Int32 count, ref Int32 mess_count)
-        {
+        public static DataTable MessageGetBySender(Int32 sender_id, Int32 page, Int32 count, ref Int32 mess_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageGetBySender", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -877,8 +874,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -886,8 +882,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -899,8 +894,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static object MessageGetNewCount(Int32 receiver_id)
-        {
+        public static object MessageGetNewCount(Int32 receiver_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageGetNewCount", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -911,8 +905,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int MessageMarkAsRead(Int32 id)
-        {
+        public static int MessageMarkAsRead(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageMarkAsRead", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -923,8 +916,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow NotesAdd(Int32 user_id, String title, String text, DateTime cdate)
-        {
+        public static DataRow NotesAdd(Int32 user_id, String title, String text, DateTime cdate) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("NotesAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -944,8 +936,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -954,23 +945,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int NotesDel(Int32 id)
-        {
+        public static int NotesDel(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("NotesDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -981,8 +969,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable NotesGet(Int32 user_id, Int32 page, Int32 count, ref Int32 posts_count)
-        {
+        public static DataTable NotesGet(Int32 user_id, Int32 page, Int32 count, ref Int32 posts_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("NotesGet", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1002,8 +989,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1011,8 +997,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1024,8 +1009,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow NotesGetById(Int32 id)
-        {
+        public static DataRow NotesGetById(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("NotesGetById", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1036,8 +1020,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1046,23 +1029,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataRow PollAdd(String topic, Int32 author_id, Int32 is_multiselect, Int32 is_open, String answers)
-        {
+        public static DataRow PollAdd(String topic, Int32 author_id, Int32 is_multiselect, Int32 is_open, String answers) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1085,8 +1065,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1095,23 +1074,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int PollDel(Int32 poll_id)
-        {
+        public static int PollDel(Int32 poll_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1122,8 +1098,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PollGet(Int32 page, Int32 count, ref Int32 polls_count)
-        {
+        public static DataTable PollGet(Int32 page, Int32 count, ref Int32 polls_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGet", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1140,8 +1115,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1149,8 +1123,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1162,8 +1135,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PollGetAnswers(Int32 poll_id)
-        {
+        public static DataTable PollGetAnswers(Int32 poll_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetAnswers", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1174,8 +1146,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1183,8 +1154,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1196,8 +1166,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PollGetAnswerVoters(Int32 answer_id)
-        {
+        public static DataTable PollGetAnswerVoters(Int32 answer_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetAnswerVoters", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1208,8 +1177,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1217,8 +1185,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1230,8 +1197,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow PollGetById(Int32 id)
-        {
+        public static DataRow PollGetById(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetById", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1242,8 +1208,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1252,23 +1217,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataRow PollGetLast()
-        {
+        public static DataRow PollGetLast() {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetLast", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1276,8 +1238,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1286,23 +1247,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static object PollIsUserVoted(Int32 user_id, Int32 poll_id)
-        {
+        public static int PollIsUserVoted(Int32 user_id, Int32 poll_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollIsUserVoted", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1312,12 +1270,11 @@ namespace ITCommunity
             cmd.Parameters["@user_id"].Value = user_id;
             cmd.Parameters.Add("@poll_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@poll_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@poll_id"].Value = poll_id; object result = cmd.ExecuteScalar();
+            cmd.Parameters["@poll_id"].Value = poll_id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
-        public static int PollVote(Int32 poll_id, Int32 user_id, String answers)
-        {
+        public static int PollVote(Int32 poll_id, Int32 user_id, String answers) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollVote", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1334,8 +1291,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow PostAdd(String title, String desc, String text, Byte attached, String source, Int32 user_id)
-        {
+        public static DataRow PostAdd(String title, String desc, String text, Byte attached, String source, Int32 user_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1361,8 +1317,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1371,23 +1326,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int PostAttachCategories(Int32 post_id, String query)
-        {
+        public static int PostAttachCategories(Int32 post_id, String query) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostAttachCategories", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1401,8 +1353,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int PostDel(Int32 id)
-        {
+        public static int PostDel(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1413,8 +1364,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PostGet(Int32 page, Int32 count, ref Int32 posts_count)
-        {
+        public static DataTable PostGet(Int32 page, Int32 count, ref Int32 posts_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGet", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1431,8 +1381,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1440,8 +1389,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1453,8 +1401,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PostGetAttached()
-        {
+        public static DataTable PostGetAttached() {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetAttached", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1462,8 +1409,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1471,8 +1417,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1484,8 +1429,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PostGetByCat(Int32 page, Int32 count, Int32 cat_id, ref Int32 posts_count)
-        {
+        public static DataTable PostGetByCat(Int32 page, Int32 count, Int32 cat_id, ref Int32 posts_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetByCat", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1505,8 +1449,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1514,8 +1457,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1527,8 +1469,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow PostGetById(Int32 id)
-        {
+        public static DataRow PostGetById(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetById", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1539,8 +1480,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1549,23 +1489,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataTable PostGetCategories(Int32 post_id)
-        {
+        public static DataTable PostGetCategories(Int32 post_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetCategories", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1576,8 +1513,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1585,8 +1521,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1598,8 +1533,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PostGetLast(Int32 count)
-        {
+        public static DataTable PostGetLast(Int32 count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetLast", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1610,8 +1544,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1619,8 +1552,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1632,8 +1564,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PostGetTop(Int32 period, Int32 count)
-        {
+        public static DataTable PostGetTop(Int32 period, Int32 count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetTop", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1647,8 +1578,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1656,8 +1586,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1669,8 +1598,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static object PostIsFavorite(Int32 user_id, Int32 post_id)
-        {
+        public static object PostIsFavorite(Int32 user_id, Int32 post_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostIsFavorite", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1684,8 +1612,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable PostSearch(String query, Int32 page, Int32 count, ref Int32 posts_count)
-        {
+        public static DataTable PostSearch(String query, Int32 page, Int32 count, ref Int32 posts_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostSearch", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1705,8 +1632,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1714,8 +1640,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1727,8 +1652,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int PostUpdate(Int32 id, String title, String desc, String text, Byte attached, String source, Int32 comments_count)
-        {
+        public static int PostUpdate(Int32 id, String title, String desc, String text, Byte attached, String source, Int32 comments_count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostUpdate", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1757,8 +1681,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static int PostUpdateViews(Int32 id)
-        {
+        public static int PostUpdateViews(Int32 id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostUpdateViews", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1769,8 +1692,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow RecoveryAdd(String identifier, Int32 user_id)
-        {
+        public static DataRow RecoveryAdd(String identifier, Int32 user_id) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1784,8 +1706,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1794,23 +1715,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int RecoveryDel(String identifier)
-        {
+        public static int RecoveryDel(String identifier) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1821,8 +1739,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow RecoveryGetByIdentifier(String identifier)
-        {
+        public static DataRow RecoveryGetByIdentifier(String identifier) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryGetByIdentifier", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1833,8 +1750,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1843,23 +1759,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataTable RfcGetByNum(String num)
-        {
+        public static DataTable RfcGetByNum(String num) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RfcGetByNum", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1870,8 +1783,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1879,8 +1791,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1892,8 +1803,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable RfcSearchByTitle(String query)
-        {
+        public static DataTable RfcSearchByTitle(String query) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RfcSearchByTitle", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1904,8 +1814,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1913,8 +1822,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -1926,8 +1834,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow UserAdd(String nick, String pass, Byte role, String email)
-        {
+        public static DataRow UserAdd(String nick, String pass, Byte role, String email) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserAdd", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1947,8 +1854,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -1957,23 +1863,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static int UserDel(Int32 userId)
-        {
+        public static int UserDel(Int32 userId) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserDel", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1984,8 +1887,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow UserGetByEmail(String email)
-        {
+        public static DataRow UserGetByEmail(String email) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByEmail", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1996,8 +1898,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -2006,23 +1907,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataRow UserGetById(Int32 userId)
-        {
+        public static DataRow UserGetById(Int32 userId) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetById", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2033,8 +1931,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -2043,23 +1940,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataRow UserGetByLogin(String login)
-        {
+        public static DataRow UserGetByLogin(String login) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByLogin", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2070,8 +1964,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -2080,23 +1973,20 @@ namespace ITCommunity
             }
 
             DataRow result;
-            if (reader.Read())
-            {
+            if (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
                 row.ItemArray = rowdata;
                 result = row;
-            } else
-            {
+            } else {
                 result = null;
             }
             reader.Close();
             connection.Close();
             return result;
         }
-        public static DataTable UserGetByRole(Int32 role)
-        {
+        public static DataTable UserGetByRole(Int32 role) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByRole", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2107,8 +1997,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -2116,8 +2005,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -2129,8 +2017,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable UserGetLastRegistered(Int32 count)
-        {
+        public static DataTable UserGetLastRegistered(Int32 count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetLastRegistered", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2141,8 +2028,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -2150,8 +2036,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -2163,8 +2048,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable UserGetStat()
-        {
+        public static DataTable UserGetStat() {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetStat", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2172,8 +2056,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -2181,8 +2064,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -2194,8 +2076,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataTable UserGetTopPosters(Int32 count)
-        {
+        public static DataTable UserGetTopPosters(Int32 count) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetTopPosters", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2206,8 +2087,7 @@ namespace ITCommunity
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             System.Data.DataTable table = new DataTable();
 
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
+            for (int i = 0; (i < reader.FieldCount); i++) {
                 System.Type __type;
                 string __name;
                 __type = reader.GetFieldType(i);
@@ -2215,8 +2095,7 @@ namespace ITCommunity
                 table.Columns.Add(__name, __type);
             }
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 System.Data.DataRow row = table.NewRow();
                 object[] rowdata = new object[reader.FieldCount];
                 reader.GetValues(rowdata);
@@ -2228,8 +2107,7 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
-        public static DataRow UserUpdate(Int32 user_id, String pass, Byte role, String email)
-        {
+        public static int UserUpdate(Int32 user_id, String pass, Byte role, String email) {
             SqlConnection connection = OpenConnection();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserUpdate", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2245,32 +2123,7 @@ namespace ITCommunity
             cmd.Parameters["@role"].Value = role;
             cmd.Parameters.Add("@email", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@email"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@email"].Value = email;
-            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
-            System.Data.DataTable table = new DataTable();
-
-            for (int i = 0; (i < reader.FieldCount); i++)
-            {
-                System.Type __type;
-                string __name;
-                __type = reader.GetFieldType(i);
-                __name = reader.GetName(i);
-                table.Columns.Add(__name, __type);
-            }
-
-            DataRow result;
-            if (reader.Read())
-            {
-                System.Data.DataRow row = table.NewRow();
-                object[] rowdata = new object[reader.FieldCount];
-                reader.GetValues(rowdata);
-                row.ItemArray = rowdata;
-                result = row;
-            } else
-            {
-                result = null;
-            }
-            reader.Close();
+            cmd.Parameters["@email"].Value = email; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
