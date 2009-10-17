@@ -69,7 +69,7 @@ namespace ITCommunity
             _formatters = new List<IHtmlFormatter>();
 
             _formatters.Add(new SearchReplaceFormatter("\r", ""));
-            _formatters.Add(new SearchReplaceFormatter("\n\n", "<p></p>"));
+            //_formatters.Add(new SearchReplaceFormatter("\n\n", "<p></p>"));
             _formatters.Add(new SearchReplaceFormatter("\n", "<br />"));
 
             _formatters.Add(new RegexFormatter(@"\[b(?:\s*)\]((.|\n)*?)\[/b(?:\s*)\]", "<b>$1</b>"));

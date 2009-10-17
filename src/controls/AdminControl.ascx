@@ -15,6 +15,6 @@
         <asp:HyperLink ID="SiteStructureLink" runat="server" NavigateUrl="~/structure.aspx">Меню/Категории</asp:HyperLink>
     </li>       
     <li>
-        <asp:HyperLink ID="ItCaptchaEditor" runat="server" NavigateUrl="~/itcaptchalist.aspx">Редактор каптчей (ов?)</asp:HyperLink>
+        <asp:HyperLink ID="ItCaptchaEditor" runat="server" NavigateUrl="~/itcaptchalist.aspx">Каптчи</asp:HyperLink>
     </li> 
 </ul>   

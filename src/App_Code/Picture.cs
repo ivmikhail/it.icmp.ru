@@ -9,7 +9,7 @@ using ITCommunity;
 
 namespace ITCommunity
 {
-
+    // страх божий
     public class Picture 
     {
         private string _name;
@@ -121,7 +121,8 @@ namespace ITCommunity
 
         public static Picture UploadImage(HttpPostedFile img, Post post)
         {
-            string filename = Guid.NewGuid().ToString("N") + Path.GetExtension(img.FileName);
+            Random rand = new Random();
+            string filename = rand.Next(0, 999999) + Path.GetExtension(img.FileName);
             filename = filename.ToLower();
 
             string fullpath = CreateFolder(post.Author.Id, -1, "full") + "/" + filename;

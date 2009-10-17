@@ -89,15 +89,14 @@ namespace ITCommunity
                 editable_post.Text = post_content[1];
 
                 editable_post.Source = Server.HtmlEncode(TextBoxSource.Text);
-                editable_post.Author = CurrentUser.User;
                 editable_post.Attached = CheckBoxAttached.Checked;
 
                 Post inserted_post = new Post();
-                if (editable_post.Id > 0) // ѕост только что создали
+                if (editable_post.Id > 0) //пост редактируют
                 {
                     editable_post.UpdateWithCategories();
                     inserted_post = editable_post;
-                } else //пост редактируют
+                } else // ѕост только что создали
                 {
                     editable_post.Author = CurrentUser.User;
                     inserted_post = Post.Add(editable_post);
@@ -180,7 +179,7 @@ namespace ITCommunity
 
         protected void AttachImageButton_Click(object sender, EventArgs e)
         {
-            Post post = current_post;
+            Post post = Post.GetById(GetPostId());
             if(post.Id < 1)
             {
                 post.Author = CurrentUser.User;

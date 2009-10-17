@@ -39,11 +39,6 @@ namespace datamigrator
 
         private static string Formatting(string text)
         {
-            /*
-<li>
- * <img>
- * <a href>
-             */
             string result = text;
 
             result = Regex.Replace(result, "<b>(.*?)</b>", "[b]$1[/b]");
