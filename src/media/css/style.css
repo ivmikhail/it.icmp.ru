@@ -638,3 +638,7 @@ hr
 {
 	padding:5px;
 }
+.clear 
+{
+	clear:both;
+}
