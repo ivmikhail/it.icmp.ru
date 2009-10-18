@@ -29,7 +29,8 @@
                     </div>
                     <div class="post-read-link">
                         <a href='news.aspx?id=<%# Eval("id")%>#cut'>Читать далее &rarr;</a>
-                    </div>                    
+                    </div>
+                    <div class="clear"></div>                    
                     <div class="post-info">
                         <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> /                      
                         <%# Eval("favoritesaction") %> /

@@ -9,6 +9,8 @@ using System.Data.Sql;
 using System.Data.SqlTypes;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace datamigrator
 {
@@ -21,8 +23,11 @@ namespace datamigrator
         
         static void Main(string[] args)
         {
-            targetConn = OpenConnection("Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;");
-            sourceConn = OpenConnection("Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;");
+            targetConnString = "Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+            sourceConnString = "Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+
+            targetConn = OpenConnection(targetConn);
+            sourceConn = OpenConnection(sourceConn);
 
             WriteToLog("INFO    Ready, steady, GO!!!1");
 
@@ -166,8 +171,14 @@ namespace datamigrator
                 string author_login = sourceTable.Rows[i]["author"].ToString();
                 int author_id = ExecuteScalar("select id from users where UPPER(nick) = UPPER('" + author_login + "')", targetConn);
                 int post_id = Convert.ToInt32(sourceTable.Rows[i]["news_id"]);
+                string introImgLink = "";
+                string mainImgLink = "";
+
                 if (author_id > 0)
                 {
+                    introImgLink = SaveIntroImage(post_id, author_id);
+                    mainImgLink = SaveMainImage(post_id, author_id);
+
                     SqlCommand cmd = new SqlCommand(
                     "SET IDENTITY_INSERT posts on;insert into posts(id,title,description,text,cdate,user_id,attached,views,source,comments_count) values(@id,@title,@description,@text,@cdate,@user_id,@attached,@views,@source,@comments_count)", targetConn);
 
@@ -181,10 +192,10 @@ namespace datamigrator
                     title.Value = Formatting(title_original.Length > 100 ? title_original.Substring(0, 100) : title_original);
 
                     SqlParameter desc = cmd.Parameters.Add("@description", SqlDbType.NVarChar);
-                    desc.Value = Formatting(sourceTable.Rows[i]["intro"].ToString());
+                    desc.Value = introImgLink + Formatting(sourceTable.Rows[i]["intro"].ToString());
 
                     SqlParameter text = cmd.Parameters.Add("@text", SqlDbType.NVarChar);
-                    text.Value = Formatting(sourceTable.Rows[i]["main"].ToString());
+                    text.Value = mainImgLink + Formatting(sourceTable.Rows[i]["main"].ToString());
 
                     SqlParameter date = cmd.Parameters.Add("@cdate", SqlDbType.DateTime);
                     date.Value = Convert.ToDateTime(sourceTable.Rows[i]["ndate"].ToString());
@@ -207,6 +218,8 @@ namespace datamigrator
                     comm_count.Value = ExecuteScalar("select count(*) from tblComment where cnews_id = '" + sourceTable.Rows[i]["news_id"] + "'", sourceConn);
 
                     cmd.ExecuteNonQuery();
+
+
 
                     ExecuteQuery("insert into post_cat(post_id, cat_id) values(" + sourceTable.Rows[i]["news_id"] + ", " + sourceTable.Rows[i]["newstype_id"] + " )", targetConn);
                 } else
@@ -290,10 +303,84 @@ namespace datamigrator
             notValidUsers.Clear();
             WriteToLog("INFO    reset not valid logins end");
         }
+        private static string SaveIntroImage(int post_id, int author_id)
+        {
+            string res = "";
+            try
+            {
 
+                MemoryStream stream = new MemoryStream();
+                SqlCommand command = new SqlCommand("select introImage from tblNews where news_id = " + post_id, sourceConn);
+                byte[] image = (byte[])command.ExecuteScalar();
+                stream.Write(image, 0, image.Length);
+                Bitmap bitmap = new Bitmap(stream);
+                Random rand = new Random();
+                if (bitmap != null)
+                {
+                    string path = CreateFolder(author_id, post_id, "full", "postimages");
+                    string real_path = path + rand.Next(0, 999999) + ".jpg";
+                    FileStream fs = File.OpenWrite(real_path);
+                    bitmap.Save(fs, ImageFormat.Jpeg);
+                    fs.Close();
+                    fs.Dispose();
+                    res = "[float=left][img]" + real_path + "[/img][/float]";
 
+                }
+
+                bitmap.Dispose();
+                stream.Close();
+                stream.Dispose();
+            } catch
+            {
+                res = "";
+            }
+            return res;
+        }
+        private static string SaveMainImage(int post_id, int author_id)
+        {
+            string res = "";
+            try
+            {
+
+                MemoryStream stream = new MemoryStream();
+                SqlCommand command = new SqlCommand("select mainImage from tblNews where news_id = " + post_id, sourceConn);
+                byte[] image = (byte[])command.ExecuteScalar();
+                stream.Write(image, 0, image.Length);
+                Bitmap bitmap = new Bitmap(stream);
+                Random rand = new Random();
+                if (bitmap != null)
+                {
+                    string path = CreateFolder(author_id, post_id, "full", "postimages");
+                    string real_path = path + rand.Next(0, 999999) + ".jpg";
+                    FileStream fs = File.OpenWrite(real_path);
+                    bitmap.Save(fs, ImageFormat.Jpeg);
+                    fs.Close();
+                    fs.Dispose();
+                    res = "[img]" + real_path + "[/img]\n\n";
+
+                }
+
+                bitmap.Dispose();
+                stream.Close();
+                stream.Dispose();
+            } catch
+            {
+                res = "";
+            }
+            return res;
+        }
 
         #region Всякая низкоуровневая хрень
+
+        public static string CreateFolder(int user_id, int post_id, string folder, string imagesfolder)
+        {
+            string current_folder =  imagesfolder + "/" + user_id + "/" + post_id + "/" + folder + "/";
+            if (!Directory.Exists(current_folder))
+            {
+                Directory.CreateDirectory(current_folder);
+            }
+            return current_folder;
+        }
 
         private static void ClearTargetTables(string[] tables)
         {
