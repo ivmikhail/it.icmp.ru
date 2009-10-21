@@ -196,10 +196,15 @@
             </div>
             <div id="footer">
                 <h2>
-                    IT Community &copy; 2005 - <asp:Literal ID="ThisYear" runat="server" />
-                </h2>
+                    IT Community &copy; 2005 - <asp:Literal ID="ThisYear" runat="server" />                    
+                </h2>                
                 Данный ресурс поддерживается сообществом АЙТИ коммунистов г.Якутска. Проект некоммерческий.
-            </div>
+                <br />
+                <br />
+                <a id="yaknet" runat="server" href="http://www.ykt.ru/yaknet/default.asp" title="Перейти в рейтинговую систему">
+                    <img src="http://www.ykt.ru/yaknet/image.asp?id=IT_community" alt="Рейтинг Ykt.Ru" width="50" height="30" />
+                </a>
+             </div>
         </div>    
     </form>
 </body>

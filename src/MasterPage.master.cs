@@ -28,7 +28,20 @@ namespace ITCommunity
                 LoadLastRegistered();
                 LoadTopPosters();
                 LoadStat();
+                InitYaknetRating();
             }
+        }
+        private void InitYaknetRating()
+        {
+            string pageName = System.IO.Path.GetFileName(HttpContext.Current.Request.FilePath);
+            if (pageName == "default.aspx" && GetCatId() == 0 && GetPageNum() == 0)
+            {
+                yaknet.Visible = true;
+            } else
+            {
+                yaknet.Visible = false;
+            }
+
         }
         private void LoadLinks()
         {
@@ -48,7 +61,7 @@ namespace ITCommunity
         private void LoadCategories()
         {
             List<Category> cats = new List<Category>();
-            cats.Add(new Category(-1, "Все новости", -1));
+            cats.Add(new Category(0, "Все новости", -1));
             cats.AddRange(Category.GetAll());
             NewsCategories.DataSource = cats;
             NewsCategories.DataBind();
@@ -105,6 +118,22 @@ namespace ITCommunity
         protected void LinkButtonSearch_Click(object sender, EventArgs e)
         {
             Response.Redirect("search.aspx?q=" + TextBoxQuery.Text);
+        }
+        private int GetCatId()
+        {
+            int id = 0;
+            Int32.TryParse(Request.QueryString["cat"], out id);
+            return id;
+        }
+        private int GetPageNum()
+        {
+            int pageNum = 0;
+            Int32.TryParse(Request.QueryString["page"], out pageNum);
+            if (pageNum == 1)
+            {
+                pageNum = 0;
+            }
+            return pageNum;
         }
     }
 
