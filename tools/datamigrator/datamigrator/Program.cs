@@ -23,20 +23,20 @@ namespace datamigrator
         
         static void Main(string[] args)
         {
-            targetConnString = "Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
-            sourceConnString = "Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+            string targetConnString = "Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+            string sourceConnString = "Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
 
-            targetConn = OpenConnection(targetConn);
-            sourceConn = OpenConnection(sourceConn);
+            targetConn = OpenConnection(targetConnString);
+            sourceConn = OpenConnection(sourceConnString);
 
             WriteToLog("INFO    Ready, steady, GO!!!1");
 
             ClearTargetDB();
-            MoveCategories();
-            MoveUsers();
-            MovePosts();
-            MovePostComments();
-            UpdateNotValidLogins();
+           MoveCategories();
+           // MoveUsers();
+           // MovePosts();
+           // MovePostComments();
+           // UpdateNotValidLogins();
 
             writer.Flush();
             writer.Close();
