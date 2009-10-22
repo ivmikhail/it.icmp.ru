@@ -1,4 +1,5 @@
-﻿body
+﻿/* REFACTOR THIS!!!!1 */
+body
 {
 	/*
     background: #fff;  
@@ -23,10 +24,13 @@
 a
 {
 	color: #3366cc;
+	text-decoration:none;
 }
 a:hover
 {
-	color: #3366cc;
+	color:#fff;
+	background: #3366cc;
+	text-decoration:none;
 }
 
 p
@@ -156,7 +160,12 @@ h3 {
 	color: #ffffff;
 	text-decoration:none;
 }
-.topposters-list li, .usersstat-list li, .newusers-list li, .topposts-links li, .lastcomments-links li 
+.topposters-list li, 
+.usersstat-list li, 
+.newusers-list li, 
+.topposts-links li, 
+.lastcomments-links li, 
+.loginform li
 {
 	padding: 2px 0 2px 0;
 }
