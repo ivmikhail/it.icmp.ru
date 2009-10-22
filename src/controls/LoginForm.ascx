@@ -2,7 +2,7 @@
 <div id="auth_panel">
 <h1>Авторизация</h1>
     <div id="auth_data">
-        <ul class="list">
+        <ul class="list loginform link">
             <li>   
                 логин        
                 <asp:TextBox ID="TextBoxLogin" runat="server"  CssClass="short-input" ValidationGroup="ValidateAuthData" />
