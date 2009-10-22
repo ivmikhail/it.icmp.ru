@@ -16,26 +16,22 @@ namespace ITCommunity {
         private int id = -1;
         protected void Page_Load(object sender, EventArgs e) {
             SqlDataSource1.ConnectionString = Global.ConnectionString();
-            if (Request.QueryString["new"] == null) {
-                isNewQuestion = false;
-            } else {
-                isNewQuestion = true;
+            if (Request.QueryString["new"] != null) {
+                id = (int)Database.CaptchaQuestionAdd();
+                Response.Redirect("~/ItCaptchaEdit.aspx?id=" + id);
             }
+
             Int32.TryParse(Request.QueryString["id"], out id);
             if (id < 0 && !isNewQuestion) {
-                return;
+                Response.Redirect("~/itcaptchalist.aspx");
             }
             if (!IsPostBack) {
-                if (isNewQuestion) {
-                    txtQuestion.Text = "";
+                DataRow row = Database.CaptchaQuestionGet(id);
+                if (row != null) {
+                    txtQuestion.Text = row["text"].ToString();
                 } else {
-                    txtQuestion.Text = Database.CaptchaGet().Rows[0]["text"].ToString();
+                    Response.Redirect("~/itcaptchalist.aspx");
                 }
-            }
-            if(isNewQuestion) {
-                btnAdd.Visible = true;
-            } else {
-                btnAdd.Visible = false;
             }
         }
 
@@ -44,15 +40,12 @@ namespace ITCommunity {
             GridView1.DataBind();
         }
         protected void lnkSaveQuestion_Click(object sender, EventArgs e) {
-            if(txtQuestion.Text.Trim().Length>0) {
-                if (isNewQuestion) {
-                    Database.CaptchaQuestionAdd(id);
-                } else {
-                    Database.CaptchaQuestionUpdate(id, txtQuestion.Text.Trim());
-                }
+            if (txtQuestion.Text.Trim().Length > 0) {
+                Database.CaptchaQuestionUpdate(id, txtQuestion.Text.Trim());
+                Response.Redirect("~/itcaptchalist.aspx");
             }
         }
-}
+    }
 
 
 }

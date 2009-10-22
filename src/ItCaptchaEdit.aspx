@@ -5,12 +5,12 @@
     <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" 
         AutoGenerateColumns="False" DataSourceID="SqlDataSource1" DataKeyNames="id">
         <Columns>
-            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
             <asp:BoundField DataField="text" HeaderText="Текст" SortExpression="text" />
             <asp:BoundField DataField="isRight" HeaderText="Правильный" SortExpression="isRight" />
+            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
         </Columns>
     </asp:GridView>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString=""
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
         DeleteCommand="CaptchaAnswerDelete" DeleteCommandType="StoredProcedure" InsertCommand="CaptchaAnswerAdd"
         InsertCommandType="StoredProcedure" SelectCommand="CaptchaAnswersList" SelectCommandType="StoredProcedure"
         UpdateCommand="CaptchaAnswerUpdate" UpdateCommandType="StoredProcedure">
@@ -27,7 +27,7 @@
         </UpdateParameters>
     </asp:SqlDataSource>
     <br />
-    <asp:Button ID="btnAdd" runat="server" Text="add" OnClick="btnAdd_Click" />
+    <asp:Button ID="btnAdd" runat="server" Text="Добавить вариант" OnClick="btnAdd_Click" />
     <br />
     <br />
     <a href="itcaptchalist.aspx">Назад</a>
