@@ -127,7 +127,16 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <a href='news.aspx?id=<%# Eval("value.postid")%>#comments' title="Смотреть остальные комментарии поста" ><%# Eval("value.shorttext")%></a> by <a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link"><%# Eval("key.nick")%></a>
+                           <span class="user-pm-link userstat">
+                                <a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору">
+                                    <%# Eval("key.nick")%>
+                                </a>
+                                :
+                            </span>
+                            <a href='news.aspx?id=<%# Eval("value.postid")%>#comments' title="Смотреть остальные комментарии поста" >
+                                <%# Eval("value.shorttext")%>
+                            </a> 
+
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
@@ -142,7 +151,16 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <a href='news.aspx?id=<%# Eval("value.id")%>'><%# Eval("value.title")%></a> by <a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link"><%# Eval("key.nick")%></a> (<%# Eval("value.views")%>)
+                            <a href='news.aspx?id=<%# Eval("value.id")%>'>
+                                <%# Eval("value.title")%>
+                            </a>                          
+                           <span class="user-pm-link userstat">                           
+                                by   
+                                <a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link">
+                                    <%# Eval("key.nick")%>
+                                </a> 
+                                (<%# Eval("value.views")%>)
+                            </span>
                         </li>
                     </ItemTemplate>
                     <FooterTemplate>
@@ -154,7 +172,7 @@
                 <h2>Активные постеры</h2>
                 <asp:Repeater ID="TopPosters" runat="server" >
                     <HeaderTemplate>
-                        <ul class="list">
+                        <ul class="list topposters-list userlink">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
@@ -170,7 +188,7 @@
                 <h3>Новые</h3>
                 <asp:Repeater ID="LastRegistered" runat="server" >
                     <HeaderTemplate>
-                        <ul class="list">
+                        <ul class="list newusers-list userlink">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
@@ -182,7 +200,7 @@
                     </FooterTemplate>
                 </asp:Repeater>
                 <h3>Количество</h3>
-                <ul class="list">                
+                <ul class="list usersstat-list">                
                     <li>
                         Всего - <asp:Literal ID="TotalUsers" runat="server" />
                     </li>

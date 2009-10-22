@@ -138,7 +138,7 @@ namespace ITCommunity
             get
             {
                 string safely_text = HttpUtility.HtmlEncode(_text);
-                return (safely_text.Length > 20) ? safely_text.Substring(0, 20) + " ..." : safely_text;
+                return (safely_text.Length > 80) ? safely_text.Substring(0, 80) + " ..." : safely_text;
             }
         }
 
