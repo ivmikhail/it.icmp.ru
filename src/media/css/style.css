@@ -138,11 +138,27 @@ h3 {
 	color: #3366cc;
 	text-decoration:none;
 }
+
 .topposts-links a:hover
 {
 	background-color: #3366cc;
 	color: #ffffff;
 	text-decoration:none;
+}
+.userlink a 
+{
+	color: #3366cc;
+	text-decoration:none;
+}
+.userlink a:hover
+{
+	background-color: red;
+	color: #ffffff;
+	text-decoration:none;
+}
+.topposters-list li, .usersstat-list li, .newusers-list li, .topposts-links li, .lastcomments-links li 
+{
+	padding: 2px 0 2px 0;
 }
 .admin-panel a
 {
@@ -331,15 +347,23 @@ div#dynamic-content .post-info a:hover
 	background:green;
 	color:#ffffff;
 }
-.user-pm-link
+.user-pm-link a
 {
 	text-decoration:none;
+	color:Gray;
+	font-weight:bold;
 }
-.user-pm-link:hover
+.user-pm-link a:hover
 {	
 	text-decoration:none;
 	background:red;
-	color:#ffffff;
+	color:#fff;
+}
+.userstat 
+{
+	padding: 5px 0 5px 0;
+	width:100%;
+	text-align:left;
 }
 div#dynamic-content .attached-image
 {
