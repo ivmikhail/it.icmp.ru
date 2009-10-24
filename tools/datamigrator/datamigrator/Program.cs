@@ -23,8 +23,11 @@ namespace datamigrator
         
         static void Main(string[] args)
         {
-            string targetConnString = "Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
-            string sourceConnString = "Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+            string sourceConnString = "Data Source=127.0.0.1;Initial Catalog=IT;Persist Security Info=True;User ID=IT;Password=nhfv,kth;persist security info=False;Connection Timeout=30;";
+            string targetConnString = "Data Source=localhost;Initial Catalog=it2;Persist Security Info=True;User ID=it2;Password=dctbltngjgkfye;persist security info=False;Connection Timeout=30;";
+
+            //string sourceConnString = "Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+            //string targetConnString = "Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
 
             targetConn = OpenConnection(targetConnString);
             sourceConn = OpenConnection(sourceConnString);
@@ -33,10 +36,10 @@ namespace datamigrator
 
             ClearTargetDB();
            MoveCategories();
-           // MoveUsers();
-           // MovePosts();
-           // MovePostComments();
-           // UpdateNotValidLogins();
+           MoveUsers();
+           MovePosts();
+           MovePostComments();
+           UpdateNotValidLogins();
 
             writer.Flush();
             writer.Close();
@@ -46,22 +49,26 @@ namespace datamigrator
         {
             string result = text;
 
-            result = Regex.Replace(result, "<b>(.*?)</b>", "[b]$1[/b]");
-            result = Regex.Replace(result, "<i>(.*?)</i>", "[i]$1[/i]");
-            result = Regex.Replace(result, "<s>(.*?)</s>", "[s]$1[/s]");
-            result = Regex.Replace(result, "<u>(.*?)</u>", "[u]$1[/u]");            
-            result = Regex.Replace(result, "<p>(.*?)</p>", "\n$1\n");
+            result = Regex.Replace(result, "<b>(.*?)</b>", "[b]$1[/b]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "<i>(.*?)</i>", "[i]$1[/i]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "<s>(.*?)</s>", "[s]$1[/s]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "<u>(.*?)</u>", "[u]$1[/u]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "<pre>(.*?)</pre>", "[code]$1[/code]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "<p>(.*?)</p>", "\n$1\n", RegexOptions.Singleline|RegexOptions.IgnoreCase);
 
-            result = Regex.Replace(result, "<img(.*?)src=(\"|')(.*?)(\"|')(.*?)>", "[img]$3[/img]");
-            result = Regex.Replace(result, "<a(.*?)href=(\"|')(.*?)(\"|')(.*?)>(.*?)</a>", "[url=$3]$6[/url]");
+            result = Regex.Replace(result, "<img(.*?)src=(\"|')(.*?)(\"|')(.*?)>", "[img]$3[/img]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "<a(.*?)href=(\"|')(.*?)(\"|')(.*?)>(.*?)</a>", "[url=$3]$6[/url]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
 
-            result = Regex.Replace(result, "<ul>(.*?)</ul>", "[list]$2[/list]");
-            result = Regex.Replace(result, "<li>(.*?)</li>", "[*]$2");
+            result = Regex.Replace(result, "<ul>(.*?)</ul>", "[list]$1[/list]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "<li>(.*?)</li>", "[*]$1", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, @"<li>(.*?)(?=(<li>)|(\[/list]))", "[*]$1", RegexOptions.Singleline|RegexOptions.IgnoreCase);
 
+            result = Regex.Replace(result, "&quot;", "\"", RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
-            result = Regex.Replace(result, "<br />", "\n");
-            result = Regex.Replace(result, "\"", "'");
-            result = HttpUtility.HtmlEncode(result);
+            result = Regex.Replace(result, @"<br\s*/?>", "\n", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "\"", "'", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            //result = HttpUtility.HtmlEncode(result);
+
             return result;
         }
         private static void ClearTargetDB()
@@ -388,6 +395,7 @@ namespace datamigrator
             {
                 WriteToLog("INFO    Clearing '" + tablename + "' start...");
                 ClearTargetTable(tablename);
+                ResetIdentitySeed(tablename);
                 WriteToLog("INFO    Clearing '" + tablename + "' end");
             }
         }
@@ -410,6 +418,7 @@ namespace datamigrator
         private static void WriteToLog(string data)
         {
             writer.WriteLine(DateTime.Now.ToString("HH:mm:ss:ffff") + "  " + data);
+            writer.Flush();
         }
 
         private static SqlConnection OpenConnection(string connString)
