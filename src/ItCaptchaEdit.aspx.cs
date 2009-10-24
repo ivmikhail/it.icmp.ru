@@ -12,7 +12,6 @@ using System.Collections.Generic;
 namespace ITCommunity {
 
     public partial class ItCaptchaEdit : System.Web.UI.Page {
-        private bool isNewQuestion;
         private int id = -1;
         protected void Page_Load(object sender, EventArgs e) {
             SqlDataSource1.ConnectionString = Global.ConnectionString();
@@ -21,8 +20,7 @@ namespace ITCommunity {
                 Response.Redirect("~/ItCaptchaEdit.aspx?id=" + id);
             }
 
-            Int32.TryParse(Request.QueryString["id"], out id);
-            if (id < 0 && !isNewQuestion) {
+            if (!Int32.TryParse(Request.QueryString["id"], out id)) {
                 Response.Redirect("~/itcaptchalist.aspx");
             }
             if (!IsPostBack) {
