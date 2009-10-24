@@ -6,7 +6,7 @@
     </p>    
     <asp:Literal ID="LiteralReferrerUrl" runat="server"/>    
     <p>
-        ≈сли вы считаете что нужно известить администраторов, то можете написать письмо по адресу <a href="mailto:ykt.itcommunity@gmail.com">ykt.itcommunity@gmail.com</a>
+        ≈сли вы считаете что нужно известить администраторов, то можете написать письмо по адресу <a href="mailto:it.icmp.ru@gmail.com">it.icmp.ru@gmail.com</a>
     </p>
 
     <h1>¬от несколько попул€рных причин по€влени€ этой страницы</h1>
