@@ -29,6 +29,7 @@ namespace ITCommunity
                 LoadTopPosters();
                 LoadStat();
                 InitYaknetRating();
+                InitAdminControl();
             }
         }
         private void InitYaknetRating()
@@ -42,6 +43,16 @@ namespace ITCommunity
                 yaknet.Visible = false;
             }
 
+        }
+        private void InitAdminControl()
+        {
+            if (CurrentUser.User.Role == User.Roles.Admin)
+            {
+                AdminControl.Visible = true;
+            } else
+            {
+                AdminControl.Visible = false;
+            }
         }
         private void LoadLinks()
         {

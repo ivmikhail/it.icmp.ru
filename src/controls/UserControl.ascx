@@ -4,7 +4,10 @@
     <ul class="list user-profile">
         <li>
             UserRole - <asp:Literal ID="LabelUserRole" runat="server" Text="userrole" />
-        </li>    
+        </li>   
+        <li>        
+            <a href="editpost.aspx"" title="Добавить свою новость">Добавить пост</a>
+       </li> 
         <li>
             <asp:Literal ID="MessagesLink" runat="server" />
         </li>    
