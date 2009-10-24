@@ -249,7 +249,7 @@ namespace ITCommunity
         /// <returns></returns>
         public bool UserAlreadyVoted(User user)
         {
-            return (0 < (int)Database.PollIsUserVoted(user.Id, this.Id));
+            return ((int)Database.PollIsUserVoted(user.Id, _id) > 0);
         }
 
         /// <summary>

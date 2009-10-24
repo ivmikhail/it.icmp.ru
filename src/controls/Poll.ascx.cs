@@ -21,7 +21,16 @@ namespace ITCommunity
             {
                 current = Poll.GetActive();
                 BindPollControlsAndData();
-                //LinkButtonVote.Enabled = !current.UserAlreadyVoted(CurrentUser.User);
+                bool userAlreadyVote = current.UserAlreadyVoted(CurrentUser.User);
+                if (userAlreadyVote)
+                {
+                    LinkButtonVote.Visible = false;
+                    UserVotedText.Visible = true;
+                } else
+                {
+                    LinkButtonVote.Visible = true;
+                    UserVotedText.Visible = false;
+                }
             }
         }
 
@@ -105,17 +114,17 @@ namespace ITCommunity
             {
                 if (current.UserAlreadyVoted(CurrentUser.User))
                 {
-                    poll_message = "Ваш голос не защитан. Вы уже голосовали.";
+                    poll_message = "Ваш голос не засчитан. Вы уже голосовали.";
                 } else
                 {
                     string vote_ids = GetVotedIds();
                     if (vote_ids == string.Empty)
                     {
-                        poll_message = "Ваш голос не защитан. Нужно выбрать хотя бы один вариант ответа.";
+                        poll_message = "Ваш голос не засчитан. Нужно выбрать хотя бы один вариант ответа.";
                     } else
                     {
                         current.Vote(CurrentUser.User, vote_ids);
-                        poll_message = "Ваш голос защитан. Спасибо за проявленную активность!";
+                        poll_message = "Ваш голос засчитан. Спасибо за проявленную активность!";
                     }
                 }
             }

@@ -66,4 +66,18 @@ Visual Studio-like style based on original C# coloring by Jason Diamond <jason@d
 .xmlDocTag {
     color: rgb(128, 128, 128);
 }
-
+pre
+{
+	overflow:auto;
+}
+/*
+pre code {
+  white-space: pre-wrap;      
+  white-space: -moz-pre-wrap !important;  
+  white-space: -pre-wrap;      
+  white-space: -o-pre-wrap;   
+  word-wrap: break-word;      
+  display: block;
+  background: #F0F0F0;
+}
+*/
