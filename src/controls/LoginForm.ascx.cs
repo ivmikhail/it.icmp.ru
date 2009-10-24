@@ -52,16 +52,17 @@ namespace ITCommunity
             {
                 return;
             }
-            User user = CurrentUser.LogIn(login, pass, remember);
-            if (user.Id > 0)
+            if (CurrentUser.LogIn(login, pass, remember))
             {
-                if (user.Role == User.Roles.Banned)
+                if (CurrentUser.User.Role == User.Roles.Banned)
                 {
                     UserIsBanned.IsValid = false;
                     CurrentUser.LogOut();
                 } else
                 {
                     Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
+                    //string targetUrl = Request.Params["ReturnUrl"] == null ? "default.aspx" : Request.Params["ReturnUrl"];
+                   // Response.Redirect(targetUrl);
                 }
             } else 
             {
