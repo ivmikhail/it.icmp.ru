@@ -28,11 +28,8 @@ a
 }
 a:hover
 {
-	color:#fff;
-	background: #3366cc;
 	text-decoration:none;
 }
-
 p
 {
 	margin:0 10px 10px;
@@ -268,12 +265,12 @@ div#dynamic-content .input-text {
 
 div#dynamic-content .post-category-link:hover
 {
-	color:#008080;
+	background:#008080;
+	color:#fff;
 }
-
 div#dynamic-content .post-title
 {
-	margin: 0 0 35px 0;
+	margin: 0 0 15px 0;
 }
 div#dynamic-content .post-title h2 
 {
@@ -295,14 +292,14 @@ div#dynamic-content .post-text
 
 div#dynamic-content .post-read-link
 {
-	margin: 20px 70px 20px 20px;
+	margin: 10px 40px 10px 10px;
 	text-align:right;
 }
 div#dynamic-content .post-info 
 {
 	border: 1px dotted gray;
 	padding: 5px;
-	margin: 30px 0px 25px 20px;
+	margin: 15px 0px 25px 20px;
 	line-height: 1.3em;
 	width:90%;
 }
@@ -483,6 +480,11 @@ div#poll .note
 	padding:5px 0 0 0;
 	width:70%;
 	font-size: 0.7em;
+}
+.poll_link 
+{
+	padding:10px;
+	width:70%;
 }
 .list
 {
@@ -674,4 +676,8 @@ hr
 .clear 
 {
 	clear:both;
+}
+.bbcode-link 
+{
+	background:#fff;
 }
