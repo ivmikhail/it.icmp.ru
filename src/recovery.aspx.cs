@@ -44,13 +44,13 @@ namespace ITCommunity
             {
                 string identifier = Guid.NewGuid().ToString("N");
                 bool sended = SendEmail.SendRecoveryEmail(user, identifier);
-                string message = "URL для сброса пароля зайемелен на указанную при регистрации электропочту";
+                string message = "URL для сброса пароля отправлен на указанный при регистрации e-mail";
                 if (sended)
                 {
                     RecoveryPass.Add(identifier, user.Id);
                 } else
                 {
-                    message = "Письмо не отправлено. Звезды не так сложились. Попробуйте еще раз. Если не получиться пните одминов.";
+                    message = "Письмо не отправлено. Причина записана в логах (увы вам она не видна). Попробуйте еще раз. Если все равно не работает, обратитесь к администрации.";
                 }
                 SendRecoveryErrors.Text = message;
                 TextBoxLogin.Text = "";
