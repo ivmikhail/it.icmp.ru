@@ -60,9 +60,9 @@ namespace ITCommunity
                     CurrentUser.LogOut();
                 } else
                 {
-                    Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
-                    //string targetUrl = Request.Params["ReturnUrl"] == null ? "default.aspx" : Request.Params["ReturnUrl"];
-                   // Response.Redirect(targetUrl);
+                    //Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
+                    string targetUrl = Request.Params["ReturnUrl"] == null ? "default.aspx" : Request.Params["ReturnUrl"];
+                    Response.Redirect(targetUrl);
                 }
             } else 
             {
