@@ -34,7 +34,7 @@ namespace ITCommunity
                                "______ \n" +
                                "С уважением, робот находящийся в рабстве у держателей сайта " + Global.SiteAddress;
                 SmtpClient client = new SmtpClient(); // используются параметры из web.config
-                client.EnableSsl = true;
+                //client.EnableSsl = true;
                 client.Send(message);
                 Logger.Log.Info("Успешно запрошен email для смены пароля для пользователя " + user.Nick + " с адреса " + CurrentUser.Ip);
             } catch (Exception ex)

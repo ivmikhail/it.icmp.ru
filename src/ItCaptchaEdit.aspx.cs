@@ -17,7 +17,7 @@ namespace ITCommunity {
         protected void Page_Load(object sender, EventArgs e) {
             SqlDataSource1.ConnectionString = Global.ConnectionString();
             if (Request.QueryString["new"] != null) {
-                id = (int)Database.CaptchaQuestionAdd();
+                id = Convert.ToInt32(Database.CaptchaQuestionAdd());
                 Response.Redirect("~/ItCaptchaEdit.aspx?id=" + id);
             }
 
@@ -38,6 +38,7 @@ namespace ITCommunity {
         protected void btnAdd_Click(object sender, EventArgs e) {
             Database.CaptchaAnswerAdd(id);
             GridView1.DataBind();
+            GridView1.EditIndex = 0;
         }
         protected void lnkSaveQuestion_Click(object sender, EventArgs e) {
             if (txtQuestion.Text.Trim().Length > 0) {
