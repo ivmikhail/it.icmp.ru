@@ -52,8 +52,9 @@ namespace ITCommunity
         /// </summary>
         /// <param name="login">Логин, он же nick</param>
         /// <param name="pass">Пароль</param>
-        public static User LogIn(string login, string pass, bool remember)
+        public static bool LogIn(string login, string pass, bool remember)
         {
+            bool result = false;
             User user = User.GetByLogin(login);
             string hashedPass = HashPass(pass, login);
 
@@ -75,8 +76,10 @@ namespace ITCommunity
                 authCookie.Value = FormsAuthentication.Encrypt(newTicket);
                 authCookie.Expires = ticketExpiration;
                 HttpContext.Current.Response.Cookies.Add(authCookie);
+
+                result = true;
             }
-            return user;
+            return result;
         }
 
         /// <summary>
@@ -101,7 +104,6 @@ namespace ITCommunity
         public static void LogOut()
         {
             HttpContext.Current.Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
-            HttpContext.Current.Session.Add("CurrentUser", new User());
             HttpContext.Current.Session.Abandon();
             FormsAuthentication.SignOut();
         }
