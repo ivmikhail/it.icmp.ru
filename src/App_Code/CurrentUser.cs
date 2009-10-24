@@ -72,9 +72,8 @@ namespace ITCommunity
                 }
                 FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, remember, user.Role.ToString(), FormsAuthentication.FormsCookiePath);
 
-                HttpCookie authCookie = FormsAuthentication.GetAuthCookie(login, false);
-                authCookie.Value = FormsAuthentication.Encrypt(newTicket);
-                authCookie.Expires = ticketExpiration;
+                string encryptedTicket = FormsAuthentication.Encrypt(newTicket);
+                HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                 result = true;
