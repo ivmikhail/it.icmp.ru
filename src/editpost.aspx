@@ -160,6 +160,7 @@
         <li style="clear:both;">
             &nbsp;
         </li>
+        <li>Нажимая кнопку добавить, вы соглашаетесь с <a href="http://it.icmp.ru:3000/wiki/itc/Правила_постинга" title="Правила постинга">правилами</a></li>
         <li class="big-button">
             <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click">Добавить</asp:LinkButton>
         </li>
