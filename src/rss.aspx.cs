@@ -37,7 +37,7 @@ namespace ITCommunity
                 RssItem item = new RssItem();
 
                 item.Author = site_domain + " - " + post.Author.Nick;
-                item.Link = new Uri(site_domain + "/posts/view/" + post.Id);
+                item.Link = new Uri(site_domain + "/news.aspx?id=" + post.Id);
                 item.Title = post.Title == "" ? "null" : post.Title;
                 item.Description = post.Description == "" ? post.Text : post.Description;
                 item.PubDate = post.CreateDate.ToUniversalTime();
