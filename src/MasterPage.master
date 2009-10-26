@@ -46,8 +46,8 @@
     <form id="MainForm" runat="server" >
         <div id="container">
             <div id="header">
-                <span class="code-class">IT</span> COMMUNITY;
-                <span class="code-comment">// якутский случай</span>
+                <span class="code-class">IT</span> Community;
+                <span class="code-comment">cout &lt;&lt; "hi";</span>
                 <div id="divider-header">&nbsp;</div>
             </div>
             <div id="wrapper">
