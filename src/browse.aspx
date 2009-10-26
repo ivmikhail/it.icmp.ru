@@ -5,15 +5,15 @@
         <HeaderTemplate>
           <table border="0" width="100%">
             <tr>
-              <th>
-              
-              </th>
-              <th>
-                Название
-              </th>
-              <th>
-                Размер
-              </th>
+              <td>
+              <b>&nbsp;</b>
+              </td>
+              <td>
+                <b>Название</b>
+              </td>
+              <td>
+                <b>Размер</b>
+              </td>
             </tr>
         </HeaderTemplate>
         <ItemTemplate>

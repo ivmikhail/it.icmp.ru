@@ -32,12 +32,13 @@ namespace ITCommunity
                 linkType = LinkType.Files;
             }
             bool isViewRootDir = dir == "";
-
+            lblInfo.Text = isViewRootDir ? "/" : dir;
             dir = BrowseItem.GetRealPathOfLink(linkType, dir);
             if (dirOk(dir))
             {
                 rptFiles.DataSource = BrowseItem.GetList(dir, isViewRootDir);
                 rptFiles.DataBind();
+                
             } else
             {
                 //throw new Exception("Error reading directory: " + dir);
