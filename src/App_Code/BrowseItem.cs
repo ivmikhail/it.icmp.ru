@@ -108,7 +108,7 @@ namespace ITCommunity {
                     String fname = null;
                     String desc = null;
                     int delimeter = -1;
-                    if (line[0] == '\"') {
+                    if (line.Length>2 && line[0] == '\"') {
                         delimeter = line.IndexOf("\"", 1);
                         if (delimeter > 0) {
                             fname = line.Substring(1, delimeter - 1);
@@ -121,7 +121,6 @@ namespace ITCommunity {
                         delimeter = line.IndexOf(" ");
                         if (delimeter > 0) {
                             fname = line.Substring(0, delimeter);
-                            // TODO check for bad desc
                             desc = line.Substring(delimeter + 1);
                         }
                     }
@@ -165,7 +164,7 @@ namespace ITCommunity {
         }
         private static String getLinkOfPath(String path) {
             String link = path.Replace(Global.ConfigStringParam("FilesFolder"), "");
-            return Global.ConfigStringParam("FilesLink") + "/" + link.Replace("\\", "/");
+            return Global.ConfigStringParam("FilesLink") + "/" + link.Replace("\\", "/").Replace("'", "%27");
         }
         public static String GetRealPathOfLink(LinkType linkType, String link) {
             if(!link.StartsWith("/")) {
