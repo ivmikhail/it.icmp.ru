@@ -11,8 +11,9 @@
 <div style="text-align:center;">
     <asp:Literal ID="LiteralPollInfo" runat="server" />
 </div>
-
+<div style="display:block;">
 <h2>
     Кто как голосовал   
 </h2>
 <asp:Literal ID="LiteralVoters" runat="server" />
+</div>

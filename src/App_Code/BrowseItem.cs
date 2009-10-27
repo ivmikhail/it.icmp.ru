@@ -166,13 +166,27 @@ namespace ITCommunity {
             String link = path.Replace(Global.ConfigStringParam("FilesFolder"), "");
             return Global.ConfigStringParam("FilesLink") + "/" + link.Replace("\\", "/").Replace("'", "%27");
         }
+        /// <summary>
+        /// Вычисляет реальный путь к папке на диске
+        /// </summary>
+        /// <param name="linkType"></param>
+        /// <param name="link"></param>
+        /// <returns>null, если путь нехороший</returns>
         public static String GetRealPathOfLink(LinkType linkType, String link) {
             if(!link.StartsWith("/")) {
                 link = "/" + link;
             }
-            String path = Global.ConfigStringParam("FilesFolder") + Enum.GetName(linkType.GetType(), linkType) + link.Replace("/", "\\");
+            String pathBegin = Global.ConfigStringParam("FilesFolder") + Enum.GetName(linkType.GetType(), linkType);
+            String path = pathBegin + link.Replace("/", "\\");
             if(!path.EndsWith("\\")) {
                 path = path + "\\";
+            }
+            path = Path.GetFullPath(path);
+            if (!Directory.Exists(path)) {
+                return null;
+            }
+            if (!path.StartsWith(pathBegin, StringComparison.CurrentCultureIgnoreCase)) {
+                return null;
             }
             return path;
         }

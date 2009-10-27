@@ -34,7 +34,7 @@ namespace ITCommunity
             bool isViewRootDir = dir == "";
             lblInfo.Text = isViewRootDir ? "/" : dir;
             dir = BrowseItem.GetRealPathOfLink(linkType, dir);
-            if (dirOk(dir))
+            if (dir!=null)
             {
                 rptFiles.DataSource = BrowseItem.GetList(dir, isViewRootDir);
                 rptFiles.DataBind();
@@ -45,20 +45,5 @@ namespace ITCommunity
                 return;
             }
         }
-
-        private bool dirOk(string dir)
-        {
-            if (!Directory.Exists(dir))
-            {
-                return false;
-            }
-            dir = Path.GetFullPath(dir);
-            if (dir.StartsWith(Global.ConfigStringParam("FilesFolder")))
-            {
-                return true;
-            }
-            return false;
-        }
-
     }
 }
