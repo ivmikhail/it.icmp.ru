@@ -41,6 +41,7 @@ namespace ITCommunity
                 
             } else
             {
+                lblInfo.Text = "—сылка не найдена, возможно файл был удален или перемещен в другое место.";
                 //throw new Exception("Error reading directory: " + dir);
                 return;
             }

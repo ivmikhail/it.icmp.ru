@@ -132,13 +132,14 @@ namespace ITCommunity {
             return descriptions;
         }
         private static string getLinkOfDir(string dir) {
+
             String link = dir.Replace(Global.ConfigStringParam("FilesFolder"), "").Replace("\\", "/");
             int i = link.IndexOf("/");
             if (i == -1) {
                 i = link.Length;
             }
             String cat = link.Substring(0, i);
-            String d = link.Substring(i);
+            String d = Uri.EscapeDataString(link.Substring(i));
             link = "browse.aspx?dir=" + d + "&cat=" + cat;
             return link;
         }
@@ -164,7 +165,7 @@ namespace ITCommunity {
         }
         private static String getLinkOfPath(String path) {
             String link = path.Replace(Global.ConfigStringParam("FilesFolder"), "");
-            return Global.ConfigStringParam("FilesLink") + "/" + link.Replace("\\", "/").Replace("'", "%27");
+            return Uri.EscapeDataString(Global.ConfigStringParam("FilesLink") + "/" + link.Replace("\\", "/"));
         }
         /// <summary>
         /// Вычисляет реальный путь к папке на диске
@@ -176,6 +177,7 @@ namespace ITCommunity {
             if(!link.StartsWith("/")) {
                 link = "/" + link;
             }
+            link = Uri.UnescapeDataString(link);
             String pathBegin = Global.ConfigStringParam("FilesFolder") + Enum.GetName(linkType.GetType(), linkType);
             String path = pathBegin + link.Replace("/", "\\");
             if(!path.EndsWith("\\")) {
