@@ -20,7 +20,7 @@ namespace ITCommunity
             {
                 if (CurrentUser.isAuth)
                 {
-                    LabelUserLogin.Text = CurrentUser.User.Nick;
+                    LabelUserLogin.Text = Greeting.GetInstance().GetGreeting() + ", " + CurrentUser.User.Nick;
                     LabelUserRole.Text = CurrentUser.User.Role.ToString();
                     MessagesLink.Text = "<a href='mailview.aspx' title='Мои сообщения' >Сообщения(" + Message.GetNewCount(CurrentUser.User.Id) + ")</a>";
                     this.Visible = true;

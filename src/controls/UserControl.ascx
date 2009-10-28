@@ -1,6 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="UserControl.ascx.cs" Inherits="ITCommunity.UserControl" %>
 <div id="user_profile">
-    <h1>Aloha <asp:Literal ID="LabelUserLogin" runat="server" Text="usernick" />!</h1>
+    <h1><asp:Literal ID="LabelUserLogin" runat="server" Text="usernick" />!</h1>
     <ul class="list user-profile">
         <li>
             UserRole - <asp:Literal ID="LabelUserRole" runat="server" Text="userrole" />
