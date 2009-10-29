@@ -28,21 +28,8 @@ namespace ITCommunity
                 LoadLastRegistered();
                 LoadTopPosters();
                 LoadStat();
-                InitYaknetRating();
                 InitAdminControl();
             }
-        }
-        private void InitYaknetRating()
-        {
-            string pageName = System.IO.Path.GetFileName(HttpContext.Current.Request.FilePath);
-            if (pageName == "default.aspx" && GetCatId() == 0 && GetPageNum() == 0)
-            {
-                yaknet.Visible = true;
-            } else
-            {
-                yaknet.Visible = false;
-            }
-
         }
         private void InitAdminControl()
         {
