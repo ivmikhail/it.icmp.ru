@@ -171,6 +171,8 @@ namespace ITCommunity
                     result.Add(menu);
                 }
             }
+            result.Sort(new MenuItemComparator());
+
             return result;
 
             //return GetItemsFromTable(Database.MenuItemsGetByParent(parentId));

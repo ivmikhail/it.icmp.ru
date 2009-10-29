@@ -1,10 +1,10 @@
 using System;
+using System.ComponentModel;
 using System.Web;
 using System.Web.Security;
 using System.Text;
 using System.Web.Services;
 using System.Web.Services.Protocols;
-using System.ComponentModel;
 using System.Collections.Specialized;
 using ITCommunity;
 
@@ -70,10 +70,14 @@ namespace ITCommunity
                 {
                     ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout); // хмм
                 }
-                FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, remember, user.Role.ToString(), FormsAuthentication.FormsCookiePath);
+                // Здесь параметр bool IsPersistent почему то неправильно работает, 
+                // сбрасывается после закрытия окна, ниже куке устанавливаю отдельно expired date
+                FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, true, user.Role.ToString(), FormsAuthentication.FormsCookiePath);
 
                 string encryptedTicket = FormsAuthentication.Encrypt(newTicket);
                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                
+                authCookie.Expires = ticketExpiration;
                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                 result = true;
@@ -148,14 +152,17 @@ namespace ITCommunity
         {
 
             User user = new User();
-            HttpCookie authCookie = FormsAuthentication.GetAuthCookie(HttpContext.Current.User.Identity.Name, false);
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
-            if (ticket.Expired)
+            HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie != null)
             {
-                LogOut();
-            } else
-            {
-                user = User.GetByLogin(ticket.Name);
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+                if (ticket.Expired)
+                {
+                    LogOut();
+                } else
+                {
+                    user = User.GetByLogin(ticket.Name);
+                }
             }
             return user;
         }

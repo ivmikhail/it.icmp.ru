@@ -28,7 +28,7 @@ namespace ITCommunity
             } catch (ArgumentException ex)
             {
                 //Debug.Print(ex.Message);
-                Logger.Log.Info("Неправильный queryString при обращении к браузеру файлов, пользователь - " + CurrentUser.User.Nick, ex);
+                Logger.Log.Info("Неправильный queryString при обращении к браузеру файлов, пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + ")", ex);
                 linkType = LinkType.Files;
             }
             bool isViewRootDir = dir == "";
@@ -41,9 +41,10 @@ namespace ITCommunity
                 
             } else
             {
-                lblInfo.Text = "Ссылка не найдена, возможно файл был удален или перемещен в другое место.";
+                Response.Redirect("notfound.aspx");
+                //lblInfo.Text = "Ссылка не найдена, возможно файл был удален или перемещен в другое место.";
                 //throw new Exception("Error reading directory: " + dir);
-                return;
+                // return;
             }
         }
     }
