@@ -53,7 +53,7 @@ namespace ITCommunity
                 }
                 SelectedCategoriesIds.Value += cat.Id;
             }
-            TextBoxTitle.Text = current_post.Title;
+            TextBoxTitle.Text = HttpUtility.HtmlDecode(current_post.Title);
             TextAreaPostText.Text = current_post.Description + current_post.Text;
             TextBoxSource.Text = current_post.Source;
             CheckBoxAttached.Checked = current_post.Attached;
@@ -82,7 +82,7 @@ namespace ITCommunity
             if (errors.Count == 0)
             {
                 editable_post.Categories = cats;
-                editable_post.Title = Server.HtmlEncode(TextBoxTitle.Text);
+                editable_post.Title = HttpUtility.HtmlEncode(TextBoxTitle.Text);
 
                 List<string> post_content = SplitPostContent(TextAreaPostText.Text);
                 editable_post.Description = post_content[0];
@@ -102,7 +102,7 @@ namespace ITCommunity
                     inserted_post = Post.Add(editable_post);
                 }
                 Picture.FixImages(inserted_post);
-                Response.Redirect("default.aspx");
+                Response.Redirect("news.aspx?id=" + inserted_post.Id);
             } else
             {
                 SelectedCategoriesIds.Value = "";
@@ -180,7 +180,7 @@ namespace ITCommunity
         protected void AttachImageButton_Click(object sender, EventArgs e)
         {
             Post post = Post.GetById(GetPostId());
-            if(post.Id < 1)
+            if (post.Id < 1)
             {
                 post.Author = CurrentUser.User;
             }
@@ -193,6 +193,28 @@ namespace ITCommunity
                 UploadImageError.Text = "";
                 UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
             }
+
+            //Сохраняем выбранные категории
+
+            string selectedIds = SelectedCategoriesIds.Value;
+            string selectedCatsNames = "";
+            if (selectedIds != "")
+            {
+                string[] catIds = selectedIds.Split(',');
+                foreach (string stringCatId in catIds)
+                {
+                    int cat_id = -1;
+                    Int32.TryParse(stringCatId, out cat_id); 
+
+                    Category cat = Category.GetById(Convert.ToInt32(cat_id));
+                    if (cat.Id > 0)
+                    {
+                        selectedCatsNames += "<a href='#' id='" + cat.Id + "' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать'>" + cat.Name + "</a> ";
+                    }
+                }
+            }
+            SelectedCategoriesNames.InnerHtml = selectedCatsNames;
+
             AttachImageButton.Focus();
         }
 

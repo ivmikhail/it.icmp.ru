@@ -5,21 +5,19 @@
 <script type="text/javascript">
     window.addEvent('domready', function(){ 
         
+        
         // Вставка загруженного изображения             
 	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
 	                //$('<%= TextAreaPostText.ClientID %>').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+ this.src +"' /></a>", false);  
 	                $('<%= TextAreaPostText.ClientID %>').insertAtCursor("[url=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/url]", false);  
 			    });
-		});		
-		
-	    
-		// Выбор категорий
-		
+		});				
+	    		
 	    var cat_dropdown = $('<%= DropDownListCats.ClientID %>');
 	    var cat_names    = $('<%= SelectedCategoriesNames.ClientID %>'); 
-	    var cat_ids      = $('<%= SelectedCategoriesIds.ClientID %>');
-	    
+	    var cat_ids      = $('<%= SelectedCategoriesIds.ClientID %>');	    
+   
 		cat_dropdown.addEvent('change', function(e) {
 		    var cat_name = cat_dropdown.options[cat_dropdown.selectedIndex].text;
 		    var cat_id = cat_dropdown.options[cat_dropdown.selectedIndex].value;
@@ -81,6 +79,8 @@
         $(el.id).destroy();
     }
     
+
+    
 </script>
 <div id="add_post">
     <ul class="list">
@@ -91,9 +91,6 @@
                 <asp:DropDownList ID="DropDownListCats" runat="server" CssClass="input-text"/>
             </label>
             <h3>Категории данной новости</h3>
-            <p class="note">                   
-                Категории выбирайте в последнюю очередь(состояние не сохраняется)
-            </p>
             <div id="SelectedCategoriesNames" runat="server">
                 <asp:Literal ID="CatNamesLiteral" runat="server"/>
             </div>            
