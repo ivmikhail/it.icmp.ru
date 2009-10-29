@@ -221,7 +221,7 @@
                 <br />
                 <script language="JavaScript" type="text/javascript">
                   var url = document.location;
-                  if (url == "http://it.icmp.ru/" || url == "http://it.icmp.ru/default.aspx") {
+                  if (url == "http://it.icmp.ru/" || url == "http://it.icmp.ru/default.aspx" || url=='http://it.icmp.ru/default.aspx?cat=0') {
                       document.write("<a href='http://www.ykt.ru/yaknet/default.asp'  title='Перейти в рейтинговую систему'>" +
                         "<img src='http://www.ykt.ru/yaknet/image.asp?id=IT_community' alt='Рейтинг Ykt.Ru' border='0' width='50' height='30'></a>");
                   }
