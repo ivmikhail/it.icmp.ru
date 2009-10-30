@@ -35,7 +35,7 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <div class="comment-content">
+                            <div id="comment-<%# Eval("id")%>" class="comment-content">
                                 <p>
                                     <%# Eval("textformatted")%>
                                 </p> 
