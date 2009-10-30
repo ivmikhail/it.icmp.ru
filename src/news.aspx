@@ -29,7 +29,7 @@
         
         <div id="comments" class="post-comments">
             <h2>Комментарии(<asp:Literal ID="comments_count" runat="server" />)</h2>
-                <asp:Repeater ID="RepeaterComments" runat="server" >
+                <asp:Repeater ID="RepeaterComments" runat="server" OnItemCommand="RepeaterComments_ItemCommand" OnItemDataBound="RepeaterComments_ItemDataBound" >
                     <HeaderTemplate>                        
                         <ul id="comments-list" class="list">
                     </HeaderTemplate>
@@ -41,7 +41,13 @@
                                 </p> 
                             </div>
                             <div class="comment-info">  
-                                <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="post-author-link"><%# Eval("author.nick")%></a>
+                                <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / 
+                                <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="post-author-link">
+                                    <%# Eval("author.nick")%>
+                                </a> 
+                                &nbsp;
+                                &nbsp;
+                                <asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") %>' ID="DeleteComment" runat="server" Text="удалить" CommandName="delete" />
                             </div>   
                        <li>
                     </ItemTemplate>
