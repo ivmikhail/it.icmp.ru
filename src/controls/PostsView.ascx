@@ -27,16 +27,14 @@
                     <div class="post-desc">
                         <%# (Eval("descriptionformatted").ToString() == "") ? Eval("textformatted") : Eval("descriptionformatted") %>                        
                     </div>
-                    <div class="post-read-link">
-                        <a href='news.aspx?id=<%# Eval("id")%>#cut'>Читать далее &rarr;</a>
-                    </div>
                     <div class="clear"></div>                    
                     <div class="post-info">
                         <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> /                      
                         <%# Eval("favoritesaction") %> /
                         <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение автору" class="post-author-link"><%# Eval("author.nick")%></a> /
                         просмотров: <%# Eval("views")%> /
-                        <a href='news.aspx?id=<%# Eval("id")%>#comments' title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a>
+                        <a href='news.aspx?id=<%# Eval("id")%>#comments' title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a> /
+                        <a href='news.aspx?id=<%# Eval("id")%>#cut' title="Читать далее">подробнее...</a>
                     </div>
                 </div>
             </li>

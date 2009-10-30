@@ -26,6 +26,20 @@ namespace ITCommunity
                 post.UpdateViews();
             }
         }
+        /*
+        private void CheckForDelComment()
+        {
+            if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin)
+            {
+                int delCommentId = GetDelCommentId();
+                if (delCommentId > 0)
+                {
+                    Comment.Delete(delCommentId);
+                    Response.Redirect("news.aspx?id=" + GetPostId() + "#comments");
+                }
+            }
+        }
+         */ 
         private void LoadData()
         {
             LoadPost();
@@ -92,10 +106,16 @@ namespace ITCommunity
             Int32.TryParse(Request.QueryString["id"], out id);
             return id;
         }
+        private int GetDelCommentId()
+        {
+            int id = -1;
+            Int32.TryParse(Request.QueryString["cid"], out id);
+            return id;
+        }
 
         private void LoadComments()
         {
-            List<Comment> comments = Comment.GetByPost(post.Id);
+            List<Comment> comments = Comment.GetByPost(GetPostId());
             RepeaterComments.DataSource = comments;
             RepeaterComments.DataBind();
 
@@ -130,5 +150,29 @@ namespace ITCommunity
             Comment.Add(comm);
             Response.Redirect("news.aspx?id=" + post.Id + "#comments");
         }
-    }
+        protected void RepeaterComments_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "delete")
+            {
+                if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin)
+                {
+                    if (IsPostBack)
+                    {
+                        Comment.Delete(Convert.ToInt32(e.CommandArgument));
+                        Response.Redirect("news.aspx?id=" + GetPostId() + "#comments");
+                    }
+                }
+            }
+        }
+        protected void RepeaterComments_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                if(CurrentUser.User.Role == ITCommunity.User.Roles.Admin) 
+                {
+                    ((LinkButton)e.Item.FindControl("DeleteComment")).Visible = true;
+                }
+            }
+        }
+}
 }
