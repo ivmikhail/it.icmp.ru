@@ -9,7 +9,7 @@
             </li>            
             <li>     
                 пароль       
-                <asp:TextBox ID="TextBoxPass" runat="server" CssClass="short-input" ValidationGroup="ValidateAuthData" TextMode="Password"/>
+                <asp:TextBox ID="TextBoxPass" runat="server" CssClass="short-input" ValidationGroup="ValidateAuthData" TextMode="Password" />
             </li>
             
             <li>   
