@@ -387,7 +387,7 @@ namespace ITCommunity
             cmd.Parameters.Add("@ip", System.Data.SqlDbType.NVarChar, 50);
             cmd.Parameters["@ip"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@ip"].Value = ip;
-            cmd.Parameters.Add("@text", System.Data.SqlDbType.NVarChar, 512);
+            cmd.Parameters.Add("@text", System.Data.SqlDbType.NVarChar, 2048);
             cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
             cmd.Parameters["@text"].Value = text;
             System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
