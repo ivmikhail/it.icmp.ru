@@ -26,20 +26,7 @@ namespace ITCommunity
                 post.UpdateViews();
             }
         }
-        /*
-        private void CheckForDelComment()
-        {
-            if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin)
-            {
-                int delCommentId = GetDelCommentId();
-                if (delCommentId > 0)
-                {
-                    Comment.Delete(delCommentId);
-                    Response.Redirect("news.aspx?id=" + GetPostId() + "#comments");
-                }
-            }
-        }
-         */ 
+
         private void LoadData()
         {
             LoadPost();
@@ -166,6 +153,7 @@ namespace ITCommunity
         }
         protected void RepeaterComments_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+            
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 if(CurrentUser.User.Role == ITCommunity.User.Roles.Admin) 
@@ -173,6 +161,7 @@ namespace ITCommunity
                     ((LinkButton)e.Item.FindControl("DeleteComment")).Visible = true;
                 }
             }
+             
         }
 }
 }
