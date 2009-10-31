@@ -192,7 +192,7 @@ namespace ITCommunity
                                                                                                               new object(), 
                                                                                                               loader, 
                                                                                                               new object[] { count }, 
-                                                                                                              DateTime.Now.AddHours(Global.ConfigDoubleParam("CacheLastComment")));
+                                                                                                              DateTime.Now.AddHours(Global.ConfigDoubleParam("CacheLastCommentPer")));
 
             return last_comments;
         }
@@ -217,6 +217,7 @@ namespace ITCommunity
         public static Comment Add(Comment comment)
         {
             Comment comm = GetCommentFromRow(Database.CommentAdd(comment.Post.Id, comment.Author.Id, comment.Ip, comment.Text));
+            AppCache.Remove(Global.ConfigStringParam("LastCommentsCacheName"));
             return comm;
         }
 

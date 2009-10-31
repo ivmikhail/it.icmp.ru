@@ -36,11 +36,9 @@ namespace ITCommunity
             {
                 lock (@lock)
                 {
-                    if ((value = HttpRuntime.Cache.Get(key)) == null)
-                    {
-                        value = data_loader.DynamicInvoke(loader_params);
-                        HttpRuntime.Cache.Insert(key, value, null, absoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-                    }
+                    value = data_loader.DynamicInvoke(loader_params);
+                    HttpRuntime.Cache.Add(key, value, null, absoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+
                 }
             }
             return value;
