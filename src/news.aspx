@@ -34,21 +34,20 @@
                         <ul id="comments-list" class="list">
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <li>
-                            <div id="comment-<%# Eval("id")%>" class="comment-content">
-                                <p>
-                                    <%# Eval("textformatted")%>
-                                </p> 
-                            </div>
+                        <li id="comment-<%# Eval("id")%>">
                             <div class="comment-info">  
-                                <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / 
                                 <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="post-author-link">
                                     <%# Eval("author.nick")%>
-                                </a> 
-                                &nbsp;
-                                &nbsp;
+                                </a> -
+                                 <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> 
                                 <asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") %>' ID="DeleteComment" runat="server" Text="удалить" CommandName="delete" />
-                            </div>   
+                            </div> 
+   
+                            
+                            <div class="comment-content">
+                                <%# Eval("textformatted")%>
+                            </div>
+
                        <li>
                     </ItemTemplate>
                     <FooterTemplate>

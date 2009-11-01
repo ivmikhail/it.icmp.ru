@@ -16,6 +16,7 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            TextBoxPass.Attributes.Add("onKeyPress", "javascript:if (event.keyCode == 13) __doPostBack('" + LogInButton.UniqueID + "','')");
             if (!IsPostBack)
             {
                 if (CurrentUser.isAuth)
