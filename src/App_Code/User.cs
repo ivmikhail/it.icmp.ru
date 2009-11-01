@@ -20,7 +20,7 @@ namespace ITCommunity
         //делегат метода загрузки посл. зарегистр. юзеров из базы, нужен дл€ организации кешировани€
         private delegate object TopPostersLoader(int count);
         //делегат метода загрузки статистики юзеров из базы, нужен дл€ организации кешировани€
-        private delegate object UsersStatLoader(); 
+        private delegate object UsersStatLoader();
 
         private int _id;
         private string _pass;
@@ -183,7 +183,18 @@ namespace ITCommunity
         /// <param name="userId">»дентификатор</param>
         public static User GetById(int userId)
         {
-            return GetUserFromRow(Database.UserGetById(userId));
+            User usr = null;
+            GetUsersList().TryGetValue(userId, out usr);
+            if (usr == null)
+            {
+                usr = GetUserFromRow(Database.UserGetById(userId));
+                if (usr.Id > 0)
+                {
+                    AddUserToList(usr);
+                }
+            }
+
+            return usr;
         }
 
         /// <summary>
@@ -278,7 +289,32 @@ namespace ITCommunity
    
         }
 
-        public static List<KeyValuePair<string, string>> GetStatsFromDB()
+        /// <summary>
+        ///  ешированный список пользователей.
+        /// </summary>
+        /// <returns></returns>
+        private static Dictionary<int, User> GetUsersList()
+        {
+            Dictionary<int, User> users = (Dictionary<int, User>)AppCache.Get(Global.ConfigStringParam("UsersListCacheName"));
+            if (users == null)
+            {
+                users = new Dictionary<int, User>();
+            }
+            return users;
+        }
+
+        /// <summary>
+        /// ƒобавление юзера в список пользователей приложени€.
+        /// </summary>
+        /// <param name="usr"></param>
+        private static void AddUserToList(User usr)
+        {
+            Dictionary<int, User> users = GetUsersList();
+            users.Add(usr.Id, usr);
+            AppCache.Insert(Global.ConfigStringParam("UsersListCacheName"), users, new object(), DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersListCachePer")));
+        }
+
+        private static List<KeyValuePair<string, string>> GetStatsFromDB()
         {
             List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
             DataTable dt = Database.UserGetStat();

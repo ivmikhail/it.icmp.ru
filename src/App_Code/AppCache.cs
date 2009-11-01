@@ -37,11 +37,27 @@ namespace ITCommunity
                 lock (@lock)
                 {
                     value = data_loader.DynamicInvoke(loader_params);
-                    HttpRuntime.Cache.Add(key, value, null, absoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-
+                    HttpRuntime.Cache.Insert(key, value, null, absoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
                 }
             }
             return value;
+        }
+
+        /// <summary>
+        /// Простое получение обьекта из кеша
+        /// </summary>
+        /// <param name="key">ключ</param>
+        /// <returns>null or object</returns>
+        public static object Get(string key)
+        {
+            return HttpRuntime.Cache.Get(key);
+        }
+        public static void Insert(string key, object obj, object @lock, DateTime absoluteExpiration)
+        {
+            lock (@lock)
+            {
+                HttpRuntime.Cache.Insert(key, obj, null, absoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+            }
         }
 
         /// <summary>
