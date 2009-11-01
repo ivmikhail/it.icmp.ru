@@ -127,13 +127,6 @@ h3 {
 	color: #ffffff;
 	text-decoration:none;
 }
-#comments-list li
-{
-}
-.comment-content
-{
-	padding: 10px 0 0 0;
-}
 .topposts-links a
 {
 	color: #3366cc;
@@ -227,7 +220,7 @@ div#dynamic-content
 	margin: 0 15%;
 	padding: 0 5px;
 	width:60%;
-	/*overflow:hidden;*/
+	overflow:hidden;
 }
 
 div#stats
@@ -305,11 +298,18 @@ div#dynamic-content .post-info
 }
 div#dynamic-content .comment-info
 {
-	border: 1px dotted gray;
-	padding: 5px;
-	margin: 10px 0px 25px 20px;
-	line-height: 1.3em;
-	width:50%;
+	/* border: 1px dotted gray; */
+	color:Gray;
+	font-size:0.85em;
+	
+}
+#comments-list li
+{	
+	margin: 0px 0px 50px 0px;
+}
+.comment-content
+{
+	padding: 8px 0 0 0;
 }
 div#dynamic-content .comment-info a:hover
 {

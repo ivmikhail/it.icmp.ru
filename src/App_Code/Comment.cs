@@ -5,6 +5,7 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
+using System.Text.RegularExpressions;
 
 using ITCommunity;
 
@@ -138,6 +139,7 @@ namespace ITCommunity
             get
             {
                 string safely_text = HttpUtility.HtmlEncode(_text);
+                safely_text = Regex.Replace(safely_text, "\\[(.*?)\\](.*?)\\[\\/(.*?)\\]", "$2", RegexOptions.Singleline | RegexOptions.IgnoreCase);
                 return (safely_text.Length > 80) ? safely_text.Substring(0, 80) + " ..." : safely_text;
             }
         }
@@ -162,13 +164,14 @@ namespace ITCommunity
             _text = "";
         }
 
-        /// <summary>
+        /// <summar>y
         /// Удаляем коммент
         /// </summary>
         /// <param name="id">Id коммента</param>
         public static void Delete(int id)
         {            
             Database.CommentDel(id);
+            AppCache.Remove(Global.ConfigStringParam("LastCommentsCacheName")) ;       
         }
 
         /// <summary>
