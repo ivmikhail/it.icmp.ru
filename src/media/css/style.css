@@ -189,7 +189,7 @@ div#header:hover
 div#header
 {
 	font: 100% Monospace, Lucida Console;
-	padding: 4% 0 1.5% 0;
+	padding: 10px 0 1.5% 0;
 	text-align:center;
 	font-size:3.5em;	
 	font-weight:bold;
