@@ -16,30 +16,38 @@ namespace datamigrator
 {
     class Program
     {
-        private static StreamWriter writer = new StreamWriter("itcommunity-migrate.log", false);
+        private static StreamWriter writer = new StreamWriter("itcommunity-migrate-1.log", false);
         private static SqlConnection targetConn;
         private static SqlConnection sourceConn;
         private static List<string> notValidUsers = new List<string>();
         
         static void Main(string[] args)
         {
-            string sourceConnString = "Data Source=127.0.0.1;Initial Catalog=IT;Persist Security Info=True;User ID=IT;Password=nhfv,kth;persist security info=False;Connection Timeout=30;";
-            string targetConnString = "Data Source=localhost;Initial Catalog=it2;Persist Security Info=True;User ID=it2;Password=dctbltngjgkfye;persist security info=False;Connection Timeout=30;";
+            //string sourceConnString = "Data Source=127.0.0.1;Initial Catalog=IT;Persist Security Info=True;User ID=IT;Password=nhfv,kth;persist security info=False;Connection Timeout=30;";
+            //string targetConnString = "Data Source=localhost;Initial Catalog=it2;Persist Security Info=True;User ID=it2;Password=dctbltngjgkfye;persist security info=False;Connection Timeout=30;";
 
-            //string sourceConnString = "Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
-            //string targetConnString = "Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+            string sourceConnString = "Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+            string targetConnString = "Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
 
             targetConn = OpenConnection(targetConnString);
             sourceConn = OpenConnection(sourceConnString);
 
             WriteToLog("INFO    Ready, steady, GO!!!1");
 
-            ClearTargetDB();
-           MoveCategories();
-           MoveUsers();
-           MovePosts();
-           MovePostComments();
-           UpdateNotValidLogins();
+            //ClearTargetDB();
+            //MoveCategories();
+            //MoveUsers();
+            //MovePosts();
+            //MovePostComments();
+            //UpdateNotValidLogins();
+
+            //Перенос блокнота и избранного
+            WriteToLog("INFO    Clearing target tables start...");
+            ClearTargetTables(new string[] { "notes", "favorites" });
+            WriteToLog("INFO    Clearing target tables end");
+
+            MoveNotepad();
+            MoveFavorites();
 
             writer.Flush();
             writer.Close();
@@ -78,6 +86,54 @@ namespace datamigrator
             WriteToLog("INFO    Clearing target tables end");
         }
 
+        private static void MoveNotepad()
+        {
+
+            WriteToLog("INFO    data migrating 'tbl_notepad -> notes' start...");
+
+            DataTable sourceTable = GetSourceTable("tbl_notepad");
+
+            for (int i = 0; i < sourceTable.Rows.Count; i++)
+            {
+                string author_login = sourceTable.Rows[i]["username"].ToString();
+                int author_id = ExecuteScalar("select id from users where UPPER(nick) = UPPER('" + author_login + "')", targetConn);
+
+                if (author_id > 0)
+                {
+                    SqlCommand cmd = new SqlCommand(
+                    "SET IDENTITY_INSERT notes on;insert into notes(id,title,text,cdate,user_id) values(@id,@title,@text,@cdate,@user_id)", targetConn);
+
+                    string label = HttpUtility.HtmlEncode(sourceTable.Rows[i]["label"].ToString());
+                    string body = HttpUtility.HtmlEncode(sourceTable.Rows[i]["body"].ToString());
+
+                    SqlParameter id = cmd.Parameters.Add("@id", SqlDbType.Int);
+                    id.Value = Convert.ToInt32(sourceTable.Rows[i]["id"].ToString());
+
+                    SqlParameter title = cmd.Parameters.Add("@title", SqlDbType.NVarChar);
+                    title.Value = label.Length > 256 ? label.Substring(0, 256) : label ;
+
+                    SqlParameter text = cmd.Parameters.Add("@text", SqlDbType.NVarChar);
+                    text.Value = body.Length > 1024 ? body.Substring(0, 1024) : body;
+
+                    SqlParameter cdate = cmd.Parameters.Add("@cdate", SqlDbType.DateTime);
+                    cdate.Value = Convert.ToDateTime(sourceTable.Rows[i]["day_time"].ToString());
+
+                    SqlParameter user_id = cmd.Parameters.Add("@user_id", SqlDbType.Int);
+                    user_id.Value = author_id;
+
+                    cmd.ExecuteNonQuery();
+                } else
+                {
+
+                    WriteToLog("WARNING cannot move user notes - " + sourceTable.Rows[i]["username"].ToString());
+
+                }
+            }
+            ExecuteQuery("SET IDENTITY_INSERT notes off", targetConn);
+            ResetIdentitySeed("notes");
+            WriteToLog("INFO    data migrating 'tbl_notepad -> notes' end");
+        }
+
         private static void MoveCategories()
         {
             WriteToLog("INFO    data migrating 'tblNewsType -> categories' start...");
@@ -101,6 +157,49 @@ namespace datamigrator
             ResetIdentitySeed("post_cat");
             WriteToLog("INFO    data migrating 'post_cat' clearing end");
         }
+
+        private static void MoveFavorites()
+        {
+            WriteToLog("INFO    data migrating 'tblNewsFavorite -> favorites' start...");
+
+            DataTable sourceTable = GetSourceTable("tblNewsFavorite");
+
+            for (int i = 0; i < sourceTable.Rows.Count; i++)
+            {
+                string author_login = sourceTable.Rows[i]["username"].ToString();
+                int author_id = ExecuteScalar("select id from users where UPPER(nick) = UPPER('" + author_login + "')", targetConn);
+                int news_id = ExecuteScalar("select id from posts where id = " + sourceTable.Rows[i]["news_id"].ToString() , targetConn);
+                if (author_id > 0 && news_id > 0)
+                {
+                    SqlCommand cmd = new SqlCommand(
+                    "SET IDENTITY_INSERT favorites on;insert into favorites(id,user_id,post_id,cdate) values(@id,@user_id,@post_id,@cdate)", targetConn);
+
+
+                    SqlParameter id = cmd.Parameters.Add("@id", SqlDbType.Int);
+                    id.Value = Convert.ToInt32(sourceTable.Rows[i]["favorite_id"].ToString());
+
+                    SqlParameter user_id = cmd.Parameters.Add("@user_id", SqlDbType.Int);
+                    user_id.Value = author_id;
+
+                    SqlParameter post_id = cmd.Parameters.Add("@post_id", SqlDbType.Int);
+                    post_id.Value = news_id;
+
+                    SqlParameter cdate = cmd.Parameters.Add("@cdate", SqlDbType.DateTime);
+                    cdate.Value = DateTime.Now;
+
+                    cmd.ExecuteNonQuery();
+                } else
+                {
+
+                    WriteToLog("WARNING cannot move user favorites post - " + sourceTable.Rows[i]["username"].ToString());
+
+                }
+            }
+            ExecuteQuery("SET IDENTITY_INSERT favorites off", targetConn);
+            ResetIdentitySeed("notes");
+            WriteToLog("INFO    data migrating 'tblNewsFavorite -> favorites' end");
+        }
+
         private static void MoveUsers()
         {
 

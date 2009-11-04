@@ -157,6 +157,7 @@ namespace ITCommunity
         public void Update()
         {
             Database.UserUpdate(this._id, this._pass, (byte)this._role, this._email);
+            RemoveUserFromList(this._id);
         }
 
         /// <summary>
@@ -313,6 +314,13 @@ namespace ITCommunity
             users.Add(usr.Id, usr);
             AppCache.Insert(Global.ConfigStringParam("UsersListCacheName"), users, new object(), DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersListCachePer")));
         }
+
+        private static void RemoveUserFromList(int userId)
+        {
+            Dictionary<int, User> users = GetUsersList();
+            users.Remove(userId);
+            AppCache.Insert(Global.ConfigStringParam("UsersListCacheName"), users, new object(), DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersListCachePer")));
+         }
 
         private static List<KeyValuePair<string, string>> GetStatsFromDB()
         {
