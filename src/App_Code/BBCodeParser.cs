@@ -116,6 +116,15 @@ namespace ITCommunity
             _formatters.Add(new RegexFormatter(@"\[list=I(?:\s*)\]((.|\n)*?)\[/list(?:\s*)\]", string.Format(sListFormat, "upper-roman"), false));
             _formatters.Add(new RegexFormatter(@"\[list=a(?:\s*)\]((.|\n)*?)\[/list(?:\s*)\]", string.Format(sListFormat, "lower-alpha"), false));
             _formatters.Add(new RegexFormatter(@"\[list=A(?:\s*)\]((.|\n)*?)\[/list(?:\s*)\]", string.Format(sListFormat, "upper-alpha"), false));
+
+            // Video tag formatter test
+            _formatters.Add(new RegexFormatter(@"http://play\.ykt\.ru/video/(\d+)/.+?(?=\s|$)", 
+                @"<embed src='http://play.ykt.ru/player.swf' width='640' height='480' allowscriptaccess='always' allowfullscreen='true' " + 
+                @"flashvars='width=640&height=480&file=http://play.ykt.ru/flvideo/$1" +
+                @".flv&image=http://play.ykt.ru/thumb/$1.jpg" + 
+                @"&displayheight=480&link=http://play.ykt.ru/video/$1&searchbar=false&linkfromdisplay=true' " +
+                @"pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash' />", true));
+            // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
             
         }
         #endregion
