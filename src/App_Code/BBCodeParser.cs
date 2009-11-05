@@ -59,6 +59,30 @@ namespace ITCommunity
                 return data.Replace(_pattern, _replace);
             }
         }
+        private static string abundaEvaluator(Match m) {
+            int videoId;
+            if (!Int32.TryParse(m.Groups[1].Value, out videoId)) {
+                return "";
+            }
+            String hash = Hash.CalculateMD5(m.Groups[1].Value).Substring(11, 20);
+            return "<embed width='452' height='361' quality='high' " 
+                + "bgcolor='#000000' name='main' id='main' allowfullscreen='true' "
+                + "allowscriptaccess='always' src='http://tube.abunda.ru/player/vPlayer.swf" 
+                + "?f=http://tube.abunda.ru/player/vConfig_embed.php?vkey=" 
+                + hash + "' "
+                + "type='application/x-shockwave-flash' />";
+        }
+        protected class RegexFuncFormatter : IHtmlFormatter {
+            private Regex _regex;
+            MatchEvaluator _function;
+            public RegexFuncFormatter(string pattern, MatchEvaluator evaluator) {
+                this._regex = new Regex(pattern);
+                this._function = evaluator;
+            }
+            public string Format(string data) {
+                return this._regex.Replace(data, _function);
+            }
+        }
         #endregion
 
         #region BBCode
@@ -118,13 +142,15 @@ namespace ITCommunity
             _formatters.Add(new RegexFormatter(@"\[list=A(?:\s*)\]((.|\n)*?)\[/list(?:\s*)\]", string.Format(sListFormat, "upper-alpha"), false));
 
             // Video tag formatter test
-            _formatters.Add(new RegexFormatter(@"http://play\.ykt\.ru/video/(\d+)/.+?(?=\s|$)", 
+            _formatters.Add(new RegexFormatter(@"\[video]http://play\.ykt\.ru/video/(\d+)/.+?\s*\[/video]", 
                 @"<embed src='http://play.ykt.ru/player.swf' width='640' height='480' allowscriptaccess='always' allowfullscreen='true' " + 
                 @"flashvars='width=640&height=480&file=http://play.ykt.ru/flvideo/$1" +
                 @".flv&image=http://play.ykt.ru/thumb/$1.jpg" + 
                 @"&displayheight=480&link=http://play.ykt.ru/video/$1&searchbar=false&linkfromdisplay=true' " +
                 @"pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash' />", true));
             // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
+            _formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]" 
+                + "", abundaEvaluator));
             
         }
         #endregion
