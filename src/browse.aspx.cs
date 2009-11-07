@@ -28,7 +28,7 @@ namespace ITCommunity
             } catch (ArgumentException ex)
             {
                 //Debug.Print(ex.Message);
-                Logger.Log.Info("Неправильный queryString при обращении к браузеру файлов, пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + ")", ex);
+                Logger.Log.Info("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ queryString РїСЂРё РѕР±СЂР°С‰РµРЅРёРё Рє Р±СЂР°СѓР·РµСЂСѓ С„Р°Р№Р»РѕРІ, РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + ")", ex);
                 linkType = LinkType.Files;
             }
             bool isViewRootDir = dir == "";
@@ -42,7 +42,7 @@ namespace ITCommunity
             } else
             {
                 Response.Redirect("notfound.aspx");
-                //lblInfo.Text = "Ссылка не найдена, возможно файл был удален или перемещен в другое место.";
+                //lblInfo.Text = "РЎСЃС‹Р»РєР° РЅРµ РЅР°Р№РґРµРЅР°, РІРѕР·РјРѕР¶РЅРѕ С„Р°Р№Р» Р±С‹Р» СѓРґР°Р»РµРЅ РёР»Рё РїРµСЂРµРјРµС‰РµРЅ РІ РґСЂСѓРіРѕРµ РјРµСЃС‚Рѕ.";
                 //throw new Exception("Error reading directory: " + dir);
                 // return;
             }

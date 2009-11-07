@@ -34,7 +34,7 @@ namespace ITCommunity
             }
             lblQuestion.Text = ic.Question;
             ddlVariants.Items.Clear();
-            ddlVariants.Items.Add(new ListItem("Выберите вариант", "-1"));
+            ddlVariants.Items.Add(new ListItem("Р’С‹Р±РµСЂРёС‚Рµ РІР°СЂРёР°РЅС‚", "-1"));
             for (int i = 0; i < ic.Variants.Count; i++)
             {
                 ddlVariants.Items.Add(new ListItem(ic.Variants[i], i.ToString()));

@@ -4,7 +4,7 @@ using ITCommunity;
 namespace ITCommunity
 {
     /// <summary>
-    /// Адаптер, храним viewstate в сессии, а не на странице у клиента.
+    /// РђРґР°РїС‚РµСЂ, С…СЂР°РЅРёРј viewstate РІ СЃРµСЃСЃРёРё, Р° РЅРµ РЅР° СЃС‚СЂР°РЅРёС†Рµ Сѓ РєР»РёРµРЅС‚Р°.
     /// </summary>
     public class SessionViewStateAdapter : System.Web.UI.Adapters.PageAdapter
     {

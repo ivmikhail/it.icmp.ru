@@ -23,15 +23,15 @@ namespace ITCommunity
         private int total_records;
         private int records_per_page;
         
-        //TODO: наверное надо очеловечить инициализацию
+        //TODO: РЅР°РІРµСЂРЅРѕРµ РЅР°РґРѕ РѕС‡РµР»РѕРІРµС‡РёС‚СЊ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЋ
         /// <summary>
-        /// Обязательно надо вызвать данный метод
+        /// РћР±СЏР·Р°С‚РµР»СЊРЅРѕ РЅР°РґРѕ РІС‹Р·РІР°С‚СЊ РґР°РЅРЅС‹Р№ РјРµС‚РѕРґ
         /// </summary>
-        /// <param name="page">Страница на которой находится пейджер, например default.aspx</param>
-        /// <param name="page_params">GET параметры страницы на которой находится пейджер, будут прицеплены в конце урла. В формате &cat_id=9&jopa=true</param>
-        /// <param name="query">Параметр в урле, например page(page=1)</param>
-        /// <param name="current_page">Номер текущей страницы</param>
-        /// <param name="total_records">Всего найденных записей</param>
+        /// <param name="page">РЎС‚СЂР°РЅРёС†Р° РЅР° РєРѕС‚РѕСЂРѕР№ РЅР°С…РѕРґРёС‚СЃСЏ РїРµР№РґР¶РµСЂ, РЅР°РїСЂРёРјРµСЂ default.aspx</param>
+        /// <param name="page_params">GET РїР°СЂР°РјРµС‚СЂС‹ СЃС‚СЂР°РЅРёС†С‹ РЅР° РєРѕС‚РѕСЂРѕР№ РЅР°С…РѕРґРёС‚СЃСЏ РїРµР№РґР¶РµСЂ, Р±СѓРґСѓС‚ РїСЂРёС†РµРїР»РµРЅС‹ РІ РєРѕРЅС†Рµ СѓСЂР»Р°. Р’ С„РѕСЂРјР°С‚Рµ &cat_id=9&jopa=true</param>
+        /// <param name="query">РџР°СЂР°РјРµС‚СЂ РІ СѓСЂР»Рµ, РЅР°РїСЂРёРјРµСЂ page(page=1)</param>
+        /// <param name="current_page">РќРѕРјРµСЂ С‚РµРєСѓС‰РµР№ СЃС‚СЂР°РЅРёС†С‹</param>
+        /// <param name="total_records">Р’СЃРµРіРѕ РЅР°Р№РґРµРЅРЅС‹С… Р·Р°РїРёСЃРµР№</param>
         /// <param name="records_per_page"></param>
         public void DataBind(string page, string page_params, string query, int current_page, int total_records, int records_per_page)
         {
@@ -87,7 +87,7 @@ namespace ITCommunity
                     result += "<li class='active'> " + page + "</li>";
                 } else
                 {
-                    result += "<li><a href='" + pager_page + "?" + query_string + "=" + page + page_params + "' title='Страница " + page + "'>" + page + "</a></li>";
+                    result += "<li><a href='" + pager_page + "?" + query_string + "=" + page + page_params + "' title='РЎС‚СЂР°РЅРёС†Р° " + page + "'>" + page + "</a></li>";
                 }
                 start++;
             }
@@ -99,10 +99,10 @@ namespace ITCommunity
             string previous_link;
             if (current_page == 1)
             {
-                previous_link = "<li class='previous-off'>Предыдущая</li>";
+                previous_link = "<li class='previous-off'>РџСЂРµРґС‹РґСѓС‰Р°СЏ</li>";
             } else
             {
-                previous_link = "<li class='previous'><a href='" + pager_page + "?" + query_string + "=" + (current_page - 1) + page_params + "' title='Предыдущая страница'>Предыдущая</a></li>";
+                previous_link = "<li class='previous'><a href='" + pager_page + "?" + query_string + "=" + (current_page - 1) + page_params + "' title='РџСЂРµРґС‹РґСѓС‰Р°СЏ СЃС‚СЂР°РЅРёС†Р°'>РџСЂРµРґС‹РґСѓС‰Р°СЏ</a></li>";
 
             }
             return previous_link;
@@ -113,10 +113,10 @@ namespace ITCommunity
             string next_link;
             if (current_page == total_pages)
             {
-                next_link = "<li class='next-off'>Следующая</li>";
+                next_link = "<li class='next-off'>РЎР»РµРґСѓСЋС‰Р°СЏ</li>";
             } else
             {
-                next_link = "<li class='next'><a href='" + pager_page + "?" + query_string + "=" + (current_page + 1) + page_params + "' title='Следующая страница'>Следующая</a></li>";
+                next_link = "<li class='next'><a href='" + pager_page + "?" + query_string + "=" + (current_page + 1) + page_params + "' title='РЎР»РµРґСѓСЋС‰Р°СЏ СЃС‚СЂР°РЅРёС†Р°'>РЎР»РµРґСѓСЋС‰Р°СЏ</a></li>";
 
             }
             return next_link;

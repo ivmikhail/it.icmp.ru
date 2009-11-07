@@ -72,7 +72,7 @@ namespace ITCommunity {
 
                 BrowseItem bi = new BrowseItem(true, getLinkOfDir(di.Parent.FullName), "..");
                 bi.Icon = UpIcon;
-                bi.Description = "Выше";
+                bi.Description = "Р’С‹С€Рµ";
                 result.Add(bi);
             }
             
@@ -168,11 +168,11 @@ namespace ITCommunity {
             return Uri.EscapeDataString(Global.ConfigStringParam("FilesLink") + "/" + link.Replace("\\", "/"));
         }
         /// <summary>
-        /// Вычисляет реальный путь к папке на диске
+        /// Р’С‹С‡РёСЃР»СЏРµС‚ СЂРµР°Р»СЊРЅС‹Р№ РїСѓС‚СЊ Рє РїР°РїРєРµ РЅР° РґРёСЃРєРµ
         /// </summary>
         /// <param name="linkType"></param>
         /// <param name="link"></param>
-        /// <returns>null, если путь нехороший</returns>
+        /// <returns>null, РµСЃР»Рё РїСѓС‚СЊ РЅРµС…РѕСЂРѕС€РёР№</returns>
         public static String GetRealPathOfLink(LinkType linkType, String link) {
             if(!link.StartsWith("/")) {
                 link = "/" + link;

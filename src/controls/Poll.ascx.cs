@@ -40,10 +40,10 @@ namespace ITCommunity
 
             if (current.IsOpen)
             {
-                LiteralNote.Text = "Это открытый опрос. Другие соучастнеги будут видеть, кто как проголосовал.";
+                LiteralNote.Text = "Р­С‚Рѕ РѕС‚РєСЂС‹С‚С‹Р№ РѕРїСЂРѕСЃ. Р”СЂСѓРіРёРµ СЃРѕСѓС‡Р°СЃС‚РЅРµРіРё Р±СѓРґСѓС‚ РІРёРґРµС‚СЊ, РєС‚Рѕ РєР°Рє РїСЂРѕРіРѕР»РѕСЃРѕРІР°Р».";
             } else
             {
-                LiteralNote.Text = "Это закрытый опрос. Кто как проголосовал легально узнать нельзя.";
+                LiteralNote.Text = "Р­С‚Рѕ Р·Р°РєСЂС‹С‚С‹Р№ РѕРїСЂРѕСЃ. РљС‚Рѕ РєР°Рє РїСЂРѕРіРѕР»РѕСЃРѕРІР°Р» Р»РµРіР°Р»СЊРЅРѕ СѓР·РЅР°С‚СЊ РЅРµР»СЊР·СЏ.";
             }
 
             List<PollAnswer> source = current.Answers;
@@ -108,27 +108,27 @@ namespace ITCommunity
 
         protected void LinkButtonVote_Click(object sender, EventArgs e)
         {
-            string poll_message = "Вы не можете голосовать, чтобы иметь такую возможность зарегистрируйтесь или авторизируйтесь.";
+            string poll_message = "Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ РіРѕР»РѕСЃРѕРІР°С‚СЊ, С‡С‚РѕР±С‹ РёРјРµС‚СЊ С‚Р°РєСѓСЋ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂСѓР№С‚РµСЃСЊ РёР»Рё Р°РІС‚РѕСЂРёР·РёСЂСѓР№С‚РµСЃСЊ.";
             
             if (CurrentUser.isAuth)
             {
                 if (current.UserAlreadyVoted(CurrentUser.User))
                 {
-                    poll_message = "Ваш голос не засчитан. Вы уже голосовали.";
+                    poll_message = "Р’Р°С€ РіРѕР»РѕСЃ РЅРµ Р·Р°СЃС‡РёС‚Р°РЅ. Р’С‹ СѓР¶Рµ РіРѕР»РѕСЃРѕРІР°Р»Рё.";
                 } else
                 {
                     string vote_ids = GetVotedIds();
                     if (vote_ids == string.Empty)
                     {
-                        poll_message = "Ваш голос не засчитан. Нужно выбрать хотя бы один вариант ответа.";
+                        poll_message = "Р’Р°С€ РіРѕР»РѕСЃ РЅРµ Р·Р°СЃС‡РёС‚Р°РЅ. РќСѓР¶РЅРѕ РІС‹Р±СЂР°С‚СЊ С…РѕС‚СЏ Р±С‹ РѕРґРёРЅ РІР°СЂРёР°РЅС‚ РѕС‚РІРµС‚Р°.";
                     } else
                     {
                         current.Vote(CurrentUser.User, vote_ids);
-                        poll_message = "Ваш голос засчитан. Спасибо за проявленную активность!";
+                        poll_message = "Р’Р°С€ РіРѕР»РѕСЃ Р·Р°СЃС‡РёС‚Р°РЅ. РЎРїР°СЃРёР±Рѕ Р·Р° РїСЂРѕСЏРІР»РµРЅРЅСѓСЋ Р°РєС‚РёРІРЅРѕСЃС‚СЊ!";
                     }
                 }
             }
-            Session["poll_message"] = poll_message; // Note: бляха
+            Session["poll_message"] = poll_message; // Note: Р±Р»СЏС…Р°
             Response.Redirect("pollresult.aspx");
         }
 }

@@ -20,7 +20,7 @@ namespace ITCommunity
                 string req_path = Request.QueryString["aspxerrorpath"];
                 if(!string.IsNullOrEmpty(req_path))
                 {
-                    LiteralReferrerUrl.Text = "<p>Запрошенный ресурс - " + Global.SiteAddress + req_path + "</p>" ;
+                    LiteralReferrerUrl.Text = "<p>Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ - " + Global.SiteAddress + req_path + "</p>" ;
                 }
             }
         }

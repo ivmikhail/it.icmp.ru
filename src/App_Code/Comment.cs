@@ -12,12 +12,12 @@ using ITCommunity;
 namespace ITCommunity
 {
     /// <summary>
-    /// Комментарий к посту
+    /// РљРѕРјРјРµРЅС‚Р°СЂРёР№ Рє РїРѕСЃС‚Сѓ
     /// </summary>
     /// 
     public class Comment
     {
-        //делегат метода загрузки последних комментов из базы, нужен для организации кеширования
+        //РґРµР»РµРіР°С‚ РјРµС‚РѕРґР° Р·Р°РіСЂСѓР·РєРё РїРѕСЃР»РµРґРЅРёС… РєРѕРјРјРµРЅС‚РѕРІ РёР· Р±Р°Р·С‹, РЅСѓР¶РµРЅ РґР»СЏ РѕСЂРіР°РЅРёР·Р°С†РёРё РєРµС€РёСЂРѕРІР°РЅРёСЏ
         private delegate object LastCommentsLoader(int count);
 
         private int _id;
@@ -64,8 +64,8 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Пользователь оставивший комментарий, если это сделал не авторизованный человек,
-        /// то возвращается "пустой" пользователь(конструктор по умолчанию)
+        /// РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕСЃС‚Р°РІРёРІС€РёР№ РєРѕРјРјРµРЅС‚Р°СЂРёР№, РµСЃР»Рё СЌС‚Рѕ СЃРґРµР»Р°Р» РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅРЅС‹Р№ С‡РµР»РѕРІРµРє,
+        /// С‚Рѕ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ "РїСѓСЃС‚РѕР№" РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ(РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ)
         /// </summary>
         public User Author
         {
@@ -110,7 +110,7 @@ namespace ITCommunity
                 _ip = value;
             }
         }
-        // "as is", может содержать небезопасный хтмл, bbcode не учитывается.
+        // "as is", РјРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ РЅРµР±РµР·РѕРїР°СЃРЅС‹Р№ С…С‚РјР», bbcode РЅРµ СѓС‡РёС‚С‹РІР°РµС‚СЃСЏ.
         public string Text
         {
             get
@@ -124,7 +124,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// BBCode преобразован в безопасный хтмл, по идее xss не должно быть.
+        /// BBCode РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅ РІ Р±РµР·РѕРїР°СЃРЅС‹Р№ С…С‚РјР», РїРѕ РёРґРµРµ xss РЅРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ.
         /// </summary>
         public string TextFormatted
         {
@@ -165,9 +165,9 @@ namespace ITCommunity
         }
 
         /// <summar>y
-        /// Удаляем коммент
+        /// РЈРґР°Р»СЏРµРј РєРѕРјРјРµРЅС‚
         /// </summary>
-        /// <param name="id">Id коммента</param>
+        /// <param name="id">Id РєРѕРјРјРµРЅС‚Р°</param>
         public static void Delete(int id)
         {            
             Database.CommentDel(id);
@@ -175,18 +175,18 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Забираем комменты поста
+        /// Р—Р°Р±РёСЂР°РµРј РєРѕРјРјРµРЅС‚С‹ РїРѕСЃС‚Р°
         /// </summary>
-        /// <param name="postId">Идентификатор поста</param>
+        /// <param name="postId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕСЃС‚Р°</param>
         public static List<Comment> GetByPost(int postId)
         {
             return GetCommentsFromTable(Database.CommentGetByPost(postId));
         }
 
         /// <summary>
-        /// Забираем последние комментарии из кеша
+        /// Р—Р°Р±РёСЂР°РµРј РїРѕСЃР»РµРґРЅРёРµ РєРѕРјРјРµРЅС‚Р°СЂРёРё РёР· РєРµС€Р°
         /// </summary>
-        /// <param name="count">Кол-во нужных комментов</param>
+        /// <param name="count">РљРѕР»-РІРѕ РЅСѓР¶РЅС‹С… РєРѕРјРјРµРЅС‚РѕРІ</param>
         public static List<KeyValuePair<User, Comment>> GetLasts(int count)
         {
 
@@ -214,9 +214,9 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Добавление комментария в базу. Кол-во комментариев поста обновляется на уровне базы
+        /// Р”РѕР±Р°РІР»РµРЅРёРµ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ РІ Р±Р°Р·Сѓ. РљРѕР»-РІРѕ РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ РїРѕСЃС‚Р° РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ РЅР° СѓСЂРѕРІРЅРµ Р±Р°Р·С‹
         /// </summary>
-        /// <param name="comment">Сам коммент</param>
+        /// <param name="comment">РЎР°Рј РєРѕРјРјРµРЅС‚</param>
         public static Comment Add(Comment comment)
         {
             Comment comm = GetCommentFromRow(Database.CommentAdd(comment.Post.Id, comment.Author.Id, comment.Ip, comment.Text));

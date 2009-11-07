@@ -148,7 +148,7 @@ namespace ITCommunity
                 @".flv&image=http://play.ykt.ru/thumb/$1.jpg" + 
                 @"&displayheight=480&link=http://play.ykt.ru/video/$1&searchbar=false&linkfromdisplay=true' " +
                 @"pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash' />", true));
-            // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
+            // Р”Р»СЏ Abunda РЅР°РґРѕ РІС‹СЃС‡РёС‚С‹РІР°С‚СЊ С…РµС€ MD5, Рє СЃС‡Р°СЃС‚СЊСЋ РґСѓСЂР°РєРё СЃРѕР»СЊ РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°Р»Рё.
             _formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]" 
                 + "", abundaEvaluator));
             

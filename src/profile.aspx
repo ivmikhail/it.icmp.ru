@@ -1,42 +1,42 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="profile.aspx.cs" Inherits="ITCommunity.ProfilePage" Title="Ykt IT Community | Редактирование профиля" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="profile.aspx.cs" Inherits="ITCommunity.ProfilePage" Title="Ykt IT Community | Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РїСЂРѕС„РёР»СЏ" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <div id="profile_panel">
     <div id="profile_data">
         <ul class="list">
             <li>
-                <h2>Изменить email</h2> 
+                <h2>РР·РјРµРЅРёС‚СЊ email</h2> 
                 <p class="note"> 
-                    Не обязательно
+                    РќРµ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ
                 </p>
                 <label> 
                     <asp:TextBox ID="TextBoxEmail" runat="server" Width="100%" MaxLength="512" ValidationGroup="ValidateProfileData"/>
                 </label>
             </li>        
             <li>
-                 <h2>Изменить пароль</h2>   
+                 <h2>РР·РјРµРЅРёС‚СЊ РїР°СЂРѕР»СЊ</h2>   
                  <p class="note"> 
-                    Не обязательно, если ничего не введете, то пароль не изменится
+                    РќРµ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ, РµСЃР»Рё РЅРёС‡РµРіРѕ РЅРµ РІРІРµРґРµС‚Рµ, С‚Рѕ РїР°СЂРѕР»СЊ РЅРµ РёР·РјРµРЅРёС‚СЃСЏ
                  </p>                
-                 <h3>Новый пароль</h3> 
+                 <h3>РќРѕРІС‹Р№ РїР°СЂРѕР»СЊ</h3> 
                  <label>
                     <asp:TextBox ID="TextBoxNewPass" runat="server" Width="100%" TextMode="Password" MaxLength="512" ValidationGroup="ValidateProfileData"/>
                  </label>
-                 <h3>Повторите новый пароль</h3>
+                 <h3>РџРѕРІС‚РѕСЂРёС‚Рµ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ</h3>
                  <label>
                     <asp:TextBox ID="TextBoxNewPassConf" runat="server" Width="100%" TextMode="Password" MaxLength="512" ValidationGroup="ValidateProfileData"/>
                 </label>
             </li>            
             <li>
-                <h2>Введите ваш текущий пароль для продолжения</h2>
+                <h2>Р’РІРµРґРёС‚Рµ РІР°С€ С‚РµРєСѓС‰РёР№ РїР°СЂРѕР»СЊ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ</h2>
                 <p class="note">
-                    Чтобы сохранить изменения введите ваш текущий пароль
+                    Р§С‚РѕР±С‹ СЃРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ РІРІРµРґРёС‚Рµ РІР°С€ С‚РµРєСѓС‰РёР№ РїР°СЂРѕР»СЊ
                 </p>
                 <label>
                     <asp:TextBox ID="TextBoxPassConf" runat="server" Width="100%"  TextMode="Password" MaxLength="512"/>
                 </label>
             </li>
             <li style="text-align:right; padding: 10px 0 0 0;">            
-                <asp:LinkButton ID="EditProfileButton" runat="server" OnClick="EditProfileButton_Click" ValidationGroup="ValidateProfileData">Изменить</asp:LinkButton>
+                <asp:LinkButton ID="EditProfileButton" runat="server" OnClick="EditProfileButton_Click" ValidationGroup="ValidateProfileData">РР·РјРµРЅРёС‚СЊ</asp:LinkButton>
             </li>
          </ul>         
      </div>
@@ -46,27 +46,27 @@
             <asp:RequiredFieldValidator ID="RequiredEmail" 
                                         runat="server" 
                                         ControlToValidate="TextBoxEmail"
-                                        ErrorMessage="Введите e-mail." 
+                                        ErrorMessage="Р’РІРµРґРёС‚Рµ e-mail." 
                                         ValidationGroup="ValidateProfileData"
                                         Display="None"  />
                                         
             <asp:RegularExpressionValidator ID="EmailValidator" 
                                         runat="server" 
                                         ControlToValidate="TextBoxEmail" 
-                                        ErrorMessage="Введите нормальный e-mail." 
+                                        ErrorMessage="Р’РІРµРґРёС‚Рµ РЅРѕСЂРјР°Р»СЊРЅС‹Р№ e-mail." 
                                         Display="None" 
                                         ValidationGroup="ValidateProfileData" 
                                         ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"/>
             <asp:CustomValidator ID="EmailExist" 
                                  runat="server" 
                                  Display="None" 
-                                 ErrorMessage="Пользователь с таким email'ом уже зарегистрирован. Изменения не вступили в силу." 
+                                 ErrorMessage="РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ С‚Р°РєРёРј email'РѕРј СѓР¶Рµ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ. РР·РјРµРЅРµРЅРёСЏ РЅРµ РІСЃС‚СѓРїРёР»Рё РІ СЃРёР»Сѓ." 
                                  ValidationGroup="ValidateProfileData" />
                              
             <asp:CustomValidator ID="OldPassConfirm" 
                                  runat="server" 
                                  Display="None" 
-                                 ErrorMessage="Старый пароль не верен, изменения не вступили в силу." 
+                                 ErrorMessage="РЎС‚Р°СЂС‹Р№ РїР°СЂРѕР»СЊ РЅРµ РІРµСЂРµРЅ, РёР·РјРµРЅРµРЅРёСЏ РЅРµ РІСЃС‚СѓРїРёР»Рё РІ СЃРёР»Сѓ." 
                                  ValidationGroup="ValidateProfileData" />
                                         
             <asp:CompareValidator ID="ConfirmPassword" 
@@ -74,7 +74,7 @@
                                   Display="None"
                                   ControlToCompare="TextBoxNewPass" 
                                   ControlToValidate="TextBoxNewPassConf" 
-                                  ErrorMessage="Пароли не совпадают." 
+                                  ErrorMessage="РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚." 
                                   ValidationGroup="ValidateProfileData" />
    
      </div>     

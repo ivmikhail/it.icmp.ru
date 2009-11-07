@@ -1,26 +1,26 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="LoginForm.ascx.cs" Inherits="ITCommunity.LoginForm" %>
 <div id="auth_panel">
-<h1>Авторизация</h1>
+<h1>РђРІС‚РѕСЂРёР·Р°С†РёСЏ</h1>
     <div id="auth_data">
         <ul class="list loginform link">
             <li>   
-                логин        
+                Р»РѕРіРёРЅ        
                 <asp:TextBox ID="TextBoxLogin" runat="server"  CssClass="short-input" ValidationGroup="ValidateAuthData" />
             </li>            
             <li>     
-                пароль       
+                РїР°СЂРѕР»СЊ       
                 <asp:TextBox ID="TextBoxPass" runat="server" CssClass="short-input" ValidationGroup="ValidateAuthData" TextMode="Password" />
             </li>
             
             <li>   
-                запомнить <asp:CheckBox ID="CheckBoxIsRemember" runat="server" />    
+                Р·Р°РїРѕРјРЅРёС‚СЊ <asp:CheckBox ID="CheckBoxIsRemember" runat="server" />    
             </li>
             <li>            
-                <asp:LinkButton ID="LogInButton" runat="server" OnClick="LogInButton_Click" ValidationGroup="ValidateAuthData">Вход</asp:LinkButton>
-                <a href="register.aspx" title="Присоединиться к этому чудесному сообществу">Регистрация</a>              
+                <asp:LinkButton ID="LogInButton" runat="server" OnClick="LogInButton_Click" ValidationGroup="ValidateAuthData">Р’С…РѕРґ</asp:LinkButton>
+                <a href="register.aspx" title="РџСЂРёСЃРѕРµРґРёРЅРёС‚СЊСЃСЏ Рє СЌС‚РѕРјСѓ С‡СѓРґРµСЃРЅРѕРјСѓ СЃРѕРѕР±С‰РµСЃС‚РІСѓ">Р РµРіРёСЃС‚СЂР°С†РёСЏ</a>              
             </li>
             <li>
-                <a href="recovery.aspx" title="Жми сюда если забыл пароль">Я забыл пароль</a>
+                <a href="recovery.aspx" title="Р–РјРё СЃСЋРґР° РµСЃР»Рё Р·Р°Р±С‹Р» РїР°СЂРѕР»СЊ">РЇ Р·Р°Р±С‹Р» РїР°СЂРѕР»СЊ</a>
             </li>
         </ul>        
      </div>
@@ -28,12 +28,12 @@
         <asp:ValidationSummary ID="ValidationSummaryAuth" runat="server" ValidationGroup="ValidateAuthData" DisplayMode="List"  />
         
         <asp:RequiredFieldValidator ID="RequiredLogin" runat="server" ControlToValidate="TextBoxLogin"
-            ErrorMessage="Введите логин." Display="None" ValidationGroup="ValidateAuthData" />
+            ErrorMessage="Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ." Display="None" ValidationGroup="ValidateAuthData" />
         <asp:RequiredFieldValidator ID="RequiredPass" runat="server" ControlToValidate="TextBoxPass"
-            ErrorMessage="Введите пароль." Display="None" ValidationGroup="ValidateAuthData" />
+            ErrorMessage="Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ." Display="None" ValidationGroup="ValidateAuthData" />
         <asp:CustomValidator ID="WrongAccount" runat="server" Display="None" 
-            ErrorMessage="Неправильный логин/пароль." ValidationGroup="ValidateAuthData" />
+            ErrorMessage="РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ Р»РѕРіРёРЅ/РїР°СЂРѕР»СЊ." ValidationGroup="ValidateAuthData" />
         <asp:CustomValidator ID="UserIsBanned" runat="server" Display="None" 
-            ErrorMessage="Ваш аккаунт забанен. Вы не можете авторизоваться" ValidationGroup="ValidateAuthData" />
+            ErrorMessage="Р’Р°С€ Р°РєРєР°СѓРЅС‚ Р·Р°Р±Р°РЅРµРЅ. Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ Р°РІС‚РѕСЂРёР·РѕРІР°С‚СЊСЃСЏ" ValidationGroup="ValidateAuthData" />
      </div>     
 </div>

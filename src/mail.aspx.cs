@@ -36,11 +36,11 @@ namespace ITCommunity
 
                 if (is_input)
                 {
-                    ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Sender.Nick + "'>Ответить</a>";
-                    LiteralWho.Text = "<h3>От кого</h3>" + mess.Sender.Nick;
+                    ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Sender.Nick + "'>РћС‚РІРµС‚РёС‚СЊ</a>";
+                    LiteralWho.Text = "<h3>РћС‚ РєРѕРіРѕ</h3>" + mess.Sender.Nick;
                 } else
                 {
-                    LiteralWho.Text = "<h2>Получатель</h2>" + mess.Receiver.Nick;  
+                    LiteralWho.Text = "<h2>РџРѕР»СѓС‡Р°С‚РµР»СЊ</h2>" + mess.Receiver.Nick;  
                 }
             } else
             {

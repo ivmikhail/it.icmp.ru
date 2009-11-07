@@ -44,19 +44,19 @@ namespace ITCommunity
             {
                 string identifier = Guid.NewGuid().ToString("N");
                 bool sended = SendEmail.SendRecoveryEmail(user, identifier);
-                string message = "URL для сброса пароля отправлен на указанный при регистрации e-mail";
+                string message = "URL РґР»СЏ СЃР±СЂРѕСЃР° РїР°СЂРѕР»СЏ РѕС‚РїСЂР°РІР»РµРЅ РЅР° СѓРєР°Р·Р°РЅРЅС‹Р№ РїСЂРё СЂРµРіРёСЃС‚СЂР°С†РёРё e-mail";
                 if (sended)
                 {
                     RecoveryPass.Add(identifier, user.Id);
                 } else
                 {
-                    message = "Письмо не отправлено. Причина записана в логах (увы вам она не видна). Попробуйте еще раз. Если все равно не работает, обратитесь к администрации.";
+                    message = "РџРёСЃСЊРјРѕ РЅРµ РѕС‚РїСЂР°РІР»РµРЅРѕ. РџСЂРёС‡РёРЅР° Р·Р°РїРёСЃР°РЅР° РІ Р»РѕРіР°С… (СѓРІС‹ РІР°Рј РѕРЅР° РЅРµ РІРёРґРЅР°). РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·. Р•СЃР»Рё РІСЃРµ СЂР°РІРЅРѕ РЅРµ СЂР°Р±РѕС‚Р°РµС‚, РѕР±СЂР°С‚РёС‚РµСЃСЊ Рє Р°РґРјРёРЅРёСЃС‚СЂР°С†РёРё.";
                 }
                 SendRecoveryErrors.Text = message;
                 TextBoxLogin.Text = "";
             } else
             {
-                SendRecoveryErrors.Text = "Пользователь с таким логином не зарегистрирован.";
+                SendRecoveryErrors.Text = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ С‚Р°РєРёРј Р»РѕРіРёРЅРѕРј РЅРµ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ.";
             }
         }
         protected void LinkButtonChangePass_Click(object sender, EventArgs e)

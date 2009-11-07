@@ -24,7 +24,7 @@ namespace ITCommunity
             {
                 if (receiver.Id == CurrentUser.User.Id)
                 {
-                    Errors.Text = "Зачем отправлять сообщение самому себе? Не хватает общения? У нас этого делать нельзя.";
+                    Errors.Text = "Р—Р°С‡РµРј РѕС‚РїСЂР°РІР»СЏС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ СЃР°РјРѕРјСѓ СЃРµР±Рµ? РќРµ С…РІР°С‚Р°РµС‚ РѕР±С‰РµРЅРёСЏ? РЈ РЅР°СЃ СЌС‚РѕРіРѕ РґРµР»Р°С‚СЊ РЅРµР»СЊР·СЏ.";
                 } else
                 {
                     Message.Send(receiver.Id, CurrentUser.User.Id, Server.HtmlEncode(MessageTitle.Text), Server.HtmlEncode(MessageText.Text));
@@ -32,7 +32,7 @@ namespace ITCommunity
                 }
             } else 
             {
-                Errors.Text = "Пользователь с таким логином у нас не живет.";
+                Errors.Text = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ С‚Р°РєРёРј Р»РѕРіРёРЅРѕРј Сѓ РЅР°СЃ РЅРµ Р¶РёРІРµС‚.";
             }
         }
         private string GetReceiver()

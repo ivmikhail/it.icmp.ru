@@ -6,14 +6,14 @@
     <asp:Literal ID="LiteralPollMessage" runat="server" />
 </div>
 
-<uc:OpenFlashChartControl ID="OpenFlashChartControl" runat="server" EnableCache="false" Width="100%" LoadingMsg="Загрузка данных..."/>
+<uc:OpenFlashChartControl ID="OpenFlashChartControl" runat="server" EnableCache="false" Width="100%" LoadingMsg="Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…..."/>
 
 <div style="text-align:center;">
     <asp:Literal ID="LiteralPollInfo" runat="server" />
 </div>
 <div style="display:block;">
 <h2>
-    Кто как голосовал   
+    РљС‚Рѕ РєР°Рє РіРѕР»РѕСЃРѕРІР°Р»   
 </h2>
 <asp:Literal ID="LiteralVoters" runat="server" />
 </div>

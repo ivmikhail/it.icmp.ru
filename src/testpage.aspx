@@ -1,6 +1,6 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="testpage.aspx.cs" Inherits="ITCommunity.TestPage" Title="Untitled Page" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<h1>ТЕСТОВАЯ СТРАНИЦА ЕПТЫТЬ!(можно выбросить, но пусть будет)</h1>
+<h1>РўР•РЎРўРћР’РђРЇ РЎРўР РђРќРР¦Рђ Р•РџРўР«РўР¬!(РјРѕР¶РЅРѕ РІС‹Р±СЂРѕСЃРёС‚СЊ, РЅРѕ РїСѓСЃС‚СЊ Р±СѓРґРµС‚)</h1>
 <br />
 
 <asp:TextBox ID="Input" runat="server" TextMode="MultiLine" Rows="20" Width="50%">
@@ -14,7 +14,7 @@
 <br />
 <br />
 
-Результат
+Р РµР·СѓР»СЊС‚Р°С‚
 <br />
 <hr />
 

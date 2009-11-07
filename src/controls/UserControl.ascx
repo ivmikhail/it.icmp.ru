@@ -6,22 +6,22 @@
             UserRole - <asp:Literal ID="LabelUserRole" runat="server" Text="userrole" />
         </li>   
         <li>        
-            <a href="editpost.aspx"" title="Добавить свою новость">Добавить пост</a>
+            <a href="editpost.aspx"" title="Р”РѕР±Р°РІРёС‚СЊ СЃРІРѕСЋ РЅРѕРІРѕСЃС‚СЊ">Р”РѕР±Р°РІРёС‚СЊ РїРѕСЃС‚</a>
        </li> 
         <li>
             <asp:Literal ID="MessagesLink" runat="server" />
         </li>    
         <li>            
-            <a href="notepad.aspx" title="Посмотреть записи">Блокнот</a>
+            <a href="notepad.aspx" title="РџРѕСЃРјРѕС‚СЂРµС‚СЊ Р·Р°РїРёСЃРё">Р‘Р»РѕРєРЅРѕС‚</a>
         </li>
         <li>
-            <a href="favorites.aspx" title="Статьи которые я отметил">Избранное</a>
+            <a href="favorites.aspx" title="РЎС‚Р°С‚СЊРё РєРѕС‚РѕСЂС‹Рµ СЏ РѕС‚РјРµС‚РёР»">РР·Р±СЂР°РЅРЅРѕРµ</a>
         </li>    
         <li>
-            <a href="profile.aspx" title="Изменить email или пароль">Профиль</a>
+            <a href="profile.aspx" title="РР·РјРµРЅРёС‚СЊ email РёР»Рё РїР°СЂРѕР»СЊ">РџСЂРѕС„РёР»СЊ</a>
         </li>    
         <li>
-            <asp:LinkButton ID="LinkButtonExit" runat="server" OnClick="LinkButtonExit_Click">Выйти</asp:LinkButton>        
+            <asp:LinkButton ID="LinkButtonExit" runat="server" OnClick="LinkButtonExit_Click">Р’С‹Р№С‚Рё</asp:LinkButton>        
         </li>
     </ul>   
 </div>

@@ -8,14 +8,14 @@
                 <div class="post"> 
                     <div class="post-title">
                         <h2>                     
-                            <asp:Image ID="AttachedImage" runat="server" ImageUrl="../media/img/design/attached.jpg" Visible="false" CssClass="attached-image" AlternateText="Важная новость" />
+                            <asp:Image ID="AttachedImage" runat="server" ImageUrl="../media/img/design/attached.jpg" Visible="false" CssClass="attached-image" AlternateText="Р’Р°Р¶РЅР°СЏ РЅРѕРІРѕСЃС‚СЊ" />
                             <a href='news.aspx?id=<%# Eval("id")%>'><%# Eval("title")%></a>     
                             <asp:Repeater ID="RepeaterPostCategories" runat="server">
                                 <HeaderTemplate>
                                     (
                                 </HeaderTemplate>
                                 <ItemTemplate>
-                                    <a href='default.aspx?cat=<%# Eval("id")%>' title="Посмотреть новости этой категории" class="post-category-link"><%# Eval("name")%></a> 
+                                    <a href='default.aspx?cat=<%# Eval("id")%>' title="РџРѕСЃРјРѕС‚СЂРµС‚СЊ РЅРѕРІРѕСЃС‚Рё СЌС‚РѕР№ РєР°С‚РµРіРѕСЂРёРё" class="post-category-link"><%# Eval("name")%></a> 
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     )
@@ -31,10 +31,10 @@
                     <div class="post-info">
                         <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> /                      
                         <%# Eval("favoritesaction") %> /
-                        <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение автору" class="post-author-link"><%# Eval("author.nick")%></a> /
-                        просмотров: <%# Eval("views")%> /
-                        <a href='news.aspx?id=<%# Eval("id")%>#comments' title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a> /
-                        <a href='news.aspx?id=<%# Eval("id")%>#cut' title="Читать далее">подробнее...</a>
+                        <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="РћС‚РїСЂР°РІРёС‚СЊ Р»РёС‡РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ Р°РІС‚РѕСЂСѓ" class="post-author-link"><%# Eval("author.nick")%></a> /
+                        РїСЂРѕСЃРјРѕС‚СЂРѕРІ: <%# Eval("views")%> /
+                        <a href='news.aspx?id=<%# Eval("id")%>#comments' title="РџРѕСЃРјРѕС‚СЂРµС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёРё" class="post-comments-link">РєРѕРјРјРµРЅС‚Р°СЂРёРё(<%# Eval("commentscount")%>)</a> /
+                        <a href='news.aspx?id=<%# Eval("id")%>#cut' title="Р§РёС‚Р°С‚СЊ РґР°Р»РµРµ">РїРѕРґСЂРѕР±РЅРµРµ...</a>
                     </div>
                 </div>
             </li>
