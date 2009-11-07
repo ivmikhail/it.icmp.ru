@@ -21,7 +21,7 @@ namespace ITCommunity
         {
             LoadData();
             this.Title += post.Title;
-            if (CurrentUser.User != post.Author) // пусть пока будет так TODO: приделать чтобы работало через кукисы
+            if (CurrentUser.User != post.Author) // РїСѓСЃС‚СЊ РїРѕРєР° Р±СѓРґРµС‚ С‚Р°Рє TODO: РїСЂРёРґРµР»Р°С‚СЊ С‡С‚РѕР±С‹ СЂР°Р±РѕС‚Р°Р»Рѕ С‡РµСЂРµР· РєСѓРєРёСЃС‹
             {
                 post.UpdateViews();
             }
@@ -34,7 +34,7 @@ namespace ITCommunity
             LoadComments();
         }
         /// <summary>
-        /// Загрузка автора нового коммента и капчи(если нужно).
+        /// Р—Р°РіСЂСѓР·РєР° Р°РІС‚РѕСЂР° РЅРѕРІРѕРіРѕ РєРѕРјРјРµРЅС‚Р° Рё РєР°РїС‡Рё(РµСЃР»Рё РЅСѓР¶РЅРѕ).
         /// </summary>
         private void LoadCommentData()
         {
@@ -63,9 +63,9 @@ namespace ITCommunity
                 favorite.Text = post.FavoritesAction;
                 if (post.Source != "")
                 {
-                    source.Text = "<a href='" + post.Source + "' target='_blank'>источник</a>";
+                    source.Text = "<a href='" + post.Source + "' target='_blank'>РёСЃС‚РѕС‡РЅРёРє</a>";
                 }
-                author.Text = "<a href='mailsend.aspx?receiver=" + post.Author.Nick + "' title='Отправить личное сообщение автору' class='post-author-link'>" + post.Author.Nick + "</a>";
+                author.Text = "<a href='mailsend.aspx?receiver=" + post.Author.Nick + "' title='РћС‚РїСЂР°РІРёС‚СЊ Р»РёС‡РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ Р°РІС‚РѕСЂСѓ' class='post-author-link'>" + post.Author.Nick + "</a>";
                 views.Text = post.Views.ToString();
 
                 PostManageControls.Post = post;

@@ -5,10 +5,10 @@
         BorderWidth="1" 
         >
         <Columns>
-            <asp:BoundField DataField="text" HeaderText="Âîïðîñ" />
-            <asp:HyperLinkField Text="Èçìåíèòü" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="~/ItCaptchaEdit.aspx?id={0}"/>
+            <asp:BoundField DataField="text" HeaderText="Ð’Ð¾Ð¿Ñ€Ð¾Ñ" />
+            <asp:HyperLinkField Text="Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="~/ItCaptchaEdit.aspx?id={0}"/>
         </Columns>
     </asp:GridView>
-    <asp:HyperLink ID="hplAdd" runat="server" Text="Äîáàâèòü" NavigateUrl="~/ItCaptchaEdit.aspx?new=1" EnableViewState="false" />
+    <asp:HyperLink ID="hplAdd" runat="server" Text="Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ" NavigateUrl="~/ItCaptchaEdit.aspx?new=1" EnableViewState="false" />
 </asp:Content>
 

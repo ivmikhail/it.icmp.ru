@@ -28,13 +28,13 @@
     }
 </script>
 <div id="SendRecoveryLink" runat="server" visible="false">
-    <h1>Сброс пароля</h1>
-    <p>Введите ниже ваш логин, ссылка для сброса пароля будет отправлена на ваш e-mail указанный при регистрации</p>
+    <h1>РЎР±СЂРѕСЃ РїР°СЂРѕР»СЏ</h1>
+    <p>Р’РІРµРґРёС‚Рµ РЅРёР¶Рµ РІР°С€ Р»РѕРіРёРЅ, СЃСЃС‹Р»РєР° РґР»СЏ СЃР±СЂРѕСЃР° РїР°СЂРѕР»СЏ Р±СѓРґРµС‚ РѕС‚РїСЂР°РІР»РµРЅР° РЅР° РІР°С€ e-mail СѓРєР°Р·Р°РЅРЅС‹Р№ РїСЂРё СЂРµРіРёСЃС‚СЂР°С†РёРё</p>
     <br />
     <ul class="list">
         <li>
-            Введите ваш логин <asp:TextBox ID="TextBoxLogin" runat="server" />
-            <asp:LinkButton ID="LinkButtonSendEmail" runat="server" OnClick="LinkButtonSendEmail_Click" OnClientClick="wait4mail();">восстановить</asp:LinkButton>
+            Р’РІРµРґРёС‚Рµ РІР°С€ Р»РѕРіРёРЅ <asp:TextBox ID="TextBoxLogin" runat="server" />
+            <asp:LinkButton ID="LinkButtonSendEmail" runat="server" OnClick="LinkButtonSendEmail_Click" OnClientClick="wait4mail();">РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ</asp:LinkButton>
         </li>
         <li>
             <div class="error-message">
@@ -44,35 +44,35 @@
     </ul>
 </div>
 <div id="RecoveryPassContainer" runat="server" visible="false">
-    <h1>Сброс пароля</h1>
+    <h1>РЎР±СЂРѕСЃ РїР°СЂРѕР»СЏ</h1>
     <ul class="list">
         <li>
-            <h2>Ваш логин</h2>
+            <h2>Р’Р°С€ Р»РѕРіРёРЅ</h2>
             <asp:Literal ID="RecoveryLogin" runat="server" />
         </li>
         <li>
-            <h2>Введите ваш новый пароль</h2>
+            <h2>Р’РІРµРґРёС‚Рµ РІР°С€ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ</h2>
             <asp:TextBox ID="NewPass" runat="server" width="100%" TextMode="Password"/>
         </li>
         <li>
-            <h2>Введите еще раз ваш новый пароль</h2>
+            <h2>Р’РІРµРґРёС‚Рµ РµС‰Рµ СЂР°Р· РІР°С€ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ</h2>
             <asp:TextBox ID="NewPassConfirm" runat="server" width="100%" TextMode="Password"/>
         </li>        
         <li>
-            <asp:LinkButton ID="LinkButtonChangePass" runat="server" OnClick="LinkButtonChangePass_Click" >изменить</asp:LinkButton>
+            <asp:LinkButton ID="LinkButtonChangePass" runat="server" OnClick="LinkButtonChangePass_Click" >РёР·РјРµРЅРёС‚СЊ</asp:LinkButton>
         </li>
         <li>
                 <asp:RequiredFieldValidator ID="RequiredPass" 
                                     runat="server" 
                                     ControlToValidate="NewPass"
-                                    ErrorMessage="Введите пароль." 
+                                    ErrorMessage="Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ." 
                                     Display="None"  />
                 <asp:CompareValidator       ID="ConfirmPassword" 
                                     runat="server" 
                                     Display="None"
                                     ControlToCompare="NewPass" 
                                     ControlToValidate="NewPassConfirm" 
-                                    ErrorMessage="Пароли не совпадают." />
+                                    ErrorMessage="РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚." />
         </li>
     </ul>
 </div>

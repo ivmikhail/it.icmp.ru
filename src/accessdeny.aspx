@@ -1,6 +1,6 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="accessdeny.aspx.cs" Inherits="ITCommunity.AccessDenyPage" Title="Ykt IT Community | доступ запрещен" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="accessdeny.aspx.cs" Inherits="ITCommunity.AccessDenyPage" Title="Ykt IT Community | РґРѕСЃС‚СѓРї Р·Р°РїСЂРµС‰РµРЅ" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<h1 class="error-message">Доступ к данной странице для вас запрещен</h1>
+<h1 class="error-message">Р”РѕСЃС‚СѓРї Рє РґР°РЅРЅРѕР№ СЃС‚СЂР°РЅРёС†Рµ РґР»СЏ РІР°СЃ Р·Р°РїСЂРµС‰РµРЅ</h1>
     <asp:Literal ID="LiteralMessage" runat="server" />
 </asp:Content>
 

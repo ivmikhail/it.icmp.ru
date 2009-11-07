@@ -21,14 +21,14 @@
               <asp:Literal ID="date" runat="server" /> / 
               <asp:Literal ID="favorite" runat="server" /> /
               <asp:Literal ID="author" runat="server" /> / 
-              просмотров:  <asp:Literal ID="views" runat="server" /> / 
+              РїСЂРѕСЃРјРѕС‚СЂРѕРІ:  <asp:Literal ID="views" runat="server" /> / 
               <asp:Literal ID="source" runat="server" />          
         </div>
          
         <uc:PostManage ID="PostManageControls" runat="server"/> 
         
         <div id="comments" class="post-comments">
-            <h2>Комментарии(<asp:Literal ID="comments_count" runat="server" />)</h2>
+            <h2>РљРѕРјРјРµРЅС‚Р°СЂРёРё(<asp:Literal ID="comments_count" runat="server" />)</h2>
                 <asp:Repeater ID="RepeaterComments" runat="server" OnItemCommand="RepeaterComments_ItemCommand" OnItemDataBound="RepeaterComments_ItemDataBound" >
                     <HeaderTemplate>                        
                         <ul id="comments-list" class="list">
@@ -36,11 +36,11 @@
                     <ItemTemplate>
                         <li id="comment-<%# Eval("id")%>">
                             <div class="comment-info">  
-                                <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="post-author-link">
+                                <a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="РћС‚РїСЂР°РІРёС‚СЊ Р»РёС‡РЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ" class="post-author-link">
                                     <%# Eval("author.nick")%>
                                 </a> -
                                  <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> 
-                                <asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") %>' ID="DeleteComment" runat="server" Text="удалить" CommandName="delete" />
+                                <asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") %>' ID="DeleteComment" runat="server" Text="СѓРґР°Р»РёС‚СЊ" CommandName="delete" />
                             </div> 
    
                             
@@ -54,13 +54,13 @@
                         </ul>
                     </FooterTemplate>                
                 </asp:Repeater>            
-            <h2>Написать комментарий. Вы - <asp:Literal ID="author_login" runat="server" /></h2> 
+            <h2>РќР°РїРёСЃР°С‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёР№. Р’С‹ - <asp:Literal ID="author_login" runat="server" /></h2> 
             <uc:TagsInfo ID="TagInfo" runat="server"/>
             <uc:ItCaptcha ID="captcha" runat="server" Visible="false" EnableViewState="true"/>           
             <div id="write-comment">                            
                 <asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="5" Width="100%" MaxLength="512" ValidationGroup="Comment"/>                
-                <asp:RequiredFieldValidator ID="RequiredFieldValidatorComment" runat="server" ErrorMessage="Введите комментарий" ControlToValidate="TextBoxComment" ValidationGroup="Comment"/>
-                <asp:LinkButton ID="LinkButtonAddComment" runat="server" OnClick="LinkButtonAddComment_Click" ValidationGroup="Comment">Добавить</asp:LinkButton>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidatorComment" runat="server" ErrorMessage="Р’РІРµРґРёС‚Рµ РєРѕРјРјРµРЅС‚Р°СЂРёР№" ControlToValidate="TextBoxComment" ValidationGroup="Comment"/>
+                <asp:LinkButton ID="LinkButtonAddComment" runat="server" OnClick="LinkButtonAddComment_Click" ValidationGroup="Comment">Р”РѕР±Р°РІРёС‚СЊ</asp:LinkButton>
             </div>
         </div>
      </div>

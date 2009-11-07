@@ -22,7 +22,7 @@ namespace ITCommunity
                 {
                     LabelUserLogin.Text = Greeting.GetInstance().GetGreeting() + ", " + CurrentUser.User.Nick;
                     LabelUserRole.Text = CurrentUser.User.Role.ToString();
-                    MessagesLink.Text = "<a href='mailview.aspx' title='Мои сообщения' >Сообщения(" + Message.GetNewCount(CurrentUser.User.Id) + ")</a>";
+                    MessagesLink.Text = "<a href='mailview.aspx' title='РњРѕРё СЃРѕРѕР±С‰РµРЅРёСЏ' >РЎРѕРѕР±С‰РµРЅРёСЏ(" + Message.GetNewCount(CurrentUser.User.Id) + ")</a>";
                     this.Visible = true;
                 } else
                 {

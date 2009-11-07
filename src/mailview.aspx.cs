@@ -30,12 +30,12 @@ namespace ITCommunity
             string pageparam = "";
             if (IsOutput())
             {
-                ListTitle.Text = "Исходящие";
+                ListTitle.Text = "РСЃС…РѕРґСЏС‰РёРµ";
                 messages = Message.GetBySender(CurrentUser.User.Id, page, Global.ConfigNumParam("MaxMessageCount"), ref total_records);
                 pageparam = "&a=output";
             } else
             {
-                ListTitle.Text = "Входящие";
+                ListTitle.Text = "Р’С…РѕРґСЏС‰РёРµ";
                 messages = Message.GetByReceiver(CurrentUser.User.Id, page, Global.ConfigNumParam("MaxMessageCount"), ref total_records);
             }
             RepeaterMessages.DataSource = messages;
@@ -52,10 +52,10 @@ namespace ITCommunity
                 Literal who = (Literal)item.FindControl("Who");
                 if (IsOutput())
                 {
-                    who.Text = "получатель: <a href='mailsend.aspx?receiver=" + current.Receiver.Nick + "' title='Отправить сообщение'>" + current.Receiver.Nick + "</a>";
+                    who.Text = "РїРѕР»СѓС‡Р°С‚РµР»СЊ: <a href='mailsend.aspx?receiver=" + current.Receiver.Nick + "' title='РћС‚РїСЂР°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ'>" + current.Receiver.Nick + "</a>";
                 } else
                 {
-                    who.Text = "автор: <a href='mailsend.aspx?receiver=" + current.Sender.Nick + "' title='Отправить сообщение'>" + current.Sender.Nick + "</a>"; 
+                    who.Text = "Р°РІС‚РѕСЂ: <a href='mailsend.aspx?receiver=" + current.Sender.Nick + "' title='РћС‚РїСЂР°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ'>" + current.Sender.Nick + "</a>"; 
                 }
             }
         }

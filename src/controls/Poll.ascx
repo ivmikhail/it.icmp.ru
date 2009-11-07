@@ -7,16 +7,16 @@
     <asp:RadioButtonList ID="RadioButtonListAnswer" runat="server" CellPadding="5" CellSpacing="5"  />
     
     <div class="poll_link">
-        <asp:LinkButton ID="LinkButtonVote" runat="server" OnClick="LinkButtonVote_Click" >голосовать</asp:LinkButton>
-        <asp:Literal ID="UserVotedText" runat="server">Вы уже голосовали</asp:Literal>
+        <asp:LinkButton ID="LinkButtonVote" runat="server" OnClick="LinkButtonVote_Click" >РіРѕР»РѕСЃРѕРІР°С‚СЊ</asp:LinkButton>
+        <asp:Literal ID="UserVotedText" runat="server">Р’С‹ СѓР¶Рµ РіРѕР»РѕСЃРѕРІР°Р»Рё</asp:Literal>
     </div>
     <p class="note">
         <asp:Literal ID="LiteralNote" runat="server"/>
     </p>  
     
     <p class="note">
-        <a href="polls.aspx" title="Посмотреть архив опросов">архив опросов</a>
+        <a href="polls.aspx" title="РџРѕСЃРјРѕС‚СЂРµС‚СЊ Р°СЂС…РёРІ РѕРїСЂРѕСЃРѕРІ">Р°СЂС…РёРІ РѕРїСЂРѕСЃРѕРІ</a>
         |
-        <a href="pollresult.aspx" title="Смотреть результаты активного опроса">результаты</a>
+        <a href="pollresult.aspx" title="РЎРјРѕС‚СЂРµС‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚С‹ Р°РєС‚РёРІРЅРѕРіРѕ РѕРїСЂРѕСЃР°">СЂРµР·СѓР»СЊС‚Р°С‚С‹</a>
     </p>
 </div>

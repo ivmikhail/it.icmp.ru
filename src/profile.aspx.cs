@@ -32,7 +32,7 @@ namespace ITCommunity
                     current.Pass = CurrentUser.HashPass(TextBoxNewPass.Text, current.Nick);
                 }
                 current.Update();
-                LiteralUpdatedMessage.Text = "Изменения вступили в силу.";
+                LiteralUpdatedMessage.Text = "РР·РјРµРЅРµРЅРёСЏ РІСЃС‚СѓРїРёР»Рё РІ СЃРёР»Сѓ.";
             }
         }
 

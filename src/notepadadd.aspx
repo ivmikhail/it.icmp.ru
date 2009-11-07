@@ -1,15 +1,15 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="notepadadd.aspx.cs" Inherits="ITCommunity.Notepadadd" Title="Ykt IT Community | Добавление заметки" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="notepadadd.aspx.cs" Inherits="ITCommunity.Notepadadd" Title="Ykt IT Community | Р”РѕР±Р°РІР»РµРЅРёРµ Р·Р°РјРµС‚РєРё" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<h1>Добавление записи в блокнот</h1>
+<h1>Р”РѕР±Р°РІР»РµРЅРёРµ Р·Р°РїРёСЃРё РІ Р±Р»РѕРєРЅРѕС‚</h1>
     <ul class="list">
         <li>
-            <h2>Заголовок</h2>
+            <h2>Р—Р°РіРѕР»РѕРІРѕРє</h2>
             <label>
                 <asp:TextBox ID="NoteTitle" runat="server" MaxLength="256" Width="100%"/>
             </label>
         </li>
         <li>
-            <h2>Текст</h2>
+            <h2>РўРµРєСЃС‚</h2>
             <label>
                 <asp:TextBox ID="NoteText" runat="server" Rows="15" Width="100%" MaxLength="1000" TextMode="MultiLine"/>
             </label>            
@@ -18,11 +18,11 @@
             <asp:ValidationSummary ID="ValidationSummaryNoteAdd" 
                                    runat="server" 
                                    ValidationGroup="ValidateNoteAdd" 
-                                   HeaderText="Для добавления записи устраните следующие ошибки"/>
+                                   HeaderText="Р”Р»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё СѓСЃС‚СЂР°РЅРёС‚Рµ СЃР»РµРґСѓСЋС‰РёРµ РѕС€РёР±РєРё"/>
                                    
             <asp:RequiredFieldValidator ID="RequiredFieldValidatorTitle" 
                                         runat="server" ControlToValidate="NoteTitle"  
-                                        ErrorMessage="Введите заголовок записи" 
+                                        ErrorMessage="Р’РІРµРґРёС‚Рµ Р·Р°РіРѕР»РѕРІРѕРє Р·Р°РїРёСЃРё" 
                                         ValidationGroup="ValidateNoteAdd"
                                         Display="None" 
                                         />
@@ -30,13 +30,13 @@
             <asp:RequiredFieldValidator ID="RequiredFieldValidatorText" 
                                         runat="server" 
                                         ControlToValidate="NoteText" 
-                                        ErrorMessage="Введите текст записи" 
+                                        ErrorMessage="Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚ Р·Р°РїРёСЃРё" 
                                         ValidationGroup="ValidateNoteAdd"
                                         Display="None" 
                                         />
         </li>
         <li style="text-align:right;">
-            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click" ValidationGroup="ValidateNoteAdd">Добавить</asp:LinkButton>
+            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click" ValidationGroup="ValidateNoteAdd">Р”РѕР±Р°РІРёС‚СЊ</asp:LinkButton>
         </li>
     </ul>
    

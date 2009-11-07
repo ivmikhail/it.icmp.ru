@@ -28,7 +28,7 @@ namespace ITCommunity
         {
             if (!IsPostBack)
             {
-                EditPostLink.Text = "<a href='editpost.aspx?id=" + post.Id + "' title='Отредактировать новость'>редактировать</a>";
+                EditPostLink.Text = "<a href='editpost.aspx?id=" + post.Id + "' title='РћС‚СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РЅРѕРІРѕСЃС‚СЊ'>СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</a>";
                 if (post.IsPostOwner(CurrentUser.User) || CurrentUser.User.Role == ITCommunity.User.Roles.Admin)
                 {
                     PostManager.Visible = true;

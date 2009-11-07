@@ -26,7 +26,7 @@ namespace ITCommunity
         protected void LinkButtonDropCache_Click(object sender, EventArgs e)
         {
             DropCache();
-            LiteralCacheMessage.Text = "Кеш категорий и меню сброшен";
+            LiteralCacheMessage.Text = "РљРµС€ РєР°С‚РµРіРѕСЂРёР№ Рё РјРµРЅСЋ СЃР±СЂРѕС€РµРЅ";
         }
         private void DropCache()
         {

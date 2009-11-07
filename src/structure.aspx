@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="structure.aspx.cs" Inherits="ITCommunity.StructurePage" Title="Ykt IT Community | Управлять категориями/меню" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="structure.aspx.cs" Inherits="ITCommunity.StructurePage" Title="Ykt IT Community | РЈРїСЂР°РІР»СЏС‚СЊ РєР°С‚РµРіРѕСЂРёСЏРјРё/РјРµРЅСЋ" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
 	    window.addEvent('domready', init);
@@ -16,31 +16,31 @@
 	        }
     </script>
     
-    <h2>Список категорий/меню</h2>    
+    <h2>РЎРїРёСЃРѕРє РєР°С‚РµРіРѕСЂРёР№/РјРµРЅСЋ</h2>    
     <p>
-        Внимание после каких-либо изменений, рекомендуется 
-        <asp:LinkButton ID="LinkButtonDropCache" runat="server" OnClick="LinkButtonDropCache_Click">сбросить кеш</asp:LinkButton>
+        Р’РЅРёРјР°РЅРёРµ РїРѕСЃР»Рµ РєР°РєРёС…-Р»РёР±Рѕ РёР·РјРµРЅРµРЅРёР№, СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ 
+        <asp:LinkButton ID="LinkButtonDropCache" runat="server" OnClick="LinkButtonDropCache_Click">СЃР±СЂРѕСЃРёС‚СЊ РєРµС€</asp:LinkButton>
     </p>
     <p class="error-message">
         <asp:Literal ID="LiteralCacheMessage" runat="server"/>
     </p>
         <div id="structure-tabs">
 	        <ul class="tabSet">
-		        <li class="off"><a>Категории</a></li>
-		        <li class="off"><a>Меню</a></li>
+		        <li class="off"><a>РљР°С‚РµРіРѕСЂРёРё</a></li>
+		        <li class="off"><a>РњРµРЅСЋ</a></li>
 	        </ul>
 	    
             <div class="panelSet">
 	            <div class="panel">
 	                <div id="category_add">	                
-	                    <h2>Добавить категорию</h2>
+	                    <h2>Р”РѕР±Р°РІРёС‚СЊ РєР°С‚РµРіРѕСЂРёСЋ</h2>
 	                    <table cellspacing="5px">
 	                        <tr>
 	                            <td>
-	                                <h3>Название</h3>   
+	                                <h3>РќР°Р·РІР°РЅРёРµ</h3>   
 	                            </td>
 	                            <td colspan="2">
-                                    <h3>Сортировка(int)</h3>
+                                    <h3>РЎРѕСЂС‚РёСЂРѕРІРєР°(int)</h3>
                                 </td>
                             </tr>
                             <tr>
@@ -51,7 +51,7 @@
                                     <asp:TextBox ID="TextBoxCatSort" runat="server" Width="50px"/>
                                 </td>
                                 <td>                            
-                                    <asp:LinkButton ID="LinkButtonAddCat" runat="server" OnClick="LinkButtonAddCat_Click">добавить</asp:LinkButton>                                    
+                                    <asp:LinkButton ID="LinkButtonAddCat" runat="server" OnClick="LinkButtonAddCat_Click">РґРѕР±Р°РІРёС‚СЊ</asp:LinkButton>                                    
                                 </td>
                             </tr>
                          </table>
@@ -88,7 +88,7 @@
 	            </div>
 	            <div class="panel">
 	            
-	            	    <h2>Добавить пункт в меню</h2>
+	            	    <h2>Р”РѕР±Р°РІРёС‚СЊ РїСѓРЅРєС‚ РІ РјРµРЅСЋ</h2>
 	                    <table cellspacing="5px">
 	                        <tr>
 	                            <td>
@@ -100,7 +100,7 @@
                                     <asp:TextBox ID="TextBoxMenuName" runat="server"/>
                                 </td>  
 	                            <td>
-                                    <h3>открывать в новом окне(1 или 0)</h3>
+                                    <h3>РѕС‚РєСЂС‹РІР°С‚СЊ РІ РЅРѕРІРѕРј РѕРєРЅРµ(1 РёР»Рё 0)</h3>
                                     <asp:TextBox ID="TextBoxMenuWindow" runat="server"/>
                                 </td>
 	                        </tr>
@@ -114,7 +114,7 @@
                                     <asp:TextBox ID="TextBoxMenuSort" runat="server"/>
                                 </td>
                                 <td>                                
-                                    <asp:LinkButton ID="LinkButtonAddMenu" runat="server" OnClick="LinkButtonAddMenu_Click">добавить</asp:LinkButton>   
+                                    <asp:LinkButton ID="LinkButtonAddMenu" runat="server" OnClick="LinkButtonAddMenu_Click">РґРѕР±Р°РІРёС‚СЊ</asp:LinkButton>   
                                 </td>
                             </tr>
                          </table>

@@ -11,11 +11,11 @@ using ITCommunity;
 namespace ITCommunity
 {
     /// <summary>
-    /// Категории новостей. Вложенность 1.
+    /// РљР°С‚РµРіРѕСЂРёРё РЅРѕРІРѕСЃС‚РµР№. Р’Р»РѕР¶РµРЅРЅРѕСЃС‚СЊ 1.
     /// </summary>
     public class Category
     {
-        //делегат метода загрузки категорий из базы, нужен для организации кеширования
+        //РґРµР»РµРіР°С‚ РјРµС‚РѕРґР° Р·Р°РіСЂСѓР·РєРё РєР°С‚РµРіРѕСЂРёР№ РёР· Р±Р°Р·С‹, РЅСѓР¶РµРЅ РґР»СЏ РѕСЂРіР°РЅРёР·Р°С†РёРё РєРµС€РёСЂРѕРІР°РЅРёСЏ
         private delegate object CategoriesLoader(); 
 
         private int _id;
@@ -55,7 +55,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Изменяем данную категорию, кеш сбрасывается.
+        /// РР·РјРµРЅСЏРµРј РґР°РЅРЅСѓСЋ РєР°С‚РµРіРѕСЂРёСЋ, РєРµС€ СЃР±СЂР°СЃС‹РІР°РµС‚СЃСЏ.
         /// </summary>
         public void Update()
         {
@@ -78,9 +78,9 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Проверяем, есть ли категория с данным айдишником
+        /// РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РєР°С‚РµРіРѕСЂРёСЏ СЃ РґР°РЅРЅС‹Рј Р°Р№РґРёС€РЅРёРєРѕРј
         /// </summary>
-        /// <param name="cat_id">Данный айдишник</param>
+        /// <param name="cat_id">Р”Р°РЅРЅС‹Р№ Р°Р№РґРёС€РЅРёРє</param>
         public static bool IsCategoryExist(int cat_id)
         {
             bool is_exists = false;
@@ -97,9 +97,9 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Берем по идентификатору
+        /// Р‘РµСЂРµРј РїРѕ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂСѓ
         /// </summary>
-        /// <param name="id">Идентификатор категории</param>
+        /// <param name="id">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєР°С‚РµРіРѕСЂРёРё</param>
         public static Category GetById(int id)
         {
             List<Category> cats = GetAll();
@@ -117,7 +117,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Возвращаем все категории в списке из кеша
+        /// Р’РѕР·РІСЂР°С‰Р°РµРј РІСЃРµ РєР°С‚РµРіРѕСЂРёРё РІ СЃРїРёСЃРєРµ РёР· РєРµС€Р°
         /// </summary>
         public static List<Category> GetAll()
         {
@@ -131,31 +131,31 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Получаем категории данной новости
+        /// РџРѕР»СѓС‡Р°РµРј РєР°С‚РµРіРѕСЂРёРё РґР°РЅРЅРѕР№ РЅРѕРІРѕСЃС‚Рё
         /// </summary>
-        /// <param name="postId">Идентификатор новости</param>
-        /// <returns>Список категорий</returns>
+        /// <param name="postId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РЅРѕРІРѕСЃС‚Рё</param>
+        /// <returns>РЎРїРёСЃРѕРє РєР°С‚РµРіРѕСЂРёР№</returns>
         public static List<Category> GetPostCategories(int postId)
         {
-            //NOTE: Узкое место
+            //NOTE: РЈР·РєРѕРµ РјРµСЃС‚Рѕ
             return GetCategoriesFromTable(Database.PostGetCategories(postId));
         }
 
         /// <summary>
-        /// Удаление
+        /// РЈРґР°Р»РµРЅРёРµ
         /// </summary>
-        /// <param name="id">Идентификатор категории</param>
+        /// <param name="id">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєР°С‚РµРіРѕСЂРёРё</param>
         public static void Delete(int id)
         {
-            // Что делать с новостями?
+            // Р§С‚Рѕ РґРµР»Р°С‚СЊ СЃ РЅРѕРІРѕСЃС‚СЏРјРё?
             Database.CategoryDel(id);
             AppCache.Remove(Global.ConfigStringParam("CategoriesCacheName"));
         }
 
         /// <summary>
-        /// Добавление категории в базу(кеш удаляется)
+        /// Р”РѕР±Р°РІР»РµРЅРёРµ РєР°С‚РµРіРѕСЂРёРё РІ Р±Р°Р·Сѓ(РєРµС€ СѓРґР°Р»СЏРµС‚СЃСЏ)
         /// </summary>
-        /// <param name="category">Только что добавленная категория</param>
+        /// <param name="category">РўРѕР»СЊРєРѕ С‡С‚Рѕ РґРѕР±Р°РІР»РµРЅРЅР°СЏ РєР°С‚РµРіРѕСЂРёСЏ</param>
         public static Category Add(Category category)
         {            
             Category cat = GetCategoryFromRow(Database.CategoryAdd(category.Name, category.Sort));

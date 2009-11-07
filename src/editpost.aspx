@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | Добавление новости" EnableViewState="true" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕСЃС‚Рё" EnableViewState="true" %>
 <%@ Register src="~/controls/TagsInfoControl.ascx" tagname="TagsInfo"   tagprefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
@@ -6,10 +6,10 @@
     window.addEvent('domready', function(){ 
         
         
-        // Вставка загруженного изображения             
+        // Р’СЃС‚Р°РІРєР° Р·Р°РіСЂСѓР¶РµРЅРЅРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ             
 	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
-	                //$('<%= TextAreaPostText.ClientID %>').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+ this.src +"' /></a>", false);  
+	                //$('<%= TextAreaPostText.ClientID %>').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='РџРѕСЃРјРѕС‚СЂРµС‚СЊ РєР°СЂС‚РёРЅРєСѓ РІ РѕСЂРёРіРёРЅР°Р»СЊРЅРѕРј СЂР°Р·РјРµСЂРµ'><img src='"+ this.src +"' /></a>", false);  
 	                $('<%= TextAreaPostText.ClientID %>').insertAtCursor("[url=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/url]", false);  
 			    });
 		});				
@@ -31,14 +31,14 @@
 		    {
 		        if(CategoryIsSelected(cat_ids, cat_id))
 		        {		    
-		            alert('Категория уже выбрана');
+		            alert('РљР°С‚РµРіРѕСЂРёСЏ СѓР¶Рµ РІС‹Р±СЂР°РЅР°');
 		        } else {
 		            if(cat_ids.value != "")
 		            {
 		                cat_ids.value += ",";
 		            }		    
 		            cat_ids.value += cat_id;
-                    cat_names.innerHTML += "<a href='#' id='" + cat_id + "' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать'>" + cat_name + "</a> ";
+                    cat_names.innerHTML += "<a href='#' id='" + cat_id + "' onclick='deleteCategory(this);return false;' class='delete-category' title='РЈР±СЂР°С‚СЊ'>" + cat_name + "</a> ";
 		        }
 		    }
 		});		
@@ -85,12 +85,12 @@
 <div id="add_post">
     <ul class="list">
         <li>
-            <h2>Категория</h2>
-            <h3>Выберите категорию(можно несколько)</h3>
+            <h2>РљР°С‚РµРіРѕСЂРёСЏ</h2>
+            <h3>Р’С‹Р±РµСЂРёС‚Рµ РєР°С‚РµРіРѕСЂРёСЋ(РјРѕР¶РЅРѕ РЅРµСЃРєРѕР»СЊРєРѕ)</h3>
             <label>
                 <asp:DropDownList ID="DropDownListCats" runat="server" CssClass="input-text"/>
             </label>
-            <h3>Категории данной новости</h3>
+            <h3>РљР°С‚РµРіРѕСЂРёРё РґР°РЅРЅРѕР№ РЅРѕРІРѕСЃС‚Рё</h3>
             <div id="SelectedCategoriesNames" runat="server">
                 <asp:Literal ID="CatNamesLiteral" runat="server"/>
             </div>            
@@ -99,29 +99,29 @@
         <li>        
             <h2>
                 <label>
-                    Прикреплено <asp:CheckBox ID="CheckBoxAttached" runat="server" Enabled="false"/>
+                    РџСЂРёРєСЂРµРїР»РµРЅРѕ <asp:CheckBox ID="CheckBoxAttached" runat="server" Enabled="false"/>
                 </label>                
             </h2>
             <p class="note">                   
-                Администраторы могу "прикреплять" важные посты. Важный пост всегда виден сверху.
+                РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂС‹ РјРѕРіСѓ "РїСЂРёРєСЂРµРїР»СЏС‚СЊ" РІР°Р¶РЅС‹Рµ РїРѕСЃС‚С‹. Р’Р°Р¶РЅС‹Р№ РїРѕСЃС‚ РІСЃРµРіРґР° РІРёРґРµРЅ СЃРІРµСЂС…Сѓ.
             </p>
         </li>
         <li>
-            <h2>Заголовок</h2>
+            <h2>Р—Р°РіРѕР»РѕРІРѕРє</h2>
             <label>
                 <asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" CssClass="input-text" MaxLength="128" />  
              </label>
         </li>    
         <li>        
-            <h2>Текст новости</h2>  
+            <h2>РўРµРєСЃС‚ РЅРѕРІРѕСЃС‚Рё</h2>  
             <p class="note">                   
-                Описание и текст разделяется разделителем([hr]). Если разделитель не вставите, то на главной появится весь текст новости, иначе только описание.
+                РћРїРёСЃР°РЅРёРµ Рё С‚РµРєСЃС‚ СЂР°Р·РґРµР»СЏРµС‚СЃСЏ СЂР°Р·РґРµР»РёС‚РµР»РµРј([hr]). Р•СЃР»Рё СЂР°Р·РґРµР»РёС‚РµР»СЊ РЅРµ РІСЃС‚Р°РІРёС‚Рµ, С‚Рѕ РЅР° РіР»Р°РІРЅРѕР№ РїРѕСЏРІРёС‚СЃСЏ РІРµСЃСЊ С‚РµРєСЃС‚ РЅРѕРІРѕСЃС‚Рё, РёРЅР°С‡Рµ С‚РѕР»СЊРєРѕ РѕРїРёСЃР°РЅРёРµ.
             </p>
             <uc:TagsInfo ID="TagInfo" runat="server"/>
             <asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" Width="100%" MaxLength="10000" TextMode="MultiLine" />
         </li>        
         <li>
-            <h2>Источник(откуда стырили)</h2>
+            <h2>РСЃС‚РѕС‡РЅРёРє(РѕС‚РєСѓРґР° СЃС‚С‹СЂРёР»Рё)</h2>
             <label>                
                 <asp:TextBox ID="TextBoxSource" runat="server" CssClass="input-text" MaxLength="1024"/> 
             </label>
@@ -132,17 +132,17 @@
             </div>
         </li>
         <li>
-            <h2>Картинки</h2>
+            <h2>РљР°СЂС‚РёРЅРєРё</h2>
             <p class="note">
                <asp:Literal ID="ImageOptions" runat="server"/>
             </p> 
-            <h3>Выберите:</h3>                
+            <h3>Р’С‹Р±РµСЂРёС‚Рµ:</h3>                
             <asp:FileUpload ID="UploadImage" runat="server" />
-            <asp:LinkButton ID="AttachImageButton" runat="server" OnClick="AttachImageButton_Click">Загрузить</asp:LinkButton>
+            <asp:LinkButton ID="AttachImageButton" runat="server" OnClick="AttachImageButton_Click">Р—Р°РіСЂСѓР·РёС‚СЊ</asp:LinkButton>
             
-            <h3>Загруженные:</h3>                     
+            <h3>Р—Р°РіСЂСѓР¶РµРЅРЅС‹Рµ:</h3>                     
             <p class="note">                   
-                Не добавленные в новость картинки будут удалены автоматически. Чтобы добавить картинку в пост кликните на неё.
+                РќРµ РґРѕР±Р°РІР»РµРЅРЅС‹Рµ РІ РЅРѕРІРѕСЃС‚СЊ РєР°СЂС‚РёРЅРєРё Р±СѓРґСѓС‚ СѓРґР°Р»РµРЅС‹ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё. Р§С‚РѕР±С‹ РґРѕР±Р°РІРёС‚СЊ РєР°СЂС‚РёРЅРєСѓ РІ РїРѕСЃС‚ РєР»РёРєРЅРёС‚Рµ РЅР° РЅРµС‘.
             </p>
             <span id="uploadImagesMessage" class="error-message">                
                <asp:Literal ID="UploadImageError" runat="server"/>
@@ -157,9 +157,9 @@
         <li style="clear:both;">
             &nbsp;
         </li>
-        <li>Нажимая кнопку добавить, вы соглашаетесь с <a href="http://it.icmp.ru:3000/wiki/itc/Правила_постинга" title="Правила постинга">правилами</a></li>
+        <li>РќР°Р¶РёРјР°СЏ РєРЅРѕРїРєСѓ РґРѕР±Р°РІРёС‚СЊ, РІС‹ СЃРѕРіР»Р°С€Р°РµС‚РµСЃСЊ СЃ <a href="http://it.icmp.ru:3000/wiki/itc/РџСЂР°РІРёР»Р°_РїРѕСЃС‚РёРЅРіР°" title="РџСЂР°РІРёР»Р° РїРѕСЃС‚РёРЅРіР°">РїСЂР°РІРёР»Р°РјРё</a></li>
         <li class="big-button">
-            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click">Добавить</asp:LinkButton>
+            <asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click">Р”РѕР±Р°РІРёС‚СЊ</asp:LinkButton>
         </li>
     </ul>
 </div>

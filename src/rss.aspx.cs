@@ -46,7 +46,7 @@ namespace ITCommunity
             }
 
             channel.Title = "Ykt IT Community RSS channel";
-            channel.Description = "RSS лента новостей якутского сообщества ИТ-специалистов - " + site_domain;
+            channel.Description = "RSS Р»РµРЅС‚Р° РЅРѕРІРѕСЃС‚РµР№ СЏРєСѓС‚СЃРєРѕРіРѕ СЃРѕРѕР±С‰РµСЃС‚РІР° РРў-СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ - " + site_domain;
             channel.Link = new Uri(site_domain);
             channel.LastBuildDate = channel.Items.LatestPubDate();
             channel.Copyright = "Ykt IT Community (c) 2007 - " + DateTime.Now.Year;

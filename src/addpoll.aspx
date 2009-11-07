@@ -1,37 +1,37 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="addpoll.aspx.cs" Inherits="ITCommunity.Addpoll" Title="Ykt IT Community | Добавление опроса" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="addpoll.aspx.cs" Inherits="ITCommunity.Addpoll" Title="Ykt IT Community | Р”РѕР±Р°РІР»РµРЅРёРµ РѕРїСЂРѕСЃР°" %>
 
 <%@ Register Src="~/controls/Pager.ascx"     TagName="Pager" TagPrefix="uc" %>
 <%@ Register Src="~/controls/PollsView.ascx" TagName="PollsView" TagPrefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<h1>Добавление нового опроса</h1>
+<h1>Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ РѕРїСЂРѕСЃР°</h1>
     <div id="newpoll">
         <ul class="list">
             <li>
-                <h2>Вопрос(топик)</h2>
+                <h2>Р’РѕРїСЂРѕСЃ(С‚РѕРїРёРє)</h2>
                 <asp:TextBox ID="TextBoxTopic" runat="server" Width="100%"/>
             </li>
             
             <li>
-                <h2>Варианты ответов(один вариант на одной строке)</h2>
+                <h2>Р’Р°СЂРёР°РЅС‚С‹ РѕС‚РІРµС‚РѕРІ(РѕРґРёРЅ РІР°СЂРёР°РЅС‚ РЅР° РѕРґРЅРѕР№ СЃС‚СЂРѕРєРµ)</h2>
                 <asp:TextBox ID="TextBoxAnswers" runat="server" TextMode="MultiLine" Rows="10" Width="100%" />
             </li>            
             <li>            
-                <h2>Сколько вариантов можно выбрать</h2>
+                <h2>РЎРєРѕР»СЊРєРѕ РІР°СЂРёР°РЅС‚РѕРІ РјРѕР¶РЅРѕ РІС‹Р±СЂР°С‚СЊ</h2>
                 <asp:RadioButtonList ID="RadioButtonListMultiselect" runat="server" RepeatDirection="horizontal">
-                    <asp:ListItem Selected="True" Text="только один" Value="0"/>
-                    <asp:ListItem Text="несколько" Value="1"/>
+                    <asp:ListItem Selected="True" Text="С‚РѕР»СЊРєРѕ РѕРґРёРЅ" Value="0"/>
+                    <asp:ListItem Text="РЅРµСЃРєРѕР»СЊРєРѕ" Value="1"/>
                 </asp:RadioButtonList>     
             </li>
             <li>            
-                <h2>Тип опроса</h2>
+                <h2>РўРёРї РѕРїСЂРѕСЃР°</h2>
                 <asp:RadioButtonList ID="RadioButtonListIsOpen" runat="server" RepeatDirection="horizontal">
-                    <asp:ListItem Selected="True" Text="закрытый" Value="0"/>
-                    <asp:ListItem Text="открытый" Value="1"/>
+                    <asp:ListItem Selected="True" Text="Р·Р°РєСЂС‹С‚С‹Р№" Value="0"/>
+                    <asp:ListItem Text="РѕС‚РєСЂС‹С‚С‹Р№" Value="1"/>
                 </asp:RadioButtonList>       
             </li>
             <li class="big-button">            
-                <asp:LinkButton ID="LinkButtonAddPoll" runat="server" OnClick="LinkButtonAddPoll_Click">добавить</asp:LinkButton>
+                <asp:LinkButton ID="LinkButtonAddPoll" runat="server" OnClick="LinkButtonAddPoll_Click">РґРѕР±Р°РІРёС‚СЊ</asp:LinkButton>
             </li>
             <li>
             <asp:ValidationSummary ID="ValidationSummaryAddpoll" runat="server" ValidationGroup="ValidatePoll" DisplayMode="List"  />
@@ -39,20 +39,20 @@
                 <asp:RequiredFieldValidator     ID="RequiredTopic" 
                                                 runat="server" 
                                                 ControlToValidate="TextBoxTopic"
-                                                ErrorMessage="Введите название опроса." 
+                                                ErrorMessage="Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РѕРїСЂРѕСЃР°." 
                                                 Display="None" 
                                                 ValidationGroup="ValidatePoll" />
                                                 
                  <asp:RequiredFieldValidator    ID="RequiredAnswers" 
                                                 runat="server" 
                                                 ControlToValidate="TextBoxAnswers"
-                                                ErrorMessage="Введите варианты ответа." 
+                                                ErrorMessage="Р’РІРµРґРёС‚Рµ РІР°СЂРёР°РЅС‚С‹ РѕС‚РІРµС‚Р°." 
                                                 Display="None" 
                                                 ValidationGroup="ValidatePoll" />
             </li>
         </ul>
     </div>
-<h1>Архив опросов</h1>
+<h1>РђСЂС…РёРІ РѕРїСЂРѕСЃРѕРІ</h1>
     <div id="polls-container">
         <uc:PollsView id="PollsView" runat="server" />
     </div>

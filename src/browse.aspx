@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="browse.aspx.cs" Inherits="ITCommunity.Browse" Title="Ykt IT Community | Файлы" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="browse.aspx.cs" Inherits="ITCommunity.Browse" Title="Ykt IT Community | Р¤Р°Р№Р»С‹" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:Label ID="lblInfo" runat="Server" />
     <asp:Repeater ID="rptFiles" runat="Server" >
@@ -9,10 +9,10 @@
               <b>&nbsp;</b>
               </td>
               <td>
-                <b>Название</b>
+                <b>РќР°Р·РІР°РЅРёРµ</b>
               </td>
               <td>
-                <b>Размер</b>
+                <b>Р Р°Р·РјРµСЂ</b>
               </td>
             </tr>
         </HeaderTemplate>

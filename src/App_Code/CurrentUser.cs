@@ -11,13 +11,13 @@ using ITCommunity;
 namespace ITCommunity
 {
     /// <summary>
-    /// Текущий пользователь
+    /// РўРµРєСѓС‰РёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
     /// </summary>
     /// 
     public static class CurrentUser
     {
         /// <summary>
-        /// Возвращаем обьект юзер из сессии/куки, если авторизован.
+        /// Р’РѕР·РІСЂР°С‰Р°РµРј РѕР±СЊРµРєС‚ СЋР·РµСЂ РёР· СЃРµСЃСЃРёРё/РєСѓРєРё, РµСЃР»Рё Р°РІС‚РѕСЂРёР·РѕРІР°РЅ.
         /// </summary>
         public static User User
         {
@@ -48,10 +48,10 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Авторизация: запихиваем юзера в сессию и куки(если надо)
+        /// РђРІС‚РѕСЂРёР·Р°С†РёСЏ: Р·Р°РїРёС…РёРІР°РµРј СЋР·РµСЂР° РІ СЃРµСЃСЃРёСЋ Рё РєСѓРєРё(РµСЃР»Рё РЅР°РґРѕ)
         /// </summary>
-        /// <param name="login">Логин, он же nick</param>
-        /// <param name="pass">Пароль</param>
+        /// <param name="login">Р›РѕРіРёРЅ, РѕРЅ Р¶Рµ nick</param>
+        /// <param name="pass">РџР°СЂРѕР»СЊ</param>
         public static bool LogIn(string login, string pass, bool remember)
         {
             bool result = false;
@@ -68,10 +68,10 @@ namespace ITCommunity
                     ticketExpiration = DateTime.Now.AddYears(50);
                 } else
                 {
-                    ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout); // хмм
+                    ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout); // С…РјРј
                 }
-                // Здесь параметр bool IsPersistent почему то неправильно работает, 
-                // сбрасывается после закрытия окна, ниже куке устанавливаю отдельно expired date
+                // Р—РґРµСЃСЊ РїР°СЂР°РјРµС‚СЂ bool IsPersistent РїРѕС‡РµРјСѓ С‚Рѕ РЅРµРїСЂР°РІРёР»СЊРЅРѕ СЂР°Р±РѕС‚Р°РµС‚, 
+                // СЃР±СЂР°СЃС‹РІР°РµС‚СЃСЏ РїРѕСЃР»Рµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР°, РЅРёР¶Рµ РєСѓРєРµ СѓСЃС‚Р°РЅР°РІР»РёРІР°СЋ РѕС‚РґРµР»СЊРЅРѕ expired date
                 FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, true, user.Role.ToString(), FormsAuthentication.FormsCookiePath);
 
                 string encryptedTicket = FormsAuthentication.Encrypt(newTicket);
@@ -86,13 +86,13 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Шифруем пароль пользователя, в дальнейшем используем выходное значение функции
-        /// в качестве пароля пользователя.
+        /// РЁРёС„СЂСѓРµРј РїР°СЂРѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РІ РґР°Р»СЊРЅРµР№С€РµРј РёСЃРїРѕР»СЊР·СѓРµРј РІС‹С…РѕРґРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ С„СѓРЅРєС†РёРё
+        /// РІ РєР°С‡РµСЃС‚РІРµ РїР°СЂРѕР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         /// 
-        /// Таким образом гарантируется что истинный пароль знает только сам пользователь.
+        /// РўР°РєРёРј РѕР±СЂР°Р·РѕРј РіР°СЂР°РЅС‚РёСЂСѓРµС‚СЃСЏ С‡С‚Рѕ РёСЃС‚РёРЅРЅС‹Р№ РїР°СЂРѕР»СЊ Р·РЅР°РµС‚ С‚РѕР»СЊРєРѕ СЃР°Рј РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
         /// </summary>
-        /// <param name="pass">Истинный пароль</param>
-        /// <param name="login">Логин пользователя</param>
+        /// <param name="pass">РСЃС‚РёРЅРЅС‹Р№ РїР°СЂРѕР»СЊ</param>
+        /// <param name="login">Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</param>
         /// <returns></returns>
         public static string HashPass(string pass, string login)
         {
@@ -102,7 +102,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Выход
+        /// Р’С‹С…РѕРґ
         /// </summary>
         public static void LogOut()
         {
@@ -112,7 +112,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// IP текущего пользователя
+        /// IP С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
         public static string Ip
         {
@@ -124,11 +124,11 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Регистрируем нового пользователя
+        /// Р РµРіРёСЃС‚СЂРёСЂСѓРµРј РЅРѕРІРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
         /// <param name="login">login=nick</param>
-        /// <param name="pass">пароль</param>
-        /// <param name="email">электропочта</param>
+        /// <param name="pass">РїР°СЂРѕР»СЊ</param>
+        /// <param name="email">СЌР»РµРєС‚СЂРѕРїРѕС‡С‚Р°</param>
         public static User Register(string login, string pass, string email)
         {
             User user  = new User();

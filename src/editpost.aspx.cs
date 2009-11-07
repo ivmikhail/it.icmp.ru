@@ -24,7 +24,7 @@ namespace ITCommunity
             {
                 LoadCategories();
                 CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
-                ImageOptions.Text = "Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).";
+                ImageOptions.Text = "Р Р°Р·РјРµСЂ РґРѕ " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; РѕР±СЊРµРј РґРѕ " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "РєР±; С‚РёРї С„Р°Р№Р»Р° РёР·РѕР±СЂР°Р¶РµРЅРёРµ(jpeg, gif Рё С‚.Рґ).";
 
                 InitPostData();
             }
@@ -45,7 +45,7 @@ namespace ITCommunity
             List<Category> cats = current_post.Categories;
             foreach (Category cat in cats)
             {
-                CatNamesLiteral.Text += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать' id='" + cat.Id + "' </a>" + cat.Name + "</a> ";
+                CatNamesLiteral.Text += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='РЈР±СЂР°С‚СЊ' id='" + cat.Id + "' </a>" + cat.Name + "</a> ";
 
                 if (SelectedCategoriesIds.Value != "")
                 {
@@ -63,7 +63,7 @@ namespace ITCommunity
         private void LoadCategories()
         {
             List<Category> cats = Category.GetAll();
-            DropDownListCats.Items.Add(new ListItem("Выбрать...", "-1"));
+            DropDownListCats.Items.Add(new ListItem("Р’С‹Р±СЂР°С‚СЊ...", "-1"));
             foreach (Category cat in cats)
             {
                 DropDownListCats.Items.Add(new ListItem(cat.Name, cat.Id.ToString()));
@@ -77,7 +77,7 @@ namespace ITCommunity
             List<Category> cats = GetCategoriesFromPost();
             if (cats.Count == 0)
             {
-                errors.Add("Категория не выбрана"); //TODO: Наверно надо переделать? 
+                errors.Add("РљР°С‚РµРіРѕСЂРёСЏ РЅРµ РІС‹Р±СЂР°РЅР°"); //TODO: РќР°РІРµСЂРЅРѕ РЅР°РґРѕ РїРµСЂРµРґРµР»Р°С‚СЊ? 
             }
             if (errors.Count == 0)
             {
@@ -92,11 +92,11 @@ namespace ITCommunity
                 editable_post.Attached = CheckBoxAttached.Checked;
 
                 Post inserted_post = new Post();
-                if (editable_post.Id > 0) //пост редактируют
+                if (editable_post.Id > 0) //РїРѕСЃС‚ СЂРµРґР°РєС‚РёСЂСѓСЋС‚
                 {
                     editable_post.UpdateWithCategories();
                     inserted_post = editable_post;
-                } else // Пост только что создали
+                } else // РџРѕСЃС‚ С‚РѕР»СЊРєРѕ С‡С‚Рѕ СЃРѕР·РґР°Р»Рё
                 {
                     editable_post.Author = CurrentUser.User;
                     inserted_post = Post.Add(editable_post);
@@ -107,7 +107,7 @@ namespace ITCommunity
             {
                 SelectedCategoriesIds.Value = "";
                 CatNamesLiteral.Text = "";
-                WriteErrors(errors, "Новость не добавлена");
+                WriteErrors(errors, "РќРѕРІРѕСЃС‚СЊ РЅРµ РґРѕР±Р°РІР»РµРЅР°");
             }
         }
 
@@ -142,19 +142,19 @@ namespace ITCommunity
 
             if (TextBoxTitle.Text.Length == 0 || TextBoxTitle.Text.Length > 128)
             {
-                errors.Add("Количество символов в заголовке должно быть от 1 до 128.");
+                errors.Add("РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ РІ Р·Р°РіРѕР»РѕРІРєРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РѕС‚ 1 РґРѕ 128.");
             }
             if (desc.Length > 2000)
             {
-                errors.Add("Количество символов в описании(краткое описание) новости должно быть до 2000.");
+                errors.Add("РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ РІ РѕРїРёСЃР°РЅРёРё(РєСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ) РЅРѕРІРѕСЃС‚Рё РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РґРѕ 2000.");
             }
             if (text.Length == 0 || text.Length > 8000)
             {
-                errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 8000.");
+                errors.Add("РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ РІ С‚РµРєСЃС‚Рµ(РїРѕР»РЅРѕРµ РѕРїРёСЃР°РЅРёРµ) РЅРѕРІРѕСЃС‚Рё РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РѕС‚ 1 РґРѕ 8000.");
             }
             if (TextBoxSource.Text.Length > 1024)
             {
-                errors.Add("Количество символов в источнике должно быть от 0 до 1024.");
+                errors.Add("РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ РІ РёСЃС‚РѕС‡РЅРёРєРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РѕС‚ 0 РґРѕ 1024.");
             }
 
             return errors;
@@ -187,14 +187,14 @@ namespace ITCommunity
             Picture pic = Picture.UploadImage(UploadImage.PostedFile, post);
             if (pic.Name == "")
             {
-                UploadImageError.Text = "Картинка не добавилась. Видимо плохая картинка.";
+                UploadImageError.Text = "РљР°СЂС‚РёРЅРєР° РЅРµ РґРѕР±Р°РІРёР»Р°СЃСЊ. Р’РёРґРёРјРѕ РїР»РѕС…Р°СЏ РєР°СЂС‚РёРЅРєР°.";
             } else
             {
                 UploadImageError.Text = "";
-                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
+                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='РєР°СЂС‚РёРЅРєР°' class='uploaded-image'/>";
             }
 
-            //Сохраняем выбранные категории
+            //РЎРѕС…СЂР°РЅСЏРµРј РІС‹Р±СЂР°РЅРЅС‹Рµ РєР°С‚РµРіРѕСЂРёРё
 
             string selectedIds = SelectedCategoriesIds.Value;
             string selectedCatsNames = "";
@@ -209,7 +209,7 @@ namespace ITCommunity
                     Category cat = Category.GetById(Convert.ToInt32(cat_id));
                     if (cat.Id > 0)
                     {
-                        selectedCatsNames += "<a href='#' id='" + cat.Id + "' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать'>" + cat.Name + "</a> ";
+                        selectedCatsNames += "<a href='#' id='" + cat.Id + "' onclick='deleteCategory(this);return false;' class='delete-category' title='РЈР±СЂР°С‚СЊ'>" + cat.Name + "</a> ";
                     }
                 }
             }
@@ -223,15 +223,15 @@ namespace ITCommunity
             List<Picture> pics = Picture.GetByPost(post);
             foreach (Picture pic in pics)
             {
-                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
+                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='РєР°СЂС‚РёРЅРєР°' class='uploaded-image'/>";
             }            
         }
 
         /// <summary>
-        /// Сплитит новость на краткое описание и текст
+        /// РЎРїР»РёС‚РёС‚ РЅРѕРІРѕСЃС‚СЊ РЅР° РєСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ Рё С‚РµРєСЃС‚
         /// </summary>
-        /// <param name="content">Тело новости</param>
-        /// <returns>Возвращает лист строк. 0 - краткое описание, 1 - текст</returns>
+        /// <param name="content">РўРµР»Рѕ РЅРѕРІРѕСЃС‚Рё</param>
+        /// <returns>Р’РѕР·РІСЂР°С‰Р°РµС‚ Р»РёСЃС‚ СЃС‚СЂРѕРє. 0 - РєСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ, 1 - С‚РµРєСЃС‚</returns>
         private List<string> SplitPostContent(string content)
         {
             List<string> result = new List<string>();

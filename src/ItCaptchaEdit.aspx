@@ -4,16 +4,16 @@
     <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" 
         AutoGenerateColumns="False" DataSourceID="SqlDataSource1" DataKeyNames="id">
         <Columns>
-            <asp:BoundField DataField="text" HeaderText="“ÂÍÒÚ" SortExpression="text" ControlStyle-Width="300px"/>
-            <asp:BoundField DataField="isRight" HeaderText="œ‡‚ËÎ¸Ì˚È" SortExpression="isRight" />
+            <asp:BoundField DataField="text" HeaderText="–¢–µ–∫—Å—Ç" SortExpression="text" ControlStyle-Width="300px"/>
+            <asp:BoundField DataField="isRight" HeaderText="–ü—Ä–∞–≤–∏–ª—å–Ω—ã–π" SortExpression="isRight" />
             <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
         </Columns>
     </asp:GridView>
     <br />
-    <asp:Button ID="btnAdd" runat="server" Text="ƒÓ·‡‚ËÚ¸ ‚‡Ë‡ÌÚ" OnClick="btnAdd_Click" />
+    <asp:Button ID="btnAdd" runat="server" Text="–î–æ–±–∞–≤–∏—Ç—å –≤–∞—Ä–∏–∞–Ω—Ç" OnClick="btnAdd_Click" />
     <br />
-    <asp:LinkButton id="lnkSaveQuestion" runat="server" Text="—Óı‡ÌËÚ¸" OnClick="lnkSaveQuestion_Click" />&nbsp;
-    <a href="itcaptchalist.aspx">Õ‡Á‡‰</a>
+    <asp:LinkButton id="lnkSaveQuestion" runat="server" Text="–°–æ—Ö—Ä–∞–Ω–∏—Ç—å" OnClick="lnkSaveQuestion_Click" />&nbsp;
+    <a href="itcaptchalist.aspx">–ù–∞–∑–∞–¥</a>
 
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
         DeleteCommand="CaptchaAnswerDelete" DeleteCommandType="StoredProcedure" InsertCommand="CaptchaAnswerAdd"

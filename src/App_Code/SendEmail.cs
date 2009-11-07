@@ -14,7 +14,7 @@ namespace ITCommunity
 {
 
     /// <summary>
-    /// Класс отсылающий емейлы
+    /// РљР»Р°СЃСЃ РѕС‚СЃС‹Р»Р°СЋС‰РёР№ РµРјРµР№Р»С‹
     /// </summary>
     public static class SendEmail
     {
@@ -26,21 +26,21 @@ namespace ITCommunity
 
                 MailMessage message = new MailMessage();
                 message.To.Add(new MailAddress(user.Email));
-                message.Subject = "Ykt IT Community - восстановление пароля";
-                message.Body = "Здравствуй %username% ! \n\n" +
-                               "Вы запросили сброс пароля с сайта " + Global.SiteAddress + ", сделать это можно перейдя по ссылке:" + "\n" +
+                message.Subject = "Ykt IT Community - РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РїР°СЂРѕР»СЏ";
+                message.Body = "Р—РґСЂР°РІСЃС‚РІСѓР№ %username% ! \n\n" +
+                               "Р’С‹ Р·Р°РїСЂРѕСЃРёР»Рё СЃР±СЂРѕСЃ РїР°СЂРѕР»СЏ СЃ СЃР°Р№С‚Р° " + Global.SiteAddress + ", СЃРґРµР»Р°С‚СЊ СЌС‚Рѕ РјРѕР¶РЅРѕ РїРµСЂРµР№РґСЏ РїРѕ СЃСЃС‹Р»РєРµ:" + "\n" +
                                " " + Global.SiteAddress + "/recovery.aspx?id=" + guid + " \n\n" +
-                               "Ссылка активна в течении 3-4 дней." + "\n\n" + 
+                               "РЎСЃС‹Р»РєР° Р°РєС‚РёРІРЅР° РІ С‚РµС‡РµРЅРёРё 3-4 РґРЅРµР№." + "\n\n" + 
                                "______ \n" +
-                               "С уважением, робот находящийся в рабстве у держателей сайта " + Global.SiteAddress;
-                SmtpClient client = new SmtpClient(); // используются параметры из web.config
+                               "РЎ СѓРІР°Р¶РµРЅРёРµРј, СЂРѕР±РѕС‚ РЅР°С…РѕРґСЏС‰РёР№СЃСЏ РІ СЂР°Р±СЃС‚РІРµ Сѓ РґРµСЂР¶Р°С‚РµР»РµР№ СЃР°Р№С‚Р° " + Global.SiteAddress;
+                SmtpClient client = new SmtpClient(); // РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РїР°СЂР°РјРµС‚СЂС‹ РёР· web.config
                 //client.EnableSsl = true;
                 client.Send(message);
-                Logger.Log.Info("Успешно запрошен email для смены пароля для пользователя " + user.Nick + " с адреса " + CurrentUser.Ip);
+                Logger.Log.Info("РЈСЃРїРµС€РЅРѕ Р·Р°РїСЂРѕС€РµРЅ email РґР»СЏ СЃРјРµРЅС‹ РїР°СЂРѕР»СЏ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ " + user.Nick + " СЃ Р°РґСЂРµСЃР° " + CurrentUser.Ip);
             } catch (Exception ex)
             {
                 status = false;
-                Logger.Log.Error("Невозможно отправить email для восстановления пароля, запрошена смена пароля для пользователя " + CurrentUser.User.Nick + " с адреса " + CurrentUser.Ip, ex);
+                Logger.Log.Error("РќРµРІРѕР·РјРѕР¶РЅРѕ РѕС‚РїСЂР°РІРёС‚СЊ email РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РїР°СЂРѕР»СЏ, Р·Р°РїСЂРѕС€РµРЅР° СЃРјРµРЅР° РїР°СЂРѕР»СЏ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ " + CurrentUser.User.Nick + " СЃ Р°РґСЂРµСЃР° " + CurrentUser.Ip, ex);
             }
             return status;
         }

@@ -2,10 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
 <div id="rfc-search">
-    <h2>Введите номер RFC или ключевое слово</h2>
+    <h2>Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ RFC РёР»Рё РєР»СЋС‡РµРІРѕРµ СЃР»РѕРІРѕ</h2>
     <asp:TextBox ID="TextBoxSearch" runat="server" /> 
-    <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click" ValidationGroup="ValidateRfcSearch">Искать</asp:LinkButton>
-    <asp:RequiredFieldValidator ID="SearchRequiredFieldValidator" runat="server" ErrorMessage="Введите чего-нибудь" ControlToValidate="TextBoxSearch" ValidationGroup="ValidateRfcSearch"/>
+    <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click" ValidationGroup="ValidateRfcSearch">РСЃРєР°С‚СЊ</asp:LinkButton>
+    <asp:RequiredFieldValidator ID="SearchRequiredFieldValidator" runat="server" ErrorMessage="Р’РІРµРґРёС‚Рµ С‡РµРіРѕ-РЅРёР±СѓРґСЊ" ControlToValidate="TextBoxSearch" ValidationGroup="ValidateRfcSearch"/>
 </div>     
 <div id="rfc-search-result">
     <asp:Repeater ID="RepeaterRfc" runat="server">
@@ -16,7 +16,7 @@
             <li>
                 <div class="rfc"> 
                      <h2> 
-                        <a href='<%# FormURL(Eval("number").ToString())%>' title="Посмотреть полный текст"><%# Eval("number")%></a>
+                        <a href='<%# FormURL(Eval("number").ToString())%>' title="РџРѕСЃРјРѕС‚СЂРµС‚СЊ РїРѕР»РЅС‹Р№ С‚РµРєСЃС‚"><%# Eval("number")%></a>
                     </h2>
                     <div class="rfc-title">
                         <%# Eval("title")%>
@@ -29,7 +29,7 @@
         </FooterTemplate>
     </asp:Repeater>
     <div id="search-notfound">
-        <asp:Literal ID="NotFoundText" runat="server" Visible="false" Text="Ничего не найдено..." />
+        <asp:Literal ID="NotFoundText" runat="server" Visible="false" Text="РќРёС‡РµРіРѕ РЅРµ РЅР°Р№РґРµРЅРѕ..." />
     </div>
 </div>
 </asp:Content>

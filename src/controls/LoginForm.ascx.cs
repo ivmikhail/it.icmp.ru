@@ -43,7 +43,7 @@ namespace ITCommunity
             return status;
         }
 
-        //TODO: õììì
+        //TODO: Ñ…Ð¼Ð¼Ð¼
         protected void LogInButton_Click(object sender, EventArgs e)
         {
             string login = TextBoxLogin.Text;

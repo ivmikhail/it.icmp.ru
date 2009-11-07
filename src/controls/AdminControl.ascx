@@ -1,20 +1,20 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="AdminControl.ascx.cs" Inherits="ITCommunity.AdminControl" %>
 
-<h1>Что-нибудь сделать</h1>         
+<h1>Р§С‚Рѕ-РЅРёР±СѓРґСЊ СЃРґРµР»Р°С‚СЊ</h1>         
 <ul class="list admin-panel">
     <li>
-       <asp:HyperLink ID="AddPostLink" runat="server" NavigateUrl="~/editpost.aspx">Добавить пост</asp:HyperLink>
+       <asp:HyperLink ID="AddPostLink" runat="server" NavigateUrl="~/editpost.aspx">Р”РѕР±Р°РІРёС‚СЊ РїРѕСЃС‚</asp:HyperLink>
     </li> 
     <li>
-       <asp:HyperLink ID="ManageAccounts" runat="server" NavigateUrl="~/accounts.aspx">Пользователи</asp:HyperLink>
+       <asp:HyperLink ID="ManageAccounts" runat="server" NavigateUrl="~/accounts.aspx">РџРѕР»СЊР·РѕРІР°С‚РµР»Рё</asp:HyperLink>
     </li>
     <li>
-        <asp:HyperLink ID="AddPollLink" runat="server" NavigateUrl="~/addpoll.aspx">Голосование</asp:HyperLink>
+        <asp:HyperLink ID="AddPollLink" runat="server" NavigateUrl="~/addpoll.aspx">Р“РѕР»РѕСЃРѕРІР°РЅРёРµ</asp:HyperLink>
     </li>     
     <li>
-        <asp:HyperLink ID="SiteStructureLink" runat="server" NavigateUrl="~/structure.aspx">Меню/Категории</asp:HyperLink>
+        <asp:HyperLink ID="SiteStructureLink" runat="server" NavigateUrl="~/structure.aspx">РњРµРЅСЋ/РљР°С‚РµРіРѕСЂРёРё</asp:HyperLink>
     </li>       
     <li>
-        <asp:HyperLink ID="ItCaptchaEditor" runat="server" NavigateUrl="~/itcaptchalist.aspx">Каптчи</asp:HyperLink>
+        <asp:HyperLink ID="ItCaptchaEditor" runat="server" NavigateUrl="~/itcaptchalist.aspx">РљР°РїС‚С‡Рё</asp:HyperLink>
     </li> 
 </ul>   

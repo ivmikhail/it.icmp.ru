@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="accounts.aspx.cs" Inherits="ITCommunity.Accounts" Title="Ykt IT Community | Управление пользователями" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="accounts.aspx.cs" Inherits="ITCommunity.Accounts" Title="Ykt IT Community | РЈРїСЂР°РІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё" %>
 <%@ Register Src="~/controls/UserList.ascx" TagName="UserList" TagPrefix="uc" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">  
     <script type="text/javascript">
@@ -16,36 +16,36 @@
                      });
 	        }
     </script>
-    <h1>Управление пользователями</h1>
-     <p>Существует 4 роли пользователей:</p>   
+    <h1>РЈРїСЂР°РІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё</h1>
+     <p>РЎСѓС‰РµСЃС‚РІСѓРµС‚ 4 СЂРѕР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№:</p>   
      <ul class="list userroles-list">
         <li>
-            <b>user</b> - простой пользователь, может голосовать, комментировать без капчи, доступные закрытые разделы сайтов. Readonly короче
+            <b>user</b> - РїСЂРѕСЃС‚РѕР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ, РјРѕР¶РµС‚ РіРѕР»РѕСЃРѕРІР°С‚СЊ, РєРѕРјРјРµРЅС‚РёСЂРѕРІР°С‚СЊ Р±РµР· РєР°РїС‡Рё, РґРѕСЃС‚СѓРїРЅС‹Рµ Р·Р°РєСЂС‹С‚С‹Рµ СЂР°Р·РґРµР»С‹ СЃР°Р№С‚РѕРІ. Readonly РєРѕСЂРѕС‡Рµ
         </li>        
         <li>
-            <b>poster</b> - права роли "user" + может добавлять/редактировать свои новости(является ролью по умолчанию)
+            <b>poster</b> - РїСЂР°РІР° СЂРѕР»Рё "user" + РјРѕР¶РµС‚ РґРѕР±Р°РІР»СЏС‚СЊ/СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ СЃРІРѕРё РЅРѕРІРѕСЃС‚Рё(СЏРІР»СЏРµС‚СЃСЏ СЂРѕР»СЊСЋ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ)
         </li>        
         <li>
-            <b>admin</b> - права роли "poster" + может управлять опросами, пользователями, может аттачить посты, редактировать любые посты. Так же управляет менюшкой, капчей, категориями новостей
+            <b>admin</b> - РїСЂР°РІР° СЂРѕР»Рё "poster" + РјРѕР¶РµС‚ СѓРїСЂР°РІР»СЏС‚СЊ РѕРїСЂРѕСЃР°РјРё, РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё, РјРѕР¶РµС‚ Р°С‚С‚Р°С‡РёС‚СЊ РїРѕСЃС‚С‹, СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ Р»СЋР±С‹Рµ РїРѕСЃС‚С‹. РўР°Рє Р¶Рµ СѓРїСЂР°РІР»СЏРµС‚ РјРµРЅСЋС€РєРѕР№, РєР°РїС‡РµР№, РєР°С‚РµРіРѕСЂРёСЏРјРё РЅРѕРІРѕСЃС‚РµР№
         </li>        
         <li>
-            <b>banned</b> - аккаунт забанен(залогиниться нельзя)
+            <b>banned</b> - Р°РєРєР°СѓРЅС‚ Р·Р°Р±Р°РЅРµРЅ(Р·Р°Р»РѕРіРёРЅРёС‚СЊСЃСЏ РЅРµР»СЊР·СЏ)
         </li>
     </ul> 
-    <h2>Присвоить определенную роль пользователю</h2>       
-        <p>Администратор помни! При регистрации пользователю присваивается роль poster</p>
+    <h2>РџСЂРёСЃРІРѕРёС‚СЊ РѕРїСЂРµРґРµР»РµРЅРЅСѓСЋ СЂРѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ</h2>       
+        <p>РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ РїРѕРјРЅРё! РџСЂРё СЂРµРіРёСЃС‚СЂР°С†РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ РїСЂРёСЃРІР°РёРІР°РµС‚СЃСЏ СЂРѕР»СЊ poster</p>
         <div id="modify-user">
             <ul class="list">
                 <li>
-                    <h3>Логин пользователя</h3> 
+                    <h3>Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</h3> 
                     <asp:TextBox ID="UserLogin" runat="server" Width="100%"/>           
                 </li>
                 <li>
-                     <h3>Присвоить роль</h3>  
+                     <h3>РџСЂРёСЃРІРѕРёС‚СЊ СЂРѕР»СЊ</h3>  
                      <asp:DropDownList ID="DropDownListActions" runat="server" Width="101%"/>      
                 </li>                
                 <li style="text-align:right; padding-top:10px;">
-                    <asp:LinkButton ID="ModifyUser" runat="server" OnClick="ModifyUser_Click">Сделать</asp:LinkButton>
+                    <asp:LinkButton ID="ModifyUser" runat="server" OnClick="ModifyUser_Click">РЎРґРµР»Р°С‚СЊ</asp:LinkButton>
                 </li>
                 <li>
                     <div class="error-message">
@@ -54,7 +54,7 @@
                 </li>
             </ul>    
         </div>
-    <h2>Список пользователей по ролям</h2>    
+    <h2>РЎРїРёСЃРѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РїРѕ СЂРѕР»СЏРј</h2>    
         <div id="accounts-tabs">
 	        <ul class="tabSet">
 		        <li class="off"><a>admin</a></li>

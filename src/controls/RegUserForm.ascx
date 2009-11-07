@@ -5,27 +5,27 @@
     <div id="reguser_data">
         <ul class="list">
             <li>
-                <h2>логин(аккаунт)</h2>   
-                <p class="note">RegExp паттерн валидного логина: ^[A-Za-z0-9_\-\.]{2,20}$ </p>                              
+                <h2>Р»РѕРіРёРЅ(Р°РєРєР°СѓРЅС‚)</h2>   
+                <p class="note">RegExp РїР°С‚С‚РµСЂРЅ РІР°Р»РёРґРЅРѕРіРѕ Р»РѕРіРёРЅР°: ^[A-Za-z0-9_\-\.]{2,20}$ </p>                              
                 <label> 
                     <asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text" MaxLength="32"/>
                 </label>
             </li>        
             <li>
-                 <h2>электропочта</h2>   
-                 <p class="note">Нигде не публикуется, используется для восстановления пароля</p>
+                 <h2>СЌР»РµРєС‚СЂРѕРїРѕС‡С‚Р°</h2>   
+                 <p class="note">РќРёРіРґРµ РЅРµ РїСѓР±Р»РёРєСѓРµС‚СЃСЏ, РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РїР°СЂРѕР»СЏ</p>
                  <label>
                     <asp:TextBox ID="TextBoxEmail" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text" MaxLength="512"/>
                  </label>
             </li>            
             <li>
-                <h2>пароль</h2>
+                <h2>РїР°СЂРѕР»СЊ</h2>
                 <label>
                     <asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateRegData" TextMode="Password" CssClass="input-text" MaxLength="512"/>
                 </label>
             </li>            
             <li>
-                <h2>повторите пароль</h2>
+                <h2>РїРѕРІС‚РѕСЂРёС‚Рµ РїР°СЂРѕР»СЊ</h2>
                 <label>
                     <asp:TextBox ID="TextBoxPassConf" runat="server" ValidationGroup="ValidateRegData" TextMode="Password" CssClass="input-text" MaxLength="512"/>
                 </label>
@@ -34,7 +34,7 @@
                 <uc:ItCaptcha ID="captcha" runat="server" Visible="true" EnableViewState="true"/>
             </li>
             <li class="big-button">            
-                <asp:LinkButton ID="RegisterButton" runat="server" ValidationGroup="ValidateRegData" OnClick="RegisterButton_Click">зарегистрируйте меня, я готов!</asp:LinkButton>
+                <asp:LinkButton ID="RegisterButton" runat="server" ValidationGroup="ValidateRegData" OnClick="RegisterButton_Click">Р·Р°СЂРµРіРёСЃС‚СЂРёСЂСѓР№С‚Рµ РјРµРЅСЏ, СЏ РіРѕС‚РѕРІ!</asp:LinkButton>
             </li>
          </ul>
          
@@ -45,13 +45,13 @@
         <asp:RequiredFieldValidator     ID="RequiredLogin" 
                                         runat="server" 
                                         ControlToValidate="TextBoxLogin"
-                                        ErrorMessage="Введите логин" 
+                                        ErrorMessage="Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ" 
                                         Display="None" 
                                         ValidationGroup="ValidateRegData" />
         <asp:RegularExpressionValidator ID="LoginValidator" 
                                         runat="server" 
                                         ControlToValidate="TextBoxLogin" 
-                                        ErrorMessage="Логин может состоять только из латинских букв, цифр, знаков '-','.' и '_'. Длина должна быть от 3-х до 25-и символов." 
+                                        ErrorMessage="Р›РѕРіРёРЅ РјРѕР¶РµС‚ СЃРѕСЃС‚РѕСЏС‚СЊ С‚РѕР»СЊРєРѕ РёР· Р»Р°С‚РёРЅСЃРєРёС… Р±СѓРєРІ, С†РёС„СЂ, Р·РЅР°РєРѕРІ '-','.' Рё '_'. Р”Р»РёРЅР° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РѕС‚ 3-С… РґРѕ 25-Рё СЃРёРјРІРѕР»РѕРІ." 
                                         Display="None" 
                                         ValidationGroup="ValidateRegData"
                                         ValidationExpression="^[A-Za-z0-9_\-\.]{2,20}$" /> 
@@ -60,13 +60,13 @@
         <asp:RequiredFieldValidator     ID="RequiredEmail" 
                                         runat="server" 
                                         ControlToValidate="TextBoxEmail"
-                                        ErrorMessage="Введите e-mail" 
+                                        ErrorMessage="Р’РІРµРґРёС‚Рµ e-mail" 
                                         Display="None" 
                                         ValidationGroup="ValidateRegData" />
         <asp:RegularExpressionValidator ID="EmailValidator" 
                                         runat="server" 
                                         ControlToValidate="TextBoxEmail" 
-                                        ErrorMessage="Введите нормальный e-mail." 
+                                        ErrorMessage="Р’РІРµРґРёС‚Рµ РЅРѕСЂРјР°Р»СЊРЅС‹Р№ e-mail." 
                                         Display="None" 
                                         ValidationGroup="ValidateRegData" 
                                         ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"/>
@@ -75,7 +75,7 @@
         <asp:RequiredFieldValidator ID="RequiredPass" 
                                     runat="server" 
                                     ControlToValidate="TextBoxPass"
-                                    ErrorMessage="Введите пароль" 
+                                    ErrorMessage="Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ" 
                                     Display="None" 
                                     ValidationGroup="ValidateRegData" />
                                     
@@ -84,26 +84,26 @@
                                     Display="None"
                                     ControlToCompare="TextBoxPass" 
                                     ControlToValidate="TextBoxPassConf" 
-                                    ErrorMessage="Пароли не совпадают" 
+                                    ErrorMessage="РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚" 
                                     ValidationGroup="ValidateRegData" />
                                     
          
         <asp:CustomValidator ID="AccountExist" 
                              runat="server" 
                              Display="None" 
-                             ErrorMessage="Пользователь с таким логином/email'ом уже зарегистрирован" 
+                             ErrorMessage="РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ С‚Р°РєРёРј Р»РѕРіРёРЅРѕРј/email'РѕРј СѓР¶Рµ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ" 
                              ValidationGroup="ValidateRegData" />
                              
        <asp:CustomValidator ID="AnonymousAccount" 
                              runat="server" 
                              Display="None" 
-                             ErrorMessage="Нельзя регистрировать аккаунт с логином 'anonymous', выберите другой логин" 
+                             ErrorMessage="РќРµР»СЊР·СЏ СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ Р°РєРєР°СѓРЅС‚ СЃ Р»РѕРіРёРЅРѕРј 'anonymous', РІС‹Р±РµСЂРёС‚Рµ РґСЂСѓРіРѕР№ Р»РѕРіРёРЅ" 
                              ValidationGroup="ValidateRegData" />
                              
         <asp:CustomValidator ID="RegisterFailed" 
                              runat="server" 
                              Display="None"
-                             ErrorMessage="Ошибка, регистрация не прошла, обратитесь к администратору" 
+                             ErrorMessage="РћС€РёР±РєР°, СЂРµРіРёСЃС‚СЂР°С†РёСЏ РЅРµ РїСЂРѕС€Р»Р°, РѕР±СЂР°С‚РёС‚РµСЃСЊ Рє Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂСѓ" 
                              ValidationGroup="ValidateRegData" />
      </div>     
 </div>

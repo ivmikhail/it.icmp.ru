@@ -74,7 +74,7 @@ namespace ITCommunity
         {
             if (number.Length > 4)
             {
-                throw new ArgumentOutOfRangeException(number, "Допустимое кол-во символов от 0 до 4");
+                throw new ArgumentOutOfRangeException(number, "Р”РѕРїСѓСЃС‚РёРјРѕРµ РєРѕР»-РІРѕ СЃРёРјРІРѕР»РѕРІ РѕС‚ 0 РґРѕ 4");
             }
             string num = number;
             while (num.Length != 4)

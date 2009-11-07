@@ -1,7 +1,7 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="whoami.aspx.cs" Inherits="ITCommunity.WhoamiPage" Title="Ykt IT Community | Кто я?" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="whoami.aspx.cs" Inherits="ITCommunity.WhoamiPage" Title="Ykt IT Community | РљС‚Рѕ СЏ?" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<h1>HTTP заголовки</h1>
-<p>На данной странице представлена информация о вас, отправляемая вашим браузером с запросом.</p>
+<h1>HTTP Р·Р°РіРѕР»РѕРІРєРё</h1>
+<p>РќР° РґР°РЅРЅРѕР№ СЃС‚СЂР°РЅРёС†Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅР° РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РІР°СЃ, РѕС‚РїСЂР°РІР»СЏРµРјР°СЏ РІР°С€РёРј Р±СЂР°СѓР·РµСЂРѕРј СЃ Р·Р°РїСЂРѕСЃРѕРј.</p>
 <asp:Repeater ID="RepeaterData" runat="server">
         <HeaderTemplate>
             <ul id="userdata-list" class="list">

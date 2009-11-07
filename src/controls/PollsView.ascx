@@ -23,7 +23,7 @@
                     <%# Eval("votescount") %>
                 </td>
                 <td>
-                    <a href="pollresult.aspx?id=<%# Eval("id") %>" title="Посмотреть результаты">результаты</a>
+                    <a href="pollresult.aspx?id=<%# Eval("id") %>" title="РџРѕСЃРјРѕС‚СЂРµС‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚С‹">СЂРµР·СѓР»СЊС‚Р°С‚С‹</a>
                 </td>
             </tr> 
         </ItemTemplate>

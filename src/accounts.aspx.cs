@@ -48,16 +48,16 @@ namespace ITCommunity
 
             if (mod_user.Id < 1)
             {
-                message = "Òàêîé ïîëüçîâàòåëü íå çàðåãèñòðèðîâàí.";
+                message = "Ð¢Ð°ÐºÐ¾Ð¹ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð½Ðµ Ð·Ð°Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ð½.";
             } else if (mod_user.Role == ITCommunity.User.Roles.Admin)
             {
-                message = "Äàííûé ïîëüçîâàòåëü àäìèí. Íàä íèì íåëüçÿ ïðîèçâîäèòü íèêàêèõ äåéñòâèé.";
+                message = "Ð”Ð°Ð½Ð½Ñ‹Ð¹ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð°Ð´Ð¼Ð¸Ð½. ÐÐ°Ð´ Ð½Ð¸Ð¼ Ð½ÐµÐ»ÑŒÐ·Ñ Ð¿Ñ€Ð¾Ð¸Ð·Ð²Ð¾Ð´Ð¸Ñ‚ÑŒ Ð½Ð¸ÐºÐ°ÐºÐ¸Ñ… Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ð¹.";
             } else
             {
                 mod_user.Role = newrole;
                 mod_user.Update();
                 FillUsersList();
-                message = "Èçìåíåíèÿ âñòóïèëè â ñèëó.";
+                message = "Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð²ÑÑ‚ÑƒÐ¿Ð¸Ð»Ð¸ Ð² ÑÐ¸Ð»Ñƒ.";
             }
             ModifyUserMessage.Text = message;
             
