@@ -30,8 +30,9 @@ namespace ITCommunity {
             // AtomFeed feed = AtomFeed.Load(new Uri(rssUrl)); -
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(rssUrl);
+                HttpWebResponse response = null;
                 try {
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    response = (HttpWebResponse)request.GetResponse();
                     Stream stream = response.GetResponseStream();
                     XmlTextReader reader = new XmlTextReader(stream);
 
@@ -40,9 +41,9 @@ namespace ITCommunity {
                     bool isTextContent = false;
                     bool isTextUrl = false;
                     RedmineActivityItem item = null;
-                    
-                    while (reader.Read() && result.Count<howGet) {
-                        
+
+                    while (reader.Read() && result.Count < howGet) {
+
                         switch (reader.NodeType) {
                             case XmlNodeType.Element:
                                 if (reader.Name == "entry") {
@@ -79,16 +80,19 @@ namespace ITCommunity {
                                 }
                                 break;
                             case XmlNodeType.EndElement:
-                                if(reader.Name == "entry") {
+                                if (reader.Name == "entry") {
                                     result.Add(item);
                                 }
                                 break;
                         }
                     }
                     reader.Close();
-                    response.Close();
                 } catch (WebException ex) {
                     Debug.Print(ex.Message);
+                } finally {
+                    if (response != null) {
+                        response.Close();
+                    }
                 }
             return result;
         }
