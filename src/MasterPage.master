@@ -3,6 +3,7 @@
 <%@ Register Src="~/controls/UserControl.ascx"  TagName="UserControl"  TagPrefix="uc" %>
 <%@ Register Src="~/controls/AdminControl.ascx" TagName="AdminControl" TagPrefix="uc" %>
 <%@ Register Src="~/controls/Poll.ascx"         TagName="Poll"         TagPrefix="uc" %>
+<%@ Register Src="~/controls/RedmineActivity.ascx" TagName="Redmine"         TagPrefix="uc" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
@@ -103,7 +104,8 @@
                         </ul>
                     </FooterTemplate>
                 </asp:Repeater>
-                       
+                <h1>Активность Redmine</h1>       
+                <uc:Redmine id="Redmine" runat="server" />
                 <uc:AdminControl id="AdminControl" runat="server"/>
             </div>
             <div id="stats">
