@@ -171,7 +171,7 @@ namespace ITCommunity
         public static void Delete(int id)
         {            
             Database.CommentDel(id);
-            AppCache.Remove(Global.ConfigStringParam("LastCommentsCacheName")) ;       
+            AppCache.Remove(Global.ConfigStringParam("LastCommentsCacheName"));
         }
 
         /// <summary>
