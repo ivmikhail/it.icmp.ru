@@ -9,7 +9,7 @@ using ITCommunity;
 
 namespace ITCommunity
 {
-    // страх божий
+    // СЃС‚СЂР°С… Р±РѕР¶РёР№
     public class Picture 
     {
         private string _name;
@@ -144,8 +144,8 @@ namespace ITCommunity
                 Bitmap bmp = new Bitmap(fs);
                 if (fs.Length > Global.ConfigNumParam("PostImgSize") || bmp.Width > Global.ConfigNumParam("PostImgWidth") || bmp.Height > Global.ConfigNumParam("PostImgHeight"))
                 {
-                    Logger.Log.Info("Пользователь(login - " + CurrentUser.User.Nick + ") пытается загрузить картинку не подходящую по размерам");
-                    throw new Exception("Размеры картинки недопустимы");
+                    Logger.Log.Info("РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ(login - " + CurrentUser.User.Nick + ") РїС‹С‚Р°РµС‚СЃСЏ Р·Р°РіСЂСѓР·РёС‚СЊ РєР°СЂС‚РёРЅРєСѓ РЅРµ РїРѕРґС…РѕРґСЏС‰СѓСЋ РїРѕ СЂР°Р·РјРµСЂР°Рј");
+                    throw new Exception("Р Р°Р·РјРµСЂС‹ РєР°СЂС‚РёРЅРєРё РЅРµРґРѕРїСѓСЃС‚РёРјС‹");
                 }
                 pic = MakeThumbnail(bmp, filename, thumbpath, post);
                 bmp.Dispose();
@@ -156,7 +156,7 @@ namespace ITCommunity
                 fs.Dispose();
                 fs.Close();
                 File.Delete(fullpath);
-                Logger.Log.Info("Изображение загруженное пользователем(login - " + CurrentUser.User.Nick + ") не сохранилась", ex);
+                Logger.Log.Info("РР·РѕР±СЂР°Р¶РµРЅРёРµ Р·Р°РіСЂСѓР¶РµРЅРЅРѕРµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј(login - " + CurrentUser.User.Nick + ") РЅРµ СЃРѕС…СЂР°РЅРёР»Р°СЃСЊ", ex);
             }
 
             return pic;
@@ -164,11 +164,11 @@ namespace ITCommunity
 
         private static Picture MakeThumbnail(Bitmap source_bmp, string filename, string folder, Post post)
         {
-            // Стандартный метод GetThumbnail генерирует изображения хренового качества
+            // РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РјРµС‚РѕРґ GetThumbnail РіРµРЅРµСЂРёСЂСѓРµС‚ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ С…СЂРµРЅРѕРІРѕРіРѕ РєР°С‡РµСЃС‚РІР°
             int max = Global.ConfigNumParam("MaxThumbWidth");
             int height = source_bmp.Height;
             int width = source_bmp.Width;
-            if (width > max) //TODO: проверить на правильность
+            if (width > max) //TODO: РїСЂРѕРІРµСЂРёС‚СЊ РЅР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚СЊ
             {
                 float x;
                 float y;
@@ -203,17 +203,17 @@ namespace ITCommunity
             return new Picture(post, filename, true);
         }
         /// <summary>
-        /// Данный метод вызывается после добавления поста, чтобы прибить изображения:
-        ///  - пихаем изображения из временной папки в нужную, 
-        ///  - изменяем новость(папка то изменилась), 
-        ///  - удаляем ненужные картинки
+        /// Р”Р°РЅРЅС‹Р№ РјРµС‚РѕРґ РІС‹Р·С‹РІР°РµС‚СЃСЏ РїРѕСЃР»Рµ РґРѕР±Р°РІР»РµРЅРёСЏ РїРѕСЃС‚Р°, С‡С‚РѕР±С‹ РїСЂРёР±РёС‚СЊ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ:
+        ///  - РїРёС…Р°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РёР· РІСЂРµРјРµРЅРЅРѕР№ РїР°РїРєРё РІ РЅСѓР¶РЅСѓСЋ, 
+        ///  - РёР·РјРµРЅСЏРµРј РЅРѕРІРѕСЃС‚СЊ(РїР°РїРєР° С‚Рѕ РёР·РјРµРЅРёР»Р°СЃСЊ), 
+        ///  - СѓРґР°Р»СЏРµРј РЅРµРЅСѓР¶РЅС‹Рµ РєР°СЂС‚РёРЅРєРё
         /// </summary>
-        /// <param name="newpost_id">Идентификатор новости</param>
-        /// <param name="user_id">Кюррент юзер</param>
+        /// <param name="newpost_id">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РЅРѕРІРѕСЃС‚Рё</param>
+        /// <param name="user_id">РљСЋСЂСЂРµРЅС‚ СЋР·РµСЂ</param>
         public static void FixImages(Post post)
         {
             MergeTempAndPostFolder(post);
-            // Изменяем ссылки на картинки в новости, так как новость получила свой айдишник + удаляем ненужные картинки
+            // РР·РјРµРЅСЏРµРј СЃСЃС‹Р»РєРё РЅР° РєР°СЂС‚РёРЅРєРё РІ РЅРѕРІРѕСЃС‚Рё, С‚Р°Рє РєР°Рє РЅРѕРІРѕСЃС‚СЊ РїРѕР»СѓС‡РёР»Р° СЃРІРѕР№ Р°Р№РґРёС€РЅРёРє + СѓРґР°Р»СЏРµРј РЅРµРЅСѓР¶РЅС‹Рµ РєР°СЂС‚РёРЅРєРё
             CheckImgInNews(post);
         }
 
@@ -276,9 +276,9 @@ namespace ITCommunity
             }
         }
         /// <summary>
-        /// Удаляет все файлы внутри директории(включая в субдерикториях)
+        /// РЈРґР°Р»СЏРµС‚ РІСЃРµ С„Р°Р№Р»С‹ РІРЅСѓС‚СЂРё РґРёСЂРµРєС‚РѕСЂРёРё(РІРєР»СЋС‡Р°СЏ РІ СЃСѓР±РґРµСЂРёРєС‚РѕСЂРёСЏС…)
         /// </summary>
-        /// <param name="dir">директория</param>
+        /// <param name="dir">РґРёСЂРµРєС‚РѕСЂРёСЏ</param>
         private static void DeleteFiles(DirectoryInfo dir)
         {
 

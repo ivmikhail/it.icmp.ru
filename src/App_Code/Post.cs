@@ -11,13 +11,13 @@ namespace ITCommunity
 {
 
     /// <summary>
-    /// Собственно новость.
+    /// РЎРѕР±СЃС‚РІРµРЅРЅРѕ РЅРѕРІРѕСЃС‚СЊ.
     /// </summary>
     public class Post
     {
-        //делегат метода загрузки последних постов из базы, нужен для организации кеширования
+        //РґРµР»РµРіР°С‚ РјРµС‚РѕРґР° Р·Р°РіСЂСѓР·РєРё РїРѕСЃР»РµРґРЅРёС… РїРѕСЃС‚РѕРІ РёР· Р±Р°Р·С‹, РЅСѓР¶РµРЅ РґР»СЏ РѕСЂРіР°РЅРёР·Р°С†РёРё РєРµС€РёСЂРѕРІР°РЅРёСЏ
         private delegate object LastPostsLoader(int count);
-        //делегат метода загрузки популярных постов из базы, нужен для организации кеширования
+        //РґРµР»РµРіР°С‚ РјРµС‚РѕРґР° Р·Р°РіСЂСѓР·РєРё РїРѕРїСѓР»СЏСЂРЅС‹С… РїРѕСЃС‚РѕРІ РёР· Р±Р°Р·С‹, РЅСѓР¶РµРЅ РґР»СЏ РѕСЂРіР°РЅРёР·Р°С†РёРё РєРµС€РёСЂРѕРІР°РЅРёСЏ
         private delegate object TopPostsLoader(int period, int count);
 
         private int _id;
@@ -56,7 +56,7 @@ namespace ITCommunity
             }
         }
         /// <summary>
-        /// Оригинальное описание, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
+        /// РћСЂРёРіРёРЅР°Р»СЊРЅРѕРµ РѕРїРёСЃР°РЅРёРµ, "РєР°Рє РІРІРµР»" РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ (bbcode РЅРµ РѕС‚С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅ РІ С…С‚РјР», С…С‚РјР» РЅРµ РѕС‚РІР°Р»РёРґРёСЂРѕРІР°РЅ)
         /// </summary>
         public string Description
         {
@@ -71,7 +71,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Оригинальный текст, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
+        /// РћСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ С‚РµРєСЃС‚, "РєР°Рє РІРІРµР»" РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ (bbcode РЅРµ РѕС‚С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅ РІ С…С‚РјР», С…С‚РјР» РЅРµ РѕС‚РІР°Р»РёРґРёСЂРѕРІР°РЅ)
         /// </summary>
         public string Text
         {
@@ -86,7 +86,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Полностью форматированное в безопасный хтмл описание
+        /// РџРѕР»РЅРѕСЃС‚СЊСЋ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅРѕРµ РІ Р±РµР·РѕРїР°СЃРЅС‹Р№ С…С‚РјР» РѕРїРёСЃР°РЅРёРµ
         /// </summary>
         public string DescriptionFormatted
         {
@@ -97,7 +97,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Полностью форматированный в безопасный хтмл текст
+        /// РџРѕР»РЅРѕСЃС‚СЊСЋ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅС‹Р№ РІ Р±РµР·РѕРїР°СЃРЅС‹Р№ С…С‚РјР» С‚РµРєСЃС‚
         /// </summary>
         public string TextFormatted
         {
@@ -123,7 +123,7 @@ namespace ITCommunity
         {
             get
             {
-                //TODO: переделать!!!
+                //TODO: РїРµСЂРµРґРµР»Р°С‚СЊ!!!
                 return User.GetById(_userId);
             }
             set
@@ -172,7 +172,7 @@ namespace ITCommunity
             }
             set
             {
-                //TODO: Накладывает кое-какие ограничения.
+                //TODO: РќР°РєР»Р°РґС‹РІР°РµС‚ РєРѕРµ-РєР°РєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ.
                 if (value.Length != 0)
                 {
                     if (0 < value.Length && value.Length < 8)
@@ -199,10 +199,10 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Выясняем является ли данный пользователь автором(создателем) новости
+        /// Р’С‹СЏСЃРЅСЏРµРј СЏРІР»СЏРµС‚СЃСЏ Р»Рё РґР°РЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р°РІС‚РѕСЂРѕРј(СЃРѕР·РґР°С‚РµР»РµРј) РЅРѕРІРѕСЃС‚Рё
         /// </summary>
-        /// <param name="user">Пользователь</param>
-        /// <returns>Значение, если такой новости нет, возвращается труъ</returns>
+        /// <param name="user">РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ</param>
+        /// <returns>Р—РЅР°С‡РµРЅРёРµ, РµСЃР»Рё С‚Р°РєРѕР№ РЅРѕРІРѕСЃС‚Рё РЅРµС‚, РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ С‚СЂСѓСЉ</returns>
         public bool IsPostOwner(User user)
         {
             bool is_owner = false;
@@ -223,33 +223,33 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Выясняем является ли статья избранным для данного пользователя
+        /// Р’С‹СЏСЃРЅСЏРµРј СЏРІР»СЏРµС‚СЃСЏ Р»Рё СЃС‚Р°С‚СЊСЏ РёР·Р±СЂР°РЅРЅС‹Рј РґР»СЏ РґР°РЅРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
-        /// <param name="user_id">Данный пользователь</param>
-        /// <returns>Булеан</returns>
+        /// <param name="user_id">Р”Р°РЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ</param>
+        /// <returns>Р‘СѓР»РµР°РЅ</returns>
         public bool IsFavorites(int user_id)
         {
             return Convert.ToBoolean(Database.PostIsFavorite(user_id, this.Id));
         }
 
         /// <summary>
-        /// Возвращает ссылку на удаление/добавление новости из/в избранное
+        /// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° СѓРґР°Р»РµРЅРёРµ/РґРѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕСЃС‚Рё РёР·/РІ РёР·Р±СЂР°РЅРЅРѕРµ
         /// </summary>
         public string FavoritesAction
         {
-            //TODO: Переделать!
+            //TODO: РџРµСЂРµРґРµР»Р°С‚СЊ!
             get
             {
-                string value = "<a href='register.aspx?favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/design/non-fav.png' class='fixPNG favorites-link' /></a>"; ;
+                string value = "<a href='register.aspx?favorites.aspx?a=add&post=" + this.Id + "' title='Р”РѕР±Р°РІРёС‚СЊ РІ РёР·Р±СЂР°РЅРЅРѕРµ'><img src='media/img/design/non-fav.png' class='fixPNG favorites-link' /></a>"; ;
                 if (CurrentUser.isAuth)
                 {
                     if (IsFavorites(CurrentUser.User.Id))
                     {
 
-                        value = "<a href='favorites.aspx?&a=del&post=" + this.Id + "' title='Убрать из избранного'><img src='media/img/design/is-fav.png' class='fixPNG' /></a>";
+                        value = "<a href='favorites.aspx?&a=del&post=" + this.Id + "' title='РЈР±СЂР°С‚СЊ РёР· РёР·Р±СЂР°РЅРЅРѕРіРѕ'><img src='media/img/design/is-fav.png' class='fixPNG' /></a>";
                     } else
                     {
-                        value = "<a href='favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/design/non-fav.png' class='fixPNG' /></a>";
+                        value = "<a href='favorites.aspx?a=add&post=" + this.Id + "' title='Р”РѕР±Р°РІРёС‚СЊ РІ РёР·Р±СЂР°РЅРЅРѕРµ'><img src='media/img/design/non-fav.png' class='fixPNG' /></a>";
                     }
                 }
                 return value;
@@ -257,16 +257,16 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Обновляем новость и его категории
+        /// РћР±РЅРѕРІР»СЏРµРј РЅРѕРІРѕСЃС‚СЊ Рё РµРіРѕ РєР°С‚РµРіРѕСЂРёРё
         /// 
-        /// Обновляются такие атрибуты как:
-        /// * title - Название 
-        /// * description - Краткое описание
-        /// * text - Текст новости
-        /// * attached - Прикреплено ли
-        /// * source - Источник(ссылка на оригинал)
+        /// РћР±РЅРѕРІР»СЏСЋС‚СЃСЏ С‚Р°РєРёРµ Р°С‚СЂРёР±СѓС‚С‹ РєР°Рє:
+        /// * title - РќР°Р·РІР°РЅРёРµ 
+        /// * description - РљСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ
+        /// * text - РўРµРєСЃС‚ РЅРѕРІРѕСЃС‚Рё
+        /// * attached - РџСЂРёРєСЂРµРїР»РµРЅРѕ Р»Рё
+        /// * source - РСЃС‚РѕС‡РЅРёРє(СЃСЃС‹Р»РєР° РЅР° РѕСЂРёРіРёРЅР°Р»)
         /// 
-        /// * categories - категории новости(отдельные таблицы)
+        /// * categories - РєР°С‚РµРіРѕСЂРёРё РЅРѕРІРѕСЃС‚Рё(РѕС‚РґРµР»СЊРЅС‹Рµ С‚Р°Р±Р»РёС†С‹)
         /// </summary>
         public void UpdateWithCategories()
         {
@@ -275,14 +275,14 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Обновляем только новость(категории и кол-во просмотров не обновляются)
+        /// РћР±РЅРѕРІР»СЏРµРј С‚РѕР»СЊРєРѕ РЅРѕРІРѕСЃС‚СЊ(РєР°С‚РµРіРѕСЂРёРё Рё РєРѕР»-РІРѕ РїСЂРѕСЃРјРѕС‚СЂРѕРІ РЅРµ РѕР±РЅРѕРІР»СЏСЋС‚СЃСЏ)
         /// 
-        /// Обновляются такие атрибуты как:
-        /// * title - Название 
-        /// * description - Краткое описание
-        /// * text - Текст новости
-        /// * attached - Прикреплено ли
-        /// * source - Источник(ссылка на оригинал)
+        /// РћР±РЅРѕРІР»СЏСЋС‚СЃСЏ С‚Р°РєРёРµ Р°С‚СЂРёР±СѓС‚С‹ РєР°Рє:
+        /// * title - РќР°Р·РІР°РЅРёРµ 
+        /// * description - РљСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ
+        /// * text - РўРµРєСЃС‚ РЅРѕРІРѕСЃС‚Рё
+        /// * attached - РџСЂРёРєСЂРµРїР»РµРЅРѕ Р»Рё
+        /// * source - РСЃС‚РѕС‡РЅРёРє(СЃСЃС‹Р»РєР° РЅР° РѕСЂРёРіРёРЅР°Р»)
         /// 
         /// </summary>
 
@@ -292,7 +292,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Увеличиваем кол-во просмотров новости на 1 единицу
+        /// РЈРІРµР»РёС‡РёРІР°РµРј РєРѕР»-РІРѕ РїСЂРѕСЃРјРѕС‚СЂРѕРІ РЅРѕРІРѕСЃС‚Рё РЅР° 1 РµРґРёРЅРёС†Сѓ
         /// </summary>
         public void UpdateViews()
         {
@@ -339,16 +339,16 @@ namespace ITCommunity
             Database.PostDel(post.Id);
         }
         /// <summary>
-        /// Сцепляем новость к категориям
+        /// РЎС†РµРїР»СЏРµРј РЅРѕРІРѕСЃС‚СЊ Рє РєР°С‚РµРіРѕСЂРёСЏРј
         /// </summary>
-        /// <param name="menu">Категории</param>
-        /// <param name="post_id">Новость</param>
+        /// <param name="menu">РљР°С‚РµРіРѕСЂРёРё</param>
+        /// <param name="post_id">РќРѕРІРѕСЃС‚СЊ</param>
         private static void PostAttachCategories(List<Category> cats, Post post)
         {
-            // лучше не придумалось
+            // Р»СѓС‡С€Рµ РЅРµ РїСЂРёРґСѓРјР°Р»РѕСЃСЊ
 
             /* 
-                Формируется запрос вида                
+                Р¤РѕСЂРјРёСЂСѓРµС‚СЃСЏ Р·Р°РїСЂРѕСЃ РІРёРґР°                
              
                 INSERT INTO post_cat(post_id, cat_id) 
                 SELECT 1,2 
@@ -357,7 +357,7 @@ namespace ITCommunity
                 UNION ALL
                 SELECT 1,4
               
-                (множественная вставка как в мускле не прокатывает)
+                (РјРЅРѕР¶РµСЃС‚РІРµРЅРЅР°СЏ РІСЃС‚Р°РІРєР° РєР°Рє РІ РјСѓСЃРєР»Рµ РЅРµ РїСЂРѕРєР°С‚С‹РІР°РµС‚)
              */
             string query = "INSERT INTO post_cat(post_id, cat_id) ";
             string param = String.Empty;
@@ -374,30 +374,30 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Полнотекстовый поиск по постам, учитываем title, desc, text
+        /// РџРѕР»РЅРѕС‚РµРєСЃС‚РѕРІС‹Р№ РїРѕРёСЃРє РїРѕ РїРѕСЃС‚Р°Рј, СѓС‡РёС‚С‹РІР°РµРј title, desc, text
         /// </summary>
-        /// <param name="page">текущая страница</param>
-        /// <param name="count">кол-во постов на страницу</param>
-        /// <param name="query">запрос</param>
-        /// <param name="posts_count">кол-во найденных постов</param>
-        /// <returns>Список найденных постов</returns>
+        /// <param name="page">С‚РµРєСѓС‰Р°СЏ СЃС‚СЂР°РЅРёС†Р°</param>
+        /// <param name="count">РєРѕР»-РІРѕ РїРѕСЃС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Сѓ</param>
+        /// <param name="query">Р·Р°РїСЂРѕСЃ</param>
+        /// <param name="posts_count">РєРѕР»-РІРѕ РЅР°Р№РґРµРЅРЅС‹С… РїРѕСЃС‚РѕРІ</param>
+        /// <returns>РЎРїРёСЃРѕРє РЅР°Р№РґРµРЅРЅС‹С… РїРѕСЃС‚РѕРІ</returns>
         public static List<Post> Search(int page, int count, string query, ref int posts_count)
         {
             return GetPostsFromTable(Database.PostSearch(query, page, count, ref posts_count));
         }
 
         /// <summary>
-        /// Забираем посты постранично, с учетом даты и аттачей
+        /// Р—Р°Р±РёСЂР°РµРј РїРѕСЃС‚С‹ РїРѕСЃС‚СЂР°РЅРёС‡РЅРѕ, СЃ СѓС‡РµС‚РѕРј РґР°С‚С‹ Рё Р°С‚С‚Р°С‡РµР№
         /// </summary>
-        /// <param name="page">Страница которая нам нужна</param>
-        /// <param name="count">Кол-во постов на страницу</param>
+        /// <param name="page">РЎС‚СЂР°РЅРёС†Р° РєРѕС‚РѕСЂР°СЏ РЅР°Рј РЅСѓР¶РЅР°</param>
+        /// <param name="count">РљРѕР»-РІРѕ РїРѕСЃС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Сѓ</param>
         public static List<Post> Get(int page, int count, ref int posts_count)
         {
             return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
         }
 
         /// <summary>
-        /// Возвращает последние добавленные посты из кеша
+        /// Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕСЃР»РµРґРЅРёРµ РґРѕР±Р°РІР»РµРЅРЅС‹Рµ РїРѕСЃС‚С‹ РёР· РєРµС€Р°
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
@@ -418,22 +418,22 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Забираем посты постранично, с учетом даты, аттачей и категории
+        /// Р—Р°Р±РёСЂР°РµРј РїРѕСЃС‚С‹ РїРѕСЃС‚СЂР°РЅРёС‡РЅРѕ, СЃ СѓС‡РµС‚РѕРј РґР°С‚С‹, Р°С‚С‚Р°С‡РµР№ Рё РєР°С‚РµРіРѕСЂРёРё
         /// </summary>
-        /// <param name="page">Страница которая нам нужна</param>
-        /// <param name="count">Кол-во постов на страницу</param>
-        /// <param name="count">id категории</param>
+        /// <param name="page">РЎС‚СЂР°РЅРёС†Р° РєРѕС‚РѕСЂР°СЏ РЅР°Рј РЅСѓР¶РЅР°</param>
+        /// <param name="count">РљРѕР»-РІРѕ РїРѕСЃС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Сѓ</param>
+        /// <param name="count">id РєР°С‚РµРіРѕСЂРёРё</param>
         public static List<Post> GetByCategory(int page, int count, int cat_id, ref int posts_count)
         {
             return GetPostsFromTable(Database.PostGetByCat(page, count, cat_id, ref posts_count));
         }
 
         /// <summary>
-        /// Популярные посты. Т.к хранится в кеше, то возможны задержки при изменении 
-        /// параметров period и count в течении жизни кеша
+        /// РџРѕРїСѓР»СЏСЂРЅС‹Рµ РїРѕСЃС‚С‹. Рў.Рє С…СЂР°РЅРёС‚СЃСЏ РІ РєРµС€Рµ, С‚Рѕ РІРѕР·РјРѕР¶РЅС‹ Р·Р°РґРµСЂР¶РєРё РїСЂРё РёР·РјРµРЅРµРЅРёРё 
+        /// РїР°СЂР°РјРµС‚СЂРѕРІ period Рё count РІ С‚РµС‡РµРЅРёРё Р¶РёР·РЅРё РєРµС€Р°
         /// </summary>
-        /// <param name="period">Период, в днях. Например, популярные посты за последние N дней.</param>
-        /// <param name="count">Кол-во нужных постов</param>
+        /// <param name="period">РџРµСЂРёРѕРґ, РІ РґРЅСЏС…. РќР°РїСЂРёРјРµСЂ, РїРѕРїСѓР»СЏСЂРЅС‹Рµ РїРѕСЃС‚С‹ Р·Р° РїРѕСЃР»РµРґРЅРёРµ N РґРЅРµР№.</param>
+        /// <param name="count">РљРѕР»-РІРѕ РЅСѓР¶РЅС‹С… РїРѕСЃС‚РѕРІ</param>
         public static List<KeyValuePair<User, Post>> GetTop(int period, int count)
         {
             TopPostsLoader loader = new TopPostsLoader(GetTopPostsFromDB);
@@ -459,9 +459,9 @@ namespace ITCommunity
 
 
         /// <summary>
-        /// Добавление нового поста
+        /// Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ РїРѕСЃС‚Р°
         /// </summary>
-        /// <param name="post">Сам пост, CreateDate будет изменен на дату добавления новости в базу.</param>
+        /// <param name="post">РЎР°Рј РїРѕСЃС‚, CreateDate Р±СѓРґРµС‚ РёР·РјРµРЅРµРЅ РЅР° РґР°С‚Сѓ РґРѕР±Р°РІР»РµРЅРёСЏ РЅРѕРІРѕСЃС‚Рё РІ Р±Р°Р·Сѓ.</param>
         public static Post Add(Post post)
         {
             DataRow dr = Database.PostAdd(post.Title,
@@ -477,30 +477,30 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Получаем избранные посты пользователя
+        /// РџРѕР»СѓС‡Р°РµРј РёР·Р±СЂР°РЅРЅС‹Рµ РїРѕСЃС‚С‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
-        /// <param name="user_id">идентификатор пользователя</param>
-        /// <returns>список постов</returns>
+        /// <param name="user_id">РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</param>
+        /// <returns>СЃРїРёСЃРѕРє РїРѕСЃС‚РѕРІ</returns>
         public static List<Post> GetFavorites(int user_id, int page, int count, ref int total_records)
         {
             return GetPostsFromTable(Database.FavoriteGetByUser(user_id, page, count, ref total_records));
         }
 
         /// <summary>
-        /// Убираем новость из "избранных" данного пользователя
+        /// РЈР±РёСЂР°РµРј РЅРѕРІРѕСЃС‚СЊ РёР· "РёР·Р±СЂР°РЅРЅС‹С…" РґР°РЅРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
-        /// <param name="post_id">идентификатор поста</param>
-        /// <param name="user_id">идентификатор пользователя</param>
+        /// <param name="post_id">РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕСЃС‚Р°</param>
+        /// <param name="user_id">РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</param>
         public static void FavoriteDelete(int post_id, int user_id)
         {
             Database.FavoriteDel(post_id, user_id);
         }
 
         /// <summary>
-        /// Добавляем посты в "избранное" пользователя
+        /// Р”РѕР±Р°РІР»СЏРµРј РїРѕСЃС‚С‹ РІ "РёР·Р±СЂР°РЅРЅРѕРµ" РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
-        /// <param name="post_id">идентификатор поста</param>
-        /// <param name="user_id">идентификатор пользователя</param>
+        /// <param name="post_id">РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕСЃС‚Р°</param>
+        /// <param name="user_id">РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</param>
         public static Post FavoriteAdd(int post_id, int user_id)
         {
             return GetPostFromRow(Database.FavoriteAdd(user_id, post_id));

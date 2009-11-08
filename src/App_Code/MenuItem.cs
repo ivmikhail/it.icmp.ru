@@ -11,20 +11,20 @@ namespace ITCommunity
 {
 
     /// <summary>
-    /// MenuItem(Ссылка в менюшке). 2 уровня вложенности.
+    /// MenuItem(РЎСЃС‹Р»РєР° РІ РјРµРЅСЋС€РєРµ). 2 СѓСЂРѕРІРЅСЏ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё.
     /// </summary>
 
     public class MenuItem
     {
-        //делегат метода загрузки меню из базы, нужен для организации кеширования
+        //РґРµР»РµРіР°С‚ РјРµС‚РѕРґР° Р·Р°РіСЂСѓР·РєРё РјРµРЅСЋ РёР· Р±Р°Р·С‹, РЅСѓР¶РµРЅ РґР»СЏ РѕСЂРіР°РЅРёР·Р°С†РёРё РєРµС€РёСЂРѕРІР°РЅРёСЏ
         private delegate object MenuLoader();
 
         private int _id;
-        private int _parentId; // 0 значит родителей нету.
+        private int _parentId; // 0 Р·РЅР°С‡РёС‚ СЂРѕРґРёС‚РµР»РµР№ РЅРµС‚Сѓ.
         private string _url;
         private int _sort;
         private string _name;
-        private byte _newWindow; // не 0, открывать ссылку в новом окне
+        private byte _newWindow; // РЅРµ 0, РѕС‚РєСЂС‹РІР°С‚СЊ СЃСЃС‹Р»РєСѓ РІ РЅРѕРІРѕРј РѕРєРЅРµ
 
         public int Id
         {
@@ -100,7 +100,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Обновляем меню, кеш сбрасывается
+        /// РћР±РЅРѕРІР»СЏРµРј РјРµРЅСЋ, РєРµС€ СЃР±СЂР°СЃС‹РІР°РµС‚СЃСЏ
         /// </summary>
         public void Update()
         {
@@ -127,9 +127,9 @@ namespace ITCommunity
             _name = "";
         }
         /// <summary>
-        /// Получаем пунктик в меню
+        /// РџРѕР»СѓС‡Р°РµРј РїСѓРЅРєС‚РёРє РІ РјРµРЅСЋ
         /// </summary>
-        /// <param name="id">Идентификатор</param>
+        /// <param name="id">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ</param>
         public static MenuItem GetById(int id)
         {
             List<MenuItem> menu_items = GetMenu();
@@ -149,12 +149,12 @@ namespace ITCommunity
 
 
         /// <summary>
-        /// Получаем пунктики по родителю
+        /// РџРѕР»СѓС‡Р°РµРј РїСѓРЅРєС‚РёРєРё РїРѕ СЂРѕРґРёС‚РµР»СЋ
         /// 
-        /// Чтобы получить верхний уровень нужно передать в качестве идентификатора родителя 0.
+        /// Р§С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ РІРµСЂС…РЅРёР№ СѓСЂРѕРІРµРЅСЊ РЅСѓР¶РЅРѕ РїРµСЂРµРґР°С‚СЊ РІ РєР°С‡РµСЃС‚РІРµ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° СЂРѕРґРёС‚РµР»СЏ 0.
         /// </summary>
-        /// <param name="parentId">Идентификатор родительского пункта</param>
-        /// <returns>Список подпунктов. Если идентификатор не натуральное число возвращается верхний уровень</returns>
+        /// <param name="parentId">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РїСѓРЅРєС‚Р°</param>
+        /// <returns>РЎРїРёСЃРѕРє РїРѕРґРїСѓРЅРєС‚РѕРІ. Р•СЃР»Рё РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РЅРµ РЅР°С‚СѓСЂР°Р»СЊРЅРѕРµ С‡РёСЃР»Рѕ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РІРµСЂС…РЅРёР№ СѓСЂРѕРІРµРЅСЊ</returns>
         public static List<MenuItem> GetByParent(int parentId)
         {
             int parent = -1;
@@ -179,9 +179,9 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Забираем меню из кеша
+        /// Р—Р°Р±РёСЂР°РµРј РјРµРЅСЋ РёР· РєРµС€Р°
         /// </summary>
-        /// <returns>Список пунктов в меню, независимо от вложенности</returns>
+        /// <returns>РЎРїРёСЃРѕРє РїСѓРЅРєС‚РѕРІ РІ РјРµРЅСЋ, РЅРµР·Р°РІРёСЃРёРјРѕ РѕС‚ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё</returns>
         private static List<MenuItem> GetMenu()
         {
             MenuLoader loader = new MenuLoader(GetMenuFromDB);
@@ -201,9 +201,9 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Удаляем
+        /// РЈРґР°Р»СЏРµРј
         /// </summary>
-        /// <param name="id">Идентификатор пункта в меню</param>
+        /// <param name="id">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСѓРЅРєС‚Р° РІ РјРµРЅСЋ</param>
         public static void Delete(int id)
         {
             Database.MenuItemsDel(id);
@@ -211,10 +211,10 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Добавляем пункт меню
+        /// Р”РѕР±Р°РІР»СЏРµРј РїСѓРЅРєС‚ РјРµРЅСЋ
         /// </summary>
-        /// <param name="MenuItem">Добавляемый пункт</param>
-        /// <returns>Только что добавленный пункт в меню(из БД)</returns>
+        /// <param name="MenuItem">Р”РѕР±Р°РІР»СЏРµРјС‹Р№ РїСѓРЅРєС‚</param>
+        /// <returns>РўРѕР»СЊРєРѕ С‡С‚Рѕ РґРѕР±Р°РІР»РµРЅРЅС‹Р№ РїСѓРЅРєС‚ РІ РјРµРЅСЋ(РёР· Р‘Р”)</returns>
         public static MenuItem Add(MenuItem item)
         {
             MenuItem new_item = GetItemFromRow(Database.MenuItemsAdd(item.Parent.Id, item.Url, item.Sort, item.Name, item._newWindow));
