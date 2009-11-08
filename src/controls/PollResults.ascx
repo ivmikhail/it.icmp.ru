@@ -12,8 +12,12 @@
     <asp:Literal ID="LiteralPollInfo" runat="server" />
 </div>
 <div style="display:block;">
-<h2>
-    Кто как голосовал   
-</h2>
-<asp:Literal ID="LiteralVoters" runat="server" />
+    <h2>
+        Период голосования 
+    </h2>        
+    <asp:Literal ID="LiteralActivePeriod" runat="server" />
+    <h2>
+        Кто как голосовал   
+    </h2>
+    <asp:Literal ID="LiteralVoters" runat="server" />
 </div>

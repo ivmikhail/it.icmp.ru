@@ -1381,6 +1381,43 @@ namespace ITCommunity
             connection.Close();
             return result;
         }
+        public static DataRow PollGetNext(Int32 id)
+        {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollGetNext", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@id"].Value = id;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++)
+            {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            DataRow result;
+            if (reader.Read())
+            {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                result = row;
+            } else
+            {
+                result = null;
+            }
+            reader.Close();
+            connection.Close();
+            return result;
+        }
         public static object PollIsUserVoted(Int32 user_id, Int32 poll_id)
         {
             SqlConnection connection = OpenConnection();
