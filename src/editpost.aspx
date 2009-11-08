@@ -10,7 +10,7 @@
 	    $$('.uploaded-image').each(function(el) {	
 	        el.addEvent('click', function(e){
 	                //$('<%= TextAreaPostText.ClientID %>').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+ this.src +"' /></a>", false);  
-	                $('<%= TextAreaPostText.ClientID %>').insertAtCursor("[url=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/url]", false);  
+	                $('<%= TextAreaPostText.ClientID %>').insertAtCursor("[popup=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/popup]", false);  
 			    });
 		});				
 	    		

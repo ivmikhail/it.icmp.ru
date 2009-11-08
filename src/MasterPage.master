@@ -28,6 +28,7 @@
      
     <script src="media/js/highlight.pack.js"                     type="text/javascript"     charset="utf-8"></script>    
     <script src="media/js/clientcide-trunk-2.1.0.compressed.js"  type="text/javascript"     charset="utf-8"></script>  
+    <script src="media/js/popup.js"                              type="text/javascript"     charset="utf-8"></script>  
 
       
     
