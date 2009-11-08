@@ -336,7 +336,12 @@ namespace ITCommunity
 
         public static void Delete(Post post)
         {
+            
             Database.PostDel(post.Id);
+            //Чистим кеш популярных постов
+            AppCache.Remove(Global.ConfigStringParam("TopPostsCacheName"));
+            //Чистим кеш комментов комментов
+            AppCache.Remove(Global.ConfigStringParam("LastCommentsCacheName"));
         }
         /// <summary>
         /// Сцепляем новость к категориям
