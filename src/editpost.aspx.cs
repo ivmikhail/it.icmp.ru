@@ -25,7 +25,13 @@ namespace ITCommunity
                 LoadCategories();
                 CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
                 ImageOptions.Text = "Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).";
-
+                if (GetPostId() > 0)
+                {
+                    LinkButtonAdd.Text = "Изменить";
+                } else
+                {
+                    LinkButtonAdd.Text = "Добавить";
+                }
                 InitPostData();
             }
 
@@ -148,9 +154,9 @@ namespace ITCommunity
             {
                 errors.Add("Количество символов в описании(краткое описание) новости должно быть до 2000.");
             }
-            if (text.Length == 0 || text.Length > 8000)
+            if (text.Length == 0 || text.Length > 16000)
             {
-                errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 8000.");
+                errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 16000.");
             }
             if (TextBoxSource.Text.Length > 1024)
             {
