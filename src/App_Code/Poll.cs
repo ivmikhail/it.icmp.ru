@@ -120,6 +120,23 @@ namespace ITCommunity
                 _cdate = value;
             }
         }
+        /// <summary>
+        /// Если опрос активный возвращается текущая дата
+        /// </summary>
+        public DateTime EndDate
+        {
+            get
+            {
+                return GetNext().CreateDate;
+            }
+        }
+        public string EndDateString
+        {
+            get
+            {
+                return _id == GetActive().Id ? "активный" : EndDate.ToString("dd MMMM yyyy, HH:mm"); 
+            }
+        }
         public Poll(int id,
                     string topic,
                     int author_id,
@@ -127,7 +144,7 @@ namespace ITCommunity
                     int is_open,
                     int votes_count,
                     List<PollAnswer> answers,
-            DateTime cdate)
+                    DateTime cdate)
         {
             _id = id;
             _topic = topic;
@@ -220,6 +237,15 @@ namespace ITCommunity
         public void Vote(User user, string answers)
         {
             Database.PollVote(_id, user.Id, answers);
+        }
+
+        /// <summary>
+        /// Получаем следующий опрос
+        /// </summary>
+        /// <returns></returns>
+        public Poll GetNext()
+        {
+            return GetPollFromRow(Database.PollGetNext(_id));
         }
 
         /// <summary>

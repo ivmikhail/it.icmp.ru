@@ -10,7 +10,13 @@
               <th>
                  voters
               </th>
-              <th></th>       
+              <th>
+                 дата начала
+              </th>
+              <th>
+                 дата окончания
+              </th>       
+              <th></th>
             </thead>
             <tbody>
         </HeaderTemplate>
@@ -21,6 +27,12 @@
                 </td>
                 <td>
                     <%# Eval("votescount") %>
+                </td>
+                <td>
+                    <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> 
+                </td>
+                <td>
+                    <%# Eval("enddatestring")%> 
                 </td>
                 <td>
                     <a href="pollresult.aspx?id=<%# Eval("id") %>" title="Посмотреть результаты">результаты</a>
