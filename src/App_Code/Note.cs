@@ -11,7 +11,7 @@ using ITCommunity;
 namespace ITCommunity
 {
 /// <summary>
-/// Типа блокнот
+/// РўРёРїР° Р±Р»РѕРєРЅРѕС‚
 /// </summary>
     public class Note
     {

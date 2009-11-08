@@ -53,7 +53,7 @@ namespace ITCommunity {
         public String GetGreeting() {
             String[] list = greetings;
             if (list.Length == 0) {
-                return "типа привет";
+                return "С‚РёРїР° РїСЂРёРІРµС‚";
             }
             return list[random.Next(list.Length)];
         }

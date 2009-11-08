@@ -13,7 +13,7 @@ using ITCommunity;
 namespace ITCommunity
 {
     /// <summary>
-    /// Мега-глобал класс
+    /// РњРµРіР°-РіР»РѕР±Р°Р» РєР»Р°СЃСЃ
     /// </summary>
     public class Global : System.Web.HttpApplication
     {
@@ -22,7 +22,7 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Адрес сайта, например: http://it.icmp.ru (без завершающего слеша).
+        /// РђРґСЂРµСЃ СЃР°Р№С‚Р°, РЅР°РїСЂРёРјРµСЂ: http://it.icmp.ru (Р±РµР· Р·Р°РІРµСЂС€Р°СЋС‰РµРіРѕ СЃР»РµС€Р°).
         /// </summary>
         public static string SiteAddress
         {
@@ -30,7 +30,7 @@ namespace ITCommunity
         }
         private static String connectionString = null;
         /// <summary>
-        /// Строка соединения с SQL сервером
+        /// РЎС‚СЂРѕРєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ SQL СЃРµСЂРІРµСЂРѕРј
         /// </summary>
         /// <returns></returns>
         public static string ConnectionString() {
@@ -56,7 +56,7 @@ namespace ITCommunity
                val =  ConfigurationManager.AppSettings[param];
             } catch (Exception ex)
             {
-                Logger.Log.Fatal("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex);
+                Logger.Log.Fatal("РћС€РёР±РєР° РїСЂРё С‡С‚РµРЅРёРё РєРѕРЅС„РёРіСѓСЂР°С†РёРё(web.config СЃРµРєС†РёСЏ appSettings), РїР°СЂР°РјРµС‚СЂ " + param + "", ex);
             }
             return val;
         }
@@ -69,7 +69,7 @@ namespace ITCommunity
                 val = Convert.ToInt32(ConfigurationManager.AppSettings[param]);
             } catch (Exception ex)
             {
-                Logger.Log.Fatal("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex);
+                Logger.Log.Fatal("РћС€РёР±РєР° РїСЂРё С‡С‚РµРЅРёРё РєРѕРЅС„РёРіСѓСЂР°С†РёРё(web.config СЃРµРєС†РёСЏ appSettings), РїР°СЂР°РјРµС‚СЂ " + param + "", ex);
             }
             return val;
         }
@@ -81,7 +81,7 @@ namespace ITCommunity
                 val = Convert.ToDouble(ConfigurationManager.AppSettings[param]);
             } catch (Exception ex)
             {
-                Logger.Log.Fatal("Ошибка при чтении конфигурации(web.config секция appSettings), параметр " + param + "", ex);
+                Logger.Log.Fatal("РћС€РёР±РєР° РїСЂРё С‡С‚РµРЅРёРё РєРѕРЅС„РёРіСѓСЂР°С†РёРё(web.config СЃРµРєС†РёСЏ appSettings), РїР°СЂР°РјРµС‚СЂ " + param + "", ex);
             }
             return val;
         }
@@ -99,19 +99,19 @@ namespace ITCommunity
         public void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();
-            Logger.Log.Error("Произошла непредвиденная ошибка, пользователь - " + CurrentUser.User.Nick  + "(" + CurrentUser.Ip + ")", ex);
+            Logger.Log.Error("РџСЂРѕРёР·РѕС€Р»Р° РЅРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР°, РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ - " + CurrentUser.User.Nick  + "(" + CurrentUser.Ip + ")", ex);
            
         }
 
         public void Application_AuthenticateRequest(Object src, EventArgs e)
         {
-            //Note: Здесь нельзя получить доступ к сессии
+            //Note: Р—РґРµСЃСЊ РЅРµР»СЊР·СЏ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє СЃРµСЃСЃРёРё
             if (HttpContext.Current.Request.IsAuthenticated)
             {
                 if (HttpContext.Current.User.Identity.AuthenticationType == "Forms")
                 {
                     System.Web.Security.FormsIdentity id = (System.Web.Security.FormsIdentity)HttpContext.Current.User.Identity;
-                    string[] roles = id.Ticket.UserData.Split(','); // на самом деле у чела не может быть по 2 роли одновременно
+                    string[] roles = id.Ticket.UserData.Split(','); // РЅР° СЃР°РјРѕРј РґРµР»Рµ Сѓ С‡РµР»Р° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїРѕ 2 СЂРѕР»Рё РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ
                     Context.User = new System.Security.Principal.GenericPrincipal(id, roles);
 
                 }

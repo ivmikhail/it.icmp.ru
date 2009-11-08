@@ -10,7 +10,7 @@ using ITCommunity;
 namespace ITCommunity
 {
     /// <summary>
-    /// Приватные сообщения
+    /// РџСЂРёРІР°С‚РЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ
     /// </summary>
     public class Message
     {

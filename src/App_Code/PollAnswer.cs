@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace ITCommunity
 {
     /// <summary>
-    /// Ответ на опрос
+    /// РћС‚РІРµС‚ РЅР° РѕРїСЂРѕСЃ
     /// </summary>
     public class PollAnswer
     {
@@ -85,9 +85,9 @@ namespace ITCommunity
             _votes_count = votes_count;
         }
         /// <summary>
-        /// Возвращает список прогосовавших за этот пункт, если опрос открытый, иначе пустой список
+        /// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РїСЂРѕРіРѕСЃРѕРІР°РІС€РёС… Р·Р° СЌС‚РѕС‚ РїСѓРЅРєС‚, РµСЃР»Рё РѕРїСЂРѕСЃ РѕС‚РєСЂС‹С‚С‹Р№, РёРЅР°С‡Рµ РїСѓСЃС‚РѕР№ СЃРїРёСЃРѕРє
         /// </summary>
-        /// <returns>Список проголосоваших</returns>
+        /// <returns>РЎРїРёСЃРѕРє РїСЂРѕРіРѕР»РѕСЃРѕРІР°С€РёС…</returns>
         public List<User> GetUsers()
         {
             List<User> users;
@@ -103,10 +103,10 @@ namespace ITCommunity
         }
 
         /// <summary>
-        /// Возвращает список вариантов ответа опроса
+        /// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІР°СЂРёР°РЅС‚РѕРІ РѕС‚РІРµС‚Р° РѕРїСЂРѕСЃР°
         /// </summary>
-        /// <param name="poll_id">Идентификатор опроса</param>
-        /// <returns>Список обьектов PollAnswer(пустой если опроса не существует)</returns>
+        /// <param name="poll_id">РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РѕРїСЂРѕСЃР°</param>
+        /// <returns>РЎРїРёСЃРѕРє РѕР±СЊРµРєС‚РѕРІ PollAnswer(РїСѓСЃС‚РѕР№ РµСЃР»Рё РѕРїСЂРѕСЃР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚)</returns>
         public static List<PollAnswer> Get(int poll_id)
         {
             return GetAnswersFromTable(Database.PollGetAnswers(poll_id));
