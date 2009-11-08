@@ -48,14 +48,12 @@
                         </dt>
                         <dd>
                             определяет, по какой стороне будет выравниваться элемент, при этом остальные элементы будут обтекать его с других сторон
-                        </dd>
-                    </dl>
-                    
-                    <dt>
+                        </dd>                    
+                        <dt>
                             [url][/url]
                             <br />
                             [email][/email]
-                    </dt>
+                        </dt>
                         <dd>
                             внутри тега [url] помещайте ссылки, а внутри [email] адрес электронной почты; 
                             так же [url] можно использовать в виде:
@@ -63,9 +61,10 @@
                             <br />
                             [url=http://example.com]пример[/url],
                             <br />
-                            [url=http://test.ru][img]http://flickr.com/givemeimg.png[/img][/url]                            
-                            <br />
+                            [url=http://test.ru][img]http://flickr.com/givemeimg.png[/img][/url]                      
+
                         </dd> 
+                  </dl>
           </div>
           <div class="block-left">
                      <dl>        
@@ -118,7 +117,18 @@
                             [video][/video]
                         </dt> 
                         <dd>
-                            Проигрывает видео, внутрь вставляем ссылки на видео, поддерживается <b>Play.Ykt.Ru</b> и <b>Tube.Abunda.Ru</b>
+                            Проигрывает видео, внутрь вставляем ссылки на видео, поддерживается <i>Play.Ykt.Ru</i> и <i>Tube.Abunda.Ru</i>
+                        </dd>
+                        <dt>
+                            [popup][/popup]
+                        </dt>
+                        <dd>
+                            используйте чтобы открывать картинку в оригинальном размере в pop-up окне
+                            <br />
+                            <br />
+                            [popup=fullimg.url][img]thumbimg.url[/img][/popup],
+                            <br />
+                            [popup=full.png]картинко[/popup]
                         </dd>
                     </dl>                   
           </div>

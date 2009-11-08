@@ -229,7 +229,7 @@ namespace ITCommunity
             List<Picture> pics = Picture.GetByPost(post);
             foreach (Picture pic in pics)
             {
-                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
+                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='Загруженная картинка' class='uploaded-image'/>";
             }            
         }
 
