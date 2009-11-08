@@ -34,19 +34,21 @@
         var isIE = (navigator.appName == "Microsoft Internet Explorer");
         
         function fitPic() {        
-            iWidth  = (isIE) ? document.body.clientWidth  : window.innerWidth;
-            iHeight = (isIE) ? document.body.clientHeight : window.innerHeight;
-            iWidth  = document.images[0].width - iWidth;
-            iHeight = document.images[0].height - iHeight;
-            window.resizeBy(iWidth, iHeight);
+            var cWidth  = (isIE) ? document.body.clientWidth  : window.innerWidth;
+            var cHeight = (isIE) ? document.body.clientHeight : window.innerHeight;
+            
+            var width  = document.images[0].width - cWidth;
+            var height = document.images[0].height - cHeight;            
+           
+            window.resizeBy(width, height);             
             self.focus();
-        };
+        }
     </script>    
 </head>
 
 <body onload="fitPic();">
     <script type="text/javascript">
-        document.write( "<img src='" + picUrl + "' alt='Картинко' >" );
+        document.write( "<img src='" + picUrl + "' alt='Картинко' onclick='window.close();' >" );
     </script>
 </body>
 </html>
