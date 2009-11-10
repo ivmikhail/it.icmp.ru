@@ -106,6 +106,7 @@ namespace ITCommunity
                 notFoundError = (ex != null && ((HttpException)ex).GetHttpCode() == 404);
             } catch (InvalidCastException exc) //pzdc
             {
+                exc = null;
                 notFoundError = false;
             }
             if (!notFoundError) {
