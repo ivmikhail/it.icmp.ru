@@ -1,3 +1,11 @@
+/* 
+	Формат написания стилей:
+		- атрибуты id и class для тегов со стилями пишутся
+			только маленькими латинскими символами и для
+			разделения слов использовать символ "-" (минус);
+		- cвойства стилей писать в алфавитном порядке;
+*/
+
 /* tags: begin */
 body {
 	background: #ffffff;
@@ -87,16 +95,13 @@ hr {
 #dynamic-content .content {
 	padding: 20px;
 }
-#dynamic-content blockquote
-{
-	padding: 3px 5px 3px 13px;
+#dynamic-content blockquote,
+#dynamic-content pre {
 	border-left: solid 2px #bbbbbb;
-	font-style:italic;
+	padding: 3px 5px 3px 13px;
 }
-#dynamic-content pre
-{
-	padding: 3px 5px 3px 13px;
-	border-left: solid 2px #bbbbbb;
+#dynamic-content blockquote {
+	font-style: italic;
 }
 /* dynamic-content: end */
 
@@ -154,9 +159,9 @@ hr {
 	border: 1px solid #aaaaaa;
 	color: #666666;
 	font-size: 0.85em;
+	margin: 5px 0;
 	padding: 2px 5px;
 	text-align: justify;
-	margin: 5px 0;
 }
 .note a {
 	color: #6688ff;
@@ -173,8 +178,8 @@ hr {
 .info-panel {
 	border: 1px dotted #afafaf;
 	clear: both;
-	padding: 5px 10px 7px;
 	margin: 10px 0;
+	padding: 5px 10px 7px;
 }
 /* panels: end */
 
@@ -229,8 +234,8 @@ hr {
 
 /* poll-menu: begin */
 #poll-menu input {
-	width: 30px;
 	padding: 3px 0;
+	width: 30px;
 }
 #poll-menu .vote-link-panel {
 	text-align: center;
@@ -258,14 +263,14 @@ hr {
 }
 .post .post-desc,
 .post .post-text {
-	padding: 10px 15px;
 	font: 1.1em/1.6em Verdana, sans-serif;
+	padding: 10px 15px;
 }
 .post .post-info {
 	border: 1px dotted #afafaf;
 	clear: both;
-	padding: 5px 10px 7px;
 	margin: 10px 0;
+	padding: 5px 10px 7px;
 }
 .post .add-to-favorites-link:hover,
 .post .delete-from-favorites-link:hover,
@@ -297,8 +302,8 @@ hr {
 	padding: 5px 10px 7px;
 }
 #comments .comment-text {
-	padding: 5px 15px 0;
 	font: 1em/1.4em Verdana, sans-serif;
+	padding: 5px 15px 0;
 }
 #comments .odd .comment-info {
 }
@@ -311,9 +316,9 @@ hr {
 #bbcode-info {
 }
 #bbcode-info:after {
+	clear: both;
 	content: "";
 	display: block;
-	clear: both;
 }
 #bbcode-info #tags-info-close {
 	float: right;
@@ -341,10 +346,10 @@ hr {
 
 /* pager: begin */
 #pager {
-	position: fixed;
 	bottom: 3.5em;
-	z-index: 254;
+	position: fixed;
 	text-align: right;
+	z-index: 254;
 }
 #pager li {
 	float: left;
@@ -353,8 +358,8 @@ hr {
 #pager a,
 #pager .active,
 #pager a:visited {
-	display: block;
 	border: solid 1px #ffffff;
+	display: block;
 	margin-right: 2px;
 	padding: 3px 6px;
 	text-decoration: none;
@@ -374,10 +379,10 @@ hr {
 }
 #pager .previous-off,
 #pager .next-off {
+	border: solid 1px #ffffff;
 	color: #666666;
 	font-weight: bold;
 	padding: 3px 6px;
-	border: solid 1px #ffffff;
 }
 #pager .previous-off:hover,
 #pager .next-off:hover {
@@ -385,8 +390,8 @@ hr {
 }
 #pager .next a,
 #pager .previous a {
-	font-weight: bold;
 	border: solid 1px #ffffff;
+	font-weight: bold;
 }
 /* pager: end */
 
@@ -420,8 +425,8 @@ hr {
 	background: #4466ff;
 	color: #ffffff;
 	font-size: 2.2em;
-	padding: 2px 5px 4px;
 	margin: 0 10px;
+	padding: 2px 5px 4px;
 }
 .big-button a:hover {
 	background: #ff4455;
@@ -445,34 +450,34 @@ hr {
 	width: 100%;
 }
 .tabs .tabSet {
+	background: url(../../media/img/design/tab/tab-bkg.gif) bottom left repeat-x;
+	height: 26px;
 	margin: 0;
 	padding: 0 0 0 6px;
-	height: 26px;
 	width: auto;
-	background: url(../../media/img/design/tab/tab-bkg.gif) bottom left repeat-x;
 }
 .tabs .tabSet li:before {
 	content: "" !important;
 }
 .tabs .tabSet li {
-	list-style-type: none;
 	background: url(../../media/img/design/tab/tab-off-l.gif) top left no-repeat !important;
+	cursor: pointer;
 	float: left !important;
+	list-style-type: none;
 	margin: 0 2px 0 0 !important;
 	padding: 0 0 0 14px !important;
-	cursor: pointer;
 }	
 .tabs .tabSet li a {
 	background: url(../../media/img/design/tab/tab-off-r.gif) top right no-repeat !important;
+	color: #545454 !important;
 	display: block !important;
 	float: left !important;
-	height: 24px !important;
-	line-height: 26px !important;
-	overflow: hidden !important;
-	color: #545454 !important;
 	font-family: arial !important;
 	font-size: 10pt !important;
 	font-weight: bold !important;
+	height: 24px !important;
+	line-height: 26px !important;
+	overflow: hidden !important;
 	padding: 2px 12px 0 0 !important;
 	text-decoration: none !important;
 }
@@ -484,10 +489,10 @@ hr {
 	color: #333;
 }
 .tabs .sections {
-	padding: 10px;
+	background: #fff;
 	border: solid 1px #dddddd;
 	border-top: 0px;
-	background: #fff;
+	padding: 10px;
 }
 /* tabs: end */
 
