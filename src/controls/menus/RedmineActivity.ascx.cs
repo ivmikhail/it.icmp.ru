@@ -26,7 +26,7 @@ namespace ITCommunity {
         private List<RedmineActivityItem> loadDataFromRss(int howGet) {
             List<RedmineActivityItem> result = new List<RedmineActivityItem>();
             String rssUrl = Global.ConfigStringParam("RedmineActivityRssUrl");
-            // νε οΰψες
+            // Π½Πµ ΠΏΠ°ΡΠµΡ‚
             // AtomFeed feed = AtomFeed.Load(new Uri(rssUrl)); -
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(rssUrl);

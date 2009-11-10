@@ -1,9 +1,78 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="register.aspx.cs" Inherits="ITCommunity.Register" Title="Ykt It Community | Регистрация" %>
-<%@ Register src="~/controls/RegUserForm.ascx" tagname="RegUserForm" tagprefix="uc" %>
+
+<%@ Register Src="~/controls/ItCaptcha.ascx" TagName="ItCaptcha" TagPrefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <uc:RegUserForm ID="RegUser" runat="server" />
-    <br />
-    <asp:Literal ID="AboutRegister" runat="server" Text="Label"/>
+
+	<asp:Panel ID="RegisterPanel" runat="server">
+		<h1>Регистрация</h1>
+
+		<label class="textbox-input">
+			<h3>Логин (аккаунт)</h3>
+			<div class="note">RegExp паттерн валидного логина: ^[A-Za-z0-9_\-\.]{2,20}$ </div>
+			<asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" MaxLength="32"/>
+		</label>
+
+		<label class="textbox-input">
+			<h3>Электропочта</h3>
+			<div class="note">Нигде не публикуется, используется для восстановления пароля</div>
+			<asp:TextBox ID="TextBoxEmail" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text" MaxLength="512"/>
+		</label>
+
+		<label class="textbox-input">
+			<h3>Пароль</h3>
+			<asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateRegData" TextMode="Password" CssClass="input-text" MaxLength="512"/>
+		</label>
+
+		<label class="textbox-input">
+			<h3>Повторите пароль</h3>
+			<asp:TextBox ID="TextBoxPassConf" runat="server" ValidationGroup="ValidateRegData" TextMode="Password" CssClass="input-text" MaxLength="512"/>
+		</label>
+
+		<uc:ItCaptcha ID="captcha" runat="server" Visible="true" EnableViewState="true"/>
+
+		<div class="big-button">
+			<asp:LinkButton ID="RegisterButton" runat="server" ValidationGroup="ValidateRegData" OnClick="RegisterButton_Click">Зарегистрируйте меня, я готов!</asp:LinkButton>
+		</div>
+
+		<asp:ValidationSummary ID="ValidationSummaryAuth" runat="server" ValidationGroup="ValidateRegData" DisplayMode="List"  />
+
+		<asp:RequiredFieldValidator ID="RequiredLogin" runat="server" ControlToValidate="TextBoxLogin"
+			ErrorMessage="Введите логин" Display="None" ValidationGroup="ValidateRegData" />
+		<asp:RegularExpressionValidator ID="LoginValidator" runat="server" ControlToValidate="TextBoxLogin"
+			ErrorMessage="Логин может состоять только из латинских букв, цифр, знаков '-','.' и '_'. Длина должна быть от 3-х до 25-и символов."
+			Display="None" ValidationGroup="ValidateRegData" ValidationExpression="^[A-Za-z0-9_\-\.]{2,20}$" />
+		<asp:RequiredFieldValidator ID="RequiredEmail" runat="server" ControlToValidate="TextBoxEmail"
+			ErrorMessage="Введите e-mail" Display="None" ValidationGroup="ValidateRegData" />
+		<asp:RegularExpressionValidator ID="EmailValidator" runat="server" ControlToValidate="TextBoxEmail"
+			ErrorMessage="Введите нормальный e-mail." Display="None" ValidationGroup="ValidateRegData" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"/>
+		<asp:RequiredFieldValidator ID="RequiredPass" runat="server" ControlToValidate="TextBoxPass"
+			ErrorMessage="Введите пароль" Display="None" ValidationGroup="ValidateRegData" />
+		<asp:CompareValidator ID="ConfirmPassword" runat="server" Display="None"
+			ControlToCompare="TextBoxPass" ControlToValidate="TextBoxPassConf" ErrorMessage="Пароли не совпадают" ValidationGroup="ValidateRegData" />
+		<asp:CustomValidator ID="AccountExist" runat="server" Display="None"
+			ErrorMessage="Пользователь с таким логином/email'ом уже зарегистрирован" ValidationGroup="ValidateRegData" />
+		<asp:CustomValidator ID="AnonymousAccount" runat="server" Display="None"
+			ErrorMessage="Нельзя регистрировать аккаунт с логином 'anonymous', выберите другой логин" ValidationGroup="ValidateRegData" />
+		<asp:CustomValidator ID="RegisterFailed" runat="server" Display="None"
+			ErrorMessage="Ошибка, регистрация не прошла, обратитесь к администратору" ValidationGroup="ValidateRegData" />
+
+		<div class="panel">
+			<h2>После регистрации Вы вас ждут следующие вкусности:</h2>
+			<ul>
+				<li>Электронные книги</li>
+				<li>Видео курсы</li>
+				<li>Тесты</li>
+				<li>Файлы</li>
+				<li>Вы можете опубликовать свою новость</li>
+			<ul>
+		</div>
+	</asp:Panel>
+
+	<asp:Literal ID="YetRegisteredText" runat="server" Visible="false">
+		<h1>Вы уже зарегистрированы и авторизовались</h1>
+		<div class="note">Если вы все-таки хотите зарегистрироватсья по новой, тогда разлогинтесь</div>
+	</asp:Literal>
+
 </asp:Content>
 

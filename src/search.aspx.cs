@@ -14,53 +14,55 @@ using ITCommunity;
 namespace ITCommunity
 {
 
-    public partial class Search : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            TextBoxQuery.Attributes.Add("onKeyPress", "javascript:if (event.keyCode == 13) __doPostBack('" + LinkButtonSearch.UniqueID + "','')");
-          
-            if (!IsPostBack)
-            {
-                string query = GetQuery();
-                if (query != "")
-                {
-                    LoadPosts(query);
-                    TextBoxQuery.Text = query;
-                }
-            }
-        }
+	public partial class Search : System.Web.UI.Page
+	{
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			TextBoxQuery.Attributes.Add("onKeyPress", "javascript:if (event.keyCode == 13) __doPostBack('" + LinkButtonSearch.UniqueID + "','')");
 
-        protected void LinkButtonSearch_Click(object sender, EventArgs e)
-        {
-            LoadPosts(TextBoxQuery.Text);
-        }
+			if (!IsPostBack)
+			{
+				string query = GetQuery();
+				if (query != "")
+				{
+					LoadPosts(query);
+					TextBoxQuery.Text = query;
+				}
+			}
+		}
 
-        private void LoadPosts(string query)
-        {
-            int total_records = 0;
-            int page = GetPage();
-            FindedPosts.PostSource = Post.Search(page, Global.ConfigNumParam("PostsCount"), query, ref total_records);
-            FindedPostsPager.DataBind("search.aspx", "", "page", page, total_records, Global.ConfigNumParam("PostsCount"));
- 
-            if (total_records == 0)
-            {
-                NotFoundText.Visible = true;
-            } else
-            {
-                NotFoundText.Visible = false;
-            }
-        }
-        private int GetPage()
-        {
-            int page_num;
-            Int32.TryParse(Request.QueryString["page"], out page_num);
-            return page_num == 0 ? 1 : page_num;
-        }
-        private string GetQuery()
-        {
-            string res = Request.QueryString["q"];
-            return res == null ? "" : res; 
-        }
-    }
+		protected void LinkButtonSearch_Click(object sender, EventArgs e)
+		{
+			LoadPosts(TextBoxQuery.Text);
+		}
+
+		private void LoadPosts(string query)
+		{
+			int total_records = 0;
+			int page = GetPage();
+			int searchedPostsPerPage = Global.ConfigNumParam("PostsCount");
+			List<Post> searchedPosts = Post.Search(page, searchedPostsPerPage, query, ref total_records);
+			FindedPosts.DataBind(searchedPosts, total_records, searchedPostsPerPage);
+
+			if (total_records == 0)
+			{
+				NotFoundText.Visible = true;
+			}
+			else
+			{
+				NotFoundText.Visible = false;
+			}
+		}
+		private int GetPage()
+		{
+			int page_num;
+			Int32.TryParse(Request.QueryString["page"], out page_num);
+			return page_num == 0 ? 1 : page_num;
+		}
+		private string GetQuery()
+		{
+			string res = Request.QueryString["q"];
+			return res == null ? "" : res;
+		}
+	}
 }

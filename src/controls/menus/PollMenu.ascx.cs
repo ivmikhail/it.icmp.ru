@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace ITCommunity
 {
-    public partial class controls_Poll : System.Web.UI.UserControl
+	public partial class PollMenu : System.Web.UI.UserControl
     {
         private static Poll current;
         protected void Page_Load(object sender, EventArgs e)

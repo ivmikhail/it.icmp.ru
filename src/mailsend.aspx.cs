@@ -24,7 +24,7 @@ namespace ITCommunity
             {
                 if (receiver.Id == CurrentUser.User.Id)
                 {
-                    Errors.Text = "Зачем отправлять сообщение самому себе? Не хватает общения? У нас этого делать нельзя.";
+                    Errors.Text = "<div class='error'>Зачем отправлять сообщение самому себе? Не хватает общения? У нас этого делать нельзя.</div>";
                 } else
                 {
                     Message.Send(receiver.Id, CurrentUser.User.Id, Server.HtmlEncode(MessageTitle.Text), Server.HtmlEncode(MessageText.Text));
@@ -32,7 +32,7 @@ namespace ITCommunity
                 }
             } else 
             {
-                Errors.Text = "Пользователь с таким логином у нас не живет.";
+                Errors.Text = "<div class='error'>Пользователь с таким логином у нас не живет.</div>";
             }
         }
         private string GetReceiver()

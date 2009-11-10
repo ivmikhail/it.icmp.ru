@@ -14,42 +14,47 @@ using ITCommunity;
 namespace ITCommunity
 {
 
-    public partial class Default : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                LoadPosts();
-            }
-        }
+	public partial class Default : System.Web.UI.Page
+	{
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			if (!IsPostBack)
+			{
+				LoadPosts();
+			}
+		}
 
-        private void LoadPosts()
-        {
-            int total_records = 0;
-            int cat_id = GetCatId();
-            int page = GetPage();
-            if (cat_id > 0)
-            {
-                PostsView.PostSource = Post.GetByCategory(page, Global.ConfigNumParam("PostsCount"), cat_id, ref total_records);
-            } else
-            {
-                PostsView.PostSource = Post.Get(page, Global.ConfigNumParam("PostsCount"), ref total_records);
-            }
+		private void LoadPosts()
+		{
+			int totalRecords = 0;
+			int catId = GetCatId();
+			int page = GetPage();
+			int postsPerPage = Global.ConfigNumParam("PostsCount");
 
-            NewsPager.DataBind("default.aspx", "&cat=" + cat_id, "page", page, total_records, Global.ConfigNumParam("PostsCount"));
-        }
-        private int GetCatId()
-        {
-            int id = -1;
-            Int32.TryParse(Request.QueryString["cat"], out id);
-            return id;
-        }
-        private int GetPage()
-        {
-            int page_num;
-            Int32.TryParse(Request.QueryString["page"], out page_num);
-            return page_num == 0 ? 1 : page_num;
-        }
-    }
+			List<Post> posts;
+			if (catId > 0)
+			{
+				posts = Post.GetByCategory(page, postsPerPage, catId, ref totalRecords);
+			}
+			else
+			{
+				posts = Post.Get(page, postsPerPage, ref totalRecords);
+			}
+			PostsList.DataBind(posts, totalRecords, postsPerPage);
+		}
+
+		private int GetCatId()
+		{
+			int id = -1;
+			Int32.TryParse(Request.QueryString["cat"], out id);
+			return id;
+		}
+
+		private int GetPage()
+		{
+			int page_num;
+			Int32.TryParse(Request.QueryString["page"], out page_num);
+			return page_num == 0 ? 1 : page_num;
+		}
+	}
 }
