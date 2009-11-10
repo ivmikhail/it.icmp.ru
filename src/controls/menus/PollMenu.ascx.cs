@@ -108,23 +108,23 @@ namespace ITCommunity
 
         protected void LinkButtonVote_Click(object sender, EventArgs e)
         {
-            string poll_message = "Вы не можете голосовать, чтобы иметь такую возможность зарегистрируйтесь или авторизируйтесь.";
+            string poll_message = "<div class='error'>Вы не можете голосовать, чтобы иметь такую возможность зарегистрируйтесь или авторизируйтесь.</div>";
             
             if (CurrentUser.isAuth)
             {
                 if (current.UserAlreadyVoted(CurrentUser.User))
                 {
-                    poll_message = "Ваш голос не засчитан. Вы уже голосовали.";
+                    poll_message = "<div class='error'>Ваш голос не засчитан. Вы уже голосовали.</div>";
                 } else
                 {
                     string vote_ids = GetVotedIds();
                     if (vote_ids == string.Empty)
                     {
-                        poll_message = "Ваш голос не засчитан. Нужно выбрать хотя бы один вариант ответа.";
+                        poll_message = "<div class='error'>Ваш голос не засчитан. Нужно выбрать хотя бы один вариант ответа.</div>";
                     } else
                     {
                         current.Vote(CurrentUser.User, vote_ids);
-                        poll_message = "Ваш голос засчитан. Спасибо за проявленную активность!";
+                        poll_message = "<div class='message'>Ваш голос засчитан. Спасибо за проявленную активность!</div>";
                     }
                 }
             }

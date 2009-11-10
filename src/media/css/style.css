@@ -229,6 +229,18 @@ hr {
 }
 /* poll-menu: end */
 
+/* popular-posts-menu: begin */
+#popular-posts-menu li {
+	padding: 2px 0;
+}
+/* popular-posts-menu: end */
+
+/* ast-comments-menu: begin */
+#last-comments-menu li {
+	padding: 2px 0;
+}
+/* past-comments-menu: end */
+
 /* post: begin */
 .post {
 	padding-bottom: 25px;
@@ -264,26 +276,25 @@ hr {
 }
 /* post: end */
 
-/* comments-panel: begin */
-#comments-panel li {
+/* comments: begin */
+#comments li {
 	padding-bottom: 15px;
 }
-#comments-panel .comment-info {
+#comments .comment-info {
 	border: 1px dotted #afafaf;
 	clear: both;
 	padding: 5px 10px 7px;
 }
-#comments-panel .comment-text {
+#comments .comment-text {
 	padding: 5px 15px 0;
 	font: 1em/1.4em Verdana, sans-serif;
 }
-#comments-panel .odd .comment-info {
-	background: #fffad0;
+#comments .odd .comment-info {
 }
-#comments-panel .even .comment-info {
+#comments .even .comment-info {
 	background: #f6f6f6;
 }
-/* comments-panel: end */
+/* comments: end */
 
 /* bbcode-info:begin */
 #bbcode-info {
