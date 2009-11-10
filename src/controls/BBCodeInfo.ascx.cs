@@ -11,11 +11,10 @@ using System.Web.UI.HtmlControls;
 
 namespace ITCommunity
 {
-    public partial class controls_TagsInfoControl : System.Web.UI.UserControl
+	public partial class BBCodeInfo : System.Web.UI.UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

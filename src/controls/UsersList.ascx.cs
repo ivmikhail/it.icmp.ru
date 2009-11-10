@@ -14,7 +14,7 @@ using ITCommunity;
 namespace ITCommunity
 {
 
-    public partial class controls_UserList : System.Web.UI.UserControl
+	public partial class UsersList : System.Web.UI.UserControl
     {
         private List<User> users;
 

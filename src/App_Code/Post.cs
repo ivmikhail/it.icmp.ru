@@ -246,10 +246,10 @@ namespace ITCommunity
                     if (IsFavorites(CurrentUser.User.Id))
                     {
 
-                        value = "<a href='favorites.aspx?&a=del&post=" + this.Id + "' title='Убрать из избранного'><img src='media/img/design/is-fav.png' class='fixPNG' /></a>";
+                        value = "<a href='favorites.aspx?&a=del&post=" + this.Id + "' title='Убрать из избранного' class='add-to-favorites-link'><img src='media/img/design/is-fav.png' class='fixPNG' /></a>";
                     } else
                     {
-                        value = "<a href='favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное'><img src='media/img/design/non-fav.png' class='fixPNG' /></a>";
+						value = "<a href='favorites.aspx?a=add&post=" + this.Id + "' title='Добавить в избранное' class='delete-from-favorites-link'><img src='media/img/design/non-fav.png' class='fixPNG' /></a>";
                     }
                 }
                 return value;

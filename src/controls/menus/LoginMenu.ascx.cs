@@ -12,7 +12,7 @@ using ITCommunity;
 
 namespace ITCommunity
 {
-    public partial class LoginForm : System.Web.UI.UserControl
+    public partial class LoginMenu : System.Web.UI.UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {

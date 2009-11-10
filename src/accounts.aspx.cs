@@ -48,16 +48,16 @@ namespace ITCommunity
 
             if (mod_user.Id < 1)
             {
-                message = "Такой пользователь не зарегистрирован.";
+                message = "<div class='error'>Такой пользователь не зарегистрирован.</div>";
             } else if (mod_user.Role == ITCommunity.User.Roles.Admin)
             {
-                message = "Данный пользователь админ. Над ним нельзя производить никаких действий.";
+				message = "<div class='error'>Данный пользователь админ. Над ним нельзя производить никаких действий.</div>";
             } else
             {
                 mod_user.Role = newrole;
                 mod_user.Update();
                 FillUsersList();
-                message = "Изменения вступили в силу.";
+				message = "<div class='message'>Изменения вступили в силу.</div>";
             }
             ModifyUserMessage.Text = message;
             

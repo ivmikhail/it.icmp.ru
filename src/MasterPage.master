@@ -1,237 +1,75 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="ITCommunity.MasterPage"  %>
-<%@ Register Src="~/controls/LoginForm.ascx"    TagName="LoginForm"    TagPrefix="uc" %>
-<%@ Register Src="~/controls/UserControl.ascx"  TagName="UserControl"  TagPrefix="uc" %>
-<%@ Register Src="~/controls/AdminControl.ascx" TagName="AdminControl" TagPrefix="uc" %>
-<%@ Register Src="~/controls/Poll.ascx"         TagName="Poll"         TagPrefix="uc" %>
-<%@ Register Src="~/controls/RedmineActivity.ascx" TagName="Redmine"         TagPrefix="uc" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="ITCommunity.MasterPage"  %>
+
+<%@ Register Src="~/controls/LeftSidebar.ascx"   TagName="LeftSidebar"  TagPrefix="uc" %>
+<%@ Register Src="~/controls/RightSidebar.ascx"  TagName="RightSidebar" TagPrefix="uc" %>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
 
-<head runat="server">
-    <title>Ykt IT Community</title>
-    <meta http-equiv="content-language" content="ru" />
-    <meta http-equiv="content-type"     content="text/html; charset=utf-8" />
-    
-    <meta name="keywords"    content="программирование, администратор, айти, якутск, саха, якутия, скачать, сеть, компьютеры, ит, виндовс, линух, репозиторий, programming, it, web, yakutsk, sakha, windows, linux, freebsd, говнокод, программист, java, c sharp" />
-    <meta name="description" content="Ykt IT Community - сообщество IT-специалистов Якутска" />
-    <meta name="author"      content="Ykt IT Community" />
-    <meta name="language"    content="ru" />
-    <meta name="doc-type"    content="web page" />
-    
-    <link rel="shortcut icon" href="media/img/design/favicon.ico" type="image/vnd.microsoft.icon" />   
-    <link rel="alternate"     href="rss.aspx"                     type="application/rss+xml" charset="utf-8"  title="Ykt IT Community - http://it.icmp.ru" />    
-  
-    <link rel="stylesheet"    href="media/css/default.css"        type="text/css"            charset="utf-8" /> 
-    <link rel="stylesheet"    href="media/css/style.css"          type="text/css"            charset="utf-8" />
-    <link rel="stylesheet"    href="media/css/highlight-vs.css"   type="text/css"            charset="utf-8" />
-     
-    <script src="media/js/highlight.pack.js"                     type="text/javascript"     charset="utf-8"></script>    
-    <script src="media/js/clientcide-trunk-2.1.0.compressed.js"  type="text/javascript"     charset="utf-8"></script>  
-    <script src="media/js/popup.js"                              type="text/javascript"     charset="utf-8"></script>  
+	<head runat="server">
+		<title>Ykt IT Community</title>
+		<meta http-equiv="content-language" content="ru" />
+		<meta http-equiv="content-type"     content="text/html; charset=utf-8" />
 
-      
-    
-</head>
-<body>
-    <script type="text/javascript">
-   
-        window.addEvent('domready', function(){ 
-            $('header').addEvent('click', function(e){	                    
-	                window.location = "default.aspx";
-			    });
-		    });		
-		    
-        hljs.initHighlightingOnLoad();
-        
-	</script>
-    <form id="MainForm" runat="server" >
-        <div id="container">
-            <div id="header">
-                <span class="code-class">IT</span> Community;
-                <span class="code-comment">cout &lt;&lt; "hi";</span>
-                <div id="divider-header">&nbsp;</div>
-            </div>
-            <div id="wrapper">
-                <div id="dynamic-content">   
-                    &nbsp;
-                    <asp:contentplaceholder id="ContentPlaceHolder1" runat="server" />
-                </div>
-            </div>
-            <div id="navigate">
-                <uc:LoginForm id="LoginForm" runat="server" />
-                <uc:UserControl id="UserControl" runat="server" />                
+		<meta name="keywords"    content="программирование, администратор, айти, якутск, саха, якутия, скачать, сеть, компьютеры, ит, виндовс, линух, репозиторий, programming, it, web, yakutsk, sakha, windows, linux, freebsd, говнокод, программист, java, c sharp" />
+		<meta name="description" content="Ykt IT Community - сообщество IT-специалистов Якутска" />
+		<meta name="author"      content="Ykt IT Community" />
+		<meta name="language"    content="ru" />
+		<meta name="doc-type"    content="web page" />
 
-                <h1>Категории</h1>                
-                <asp:Repeater ID="NewsCategories" runat="server" >
-                    <HeaderTemplate>
-                        <ul class="list categories-links">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li>
-                            <a href='default.aspx?cat=<%# Eval("id")%>' title="Смотреть посты только этой категории" class="categories-link"><%# Eval("name")%></a>
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                
-                <h1>Меню</h1>
-                <asp:Repeater ID="RepeaterMenu" runat="server" OnItemDataBound="RepeaterMenu_ItemDataBound" >
-                    <HeaderTemplate>
-                        <ul class="list menu-links">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li>
-                            <h3><%# Eval("name")%></h3>
-                            
-                            <asp:Repeater ID="RepeaterSubMenu" runat="server">
-                                <HeaderTemplate>
-                                    <ul class="list">
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <li>
-                                        <asp:HyperLink ID="hplLink" runat="Server" Text='<%# Eval("name")%>' NavigateUrl='<%# Eval("url")%>' Target="<%# IsBlank(Container.DataItem)%>" />                                        
-                                    </li>
-                                </ItemTemplate>
-                                <FooterTemplate>
-                                   </ul>
-                                </FooterTemplate>
-                            </asp:Repeater>
-                       </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                <h1>Активность Redmine</h1>       
-                <uc:Redmine id="Redmine" runat="server" />
-                <uc:AdminControl id="AdminControl" runat="server"/>
-            </div>
-            <div id="stats">
-                <h1>Поиск</h1>
-                <div id="search-panel">
-                    <asp:TextBox ID="TextBoxQuery" runat="server" />   
-                    <asp:LinkButton ID="LinkButtonSearch" runat="server" OnClick="LinkButtonSearch_Click">Найти</asp:LinkButton>
-                </div>
-                
-                <h1>Голосование</h1>
-                <div id="poll_container">
-                    <uc:Poll id="Poll" runat="server" />
-                </div>    
-                
-                <h1>Статистика</h1>
-                
-                <h2>Последние комментарии</h2>
-                <asp:Repeater ID="LastComments" runat="server" >
-                    <HeaderTemplate>
-                        <ul class="list lastcomments-links">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li>
-                           <span class="user-pm-link userstat">
-                                <a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору">
-                                    <%# Eval("key.nick")%>
-                                </a>
-                                :
-                            </span>
-                            <a href='news.aspx?id=<%# Eval("value.postid")%>#comment-<%# Eval("value.id")%>' title="<%# Eval("value.post.title")%>" >
-                                <%# Eval("value.shorttext")%>
-                            </a> 
+		<link rel="shortcut icon" href="media/img/design/favicon.ico" type="image/vnd.microsoft.icon" />
+		<link rel="alternate"     href="rss.aspx"                     type="application/rss+xml" charset="utf-8"  title="Ykt IT Community - http://it.icmp.ru" />    
 
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                                
-                <h2>Популярные посты</h2>
-                <asp:Repeater ID="PopularPosts" runat="server" >
-                    <HeaderTemplate>
-                        <ul class="list topposts-links">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li>
-                            <a href='news.aspx?id=<%# Eval("value.id")%>'>
-                                <%# Eval("value.title")%>
-                            </a>                          
-                           <span class="user-pm-link userstat">                           
-                                by   
-                                <a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link">
-                                    <%# Eval("key.nick")%>
-                                </a> 
-                                (<%# Eval("value.views")%>)
-                            </span>
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                
-                
-                <h2>Активные постеры</h2>
-                <asp:Repeater ID="TopPosters" runat="server" >
-                    <HeaderTemplate>
-                        <ul class="list topposters-list userlink">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li>
-                            <a href="mailsend.aspx?receiver=<%# Eval("key") %>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("key")%></a> (<%# Eval("value")%>)
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                
-                <h1>Пользователи</h1>
-                <h3>Новые</h3>
-                <asp:Repeater ID="LastRegistered" runat="server" >
-                    <HeaderTemplate>
-                        <ul class="list newusers-list userlink">
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <li>
-                            <%# Eval("createdate", "{0:dd MMMM}")%>  <a href="mailsend.aspx?receiver=<%# Eval("nick") %>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("nick")%></a>
-                        </li>
-                    </ItemTemplate>
-                    <FooterTemplate>
-                        </ul>
-                    </FooterTemplate>
-                </asp:Repeater>
-                <h3>Количество</h3>
-                <ul class="list usersstat-list">                
-                    <li>
-                        Всего - <asp:Literal ID="TotalUsers" runat="server" />
-                    </li>
-                    <li>
-                        Постеры -  <asp:Literal ID="TotalPosters" runat="server" />
-                    </li>
-                    <li>
-                        Админы - <asp:Literal ID="TotalAdmins" runat="server" />
-                    </li>
-                </ul>
-            </div>
-            <div id="footer">
-                <h2>
-                    IT Community &copy; 2005 - <asp:Literal ID="ThisYear" runat="server" />                    
-                </h2>                
-                Данный ресурс поддерживается сообществом АЙТИ коммунистов г.Якутска. Проект некоммерческий.
-                <br />
-                <br />
-                <script language="JavaScript" type="text/javascript">
-                  var url = document.location.toString().toLowerCase();
-                  if (url == "http://it.icmp.ru/" || url == "http://it.icmp.ru/default.aspx" || url=='http://it.icmp.ru/default.aspx?cat=0') {
-                      document.write("<a href='http://www.ykt.ru/yaknet/default.asp'  title='Перейти в рейтинговую систему'>" +
-                        "<img src='http://www.ykt.ru/yaknet/image.asp?id=IT_community' alt='Рейтинг Ykt.Ru' border='0' width='50' height='30'></a>");
-                  }
-                </script>
+		<link rel="stylesheet"    href="media/css/default.css"        type="text/css"            charset="utf-8" />
+		<link rel="stylesheet"    href="media/css/style.css"          type="text/css"            charset="utf-8" />
+		<link rel="stylesheet"    href="media/css/highlight-vs.css"   type="text/css"            charset="utf-8" />
 
-             </div>
-        </div>    
-    </form>
-</body>
+		<script src="media/js/highlight.pack.js"                     type="text/javascript"     charset="utf-8"></script>
+		<script src="media/js/clientcide-trunk-2.1.0.compressed.js"  type="text/javascript"     charset="utf-8"></script>
+		<script src="media/js/popup.js"                              type="text/javascript"     charset="utf-8"></script>
+		<script type="text/javascript">
+			hljs.initHighlightingOnLoad();
+		</script>
+
+	</head>
+
+	<body>
+		<form id="MainForm" runat="server">
+
+			<div id="header">
+				<a href="default.aspx" class="main-link">
+					<span class="code-class">IT</span> Community;
+					<span class="code-comment">cout &lt;&lt; "hi";</span>
+				</a>
+			</div>
+
+			<uc:LeftSidebar id="LeftSidebar" runat="server" />
+
+			<div id="dynamic-content">
+				<div class="content">
+					<asp:contentplaceholder id="ContentPlaceHolder1" runat="server" />
+				</div>
+			</div>
+
+			<uc:RightSidebar id="RightSidebar" runat="server" />
+
+			<div id="footer">
+				<h2>
+					IT Community &copy; 2005 - <asp:Literal ID="ThisYear" runat="server" />
+				</h2>
+				Данный ресурс поддерживается сообществом АЙТИ коммунистов г.Якутска. Проект некоммерческий.
+				<br />
+				<br />
+				<script language="JavaScript" type="text/javascript">
+					var url = document.location.toString().toLowerCase();
+					if (url == "http://it.icmp.ru/" || url == "http://it.icmp.ru/default.aspx" || url=='http://it.icmp.ru/default.aspx?cat=0') {
+						document.write("<a href='http://www.ykt.ru/yaknet/default.asp'  title='Перейти в рейтинговую систему'>" +
+						"<img src='http://www.ykt.ru/yaknet/image.asp?id=IT_community' alt='Рейтинг Ykt.Ru' border='0' width='50' height='30'></a>");
+					}
+				</script>
+			</div>
+
+		</form>
+	</body>
 </html>

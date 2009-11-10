@@ -24,7 +24,7 @@ namespace ITCommunity
             {
                 LoadCategories();
                 CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
-                ImageOptions.Text = "Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).";
+				ImageOptions.Text = "<div class='note'>Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
                 if (GetPostId() > 0)
                 {
                     LinkButtonAdd.Text = "Изменить";
@@ -167,12 +167,12 @@ namespace ITCommunity
         }
         private void WriteErrors(List<string> errors, string title)
         {
-            string text = "<h2>" + title + "</h2><ul class='list'>";
+			string text = "<div  class='error'><h2>" + title + "</h2><ul>";
             foreach (string message in errors)
             {
                 text += "<li>" + message + "</li>";
             }
-            text += "</ul>";
+            text += "</ul></div>";
             AddPostMessages.Text = text;
             LinkButtonAdd.Focus();
         }
@@ -191,14 +191,14 @@ namespace ITCommunity
                 post.Author = CurrentUser.User;
             }
             Picture pic = Picture.UploadImage(UploadImage.PostedFile, post);
-            if (pic.Name == "")
-            {
-                UploadImageError.Text = "Картинка не добавилась. Видимо плохая картинка.";
-            } else
-            {
-                UploadImageError.Text = "";
-                UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
-            }
+			if (pic.Name == "")
+			{
+				UploadImageError.Visible = true;
+			}
+			else
+			{
+				UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
+			}
 
             //Сохраняем выбранные категории
 

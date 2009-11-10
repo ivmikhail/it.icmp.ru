@@ -2,8 +2,8 @@
 window.addEvent('domready', function() {
 
 	
-	var pager = $('pager-container');
-	var pagerLinks = $$('#pager-container a');
+	var pager = $('pager');
+	var pagerLinks = $$('#pager li');
 	
 	pager.fade('hide');
 	pagerLinks.fade('hide');
@@ -23,6 +23,6 @@ window.addEvent('domready', function() {
 			(function() { el.fade(1).fade(0.5); }).delay(aCount * 100);
 			aCount++;
 		});
-		(function() { $$('#pager-container').fade(0.3); }.delay(aCount * 100 + 100));
+		(function() { $('pager').fade(0.3); }.delay(aCount * 100 + 100));
 	}).delay(500);
 });

@@ -40,7 +40,7 @@ namespace ITCommunity
             }
             RepeaterMessages.DataSource = messages;
             RepeaterMessages.DataBind();
-            MessagePager.DataBind("mailview.aspx", pageparam, "page", page, total_records, Global.ConfigNumParam("MaxMessageCount"));
+            MessagePager.DataBind(total_records, Global.ConfigNumParam("MaxMessageCount"));
         }
 
         protected void RepeaterMessages_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -52,10 +52,10 @@ namespace ITCommunity
                 Literal who = (Literal)item.FindControl("Who");
                 if (IsOutput())
                 {
-                    who.Text = "получатель: <a href='mailsend.aspx?receiver=" + current.Receiver.Nick + "' title='Отправить сообщение'>" + current.Receiver.Nick + "</a>";
+					who.Text = "получатель: <a href='mailsend.aspx?receiver=" + current.Receiver.Nick + "' title='Отправить сообщение' class='user-pm-link'>" + current.Receiver.Nick + "</a>";
                 } else
                 {
-                    who.Text = "автор: <a href='mailsend.aspx?receiver=" + current.Sender.Nick + "' title='Отправить сообщение'>" + current.Sender.Nick + "</a>"; 
+					who.Text = "автор: <a href='mailsend.aspx?receiver=" + current.Sender.Nick + "' title='Отправить сообщение' class='user-pm-link'>" + current.Sender.Nick + "</a>"; 
                 }
             }
         }
