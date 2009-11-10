@@ -4,10 +4,16 @@
 	<h1>Активность Redmine</h1>
 
 	<asp:Repeater ID="ActivityItems" runat="server" EnableViewState="false">
+	    <HeaderTemplate>
+	    	<ul>
+	    </HeaderTemplate>
 		<ItemTemplate>
-			<%# Eval("Author") %> - 
-			<a href='<%# Eval("Url") %>' target="_blank"><%# Eval("Title") %></a>
-			<br />
+			<li>			
+			    <%# Eval("Author") %> - <a href='<%# Eval("Url") %>' target="_blank"><%# Eval("Title") %></a>
+			</li>
 		</ItemTemplate>
+		<FooterTemplate>
+		    </ul>
+		</FooterTemplate>
 	</asp:Repeater>
 </div>
