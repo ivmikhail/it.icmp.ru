@@ -87,6 +87,17 @@ hr {
 #dynamic-content .content {
 	padding: 20px;
 }
+#dynamic-content blockquote
+{
+	padding: 3px 5px 3px 13px;
+	border-left: solid 2px #bbbbbb;
+	font-style:italic;
+}
+#dynamic-content pre
+{
+	padding: 3px 5px 3px 13px;
+	border-left: solid 2px #bbbbbb;
+}
 /* dynamic-content: end */
 
 /* right-sidebar: begin */
