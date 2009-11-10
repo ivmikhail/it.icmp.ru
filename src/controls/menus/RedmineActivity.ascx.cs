@@ -20,15 +20,22 @@ namespace ITCommunity
 
     public partial class RedmineActivity : System.Web.UI.UserControl
     {
-
+        //делегат метода загрузки данных
+        private delegate object RedmineActivityLoader(int howView);
+        private static readonly int cacheLiveTime = Global.ConfigNumParam("RedmineActivityCachePer");
+        private static readonly int howItemsGet = Global.ConfigNumParam("RedmineActivityRssHowView");
+        private static readonly String cacheKeyName = Global.ConfigStringParam("RedmineActivityCacheName");
         protected void Page_Load(object sender, EventArgs e)
         {
-            int howItemsGet = Global.ConfigNumParam("RedmineActivityRssHowView");
-            List<RedmineActivityItem> items = loadDataFromRss(howItemsGet);
+            List<RedmineActivityItem> items = loadDataFromCache(howItemsGet);
             ActivityItems.DataSource = items;
             ActivityItems.DataBind();
         }
-
+        private List<RedmineActivityItem> loadDataFromCache(int howGet) {
+            RedmineActivityLoader loader = new RedmineActivityLoader(loadDataFromRss);
+            List<RedmineActivityItem> list = (List<RedmineActivityItem>)AppCache.Get(cacheKeyName, new object(), loader, new object[] { howGet }, DateTime.Now.AddMinutes(cacheLiveTime));
+            return list;
+        }
         private List<RedmineActivityItem> loadDataFromRss(int howGet)
         {
             List<RedmineActivityItem> result = new List<RedmineActivityItem>();
