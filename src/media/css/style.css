@@ -197,6 +197,13 @@ hr {
 }
 /* links: begin */
 
+/* redmine activity begin */
+#redmine-activity li
+{	
+	padding: 2px 0;
+}
+/* redmine activity end */
+
 /* login-menu: begin */
 #login-menu .checkbox-label,
 #login-menu .textbox-label {
@@ -251,7 +258,7 @@ hr {
 }
 /* popular-posts-menu: end */
 
-/* ast-comments-menu: begin */
+/* last-comments-menu: begin */
 #last-comments-menu li {
 	padding: 2px 0;
 }

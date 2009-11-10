@@ -5,7 +5,7 @@
 
 	<asp:Repeater ID="ActivityItems" runat="server" EnableViewState="false">
 	    <HeaderTemplate>
-	    	<ul>
+	    	<ul id="redmine-activity">
 	    </HeaderTemplate>
 		<ItemTemplate>
 			<li>			
