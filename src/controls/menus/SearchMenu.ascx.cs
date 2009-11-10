@@ -18,7 +18,9 @@ namespace ITCommunity
 
 		protected void LinkButtonSearch_Click(object sender, EventArgs e)
 		{
-			Response.Redirect(Request.ApplicationPath + "/search.aspx?q=" + TextBoxQuery.Text);
+            string path = Request.Url.LocalPath;
+            path = path.Replace(Request.Url.Segments[Request.Url.Segments.Length - 1], "");
+            Response.Redirect(path + "search.aspx?q=" + TextBoxQuery.Text);
 		}
 	}
 }

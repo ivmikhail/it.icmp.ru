@@ -3,7 +3,8 @@
 <%@ Register Assembly="OpenFlashChart" Namespace="OpenFlashChart" TagPrefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-	<h1><asp:Literal ID="PollMessageText" runat="server" /></h1>
+
+	<asp:Literal ID="PollMessageText" runat="server" />
 
 	<uc:OpenFlashChartControl ID="OpenFlashChartControl" runat="server" EnableCache="false" Width="100%" LoadingMsg="Загрузка данных..."/>
 

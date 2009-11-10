@@ -28,7 +28,7 @@
 			<asp:Literal ID="source" runat="server" />
 		</div>
 
-		<div id="comments-panel" class="panel">
+		<div id="comments" class="panel">
 			<h2>Комментарии (<asp:Literal ID="comments_count" runat="server" />)</h2>
 			<asp:Repeater ID="RepeaterComments" runat="server" OnItemCommand="RepeaterComments_ItemCommand" OnItemDataBound="RepeaterComments_ItemDataBound">
 				<HeaderTemplate>
