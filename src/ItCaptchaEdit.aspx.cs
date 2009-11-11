@@ -24,6 +24,12 @@ namespace ITCommunity
 				Response.Redirect("~/ItCaptchaEdit.aspx?id=" + id);
 			}
 
+			if (Int32.TryParse(Request.QueryString["del"], out id))
+			{
+				Database.CaptchaDelete(id);
+				Response.Redirect("~/itcaptchalist.aspx");
+			}
+
 			if (!Int32.TryParse(Request.QueryString["id"], out id))
 			{
 				Response.Redirect("~/itcaptchalist.aspx");

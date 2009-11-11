@@ -36,7 +36,7 @@ namespace ITCommunity
 		protected void LinkButtonExit_Click(object sender, EventArgs e)
 		{
 			CurrentUser.LogOut();
-			Response.Redirect("Default.aspx");
+			Response.Redirect("default.aspx");
 		}
 	}
 }

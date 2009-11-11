@@ -2,9 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-<div class="error">
-	<h1>Доступ к данной странице для вас запрещен</h1>
-	<asp:Literal ID="LiteralMessage" runat="server" />
-</div>
-</asp:Content>
+	<h1 class="error">Доступ к данной странице для вас запрещен</h1>
 
+	<div class="note">
+		Для получения доступа попробуйте авторизоваться слева или <a href='register.aspx' title='Зарегистрировать нового пользователя'>зарегистрироваться</a>.
+		<br />
+		Возможно вы и не должны иметь доступ к этой странице...
+	</div>
+</asp:Content>

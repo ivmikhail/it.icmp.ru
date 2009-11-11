@@ -2,7 +2,7 @@
 
 <asp:Content ID="content" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 	<label class="textbox-input">
-		<h3>Вопрос</h3>
+		<span class="label-title">Вопрос</span>
 		<asp:TextBox ID="txtQuestion" runat="server" />
 	</label>
 
@@ -10,7 +10,7 @@
 		Ответы
 		<asp:LinkButton ID="btnAdd" runat="server" Text="Добавить вариант" OnClick="btnAdd_Click" />
 	</h3>
-	<asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" 
+	<asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" GridLines="None"
 		AutoGenerateColumns="False" DataSourceID="SqlDataSource1" DataKeyNames="id" CssClass="data-table">
 		<Columns>
 			<asp:BoundField DataField="text" HeaderText="Текст" SortExpression="text" />

@@ -82,7 +82,7 @@
 		<h2>Категория</h2>
 
 		<label class="dropdown-list-select">
-			<h3>Выберите категорию (можно несколько)</h3>
+			<span class="label-title">Выберите категорию (можно несколько)</span>
 			<asp:DropDownList ID="DropDownListCats" runat="server" />
 		</label>
 
@@ -93,14 +93,15 @@
 		<asp:HiddenField ID="SelectedCategoriesIds" runat="server" />
 
 		<label class="checkbox-input">
-			<h2>Прикреплено<asp:CheckBox ID="CheckBoxAttached" runat="server" Enabled="false"/></h2>
-			<div class="note">
+			<span class="label-title">Прикреплено</span>
+			<asp:CheckBox ID="CheckBoxAttached" runat="server" Enabled="false"/>
+			<span class="note">
 				Администраторы могу "прикреплять" важные посты. Важный пост всегда виден сверху.
-			</div>
+			</span>
 		</label>
 
+		<h2>Заголовок</h2>
 		<label class="textbox-input">
-			<h2>Заголовок</h2>
 			<asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" MaxLength="128" />
 		</label>
 
@@ -115,8 +116,8 @@
 			<asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" MaxLength="10000" TextMode="MultiLine" />
 		</label>
 
+		<h2>Источник (откуда стырили)</h2>
 		<label class="textbox-input">
-			<h2>Источник (откуда стырили)</h2>
 			<asp:TextBox ID="TextBoxSource" runat="server" MaxLength="1024"/> 
 		</label>
 

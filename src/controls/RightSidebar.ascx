@@ -14,9 +14,9 @@
 
 		<uc:PollMenu ID="PollMenu" runat="server" />
 
-		<uc:LastCommentsMenu ID="LastCommentsMenu" runat="server" />
-		
 		<uc:PopularPostsMenu ID="PopularPostsMenu" runat="server" />
+
+		<uc:LastCommentsMenu ID="LastCommentsMenu" runat="server" />
 
 		<uc:TopPostersMenu ID="TopPostersMenu" runat="server" />
 

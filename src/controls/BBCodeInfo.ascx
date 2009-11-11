@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	function toggle_tags()
 	{
-		$('tagsinfo').setStyle('display', $('tagsinfo').getStyle('display') == "none" ? "" : "none");    
+		$('tagsinfo').setStyle('display', $('tagsinfo').getStyle('display') == "none" ? "" : "none");
 		return false;
 	}
 </script>
@@ -132,5 +132,7 @@
 				[popup=full.png]картинко[/popup]
 			</dd>
 		</dl>
+		
+		<div class="clear"></div>
 	</div>
 </div>

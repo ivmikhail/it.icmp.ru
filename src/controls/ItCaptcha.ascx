@@ -2,19 +2,18 @@
 
 <div class="captcha">
 	<label class="dropdown-list-select">
-		<div class="note">
+		<span class="label-title">IT-captcha: <asp:Literal ID="QuestionText" runat="server" EnableViewState="False" /></span>
+		<span class="note">
 			Введите пожалуйста ответ на данный вопрос, мы должны убедиться что вы действительно имеете отношения с IT :)
-		</div>		
-		<h2><asp:Literal ID="QuestionText" runat="server" EnableViewState="False" /></h2>
+		</span>
 		<asp:DropDownList ID="VariantsList" runat="server" />
 	</label>
 
-	
 	<asp:Literal ID="lblErrorMessage" runat="server" EnableViewState="False" Visible="false">
 		<div class="error">
-			Неправильный ответ
+			IT-captcha: Неправильный ответ
 		</div>
 	</asp:Literal>
-	
+
 	<asp:HiddenField ID="RightAnswer" runat="server" />
 </div>

@@ -1,4 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="UsersList.ascx.cs" Inherits="ITCommunity.UsersList" %>
+
 <asp:Repeater ID="RepeaterUsers" runat="server">
 	<HeaderTemplate>
 		<table class="data-table">
@@ -9,11 +10,17 @@
 			<tbody>
 	</HeaderTemplate>
 	<ItemTemplate>
-		<tr>
+		<tr class="even">
 			<td><%# Eval("nick") %></td>
 			<td><%# Eval("email") %></td>
 		</tr>
 	</ItemTemplate>
+	<AlternatingItemTemplate>
+		<tr class="odd">
+			<td><%# Eval("nick") %></td>
+			<td><%# Eval("email") %></td>
+		</tr>
+	</AlternatingItemTemplate>
 	<FooterTemplate>
 		</tbody>
 	</table>

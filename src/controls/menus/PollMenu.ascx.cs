@@ -13,123 +13,129 @@ using System.Collections.Generic;
 namespace ITCommunity
 {
 	public partial class PollMenu : System.Web.UI.UserControl
-    {
-        private static Poll current;
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                current = Poll.GetActive();
-                BindPollControlsAndData();
-                bool userAlreadyVote = current.UserAlreadyVoted(CurrentUser.User);
-                if (userAlreadyVote)
-                {
-                    LinkButtonVote.Visible = false;
-                    UserVotedText.Visible = true;
-                } else
-                {
-                    LinkButtonVote.Visible = true;
-                    UserVotedText.Visible = false;
-                }
-            }
-        }
+	{
+		private static Poll current;
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			if (!IsPostBack)
+			{
+				current = Poll.GetActive();
+				BindPollControlsAndData();
+				bool userAlreadyVote = current.UserAlreadyVoted(CurrentUser.User);
+				if (userAlreadyVote)
+				{
+					LinkButtonVote.Visible = false;
+					UserVotedText.Visible = true;
+				}
+				else
+				{
+					LinkButtonVote.Visible = true;
+					UserVotedText.Visible = false;
+				}
+			}
+		}
 
-        private void BindPollControlsAndData()
-        {
-            LiteralPollTopic.Text = current.Topic;
+		private void BindPollControlsAndData()
+		{
+			LiteralPollTopic.Text = current.Topic;
 
-            if (current.IsOpen)
-            {
-                LiteralNote.Text = "Это открытый опрос. Другие соучастнеги будут видеть, кто как проголосовал.";
-            } else
-            {
-                LiteralNote.Text = "Это закрытый опрос. Кто как проголосовал легально узнать нельзя.";
-            }
+			if (current.IsOpen)
+			{
+				LiteralNote.Text = "Это открытый опрос. Другие соучастнеги будут видеть, кто как проголосовал.";
+			}
+			else
+			{
+				LiteralNote.Text = "Это закрытый опрос. Кто как проголосовал легально узнать нельзя.";
+			}
 
-            List<PollAnswer> source = current.Answers;
+			List<PollAnswer> source = current.Answers;
 
-            if (current.IsMultiSelect)
-            {
-                BindCheckBoxList(source);
+			if (current.IsMultiSelect)
+			{
+				BindCheckBoxList(source);
 
-            } else
-            {
-                BindRadioButtonList(source);
-            }
-        }
-        private void BindCheckBoxList(List<PollAnswer> answers)
-        {
-            CheckBoxListAnswer.Visible = true;
-            RadioButtonListAnswer.Visible = false;
+			}
+			else
+			{
+				BindRadioButtonList(source);
+			}
+		}
+		private void BindCheckBoxList(List<PollAnswer> answers)
+		{
+			CheckBoxListAnswer.Visible = true;
+			RadioButtonListAnswer.Visible = false;
 
-            CheckBoxListAnswer.DataSource = answers;
+			CheckBoxListAnswer.DataSource = answers;
 
-            CheckBoxListAnswer.DataValueField = "id";
-            CheckBoxListAnswer.DataTextField = "text";
-            CheckBoxListAnswer.DataBind();
-        }
-        private void BindRadioButtonList(List<PollAnswer> answers)
-        {
-            CheckBoxListAnswer.Visible = false;
-            RadioButtonListAnswer.Visible = true;
+			CheckBoxListAnswer.DataValueField = "id";
+			CheckBoxListAnswer.DataTextField = "text";
+			CheckBoxListAnswer.DataBind();
+		}
+		private void BindRadioButtonList(List<PollAnswer> answers)
+		{
+			CheckBoxListAnswer.Visible = false;
+			RadioButtonListAnswer.Visible = true;
 
-            RadioButtonListAnswer.DataSource = answers;
+			RadioButtonListAnswer.DataSource = answers;
 
-            RadioButtonListAnswer.DataValueField = "id";
-            RadioButtonListAnswer.DataTextField = "text";
+			RadioButtonListAnswer.DataValueField = "id";
+			RadioButtonListAnswer.DataTextField = "text";
 
-            RadioButtonListAnswer.DataBind();
-        }
+			RadioButtonListAnswer.DataBind();
+		}
 
-        private string GetVotedIds()
-        {
-            string vote_ids = string.Empty;
-            if (current.IsMultiSelect)
-            {
-                foreach (ListItem item in CheckBoxListAnswer.Items)
-                {
-                    if (item.Selected)
-                    {
-                        if (vote_ids.Length > 0)
-                        {
-                            vote_ids += ",";
-                        }
-                        vote_ids += item.Value;
-                    }
-                }
-            } else
-            {
-                vote_ids = RadioButtonListAnswer.SelectedItem.Value;// SelectedValue;
-            }
+		private string GetVotedIds()
+		{
+			string vote_ids = string.Empty;
+			if (current.IsMultiSelect)
+			{
+				foreach (ListItem item in CheckBoxListAnswer.Items)
+				{
+					if (item.Selected)
+					{
+						if (vote_ids.Length > 0)
+						{
+							vote_ids += ",";
+						}
+						vote_ids += item.Value;
+					}
+				}
+			}
+			else
+			{
+				vote_ids = RadioButtonListAnswer.SelectedValue;
+			}
 
-            return vote_ids;
-        }
+			return vote_ids;
+		}
 
 
-        protected void LinkButtonVote_Click(object sender, EventArgs e)
-        {
-            string poll_message = "<div class='error'>Вы не можете голосовать, чтобы иметь такую возможность зарегистрируйтесь или авторизируйтесь.</div>";
-            
-            if (CurrentUser.isAuth)
-            {
-                if (current.UserAlreadyVoted(CurrentUser.User))
-                {
-                    poll_message = "<div class='error'>Ваш голос не засчитан. Вы уже голосовали.</div>";
-                } else
-                {
-                    string vote_ids = GetVotedIds();
-                    if (vote_ids == string.Empty)
-                    {
-                        poll_message = "<div class='error'>Ваш голос не засчитан. Нужно выбрать хотя бы один вариант ответа.</div>";
-                    } else
-                    {
-                        current.Vote(CurrentUser.User, vote_ids);
-                        poll_message = "<div class='message'>Ваш голос засчитан. Спасибо за проявленную активность!</div>";
-                    }
-                }
-            }
-            Session["poll_message"] = poll_message; // Note: бляха
-            Response.Redirect("pollresult.aspx");
-        }
-}
+		protected void LinkButtonVote_Click(object sender, EventArgs e)
+		{
+			string poll_message = "<div class='error'>Вы не можете голосовать, чтобы иметь такую возможность зарегистрируйтесь или авторизируйтесь.</div>";
+
+			if (CurrentUser.isAuth)
+			{
+				if (current.UserAlreadyVoted(CurrentUser.User))
+				{
+					poll_message = "<div class='error'>Ваш голос не засчитан. Вы уже голосовали.</div>";
+				}
+				else
+				{
+					string vote_ids = GetVotedIds();
+					if (vote_ids == string.Empty)
+					{
+						poll_message = "<div class='error'>Ваш голос не засчитан. Нужно выбрать хотя бы один вариант ответа.</div>";
+					}
+					else
+					{
+						current.Vote(CurrentUser.User, vote_ids);
+						poll_message = "<div class='message'>Ваш голос засчитан. Спасибо за проявленную активность!</div>";
+					}
+				}
+			}
+			Session["poll_message"] = poll_message; // Note: бляха
+			Response.Redirect("pollresult.aspx");
+		}
+	}
 }

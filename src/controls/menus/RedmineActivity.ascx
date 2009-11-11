@@ -3,17 +3,14 @@
 <div class="menu-panel">
 	<h1>Активность Redmine</h1>
 
-	<asp:Repeater ID="ActivityItems" runat="server" EnableViewState="false">
-	    <HeaderTemplate>
-	    	<ul id="redmine-activity">
-	    </HeaderTemplate>
-		<ItemTemplate>
-			<li>			
-			    <%# Eval("Author") %> - <a href='<%# Eval("Url") %>' target="_blank"><%# Eval("Title") %></a>
-			</li>
-		</ItemTemplate>
-		<FooterTemplate>
-		    </ul>
-		</FooterTemplate>
-	</asp:Repeater>
+	<ul>
+		<asp:Repeater ID="ActivityItems" runat="server" EnableViewState="false">
+			<ItemTemplate>
+				<li>
+					<b><%# Eval("Author") %></b> - 
+					<a href='<%# Eval("Url") %>' target="_blank"><%# Eval("Title") %></a>
+				</li>
+			</ItemTemplate>
+		</asp:Repeater>
+	</ul>
 </div>

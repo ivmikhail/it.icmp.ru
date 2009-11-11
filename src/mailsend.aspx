@@ -8,22 +8,22 @@
 
 	<h1>Отправка сообщения</h1>
 
-	<asp:Literal ID="Errors" runat="server" />
-
 	<label class="textbox-input">
-		<h3>Кому</h3>
+		<span class="label-title">Кому</span>
 		<asp:TextBox ID="MessageReceiver" runat="server" MaxLength="20" />
 	</label>
 
 	<label class="textbox-input">
-		<h3>Заголовок</h3>
+		<span class="label-title">Заголовок</span>
 		<asp:TextBox ID="MessageTitle" runat="server" MaxLength="50" />
 	</label>
 
 	<label class="textbox-textarea">
-		<h3>Текст</h3>
-		<asp:TextBox ID="MessageText" runat="server" Rows="15" MaxLength="1000" TextMode="MultiLine"/>
+		<span class="label-title">Текст</span>
+		<asp:TextBox ID="MessageText" runat="server" Rows="10" MaxLength="1000" TextMode="MultiLine"/>
 	</label>
+
+	<asp:Literal ID="Errors" runat="server" />
 
 	<div class="big-button">
 		<a href='mailview.aspx?'>Отмена</a>
