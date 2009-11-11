@@ -8,16 +8,16 @@
 		window.addEvent('domready', init);
 		function init() {
 			myTabs = new TabSwapper({
-						selectedClass: 'on',
-						deselectedClass: 'off',
-						tabs: $$('#accounts-tabs li'),
-						clickers: $$('#accounts-tabs li a'),
-						sections: $$('div.sections div.panel'),
-						cookieName: 'accounts-tabs',
-						smooth: true,
-						smoothSize: true
-					 });
-			}
+				selectedClass: 'on',
+				deselectedClass: 'off',
+				tabs: $$('.tabs .clickers li'),
+				clickers: $$('.tabs .clickers a'),
+				sections: $$('.tabs .sections .section'),
+			cookieName: 'accounts-tabs',
+				smooth: true,
+				smoothSize: true
+			});
+		}
 	</script>
 
 	<h1>Управление пользователями</h1>
@@ -45,12 +45,12 @@
 	</div>
 
 	<label class="textbox-input">
-		<h3>Логин пользователя</h3>
+		<span class="label-title">Логин пользователя</span>
 		<asp:TextBox ID="UserLogin" runat="server" />
 	</label>
 
 	<label class="dropdown-list-select">
-		<h3>Присвоить роль</h3>  
+		<span class="label-title">Присвоить роль</span>
 		<asp:DropDownList ID="DropDownListActions" runat="server" />
 	</label>
 
@@ -62,22 +62,22 @@
 
 	<h2>Список пользователей по ролям</h2>
 	<div id="accounts-tabs" class="tabs">
-		<ul class="tabSet">
+		<ul class="clickers">
 			<li class="off"><a>admin</a></li>
 			<li class="off"><a>user</a></li>
 			<li class="off"><a>banned</a></li>
 		</ul>
 
-		<div class="sections">
-			<div class="panel">
+		<ul class="sections">
+			<li class="section">
 				<uc:UsersList id="admins" runat="server" />
-			</div>
-			<div class="panel">
+			</li>
+			<li class="section">
 				<uc:UsersList id="users" runat="server" />
-			</div>
-			<div class="panel">
+			</li>
+			<li class="section">
 				<uc:UsersList id="banned" runat="server" />
-			</div>
-		</div> 
+			</li>
+		</ul> 
 	</div>
 </asp:Content>

@@ -41,7 +41,8 @@ namespace ITCommunity
 		}
 		protected void LinkButtonAddMenu_Click(object sender, EventArgs e)
 		{
-			MenuItem.Add(new MenuItem(-1, Convert.ToInt32(TextBoxMenuParent.Text), TextBoxMenuUrl.Text, Convert.ToInt32(TextBoxMenuSort.Text), TextBoxMenuName.Text, byte.Parse(TextBoxMenuWindow.Text)));
+			byte isBlank = (IsBlankCheckBox.Checked) ? (byte)1 : (byte)0;
+			MenuItem.Add(new MenuItem(-1, Convert.ToInt32(TextBoxMenuParent.Text), TextBoxMenuUrl.Text, Convert.ToInt32(TextBoxMenuSort.Text), TextBoxMenuName.Text, isBlank));
 			gv_menuitems.DataBind();
 			RestoreNewMenuItemData();
 		}
@@ -56,7 +57,7 @@ namespace ITCommunity
 			TextBoxMenuUrl.Text = "";
 			TextBoxMenuSort.Text = "0";
 			TextBoxMenuName.Text = "";
-			TextBoxMenuWindow.Text = "1";
+			IsBlankCheckBox.Checked = false;
 		}
 	}
 }

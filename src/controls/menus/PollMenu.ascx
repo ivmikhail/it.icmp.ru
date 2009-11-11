@@ -7,7 +7,8 @@
 		<asp:Literal ID="LiteralPollTopic" runat="server" />
 	</h3>
 
-	<asp:CheckBoxList    ID="CheckBoxListAnswer"    runat="server" />
+	<asp:CheckBoxList ID="CheckBoxListAnswer" runat="server" />
+
 	<asp:RadioButtonList ID="RadioButtonListAnswer" runat="server" />
 
 	<div class="vote-link-panel">
@@ -19,7 +20,7 @@
 			Вы уже голосовали
 		</div>
 	</asp:Literal>
-	
+
 	<div class="note">
 		<a href="polls.aspx" title="Посмотреть архив опросов">Архив опросов</a> |
 		<a href="pollresult.aspx" title="Смотреть результаты активного опроса">Результаты</a>

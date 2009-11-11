@@ -99,19 +99,8 @@ namespace ITCommunity
         public void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();
-
-            bool notFoundError = false;
-            try
-            {
-                notFoundError = (ex != null && ((HttpException)ex).GetHttpCode() == 404);
-            } catch (InvalidCastException exc) //pzdc
-            {
-                exc = null;
-                notFoundError = false;
-            }
-            if (!notFoundError) {
-                Logger.Log.Error("Произошла непредвиденная ошибка, пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + ")", ex);
-            }           
+            Logger.Log.Error("Произошла непредвиденная ошибка, пользователь - " + CurrentUser.User.Nick  + "(" + CurrentUser.Ip + ")", ex);
+           
         }
 
         public void Application_AuthenticateRequest(Object src, EventArgs e)

@@ -4,12 +4,12 @@
 	<h1>Добавление записи в блокнот</h1>
 
 	<label class="textbox-input">
-		<h3>Заголовок</h3>
+		<span class="label-title">Заголовок</span>
 		<asp:TextBox ID="NoteTitle" runat="server" MaxLength="256" />
 	</label>
 
 	<label class="textbox-textarea">
-		<h3>Заметка</h3>
+		<span class="label-title">Заметка</span>
 		<asp:TextBox ID="NoteText" runat="server" Rows="15" MaxLength="1000" TextMode="MultiLine"/>
 	</label>
 

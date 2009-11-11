@@ -6,36 +6,42 @@
 
 	<asp:Panel ID="RegisterPanel" runat="server">
 		<h1>Регистрация</h1>
+		<div class="note">
+			<h2>После регистрации Вы вас ждут следующие вкусности</h2>
+			<ul class="list">
+				<li>Электронные книги</li>
+				<li>Видео курсы</li>
+				<li>Тесты</li>
+				<li>Файлы</li>
+				<li>Вы можете опубликовать свою новость</li>
+			<ul>
+		</div>
 
 		<label class="textbox-input">
-			<h3>Логин (аккаунт)</h3>
-			<div class="note">RegExp паттерн валидного логина: ^[A-Za-z0-9_\-\.]{2,20}$ </div>
+			<span class="label-title">Логин (аккаунт)</span>
+			<span class="note">RegExp паттерн валидного логина: ^[A-Za-z0-9_\-\.]{2,20}$ </span>
 			<asp:TextBox ID="TextBoxLogin" runat="server" ValidationGroup="ValidateRegData" MaxLength="32"/>
 		</label>
 
 		<label class="textbox-input">
-			<h3>Электропочта</h3>
-			<div class="note">Нигде не публикуется, используется для восстановления пароля</div>
+			<span class="label-title">Электропочта</span>
+			<span class="note">Нигде не публикуется, используется для восстановления пароля</span>
 			<asp:TextBox ID="TextBoxEmail" runat="server" ValidationGroup="ValidateRegData" CssClass="input-text" MaxLength="512"/>
 		</label>
 
 		<label class="textbox-input">
-			<h3>Пароль</h3>
+			<span class="label-title">Пароль</span>
 			<asp:TextBox ID="TextBoxPass" runat="server" ValidationGroup="ValidateRegData" TextMode="Password" CssClass="input-text" MaxLength="512"/>
 		</label>
 
 		<label class="textbox-input">
-			<h3>Повторите пароль</h3>
+			<span class="label-title">Повторите пароль</span>
 			<asp:TextBox ID="TextBoxPassConf" runat="server" ValidationGroup="ValidateRegData" TextMode="Password" CssClass="input-text" MaxLength="512"/>
 		</label>
 
 		<uc:ItCaptcha ID="captcha" runat="server" Visible="true" EnableViewState="true"/>
 
-		<div class="big-button">
-			<asp:LinkButton ID="RegisterButton" runat="server" ValidationGroup="ValidateRegData" OnClick="RegisterButton_Click">Зарегистрируйте меня, я готов!</asp:LinkButton>
-		</div>
-
-		<asp:ValidationSummary ID="ValidationSummaryAuth" runat="server" ValidationGroup="ValidateRegData" DisplayMode="List"  />
+		<asp:ValidationSummary ID="ValidationSummaryAuth" runat="server" ValidationGroup="ValidateRegData" DisplayMode="List" CssClass="error" />
 
 		<asp:RequiredFieldValidator ID="RequiredLogin" runat="server" ControlToValidate="TextBoxLogin"
 			ErrorMessage="Введите логин" Display="None" ValidationGroup="ValidateRegData" />
@@ -57,20 +63,14 @@
 		<asp:CustomValidator ID="RegisterFailed" runat="server" Display="None"
 			ErrorMessage="Ошибка, регистрация не прошла, обратитесь к администратору" ValidationGroup="ValidateRegData" />
 
-		<div class="panel">
-			<h2>После регистрации Вас ждут следующие вкусности:</h2>
-			<ul>
-				<li>Электронные книги</li>
-				<li>Видео курсы</li>
-				<li>Тесты</li>
-				<li>Файлы</li>
-				<li>Вы можете опубликовать свою новость</li>
-			<ul>
+		<div class="big-button">
+			<asp:LinkButton ID="RegisterButton" runat="server" ValidationGroup="ValidateRegData" OnClick="RegisterButton_Click">Зарегистрируйте меня, я готов!</asp:LinkButton>
 		</div>
+
 	</asp:Panel>
 
 	<asp:Literal ID="YetRegisteredText" runat="server" Visible="false">
-		<h1>Вы уже зарегистрированы и авторизовались</h1>
+		<h1 class="message">Вы уже зарегистрированы и авторизовались</h1>
 		<div class="note">Если вы все-таки хотите зарегистрироватсья по новой, тогда разлогинтесь</div>
 	</asp:Literal>
 

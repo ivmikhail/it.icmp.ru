@@ -35,7 +35,7 @@
 			Введите ниже ваш логин, ссылка для сброса пароля будет отправлена на ваш e-mail указанный при регистрации
 		</div>
 		<label class="textbox-input">
-			<h3>Введите ваш логин</h3>
+			<span class="label-title">Введите ваш логин</span>
 			<asp:TextBox ID="TextBoxLogin" runat="server" />
 		</label>
 		
@@ -51,22 +51,22 @@
 		<h2>Ваш логин - <asp:Literal ID="RecoveryLogin" runat="server" /></h2>
 			
 		<label class="textbox-input">
-			<h3>Введите ваш новый пароль</h3>
+			<span class="label-title">Введите ваш новый пароль</span>
 			<asp:TextBox ID="NewPass" runat="server" TextMode="Password"/>
 		</label >
 
 		<label class="textbox-input">
-			<h3>Введите еще раз ваш новый пароль</h3>
+			<span class="label-title">Введите еще раз ваш новый пароль</span>
 			<asp:TextBox ID="NewPassConfirm" runat="server" TextMode="Password"/>
 		</label >
-
-		<div class="big-button">
-			<asp:LinkButton ID="LinkButtonChangePass" runat="server" OnClick="LinkButtonChangePass_Click" >изменить</asp:LinkButton>
-		</div>
 
 		<asp:RequiredFieldValidator ID="RequiredPass" runat="server" ControlToValidate="NewPass"
 			ErrorMessage="Введите пароль." Display="None" />
 		<asp:CompareValidator ID="ConfirmPassword" runat="server" Display="None"
 			ControlToCompare="NewPass" ControlToValidate="NewPassConfirm" ErrorMessage="Пароли не совпадают." />
+
+		<div class="big-button">
+			<asp:LinkButton ID="LinkButtonChangePass" runat="server" OnClick="LinkButtonChangePass_Click" >изменить</asp:LinkButton>
+		</div>
 	</div>
 </asp:Content>

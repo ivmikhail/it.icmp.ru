@@ -4,31 +4,31 @@
 	<h1>Ваш профиль</h1>
 
 	<label class="textbox-input">
-		<h3>Изменить email</h3>
-		<p class="note"> 
+		<span class="label-title">Изменить email</span>
+		<span class="note"> 
 			Не обязательно
-		</p>
+		</span>
 		<asp:TextBox ID="TextBoxEmail" runat="server" MaxLength="512" ValidationGroup="ValidateProfileData"/>
 	</label>
 
 	<label class="textbox-input">
-		<h3>Новый пароль</h3> 
-		<p class="note">
+		<span class="label-title">Новый пароль</span> 
+		<span class="note">
 			Не обязательно, если ничего не введете, то пароль не изменится
-		</p>
+		</span>
 		<asp:TextBox ID="TextBoxNewPass" runat="server" TextMode="Password" MaxLength="512" ValidationGroup="ValidateProfileData"/>
 	</label>
 
 	<label class="textbox-input">
-		<h3>Повторите новый пароль</h3>
+		<span class="label-title">Повторите новый пароль</span>
 		<asp:TextBox ID="TextBoxNewPassConf" runat="server" TextMode="Password" MaxLength="512" ValidationGroup="ValidateProfileData"/>
 	</label>
 
 	<label class="textbox-input">
-		<h3>Введите ваш текущий пароль для продолжения</h3>
-		<p class="note">
+		<span class="label-title">Введите ваш текущий пароль для продолжения</span>
+		<span class="note">
 			Чтобы сохранить изменения введите ваш текущий пароль
-		</p>
+		</span>
 		<asp:TextBox ID="TextBoxPassConf" runat="server" TextMode="Password" MaxLength="512"/>
 	</label>
 

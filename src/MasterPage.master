@@ -23,6 +23,8 @@
 
 		<link rel="stylesheet"    href="media/css/default.css"        type="text/css"            charset="utf-8" />
 		<link rel="stylesheet"    href="media/css/style.css"          type="text/css"            charset="utf-8" />
+		<!--[if IE 6]><link rel="stylesheet" href="media/css/ie6-fix.css" type="text/css" charset="utf-8" /><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" href="media/css/ie7-fix.css" type="text/css" charset="utf-8" /><![endif]-->
 		<link rel="stylesheet"    href="media/css/highlight-vs.css"   type="text/css"            charset="utf-8" />
 
 		<script src="media/js/highlight.pack.js"                     type="text/javascript"     charset="utf-8"></script>
