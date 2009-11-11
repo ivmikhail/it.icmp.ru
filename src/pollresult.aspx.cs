@@ -72,6 +72,7 @@ namespace ITCommunity
 			}
 
 			// период голосования 
+            VotersCountText.Text = poll.VotesCount.ToString();
 			CreateDateText.Text = poll.CreateDate.ToString("dd MMMM yyyy, HH:mm");
 			CloseDateText.Text = poll.EndDateString;
 
