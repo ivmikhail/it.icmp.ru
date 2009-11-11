@@ -29,6 +29,7 @@
 		- user-menu				меню юзера
 		- admin-menu			меню админа
 		- links-menu			меню ссылок
+        - redmine-activity      активность редмайна
 		- poll-menu				меню голосовани€
 		- popular-posts-menu	меню попул€рных постов
 		- last-comments			меню последних комментариев
@@ -446,6 +447,12 @@ hr {
 }
 /* links-menu: end */
 
+/* redmine activity begin */
+#redmine-activity li
+	{	
+		padding: 2px 0;
+	}		
+/* redmine activity end */
 
 /* poll-menu: begin */
 #poll-menu input {

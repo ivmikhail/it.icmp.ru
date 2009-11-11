@@ -2,10 +2,10 @@
 
 <div class="captcha">
 	<label class="dropdown-list-select">
-		<span class="label-title">IT-captcha: <asp:Literal ID="QuestionText" runat="server" EnableViewState="False" /></span>
-		<span class="note">
+	    <span class="note">
 			Введите пожалуйста ответ на данный вопрос, мы должны убедиться что вы действительно имеете отношения с IT :)
 		</span>
+		<span class="label-title">IT-captcha: <asp:Literal ID="QuestionText" runat="server" EnableViewState="False" /></span>
 		<asp:DropDownList ID="VariantsList" runat="server" />
 	</label>
 
