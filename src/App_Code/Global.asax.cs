@@ -99,8 +99,14 @@ namespace ITCommunity
         public void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();
-            Logger.Log.Error("Произошла непредвиденная ошибка, пользователь - " + CurrentUser.User.Nick  + "(" + CurrentUser.Ip + ")", ex);
-           
+            HttpException exc = ex as HttpException;
+            if (exc != null && exc.GetHttpCode() == 404)
+            {
+                //ignore 404 error
+            } else
+            {
+                Logger.Log.Error("Произошла непредвиденная ошибка, пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + ")", ex);
+            }
         }
 
         public void Application_AuthenticateRequest(Object src, EventArgs e)

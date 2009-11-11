@@ -15,6 +15,7 @@ namespace ITCommunity
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.StatusCode = 404;
             if (!IsPostBack)
             {
                 string req_path = Request.QueryString["aspxerrorpath"];

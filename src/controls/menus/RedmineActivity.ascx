@@ -3,7 +3,7 @@
 <div class="menu-panel">
 	<h1>Активность Redmine</h1>
 
-	<ul>
+	<ul id="redmine-activity">
 		<asp:Repeater ID="ActivityItems" runat="server" EnableViewState="false">
 			<ItemTemplate>
 				<li>
