@@ -27,13 +27,11 @@ namespace ITCommunity
             int total_records = 0;
             int page = GetPage();
             List<Message> messages = new List<Message>();
-            string pageparam = "";
             if (IsOutput())
             {
                 ListTitle.Text = "Исходящие";
                 messages = Message.GetBySender(CurrentUser.User.Id, page, Global.ConfigNumParam("MaxMessageCount"), ref total_records);
-                pageparam = "&a=output";
-            } else
+             } else
             {
                 ListTitle.Text = "Входящие";
                 messages = Message.GetByReceiver(CurrentUser.User.Id, page, Global.ConfigNumParam("MaxMessageCount"), ref total_records);

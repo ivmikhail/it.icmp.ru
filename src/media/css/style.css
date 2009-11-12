@@ -247,6 +247,17 @@ hr {
 .post {
 	padding-bottom: 25px;
 }
+.post .title-link {
+	text-decoration:underline;
+}
+
+.post .category-link {
+	color:#4499cc;
+}
+.post .category-link:hover {
+	color:#ffffff;
+}
+
 .post .post-desc,
 .post .post-text {
 	font: 1.1em/1.6em Verdana, sans-serif;
