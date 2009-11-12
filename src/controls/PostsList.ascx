@@ -10,7 +10,7 @@
 		<li class="post">
 			<h1>
 				<asp:Image ID="AttachedImage" runat="server" ImageUrl="../media/img/design/attached.jpg" Visible="false" CssClass="attached-image" AlternateText="Важная новость" />
-				<a href='news.aspx?id=<%# Eval("id")%>'><%# Eval("title")%></a>
+				<a href='news.aspx?id=<%# Eval("id")%>' title="Посмотреть полный текст" class="title-link"><%# Eval("title")%></a>
 				<asp:Repeater ID="RepeaterPostCategories" runat="server">
 					<HeaderTemplate>
 						(

@@ -6,7 +6,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 	<div class="post"> 
 		<h1>
-			<asp:HyperLink ID="HyperLinkTitle" runat="server">HyperLink</asp:HyperLink>
+			<asp:HyperLink ID="HyperLinkTitle" runat="server" CssClass="title-link">HyperLink</asp:HyperLink>
 			( <asp:Literal ID="LinksPostCategories" runat="server"></asp:Literal> )
 		</h1>
 

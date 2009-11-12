@@ -23,9 +23,7 @@ namespace ITCommunity
 
         private void LoadPolls()
         {
-            int total_records = 0;
             int page = GetPage();
-
         }
         private int GetPage()
         {
