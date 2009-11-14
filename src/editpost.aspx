@@ -125,7 +125,7 @@
 		<div class="note">
 			Не добавленные в новость картинки будут удалены автоматически. Чтобы добавить картинку в пост кликните на неё.
 		</div>
-		<div id="uploadImagesList">
+		<div id="upload-images-list">
 			<asp:Literal ID="UploadedImagesList" runat="server"/>
 		</div>
 

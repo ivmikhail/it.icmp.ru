@@ -29,7 +29,7 @@
 		- user-menu				меню юзера
 		- admin-menu			меню админа
 		- links-menu			меню ссылок
-        - redmine-activity      активность редмайна
+		- redmine-activity		активность редмайна
 		- poll-menu				меню голосовани€
 		- popular-posts-menu	меню попул€рных постов
 		- last-comments			меню последних комментариев
@@ -608,6 +608,14 @@ hr {
 }
 #edit-post .file-upload-input a {
 	font-size: 2.2em;
+}
+#edit-post .uploaded-image {
+	border: 3px solid #aaaaaa;
+	margin-right: 5px;
+}
+#edit-post .uploaded-image:hover {
+	border: 3px solid #ff6633;
+	padding: 0;
 }
 /* edit-post: end */
 
