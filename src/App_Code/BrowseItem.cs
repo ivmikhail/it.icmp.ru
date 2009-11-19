@@ -63,6 +63,10 @@ namespace ITCommunity {
             this._link = link;
             this._name = name;
         }
+        public static BrowseItem Get(String dir) {
+            BrowseItem bi = new BrowseItem(true, getLinkOfDir(dir), getDirName(dir));
+            return bi;
+        }
         public static List<BrowseItem> GetList(String dir, bool isViewRoot) {
 
             List<BrowseItem> result = new List<BrowseItem>();
@@ -78,8 +82,8 @@ namespace ITCommunity {
             
             String[] dirs = Directory.GetDirectories(dir);
             for (int i = 0; i < dirs.Length; i++) {
-                String dirName = dirs[i].Substring(dirs[i].LastIndexOf("\\") + 1);
-                BrowseItem bi = new BrowseItem(true, getLinkOfDir(dirs[i]), dirName);
+                String dirName = getDirName(dirs[i]);
+                BrowseItem bi = Get(dirs[i]);
                 bi.Icon = FolderIcon;
                 descriptions.TryGetValue(dirName, out bi._description);
                 result.Add(bi);
@@ -99,6 +103,13 @@ namespace ITCommunity {
             }
             return result;
 
+        }
+
+        private static String getDirName(String dir) {
+            if (dir[dir.Length - 1] == '\\') {
+                dir = dir.Substring(0, dir.Length - 1);
+            }
+            return dir.Substring(dir.LastIndexOf("\\") + 1);
         }
         private static Dictionary<String, String> getDescriptions(String dir) {
             Dictionary<String, String> descriptions = new Dictionary<string, string>();
