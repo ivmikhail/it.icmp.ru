@@ -2,7 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 	<table id="files-table" class="data-table">
-		<caption><asp:Label ID="lblInfo" runat="Server" /></caption>
+		<caption>
+		<asp:Repeater ID="rptPath" runat="Server" >
+		<ItemTemplate>/<a href='<%# Eval("Link") %>'><%# Eval("Name") %></a></ItemTemplate>
+		</asp:Repeater>
+		</caption>
 		<thead>
 			<tr>
 				<th></th>
