@@ -4,6 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
+    <h1>Избранные посты</h1>
 	<uc:PostsList id="FavoritesList" runat="server" />
 
 </asp:Content>

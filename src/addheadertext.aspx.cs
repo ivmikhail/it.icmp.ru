@@ -29,7 +29,7 @@ namespace ITCommunity {
 		}
 
 		protected void LinkButtonAddHeaderText_Click(object sender, EventArgs e) {
-			if (IsValid()) {
+			if (IsDataValid()) {
 				User current = CurrentUser.User;
 				if (!current.AbleToAddHeaderText())
 					return;
@@ -42,7 +42,7 @@ namespace ITCommunity {
 			}
 		}
 
-		private bool IsValid() {
+		private bool IsDataValid() {
 			RequiredText.Validate();
 			if (TextBoxText.Text.Length > Global.ConfigNumParam("HeaderTextMaxLength")) {
 				HeaderTextMaxLength.Text = Global.ConfigNumParam("HeaderTextMaxLength").ToString();
