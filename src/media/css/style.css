@@ -181,6 +181,13 @@ hr {
 .big-button a:hover {
 	background: #ff4455;
 }
+
+.new-link {
+	color: #ff4455;
+}
+.new-link:hover {
+	background: #ffffff;
+}
 /* links: begin */
 
 
@@ -286,6 +293,10 @@ hr {
 }
 .post .align-right {
 	margin: 0 0 25px 20px;
+}
+.post .bbcode-list {
+	list-style-type: square;
+	padding-left: 14px;
 }
 /* post: end */
 

@@ -108,6 +108,10 @@ namespace ITCommunity
 				{
 					editable_post.Author = CurrentUser.User;
 					inserted_post = Post.Add(editable_post);
+					// Увеличиваем счетчик
+					User current = CurrentUser.User;
+					current.HeaderTextCounter++;
+					current.Update();
 				}
 				Picture.FixImages(inserted_post);
 				Response.Redirect("news.aspx?id=" + inserted_post.Id);
