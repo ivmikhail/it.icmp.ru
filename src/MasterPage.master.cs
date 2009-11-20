@@ -19,6 +19,7 @@ namespace ITCommunity
 		{
 			if (!IsPostBack)
 			{
+				HeaderTextLiteral.Text = HeaderText.GetCurrent().Text;
 				ThisYear.Text = DateTime.Now.Year.ToString();
 			}
 		}

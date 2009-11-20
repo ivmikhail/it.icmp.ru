@@ -15,5 +15,8 @@
 		<li>
 			<a href="accounts.aspx" title="Редактировать роли пользователей">Пользователи</a>
 		</li>
+		<li>
+			<a href="headertexts.aspx" title="Очередь текстов для хидера">Тексты для хидера</a>
+		</li>
 	</ul>
 </div>

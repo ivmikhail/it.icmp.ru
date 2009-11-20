@@ -245,7 +245,7 @@ namespace ITCommunity
         /// <returns></returns>
         public Poll GetNext()
         {
-            return GetPollFromRow(Database.PollGetNext(_id));
+            return GetPollFromRow(Database.PollGetById(_id));
         }
 
         /// <summary>

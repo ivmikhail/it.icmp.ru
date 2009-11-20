@@ -41,8 +41,7 @@
 
 			<div id="header">
 				<a href="default.aspx" class="main-link">
-					<span class="code-class">IT</span> Community;
-					<span class="code-comment">cout &lt;&lt; "hi";</span>
+					<asp:Literal ID="HeaderTextLiteral" runat="server" />
 				</a>
 			</div>
 
