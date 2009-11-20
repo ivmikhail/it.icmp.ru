@@ -7,7 +7,7 @@
 	<div class="post"> 
 		<h1>
 			<asp:HyperLink ID="HyperLinkTitle" runat="server" CssClass="title-link">HyperLink</asp:HyperLink>
-			( <asp:Literal ID="LinksPostCategories" runat="server"></asp:Literal> )
+			(<asp:Literal ID="LinksPostCategories" runat="server"></asp:Literal>)
 		</h1>
 
 		<div class="post-desc">
