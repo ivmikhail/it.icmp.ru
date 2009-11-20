@@ -88,7 +88,7 @@ namespace ITCommunity
 			{
 				if (result.Length > 0)
 				{
-					result += " , ";
+					result += ", ";
 				}
 				result += "<a href='default.aspx?cat=" + cat.Id + "' class='category-link'>" + cat.Name + "</a>";
 			}

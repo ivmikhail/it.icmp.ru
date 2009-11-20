@@ -83,7 +83,7 @@ namespace ITCommunity {
 			if (current.ShowBeginDate == DateTime.MinValue){
 				current.ShowBeginDate = DateTime.Now;
 				Database.HeaderTextUpdateShowBeginDate(current.Id);
-				Message.Send(current.User.Id, 0, "Уведомление", "Добрый день!<br />Ваш текст теперь показыется в хидере, поздравляем!");
+				Message.Send(current.User.Id, 0, "Уведомление", "Добрый день!<br />Ваш текст теперь показывется в хидере, поздравляем!");
 			}
 			// проверяем закончился ли период показа, если да, то загружаем следующий текст
 			double hours = Global.ConfigDoubleParam("HeaderTextShowingHours");

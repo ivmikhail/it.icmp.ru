@@ -12,16 +12,10 @@
 				<asp:Image ID="AttachedImage" runat="server" ImageUrl="../media/img/design/attached.jpg" Visible="false" CssClass="attached-image" AlternateText="Важная новость" />
 				<a href='news.aspx?id=<%# Eval("id")%>' title="Посмотреть полный текст" class="title-link"><%# Eval("title")%></a>
 				<asp:Repeater ID="RepeaterPostCategories" runat="server">
-					<HeaderTemplate>
-						(
-					</HeaderTemplate>
-					<ItemTemplate>
-						<a href='default.aspx?cat=<%# Eval("id")%>' title="Посмотреть новости этой категории" class="category-link"><%# Eval("name")%></a>
-					</ItemTemplate>
-					<FooterTemplate>
-						)
-					</FooterTemplate>
-					<SeparatorTemplate>,</SeparatorTemplate>
+					<HeaderTemplate>(</HeaderTemplate>
+					<ItemTemplate><a href='default.aspx?cat=<%# Eval("id")%>' title="Посмотреть новости этой категории" class="category-link"><%# Eval("name")%></a></ItemTemplate>
+					<FooterTemplate>)</FooterTemplate>
+					<SeparatorTemplate>, </SeparatorTemplate>
 				</asp:Repeater>
 			</h1>
 
