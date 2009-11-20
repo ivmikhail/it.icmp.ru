@@ -13,12 +13,12 @@ namespace ITCommunity {
         private static readonly int howItemsGet = Global.ConfigNumParam("RedmineActivityRssHowView");
         private static readonly String cacheKeyName = Global.ConfigStringParam("RedmineActivityCacheName");
  
-        public static List<RedmineActivityItem> LoadDataFromCache() {
-            RedmineActivityLoader loader = new RedmineActivityLoader(loadDataFromRss);
+        public static List<RedmineActivityItem> GetItems() {
+            RedmineActivityLoader loader = new RedmineActivityLoader(LoadDataFromRss);
             List<RedmineActivityItem> list = (List<RedmineActivityItem>)AppCache.Get(cacheKeyName, new object(), loader, new object[] { howItemsGet }, DateTime.Now.AddMinutes(cacheLiveTime));
             return list;
         }
-        private static List<RedmineActivityItem> loadDataFromRss(int howGet) {
+        private static List<RedmineActivityItem> LoadDataFromRss(int howGet) {
             List<RedmineActivityItem> result = new List<RedmineActivityItem>();
             String rssUrl = Global.ConfigStringParam("RedmineActivityRssUrl");
             // не пашет

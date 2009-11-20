@@ -26,7 +26,7 @@ namespace ITCommunity
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<RedmineActivityItem> items = RedmineActivityData.LoadDataFromCache();
+            List<RedmineActivityItem> items = RedmineActivityData.GetItems();
             ActivityItems.DataSource = items;
             ActivityItems.DataBind();
         }

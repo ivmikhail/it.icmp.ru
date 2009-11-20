@@ -5,6 +5,8 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.Data;
 using System.Collections.Generic;
+using System.Web.Caching;
+
 using ITCommunity;
 
 namespace ITCommunity {
@@ -156,7 +158,7 @@ namespace ITCommunity {
 
 		public void Update() {
 			Database.UserUpdate(_id, _pass, (byte)_role, _email, _canAddHeaderText, _headerTextCounter);
-			RemoveUserFromList(_id);
+            RemoveUserFromCache(_id);
 		}
 
 		/// <summary>
@@ -180,18 +182,34 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="userId">Идентификатор</param>
 		public static User GetById(int userId) {
-			User usr = null;
-			GetUsersList().TryGetValue(userId, out usr);
+			User usr = GetUserFromCache(userId);
 			if (usr == null) {
 				usr = GetUserFromRow(Database.UserGetById(userId));
 				if (usr.Id > 0) {
-					AddUserToList(usr);
+					AddUserToCache(usr);
 				}
 			}
 
 			return usr;
 		}
 
+        /// <summary>
+        /// Получаем пользователя из кеша
+        /// </summary>
+        /// <param name="userId">идентификатор пользователя</param>
+        /// <returns>обьект пользователь, либо null</returns>
+        private static User GetUserFromCache(int userId) {
+            return (User)HttpRuntime.Cache.Get(Global.ConfigStringParam("UsersListCacheName") + userId);
+        }
+
+        private static void AddUserToCache(User usr) {
+            HttpRuntime.Cache.Insert(Global.ConfigStringParam("UsersListCacheName") + usr.Id, usr, null, DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersListCachePer")), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+        }
+
+        private static void RemoveUserFromCache(int userId) {
+            HttpRuntime.Cache.Remove(Global.ConfigStringParam("UsersListCacheName") + userId);
+        }
+        
 		/// <summary>
 		/// Получаем пользователей по ролям
 		/// </summary>
@@ -249,17 +267,17 @@ namespace ITCommunity {
 
 		}
 
-		private static List<KeyValuePair<string, string>> GetTopPostersFromDB(int count) {
-			List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
-			DataTable dt = Database.UserGetTopPosters(count);
-			for (int i = 0; i < dt.Rows.Count; i++) {
-				string username = dt.Rows[i]["usernick"].ToString();
-				string text = dt.Rows[i]["postcount"].ToString();
-				top.Add(new KeyValuePair<string, string>(username, text));
-			}
+        private static List<KeyValuePair<string, string>> GetTopPostersFromDB(int count) {
+            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+            DataTable dt = Database.UserGetTopPosters(count);
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string username = dt.Rows[i]["usernick"].ToString();
+                string text = dt.Rows[i]["postcount"].ToString();
+                top.Add(new KeyValuePair<string, string>(username, text));
+            }
 
-			return top;
-		}
+            return top;
+        }
 
 		/// <summary>
 		/// Получаем статистику по пользователям(кол-во пользователей, админов, постеров) из кеша
@@ -274,34 +292,6 @@ namespace ITCommunity {
 
 			return stat;
 
-		}
-
-		/// <summary>
-		/// Кешированный список пользователей.
-		/// </summary>
-		/// <returns></returns>
-		private static Dictionary<int, User> GetUsersList() {
-			Dictionary<int, User> users = (Dictionary<int, User>)AppCache.Get(Global.ConfigStringParam("UsersListCacheName"));
-			if (users == null) {
-				users = new Dictionary<int, User>();
-			}
-			return users;
-		}
-
-		/// <summary>
-		/// Добавление юзера в список пользователей приложения.
-		/// </summary>
-		/// <param name="usr"></param>
-		private static void AddUserToList(User usr) {
-			Dictionary<int, User> users = GetUsersList();
-			users.Add(usr.Id, usr);
-			AppCache.Insert(Global.ConfigStringParam("UsersListCacheName"), users, new object(), DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersListCachePer")));
-		}
-
-		private static void RemoveUserFromList(int userId) {
-			Dictionary<int, User> users = GetUsersList();
-			users.Remove(userId);
-			AppCache.Insert(Global.ConfigStringParam("UsersListCacheName"), users, new object(), DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersListCachePer")));
 		}
 
 		private static List<KeyValuePair<string, string>> GetStatsFromDB() {
