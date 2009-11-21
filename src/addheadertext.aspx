@@ -13,7 +13,7 @@
 	
 	<asp:Literal ID="MessageText" runat="server" Visible="false">
 		<div class="message">
-			Ваш текст добавлен в очередь. Мы отправим Вам сообщение, когда будем показывать Ваш текст.
+			Ваш текст добавлен.
 		</div>
 	</asp:Literal>
 

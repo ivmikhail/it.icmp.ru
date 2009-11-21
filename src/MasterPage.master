@@ -40,11 +40,11 @@
 		<form id="MainForm" runat="server">
 
 			<div id="header">
-				<a href="default.aspx" class="main-link">				
+				<a href="default.aspx" class="main-link">
 					<span class="code-class">IT</span> Community →
 					
 					<span class="code-comment">
-					    <asp:Literal ID="HeaderTextLiteral" runat="server" />
+						<asp:Literal ID="HeaderTextLiteral" runat="server" />
 					</span>
 				</a>
 			</div>
