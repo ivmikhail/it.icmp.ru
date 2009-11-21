@@ -16,6 +16,7 @@ namespace ITCommunity {
 		private DateTime _showEndDate = DateTime.MinValue;
 
 		private delegate object CurrentHeaderTextLoader();
+		private static Random random = new Random();
 
 		public int Id {
 			get { return _id; }
@@ -48,6 +49,7 @@ namespace ITCommunity {
 		}
 
 		public HeaderText() {
+			Text = "Напиши текст для хидера, " + CurrentUser.User.Nick + "!";
 		}
 
 		public HeaderText(int id, User user, string text, DateTime createDate, DateTime showBeginDate, DateTime showEndDate) {
@@ -65,37 +67,46 @@ namespace ITCommunity {
 		}
 
 		public static HeaderText GetCurrent() {
-			CurrentHeaderTextLoader loader = new CurrentHeaderTextLoader(GetCurrentFromDB);
-			HeaderText current = (HeaderText)AppCache.Get(Global.ConfigStringParam("HeaderTextCacheName"),
-														  new object(),
-														  loader,
-														  new object[] {},
-														  DateTime.Now.AddHours(Global.ConfigDoubleParam("HeaderTextCachePer")));
+			List<HeaderText> currents = GetCurrents();
+			return currents[random.Next(currents.Count)];
+		}
+
+		private static List<HeaderText> GetCurrents() {
+			CurrentHeaderTextLoader loader = new CurrentHeaderTextLoader(GetCurrentsFromDB);
+			List<HeaderText> current = (List<HeaderText>)AppCache.Get(
+				Global.ConfigStringParam("HeaderTextCacheName"),
+				new object(),
+				loader,
+				new object[] {},
+				DateTime.Now.AddHours(Global.ConfigDoubleParam("HeaderTextCachePer")));
 			return current;
 		}
 
-		private static HeaderText GetCurrentFromDB() {
-			HeaderText current = GetHeaderTextFromRow(Database.HeaderTextGetCurrent());
-			if (current == null){
-				return current;
+		private static List<HeaderText> GetCurrentsFromDB() {
+			List<HeaderText> currents = GetHeaderTextsFromTable(Database.HeaderTextGetCurrents());
+			if (currents.Count == 0){
+				currents.Add(new HeaderText());
+				return currents;
 			}
-			// проверяем показывался ли, если нет, то сохраняем дату начала показа
-			if (current.ShowBeginDate == DateTime.MinValue){
-				current.ShowBeginDate = DateTime.Now;
-				Database.HeaderTextUpdateShowBeginDate(current.Id);
-				Message.Send(current.User.Id, 0, "Уведомление", "Добрый день!<br />Ваш текст теперь показывется в хидере, поздравляем!");
+			foreach (HeaderText current in currents) {
+				// проверяем показывался ли, если нет, то сохраняем дату начала показа
+				if (current.ShowBeginDate == DateTime.MinValue) {
+					current.ShowBeginDate = DateTime.Now;
+					Database.HeaderTextUpdateShowBeginDate(current.Id);
+					//Message.Send(current.User.Id, 0, "Уведомление", "Добрый день!<br />Ваш текст теперь показывется в хидере, поздравляем!");
+				}
+				// проверяем закончился ли период показа, если да, то загружаем следующий текст
+				double hours = Global.ConfigDoubleParam("HeaderTextShowingHours");
+				DateTime date = DateTime.Now.AddHours(-hours);
+				int comp = current.ShowBeginDate.CompareTo(date);
+				if (comp <= 0) {
+					current.ShowEndDate = DateTime.Now;
+					Database.HeaderTextUpdateShowEndDate(current.Id);
+					// Внимание рекурсия!!!
+					return GetCurrentsFromDB();
+				}
 			}
-			// проверяем закончился ли период показа, если да, то загружаем следующий текст
-			double hours = Global.ConfigDoubleParam("HeaderTextShowingHours");
-			DateTime date = DateTime.Now.AddHours(-hours);
-			int comp = current.ShowBeginDate.CompareTo(date);
-			if (comp <= 0) {
-				current.ShowEndDate = DateTime.Now;
-				Database.HeaderTextUpdateShowEndDate(current.Id);
-				// Внимание рекурсия!!!
-				return GetCurrentFromDB();
-			}
-			return current;
+			return currents;
 		}
 
 		public static void Delete(int id) {
@@ -119,7 +130,6 @@ namespace ITCommunity {
 			HeaderText headerText;
 			if (dr == null) {
 				headerText = new HeaderText();
-				headerText.Text = "Напиши текст для хидера, " + CurrentUser.User.Nick + "!";
 			} else {
 				DateTime showBeginDate = DateTime.MinValue;
 				DateTime showEndDate = DateTime.MinValue;

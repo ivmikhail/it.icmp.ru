@@ -11,8 +11,7 @@ namespace ITCommunity {
 			string connectionString;
 			if (ConfigurationManager.ConnectionStrings[Environment.MachineName] != null) {
 				connectionString = ConfigurationManager.ConnectionStrings[Environment.MachineName].ConnectionString;
-			}
-			else {
+			} else {
 				connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 			}
 			SqlConnection connection = new SqlConnection(connectionString);
@@ -162,8 +161,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -241,8 +239,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -314,8 +311,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -374,8 +370,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -484,8 +479,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -575,8 +569,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -631,9 +624,9 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow HeaderTextGetCurrent() {
+		public static DataTable HeaderTextGetCurrents() {
 			SqlConnection connection = OpenConnection();
-			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("HeaderTextGetCurrent", connection);
+			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("HeaderTextGetCurrents", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
 			System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
@@ -647,18 +640,15 @@ namespace ITCommunity {
 				table.Columns.Add(__name, __type);
 			}
 
-			DataRow result;
-			if (reader.Read()) {
+			while (reader.Read()) {
 				System.Data.DataRow row = table.NewRow();
 				object[] rowdata = new object[reader.FieldCount];
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
-				result = row;
-			}
-			else {
-				result = null;
+				table.Rows.Add(row);
 			}
 			reader.Close();
+			DataTable result = table;
 			connection.Close();
 			return result;
 		}
@@ -722,8 +712,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -795,8 +784,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -895,8 +883,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -951,8 +938,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1096,8 +1082,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1181,8 +1166,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1227,8 +1211,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1371,8 +1354,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1402,8 +1384,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1493,8 +1474,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1657,8 +1637,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1884,8 +1863,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -1929,8 +1907,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -2034,8 +2011,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -2107,8 +2083,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -2141,8 +2116,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -2175,8 +2149,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
@@ -2356,8 +2329,7 @@ namespace ITCommunity {
 				reader.GetValues(rowdata);
 				row.ItemArray = rowdata;
 				result = row;
-			}
-			else {
+			} else {
 				result = null;
 			}
 			reader.Close();
