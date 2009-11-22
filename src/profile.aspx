@@ -6,7 +6,7 @@
 	<label class="textbox-input">
 		<span class="label-title">Изменить email</span>
 		<span class="note"> 
-			Не обязательно
+			Необязательно
 		</span>
 		<asp:TextBox ID="TextBoxEmail" runat="server" MaxLength="512" ValidationGroup="ValidateProfileData"/>
 	</label>
@@ -14,7 +14,7 @@
 	<label class="textbox-input">
 		<span class="label-title">Новый пароль</span> 
 		<span class="note">
-			Не обязательно, если ничего не введете, то пароль не изменится
+			Необязательно, если ничего не введете, то пароль не изменится
 		</span>
 		<asp:TextBox ID="TextBoxNewPass" runat="server" TextMode="Password" MaxLength="512" ValidationGroup="ValidateProfileData"/>
 	</label>
