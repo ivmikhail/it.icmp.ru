@@ -13,6 +13,8 @@ namespace ITCommunity
 			if (!IsPostBack)
 			{
 				LoadTopPosters();
+                LoadLastTopPosters();
+                LastTopPostersDays.Text = Global.ConfigNumParam("LastTopUsersDays").ToString();
 			}
 		}
 		private void LoadTopPosters()
@@ -21,5 +23,9 @@ namespace ITCommunity
 			TopPosters.DataBind();
 		}
 
+        private void LoadLastTopPosters() {
+            LastTopPosters.DataSource = User.GetLastTopPosters(Global.ConfigNumParam("TopPostersCount"), Global.ConfigNumParam("LastTopUsersDays"));
+            LastTopPosters.DataBind();
+        }
 	}
 }

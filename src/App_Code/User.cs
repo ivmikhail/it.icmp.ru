@@ -17,10 +17,12 @@ namespace ITCommunity {
 	public class User {
 		//делегат метода загрузки посл. зарегистр. юзеров из базы, нужен для организации кеширования
 		private delegate object LastUsersLoader(int count);
-		//делегат метода загрузки посл. зарегистр. юзеров из базы, нужен для организации кеширования
+        //делегат метода загрузки активных пользователей за все время, нужен для организации кеширования
 		private delegate object TopPostersLoader(int count);
 		//делегат метода загрузки статистики юзеров из базы, нужен для организации кеширования
 		private delegate object UsersStatLoader();
+        //делегат метода загрузки активных пользователей за последние несколько дней, нужен для организации кеширования
+        private delegate object LastTopPostersLoader(int count, int days);
 
 		private int _id;
 		private string _pass;
@@ -278,6 +280,38 @@ namespace ITCommunity {
 
             return top;
         }
+
+        /// <summary>
+        /// Получаем активных постеров за последние N дней
+        /// </summary>
+        /// <param name="count">Сколько пользователей нужно</param>
+        /// <param name="days">Сколько последних дней учитывать</param>
+        /// <returns></returns>
+        public static List<KeyValuePair<string, string>> GetLastTopPosters(int count, int days) {
+            LastTopPostersLoader loader = new LastTopPostersLoader(GetLastTopPostersFromDB);
+            List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)AppCache.Get(Global.ConfigStringParam("LastTopPostersCacheName"),
+                                                                                                      new object(),
+                                                                                                      loader,
+                                                                                                      new object[] { count, days },
+                                                                                                      DateTime.Now.AddHours(Global.ConfigDoubleParam("LastTopPostersCachePer")));
+
+            return top;
+
+        }
+
+        private static List<KeyValuePair<string, string>> GetLastTopPostersFromDB(int count, int days) {
+            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+            DataTable dt = Database.UserGetLastTopPosters(count, 0 - days);
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string username = dt.Rows[i]["usernick"].ToString();
+                string text = dt.Rows[i]["postcount"].ToString();
+                top.Add(new KeyValuePair<string, string>(username, text));
+            }
+
+            return top;
+        }
+
+
 
 		/// <summary>
 		/// Получаем статистику по пользователям(кол-во пользователей, админов, постеров) из кеша
