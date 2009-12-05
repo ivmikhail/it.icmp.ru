@@ -6,6 +6,8 @@
 			Введите пожалуйста ответ на данный вопрос, мы должны убедиться что вы действительно имеете отношения с IT :)
 		</span>
 		<span class="label-title">IT-captcha: <asp:Literal ID="QuestionText" runat="server" EnableViewState="False" /></span>
+		<br />
+		<br />
 		<asp:DropDownList ID="VariantsList" runat="server" />
 	</label>
 

@@ -1,9 +1,11 @@
 <%@ Page Language="C#" EnableViewState="true" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="news.aspx.cs" Inherits="ITCommunity.News" Title="Ykt It Community | " %>
 
-<%@ Register src="~/controls/ItCaptcha.ascx"       tagname="ItCaptcha"  tagprefix="uc" %>
-<%@ Register src="~/controls/BBCodeInfo.ascx"      tagname="BBCodeInfo" tagprefix="uc" %>
+<%@ Register src="~/controls/ItCaptcha.ascx"       tagname="ItCaptcha"     tagprefix="uc" %>
+<%@ Register src="~/controls/BBCodeInfo.ascx"      tagname="BBCodeInfo"    tagprefix="uc" %>
+<%@ Register src="~/controls/EditorToolbar.ascx"   tagname="EditorToolbar" tagprefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+   
 	<div class="post"> 
 		<h1>
 			<asp:HyperLink ID="HyperLinkTitle" runat="server" CssClass="title-link">HyperLink</asp:HyperLink>
@@ -24,7 +26,7 @@
 			<a href='mailsend.aspx?receiver=<asp:Literal ID="author" runat="server" />' title="Отправить личное сообщение" class="user-pm-link"><asp:Literal ID="authorLogin" runat="server" /></a> /
 			просмотров: <asp:Literal ID="views" runat="server" />
 			<asp:Literal ID="EditPostLink" runat="server" Visible="false" />
-			<asp:LinkButton ID="DeletePostLink" runat="server" OnClick="DeletePost_Click" Visible="false">удалить</asp:LinkButton>
+			<asp:LinkButton ID="DeletePostLink" runat="server" OnClick="DeletePost_Click" Visible="false" OnClientClick="return confirm('Точно удалить?')">удалить</asp:LinkButton>
 			<asp:Literal ID="source" runat="server" />
 		</div>
 
@@ -39,7 +41,7 @@
 						<div class="comment-info">
 							<a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("author.nick")%></a>
 							- <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%>
-							<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") %>' ID="DeleteComment" runat="server" Text="Удалить" CommandName="delete" />
+							<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") %>' ID="DeleteComment" runat="server" Text="Удалить" CommandName="delete" OnClientClick="return confirm('Точно удалить?')" />
 						</div>
 						<div class="comment-text">
 							<%# Eval("textformatted")%>
@@ -69,8 +71,9 @@
 
 			<uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
 
-			<uc:ItCaptcha ID="captcha" runat="server" Visible="false" EnableViewState="true"/>
+			<uc:ItCaptcha ID="Captcha" runat="server" Visible="false" EnableViewState="true"/>
 
+            <uc:EditorToolbar ID="EditorToolbar" runat="server" ToolbarElements="" />
 			<label class="textbox-textarea">
 				<asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="10" MaxLength="512" ValidationGroup="Comment" />
 			</label>

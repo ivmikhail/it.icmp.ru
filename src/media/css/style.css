@@ -39,6 +39,7 @@
 		- edit-post				редактирование поста
 		- files-table			таблица файлов отображаемых на файл-броузере
 		- search				поиск
+		- editor-toolbar		кноки форматирования текста
 */
 
 
@@ -151,6 +152,18 @@ hr {
 .list li {
 	padding: 2px 0;
 }
+.editor-toolbar {
+	background: #f8f8f8;
+	border: 1px solid #c0c0c0;
+	padding:5px;
+}
+.editor-toolbar input {	
+	background-color: #ffffff;
+	border: 1px solid #c0c0c0;
+	margin: 1px 0px;
+	padding: 2px 5px 2px 5px;
+	font-family: Verdana;
+}
 /* panels: end */
 
 
@@ -213,7 +226,7 @@ hr {
 .textbox-textarea textarea {
 	color: #444444;
 	font-family: Verdana, sans-serif;
-	font-size: 2.2em;
+	/*font-size: 2.2em;*/
 	width: 100%;
 }
 
@@ -618,7 +631,7 @@ hr {
 	width: 70%;
 }
 #edit-post .file-upload-input a {
-	font-size: 2.2em;
+	/* font-size: 2.2em; */
 }
 #edit-post .uploaded-image {
 	border: 3px solid #aaaaaa;
