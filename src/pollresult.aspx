@@ -17,7 +17,7 @@
 		</asp:Literal>
 		, всего проголосовало - <asp:Literal ID="VotersCountText" runat="server" />
 
-		<asp:LinkButton ID="DeletePollLink" runat="server" Visible="false" ToolTip="Удалить этот опрос" OnClick="DeletePollLink_Click">
+		<asp:LinkButton ID="DeletePollLink" runat="server" Visible="false" ToolTip="Удалить этот опрос" OnClick="DeletePollLink_Click" OnClientClick="return confirm('Точно удалить?')">
 			Удалить опрос
 		</asp:LinkButton>
 	</div>

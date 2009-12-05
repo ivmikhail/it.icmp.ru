@@ -1,5 +1,6 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="editpost.aspx.cs" Inherits="ITCommunity.EditPost" Title="Ykt IT Community | Добавление новости" EnableViewState="true" %>
-<%@ Register src="~/controls/BBCodeInfo.ascx" tagname="BBCodeInfo"   tagprefix="uc" %>
+<%@ Register src="~/controls/BBCodeInfo.ascx"      tagname="BBCodeInfo"    tagprefix="uc" %>
+<%@ Register src="~/controls/EditorToolbar.ascx"   tagname="EditorToolbar" tagprefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
 	<script type="text/javascript">
@@ -111,7 +112,7 @@
 		</div>
 
 		<uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
-
+        <uc:EditorToolbar ID="EditorToolbar" runat="server" />
 		<label class="textbox-textarea">
 			<asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" MaxLength="10000" TextMode="MultiLine" />
 		</label>

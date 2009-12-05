@@ -25,6 +25,7 @@ namespace ITCommunity
 			{
 				post.UpdateViews();
 			}
+            EditorToolbar.InputId = TextBoxComment.ClientID;
 		}
 
 		private void LoadData()
@@ -45,7 +46,7 @@ namespace ITCommunity
 			else
 			{
 				userLogin.Text = "anonymous";
-				captcha.Visible = true;
+				Captcha.Visible = true;
 			}
 		}
 		private void LoadPost()
@@ -117,15 +118,15 @@ namespace ITCommunity
 
 		protected void LinkButtonAddComment_Click(object sender, EventArgs e)
 		{
-			if (captcha.Visible)
+			if (Captcha.Visible)
 			{
-				if (captcha.IsRightAnswer())
+				if (Captcha.IsRightAnswer())
 				{
 					AddComment();
 				}
 				else
 				{
-					captcha.SetErrorMessageVisible();
+					Captcha.SetErrorMessageVisible();
 					LinkButtonAddComment.Focus();
 				}
 			}

@@ -124,14 +124,14 @@ namespace ITCommunity
 		protected void DeletePollLink_Click(object sender, EventArgs e)
 		{
 			int del_id = GetPollId();
-			if (del_id > 0)
-			{
-				Poll del_poll = Poll.GetById(del_id);
-				if (del_poll.Id > 0)
-				{
-					Poll.Delete(del_poll.Id);
-				}
-			}
+            if (del_id > 0) {
+                Poll del_poll = Poll.GetById(del_id);
+                if (del_poll.Id > 0) {
+                    Poll.Delete(del_poll.Id);
+                }
+            } else {
+                Poll.Delete(Poll.GetActive().Id);
+            }
 			Response.Redirect("polls.aspx");
 		}
 	}

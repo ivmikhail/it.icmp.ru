@@ -34,6 +34,8 @@ namespace ITCommunity
 					LinkButtonAdd.Text = "Добавить";
 				}
 				InitPostData();
+
+                EditorToolbar.InputId = TextAreaPostText.ClientID;
 			}
 
 		}
