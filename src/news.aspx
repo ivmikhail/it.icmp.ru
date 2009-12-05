@@ -53,7 +53,7 @@
 						<div class="comment-info">
 							<a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("author.nick")%></a>
 							- <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%>
-							<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") %>' ID="DeleteComment" runat="server" Text="Удалить" CommandName="delete" />
+							<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") %>' ID="DeleteComment" runat="server" Text="Удалить" CommandName="delete" OnClientClick="return confirm('Точно удалить?')" />
 						</div>
 						<div class="comment-text">
 							<%# Eval("textformatted")%>
