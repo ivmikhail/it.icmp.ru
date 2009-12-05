@@ -6,7 +6,7 @@
             var editor = new SimpleEditor(input, $$('.editor-toolbar input'));
             editor.addCommands({
             	hr: {
-		                shortcut: 'h',
+		                shortcut: '1',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[hr]',
@@ -15,7 +15,7 @@
 		            }
 	            },
 	            bold: {
-		                shortcut: 'b',
+		                shortcut: '2',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[b]',
@@ -24,7 +24,7 @@
 		            }
 	            },
 	            underline: {
-		                shortcut: '_',
+		                shortcut: '3',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[u]',
@@ -33,7 +33,7 @@
 		            }
 	            },
 	            italic: {
-		                shortcut: '/',
+		                shortcut: '4',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[i]',
@@ -42,7 +42,7 @@
 		            }
 	            },
 	            strike: {
-		                shortcut: 's',
+		                shortcut: '5',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[s]',
@@ -51,7 +51,7 @@
 		            }
 	            },
 	            code: {
-		                shortcut: 'c',
+		                shortcut: '6',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[code]',
@@ -60,7 +60,7 @@
 		            }
 	            },
 	            quote: {
-		                shortcut: 'q',
+		                shortcut: '7',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[quote]',
@@ -69,7 +69,7 @@
 		            }
 	            },
 	            bulllist: {
-		                shortcut: '=',
+		                shortcut: '8',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[list]',
@@ -79,7 +79,7 @@
 		            }
 	            },
 	            link: {
-		                shortcut: 'l',
+		                shortcut: '9',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[url]',
@@ -88,7 +88,7 @@
 		            }
 	            },
 	            email: {
-		                shortcut: 'e',
+		                shortcut: '0',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[email]',
@@ -97,7 +97,7 @@
 		            }
 	            },
 	            img: {
-		                shortcut: 'i',
+		                shortcut: 'q',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[img]',
@@ -106,7 +106,7 @@
 		            }
 	            },
 	            video: {
-		                shortcut: 'v',
+		                shortcut: 'e',
 		                command: function(input){
 			            input.insertAroundCursor({
 			                before:'[video]',
@@ -120,20 +120,20 @@
 
 
 <div class="editor-toolbar">
-    <input type="button" title="Разделитель (ctrl+h)" rel="hr" value="hr" />
+    <input type="button" title="Разделитель (ctrl+1)" rel="hr" value="hr" />
     - 
-    <input type="button" title="Жирный (ctrl+b)"            rel="bold"      value="b" />
-    <input type="button" title="Подчеркивание (ctrl+_)"     rel="underline" value="u" />
-    <input type="button" title="Курсив (ctrl+/)"            rel="italic"    value="i" /> 
-    <input type="button" title="Зачеркнутый текст (ctrl+s)" rel="strike"    value="s" /> 
+    <input type="button" title="Жирный (ctrl+2)"            rel="bold"      value="b" />
+    <input type="button" title="Подчеркивание (ctrl+3)"     rel="underline" value="u" />
+    <input type="button" title="Курсив (ctrl+4)"            rel="italic"    value="i" /> 
+    <input type="button" title="Зачеркнутый текст (ctrl+5)" rel="strike"    value="s" /> 
     - 
-    <input type="button" title="Блок кода (ctrl+c)" rel="code"  value="code"  />
-    <input type="button" title="Цитата (ctrl+q)"    rel="quote" value="quote" />
+    <input type="button" title="Блок кода (ctrl+6)" rel="code"  value="code"  />
+    <input type="button" title="Цитата (ctrl+7)"    rel="quote" value="quote" />
     - 
-    <input type="button" title="Маркированный список (ctrl+=)" rel="bulllist" value="list" /> 
+    <input type="button" title="Маркированный список (ctrl+8)" rel="bulllist" value="list" /> 
     - 
-    <input type="button" title="Ссылка (ctrl+u)"   rel="link"  value="link"  />
-    <input type="button" title="email (ctrl+e)"    rel="email" value="email" />
-    <input type="button" title="Картинка (ctrl+i)" rel="img"   value="img"   />
-    <input type="button" title="Видео (ctrl+v)"    rel="video" value="video" />
+    <input type="button" title="Ссылка (ctrl+9)"   rel="link"  value="link"  />
+    <input type="button" title="email (ctrl+0)"    rel="email" value="email" />
+    <input type="button" title="Картинка (ctrl+q)" rel="img"   value="img"   />
+    <input type="button" title="Видео (ctrl+e)"    rel="video" value="video" />
 </div>
