@@ -39,7 +39,7 @@ namespace ITCommunity
                 item.Author = site_domain + " - " + post.Author.Nick;
                 item.Link = new Uri(site_domain + "/news.aspx?id=" + post.Id);
                 item.Title = post.Title == "" ? "null" : post.Title;
-                item.Description = post.Description == "" ? post.Text : post.Description;
+                item.Description = post.Description == "" ? post.TextFormatted : post.DescriptionFormatted;
                 item.PubDate = post.CreateDate.ToUniversalTime();
 
                 channel.Items.Add(item);
