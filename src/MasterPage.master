@@ -17,7 +17,11 @@
 		<meta name="author"      content="Ykt IT Community" />
 		<meta name="language"    content="ru" />
 		<meta name="doc-type"    content="web page" />
-
+		
+        <meta http-equiv="pragma"        content="no-cache" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires"       content="now" />
+        
 		<link rel="shortcut icon" href="favicon.ico"                  type="image/vnd.microsoft.icon" />
 		<link rel="alternate"     href="rss.aspx"                     type="application/rss+xml" charset="utf-8"  title="Ykt IT Community - http://it.icmp.ru" />    
 
