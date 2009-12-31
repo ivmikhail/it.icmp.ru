@@ -14,11 +14,11 @@
 	</label>
 
 	<asp:ValidationSummary ID="ValidationSummaryNoteAdd" runat="server" ValidationGroup="ValidateNoteAdd"
-		HeaderText="Для добавления записи устраните следующие ошибки"/>
+		HeaderText="Для добавления записи устраните следующие ошибки:"/>
 	<asp:RequiredFieldValidator ID="RequiredFieldValidatorTitle" runat="server" ControlToValidate="NoteTitle"
-		ErrorMessage="Введите заголовок записи" ValidationGroup="ValidateNoteAdd" Display="None" />
+		ErrorMessage=" - введите заголовок записи" ValidationGroup="ValidateNoteAdd" Display="None" />
 	<asp:RequiredFieldValidator ID="RequiredFieldValidatorText" runat="server" ControlToValidate="NoteText"
-		ErrorMessage="Введите текст записи" ValidationGroup="ValidateNoteAdd" Display="None" />
+		ErrorMessage="- введите текст записи" ValidationGroup="ValidateNoteAdd" Display="None" />
 
 	<div class="big-button">
 		<asp:LinkButton ID="LinkButtonAdd" runat="server" OnClick="LinkButtonAdd_Click" ValidationGroup="ValidateNoteAdd">Добавить</asp:LinkButton>

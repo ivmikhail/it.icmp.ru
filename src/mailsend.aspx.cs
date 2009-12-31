@@ -20,19 +20,22 @@ namespace ITCommunity
         {
             //NOTE: bydlo-style code
             ITCommunity.User receiver = ITCommunity.User.GetByLogin(MessageReceiver.Text);
-            if (receiver.Id > 0)
+            string errors = "";
+
+            if (receiver.Id < 1)
             {
-                if (receiver.Id == CurrentUser.User.Id)
-                {
-                    Errors.Text = "<div class='error'>Зачем отправлять сообщение самому себе? Не хватает общения? У нас этого делать нельзя.</div>";
-                } else
-                {
-                    Message.Send(receiver.Id, CurrentUser.User.Id, Server.HtmlEncode(MessageTitle.Text), Server.HtmlEncode(MessageText.Text));
-                    Response.Redirect("mailview.aspx?a=output");
-                }
-            } else 
-            {
-                Errors.Text = "<div class='error'>Пользователь с таким логином у нас не живет.</div>";
+                errors = "Пользователь с таким логином у нас не живет";
+            } else if (receiver.Id == CurrentUser.User.Id) {
+                errors = "Зачем отправлять сообщение самому себе? Не хватает общения? У нас этого делать нельзя";
+            } else if (MessageTitle.Text.Trim() == "" || MessageText.Text.Trim() == "") {
+                errors = "Заголовок и текст сообщения не могут быть пустыми";
+            }
+
+            if (errors == "") {
+                Message.Send(receiver.Id, CurrentUser.User.Id, Server.HtmlEncode(MessageTitle.Text), Server.HtmlEncode(MessageText.Text));
+                Response.Redirect("mailview.aspx?a=output");
+            } else {
+                Errors.Text = "<div class='error'>" + errors + "</div>";
             }
         }
         private string GetReceiver()
