@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
 using ITCommunity;
+using System.Timers;
 
 namespace ITCommunity
 {
@@ -122,5 +123,9 @@ namespace ITCommunity
             }
             return rec;
         }
+        public static void PurgeOldRecoveryTasks(object source, ElapsedEventArgs e) {
+            Database.RecoveryPurgeOldTasks();
+        }
+
     }
 }
