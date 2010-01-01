@@ -85,10 +85,11 @@ namespace ITCommunity
             }
             return val;
         }
-
+        private TimerTask timerTask;
         public void Application_Start(object sender, EventArgs e)
         {
             Logger.Log.Info("Application started ...");
+            timerTask = new TimerTask((double)3600 * 1000 * 12, RecoveryPass.PurgeOldRecoveryTasks);
         }
 
         public void Application_End(object sender, EventArgs e)
