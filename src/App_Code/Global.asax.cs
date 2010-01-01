@@ -106,7 +106,8 @@ namespace ITCommunity
                 //ignore 404 error
             } else
             {
-                Logger.Log.Error("Произошла непредвиденная ошибка, пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + ")", ex);
+                Logger.Log.Error("Произошла непредвиденная ошибка: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + Request.Url, ex);
+                
             }
         }
 
@@ -131,27 +132,26 @@ namespace ITCommunity
             string acceptEncoding = app.Request.Headers["Accept-Encoding"];
             Stream prevUncompressedStream = app.Response.Filter;
 
-            if (!(app.Context.CurrentHandler is System.Web.UI.Page) ||
-                app.Request["HTTP_X_MICROSOFTAJAX"] != null)
+            if (!(app.Context.CurrentHandler is System.Web.UI.Page) || app.Request["HTTP_X_MICROSOFTAJAX"] != null) {
                 return;
+            }
 
-            if (acceptEncoding == null || acceptEncoding.Length == 0)
+            if (acceptEncoding == null || acceptEncoding.Length == 0) {
                 return;
-
+            }
+            
             acceptEncoding = acceptEncoding.ToLower();
 
             if (acceptEncoding.Contains("gzip"))
             {
                 // gzip
-                app.Response.Filter = new GZipStream(prevUncompressedStream,
-                    CompressionMode.Compress);
+                app.Response.Filter = new GZipStream(prevUncompressedStream, CompressionMode.Compress);
                 app.Response.AppendHeader("Content-Encoding", "gzip");
 
             } else if (acceptEncoding.Contains("deflate"))
             {               
                 // deflate
-                app.Response.Filter = new DeflateStream(prevUncompressedStream,
-                    CompressionMode.Compress);
+                app.Response.Filter = new DeflateStream(prevUncompressedStream, CompressionMode.Compress);
                 app.Response.AppendHeader("Content-Encoding", "deflate");
             }
         }
