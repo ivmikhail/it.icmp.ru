@@ -25,6 +25,7 @@ namespace ITCommunity
 			{
 				post.UpdateViews();
 			}
+            DescSeparator.Text = (post.Description.Trim() == "") ? "" : "<hr />";
             EditorToolbar.InputId = TextBoxComment.ClientID;
 		}
 

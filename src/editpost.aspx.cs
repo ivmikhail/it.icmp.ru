@@ -35,7 +35,7 @@ namespace ITCommunity
 				}
 				InitPostData();
 
-                EditorToolbar.InputId = TextAreaPostText.ClientID;
+                EditorToolbarText.InputId = TextAreaPostText.ClientID;
 			}
 
 		}
@@ -63,7 +63,8 @@ namespace ITCommunity
 				SelectedCategoriesIds.Value += cat.Id;
 			}
 			TextBoxTitle.Text = HttpUtility.HtmlDecode(current_post.Title);
-			TextAreaPostText.Text = current_post.Description + current_post.Text;
+            TextAreaPostDesc.Text = current_post.Description;
+			TextAreaPostText.Text = current_post.Text;
 			TextBoxSource.Text = current_post.Source;
 			CheckBoxAttached.Checked = current_post.Attached;
 
@@ -93,9 +94,8 @@ namespace ITCommunity
 				editable_post.Categories = cats;
 				editable_post.Title = HttpUtility.HtmlEncode(TextBoxTitle.Text);
 
-				List<string> post_content = SplitPostContent(TextAreaPostText.Text);
-				editable_post.Description = post_content[0];
-				editable_post.Text = post_content[1];
+				editable_post.Description = TextAreaPostDesc.Text;
+				editable_post.Text = TextAreaPostText.Text;
 
 				editable_post.Source = Server.HtmlEncode(TextBoxSource.Text);
 				editable_post.Attached = CheckBoxAttached.Checked;
@@ -151,21 +151,17 @@ namespace ITCommunity
 		{
 			List<string> errors = new List<string>();
 
-			List<string> post_content = SplitPostContent(TextAreaPostText.Text);
-			string desc = post_content[0];
-			string text = post_content[1];
-
 			if (TextBoxTitle.Text.Length == 0 || TextBoxTitle.Text.Length > 128)
 			{
 				errors.Add("Количество символов в заголовке должно быть от 1 до 128.");
 			}
-			if (desc.Length > 2000)
+            if (TextAreaPostDesc.Text.Length > 2000)
 			{
 				errors.Add("Количество символов в описании(краткое описание) новости должно быть до 2000.");
 			}
-			if (text.Length == 0 || text.Length > 16000)
+            if (TextAreaPostText.Text.Length == 0 || TextAreaPostText.Text.Length > 20000)
 			{
-				errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 16000.");
+				errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 20000.");
 			}
 			if (TextBoxSource.Text.Length > 1024)
 			{
@@ -224,7 +220,7 @@ namespace ITCommunity
 					Category cat = Category.GetById(Convert.ToInt32(cat_id));
 					if (cat.Id > 0)
 					{
-						selectedCatsNames += "<a href='#' id='" + cat.Id + "' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать'>" + cat.Name + "</a> ";
+						selectedCatsNames += "<a href='#' id='" + cat.Id + "' onclick='deleteCategory(this);' class='delete-category' title='Убрать'>" + cat.Name + "</a> ";
 					}
 				}
 			}
@@ -240,35 +236,6 @@ namespace ITCommunity
 			{
 				UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='Загруженная картинка' class='uploaded-image'/>";
 			}
-		}
-
-		/// <summary>
-		/// Сплитит новость на краткое описание и текст
-		/// </summary>
-		/// <param name="content">Тело новости</param>
-		/// <returns>Возвращает лист строк. 0 - краткое описание, 1 - текст</returns>
-		private List<string> SplitPostContent(string content)
-		{
-			List<string> result = new List<string>();
-
-			int index = content.ToLower().IndexOf("[hr]");
-			string post_desc = "";
-			string post_text = "";
-			if (index > 0)
-			{
-				post_desc = content.Substring(0, index);
-				post_text = content.Substring(index);
-			}
-			else
-			{
-				post_desc = "";
-				post_text = content;
-			}
-
-			result.Add(post_desc);
-			result.Add(post_text);
-
-			return result;
 		}
 	}
 }
