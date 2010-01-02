@@ -28,7 +28,7 @@ namespace ITCommunity
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) {
-                input.Text = inputId;
+                Input.Text = inputId;
             }
         }
     }

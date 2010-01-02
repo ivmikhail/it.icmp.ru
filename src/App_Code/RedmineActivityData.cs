@@ -83,7 +83,7 @@ namespace ITCommunity {
                 }
                 reader.Close();
             } catch (WebException ex) {
-                Logger.Log.Error("Не удалось получить активность redmine, rss fedd url - " + rssUrl, ex);
+                Logger.Log.Error("Не удалось получить активность redmine, rss feed url - " + rssUrl, ex);
             } finally {
                 if (response != null) {
                     response.Close();

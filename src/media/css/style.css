@@ -482,11 +482,29 @@ hr {
 }
 /* links-menu: end */
 
+/* noscript-message begin */
+#noscript-message {
+	background:#ff0000;
+	color:#ffffff;
+	font-size:1.3em;
+	font-weight:bold;
+	padding:5px;
+}
+#noscript-message a {
+	color:#ffffff;
+	text-decoration:underline;
+}
+#noscript-message a:hover {	
+	background:none;
+	color:#ffffff;
+	text-decoration:none;
+}
+/* noscript-message end */
+
 /* redmine activity begin */
-#redmine-activity li
-	{	
-		padding: 2px 0;
-	}		
+#redmine-activity li {	
+	padding: 2px 0;
+}		
 /* redmine activity end */
 
 /* poll-menu: begin */

@@ -4,12 +4,13 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
 	<script type="text/javascript">
+	    var currentTextAreaId = '<%= TextAreaPostText.ClientID %>';
+	    
 		window.addEvent('domready', function(){
 			// Вставка загруженного изображения
 			$$('.uploaded-image').each(function(el) {
 				el.addEvent('click', function(e){
-						//$('<%= TextAreaPostText.ClientID %>').insertAtCursor("<a href='" + (this.src).replace("thumb", "full") + "' target='_blank' title='Посмотреть картинку в оригинальном размере'><img src='"+ this.src +"' /></a>", false);
-						$('<%= TextAreaPostText.ClientID %>').insertAtCursor("[popup=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/popup]", false);
+						$(currentTextAreaId).insertAtCursor("[popup=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/popup]", false);
 					});
 			});
 
@@ -43,6 +44,10 @@
 			});
 		});
 		
+		function setCurrentTextArea(el) {
+		    currentTextAreaId = el.id;
+		    return false;
+		}
 		function CategoryIsSelected(cat_ids, cat_id)
 		{
 			var status = false;
@@ -75,6 +80,7 @@
 			};
 			cat_ids.value = true_cats.join(",");
 			$(el.id).destroy();
+			return false;
 		}
 
 	</script>
@@ -105,16 +111,20 @@
 		<label class="textbox-input">
 			<asp:TextBox ID="TextBoxTitle" runat="server" Columns="20" MaxLength="128" />
 		</label>
-
-		<h2>Текст новости</h2>
+		
+		<h2>Краткое описание</h2>
 		<div class="note">
-			<b>Описание и текст разделяется разделителем - [hr]. Если разделитель не вставите, то на главной появится весь текст новости, иначе только описание.</b>
+			Если описание пустое, на главной появится весь текст новости
 		</div>
-
-		<uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
-        <uc:EditorToolbar ID="EditorToolbar" runat="server" />
 		<label class="textbox-textarea">
-			<asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" MaxLength="10000" TextMode="MultiLine" />
+			<asp:TextBox ID="TextAreaPostDesc" runat="server" Rows="7" MaxLength="2000" TextMode="MultiLine" OnFocus="setCurrentTextArea(this);" />
+		</label>
+		
+		<h2>Текст новости</h2>		
+        <uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
+        <uc:EditorToolbar ID="EditorToolbarText" runat="server" />
+		<label class="textbox-textarea">
+			<asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" MaxLength="20000" TextMode="MultiLine" OnFocus="setCurrentTextArea(this);"/>
 		</label>
 
 		<h2>Источник (откуда стырили)</h2>

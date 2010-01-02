@@ -15,7 +15,7 @@
 		<div class="post-desc">
 			<asp:Literal ID="desc" runat="server" />
 		</div>
-
+        <asp:Literal ID="DescSeparator" runat="server" />
 		<div id="cut" class="post-text">
 			<asp:Literal ID="text" runat="server" />  
 		</div>

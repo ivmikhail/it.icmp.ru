@@ -1,9 +1,10 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="EditorToolbar.ascx.cs" Inherits="ITCommunity.EditorToolbar" %>
-
- <script type="text/javascript">        
+<script type="text/javascript">        
         window.addEvent('domready', function(){
-            var input = $('<asp:Literal Id="input" runat="server" />');
+            var input = $('<asp:Literal Id="Input" runat="server" />');
+         
             var editor = new SimpleEditor(input, $$('.editor-toolbar input'));
+
             editor.addCommands({
             	hr: {
 		                shortcut: '1',
@@ -120,8 +121,8 @@
 
 
 <div class="editor-toolbar">
-    <input type="button" title="Разделитель (ctrl+1)" rel="hr" value="hr" />
-    - 
+    <input type="button" title="Разделитель (ctrl+1)"       rel="hr"         value="hr" />
+    -
     <input type="button" title="Жирный (ctrl+2)"            rel="bold"      value="b" />
     <input type="button" title="Подчеркивание (ctrl+3)"     rel="underline" value="u" />
     <input type="button" title="Курсив (ctrl+4)"            rel="italic"    value="i" /> 

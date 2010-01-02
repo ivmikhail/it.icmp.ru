@@ -44,6 +44,9 @@
 		<form id="MainForm" runat="server">
 
 			<div id="header">
+			    <noscript>
+			        <div id="noscript-message">Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется. <a href="http://adsense.google.com/support/bin/answer.py?hl=ru&answer=12654" target="_blank">Узнать как включить >>></div>
+			    </noscript>
 				<a href="default.aspx" class="main-link">
 					<span class="code-class">IT</span> Community →
 					
