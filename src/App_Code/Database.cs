@@ -25,8 +25,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@question_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@question_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@question_id"].Value = question_id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@question_id"].Value = question_id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -37,8 +36,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -86,8 +84,7 @@ namespace ITCommunity {
             cmd.Parameters["@text"].Value = text;
             cmd.Parameters.Add("@isRight", System.Data.SqlDbType.TinyInt, 0);
             cmd.Parameters["@isRight"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@isRight"].Value = isRight;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@isRight"].Value = isRight; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -98,8 +95,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -210,8 +206,7 @@ namespace ITCommunity {
             cmd.Parameters["@id"].Value = id;
             cmd.Parameters.Add("@text", System.Data.SqlDbType.NVarChar, 200);
             cmd.Parameters["@text"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@text"].Value = text;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@text"].Value = text; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -258,8 +253,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -337,8 +331,7 @@ namespace ITCommunity {
             cmd.Parameters["@sort"].Value = sort;
             cmd.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 32);
             cmd.Parameters["@name"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@name"].Value = name;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@name"].Value = name; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -391,8 +384,47 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
+            connection.Close();
+            return result;
+        }
+        public static DataTable CommentGetByAuthor(Int32 author_id, Int32 page, Int32 count, ref Int32 total_records) {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentGetByAuthor", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@author_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@author_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@author_id"].Value = author_id;
+            cmd.Parameters.Add("@page", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@page"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@page"].Value = page;
+            cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@count"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@count"].Value = count;
+            cmd.Parameters.Add("@total_records", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@total_records"].Direction = System.Data.ParameterDirection.InputOutput;
+            cmd.Parameters["@total_records"].Value = total_records;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++) {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            while (reader.Read()) {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                table.Rows.Add(row);
+            }
+            reader.Close();
+            DataTable result = table; total_records = (Int32)(cmd.Parameters["@total_records"].Value);
             connection.Close();
             return result;
         }
@@ -504,8 +536,7 @@ namespace ITCommunity {
             cmd.Parameters["@post_id"].Value = post_id;
             cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@user_id"].Value = user_id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@user_id"].Value = user_id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -545,8 +576,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
+            DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
             connection.Close();
             return result;
         }
@@ -593,8 +623,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -631,8 +660,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            records_count = (Int32)(cmd.Parameters["@records_count"].Value);
+            DataTable result = table; records_count = (Int32)(cmd.Parameters["@records_count"].Value);
             connection.Close();
             return result;
         }
@@ -671,8 +699,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -683,8 +710,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -740,8 +766,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -859,8 +884,7 @@ namespace ITCommunity {
             cmd.Parameters["@name"].Value = name;
             cmd.Parameters.Add("@new_window", System.Data.SqlDbType.TinyInt, 0);
             cmd.Parameters["@new_window"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@new_window"].Value = new_window;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@new_window"].Value = new_window; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -913,8 +937,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@mess_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@mess_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@mess_id"].Value = mess_id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@mess_id"].Value = mess_id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -925,8 +948,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@mess_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@mess_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@mess_id"].Value = mess_id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@mess_id"].Value = mess_id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -999,8 +1021,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            mess_count = (Int32)(cmd.Parameters["@mess_count"].Value);
+            DataTable result = table; mess_count = (Int32)(cmd.Parameters["@mess_count"].Value);
             connection.Close();
             return result;
         }
@@ -1040,8 +1061,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            mess_count = (Int32)(cmd.Parameters["@mess_count"].Value);
+            DataTable result = table; mess_count = (Int32)(cmd.Parameters["@mess_count"].Value);
             connection.Close();
             return result;
         }
@@ -1052,8 +1072,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@receiver_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@receiver_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@receiver_id"].Value = receiver_id;
-            object result = cmd.ExecuteScalar();
+            cmd.Parameters["@receiver_id"].Value = receiver_id; object result = cmd.ExecuteScalar();
             connection.Close();
             return result;
         }
@@ -1064,8 +1083,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -1118,8 +1136,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -1159,8 +1176,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
+            DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
             connection.Close();
             return result;
         }
@@ -1249,8 +1265,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@poll_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@poll_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@poll_id"].Value = poll_id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@poll_id"].Value = poll_id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -1287,8 +1302,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            polls_count = (Int32)(cmd.Parameters["@polls_count"].Value);
+            DataTable result = table; polls_count = (Int32)(cmd.Parameters["@polls_count"].Value);
             connection.Close();
             return result;
         }
@@ -1460,8 +1474,7 @@ namespace ITCommunity {
             cmd.Parameters["@user_id"].Value = user_id;
             cmd.Parameters.Add("@poll_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@poll_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@poll_id"].Value = poll_id;
-            object result = cmd.ExecuteScalar();
+            cmd.Parameters["@poll_id"].Value = poll_id; object result = cmd.ExecuteScalar();
             connection.Close();
             return result;
         }
@@ -1478,8 +1491,7 @@ namespace ITCommunity {
             cmd.Parameters["@user_id"].Value = user_id;
             cmd.Parameters.Add("@answers", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@answers"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@answers"].Value = answers;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@answers"].Value = answers; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -1541,8 +1553,7 @@ namespace ITCommunity {
             cmd.Parameters["@post_id"].Value = post_id;
             cmd.Parameters.Add("@query", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@query"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@query"].Value = query;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@query"].Value = query; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -1553,8 +1564,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -1591,8 +1601,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
+            DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
             connection.Close();
             return result;
         }
@@ -1621,6 +1630,46 @@ namespace ITCommunity {
             }
             reader.Close();
             DataTable result = table;
+            connection.Close();
+            return result;
+        }
+        public static DataTable PostGetByAuthor(Int32 page, Int32 count, Int32 author_id, ref Int32 posts_count) {
+            SqlConnection connection = OpenConnection();
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetByAuthor", connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@page", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@page"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@page"].Value = page;
+            cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@count"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@count"].Value = count;
+            cmd.Parameters.Add("@author_id", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@author_id"].Direction = System.Data.ParameterDirection.Input;
+            cmd.Parameters["@author_id"].Value = author_id;
+            cmd.Parameters.Add("@posts_count", System.Data.SqlDbType.Int, 0);
+            cmd.Parameters["@posts_count"].Direction = System.Data.ParameterDirection.InputOutput;
+            cmd.Parameters["@posts_count"].Value = posts_count;
+            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+            System.Data.DataTable table = new DataTable();
+
+            for (int i = 0; (i < reader.FieldCount); i++) {
+                System.Type __type;
+                string __name;
+                __type = reader.GetFieldType(i);
+                __name = reader.GetName(i);
+                table.Columns.Add(__name, __type);
+            }
+
+            while (reader.Read()) {
+                System.Data.DataRow row = table.NewRow();
+                object[] rowdata = new object[reader.FieldCount];
+                reader.GetValues(rowdata);
+                row.ItemArray = rowdata;
+                table.Rows.Add(row);
+            }
+            reader.Close();
+            DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
             connection.Close();
             return result;
         }
@@ -1660,8 +1709,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
+            DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
             connection.Close();
             return result;
         }
@@ -1804,8 +1852,7 @@ namespace ITCommunity {
             cmd.Parameters["@user_id"].Value = user_id;
             cmd.Parameters.Add("@post_id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@post_id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@post_id"].Value = post_id;
-            object result = cmd.ExecuteScalar();
+            cmd.Parameters["@post_id"].Value = post_id; object result = cmd.ExecuteScalar();
             connection.Close();
             return result;
         }
@@ -1845,8 +1892,7 @@ namespace ITCommunity {
                 table.Rows.Add(row);
             }
             reader.Close();
-            DataTable result = table;
-            posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
+            DataTable result = table; posts_count = (Int32)(cmd.Parameters["@posts_count"].Value);
             connection.Close();
             return result;
         }
@@ -1875,8 +1921,7 @@ namespace ITCommunity {
             cmd.Parameters["@source"].Value = source;
             cmd.Parameters.Add("@comments_count", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@comments_count"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@comments_count"].Value = comments_count;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@comments_count"].Value = comments_count; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -1887,8 +1932,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@id"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@id"].Value = id;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@id"].Value = id; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -1935,8 +1979,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@identifier", System.Data.SqlDbType.NVarChar, 1024);
             cmd.Parameters["@identifier"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@identifier"].Value = identifier;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@identifier"].Value = identifier; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }
@@ -2092,8 +2135,7 @@ namespace ITCommunity {
 
             cmd.Parameters.Add("@userId", System.Data.SqlDbType.Int, 0);
             cmd.Parameters["@userId"].Direction = System.Data.ParameterDirection.Input;
-            cmd.Parameters["@userId"].Value = userId;
-            int result = cmd.ExecuteNonQuery();
+            cmd.Parameters["@userId"].Value = userId; int result = cmd.ExecuteNonQuery();
             connection.Close();
             return result;
         }

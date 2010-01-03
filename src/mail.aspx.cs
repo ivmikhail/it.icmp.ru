@@ -36,12 +36,12 @@ namespace ITCommunity
 
 				if (is_input)
 				{
-					ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Sender.Nick + "' class='user-pm-link'>Ответить</a>";
-					LiteralWho.Text = "<h3>От кого</h3>" + mess.Sender.Nick;
+					ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Sender.Login + "' class='user-pm-link'>Ответить</a>";
+					LiteralWho.Text = "<h3>От кого</h3>" + mess.Sender.Login;
 				}
 				else
 				{
-					LiteralWho.Text = "<h3>Получатель</h3>" + mess.Receiver.Nick;
+					LiteralWho.Text = "<h3>Получатель</h3>" + mess.Receiver.Login;
 				}
 			}
 			else

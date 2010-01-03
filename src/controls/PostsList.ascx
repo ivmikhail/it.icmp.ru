@@ -26,10 +26,10 @@
 			<div class="post-info">
 				<%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> /
 				<%# Eval("favoritesaction") %> /
-				<a href="mailsend.aspx?receiver=<%# Eval("author.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link"><%# Eval("author.nick")%></a> /
+				<a href="user.aspx?login=<%# Eval("author.login")%>" title="Посетить страницу пользователя" class="user-pm-link"><%# Eval("author.login")%></a> /
 				просмотров: <%# Eval("views")%> /
-				<a href='news.aspx?id=<%# Eval("id")%>#comments' title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a> /
-				<a href='news.aspx?id=<%# Eval("id")%>#cut' title="Читать далее">подробнее...</a>
+				<a href="news.aspx?id=<%# Eval("id")%>#comments" title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a> /
+				<a href="news.aspx?id=<%# Eval("id")%>#cut" title="Читать далее">подробнее...</a>
 			</div>
 		</li>
 	</ItemTemplate>

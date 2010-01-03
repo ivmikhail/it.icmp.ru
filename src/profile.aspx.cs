@@ -29,7 +29,7 @@ namespace ITCommunity
 				current.Email = TextBoxEmail.Text.Trim();
 				if (TextBoxNewPass.Text.Trim() != "")
 				{
-					current.Pass = CurrentUser.HashPass(TextBoxNewPass.Text, current.Nick);
+					current.Pass = CurrentUser.HashPass(TextBoxNewPass.Text, current.Login);
 				}
 				current.Update();
 				LiteralUpdatedMessage.Text = "<div class='message'>Изменения вступили в силу.</div>";
@@ -78,7 +78,7 @@ namespace ITCommunity
 
 			User current = CurrentUser.User;
 
-			if (current.Pass != CurrentUser.HashPass(TextBoxPassConf.Text, current.Nick))
+			if (current.Pass != CurrentUser.HashPass(TextBoxPassConf.Text, current.Login))
 			{
 				status = OldPassConfirm.IsValid = false;
 			}

@@ -36,11 +36,11 @@ namespace ITCommunity
                 SmtpClient client = new SmtpClient(); // используются параметры из web.config
                 //client.EnableSsl = true;
                 client.Send(message);
-                Logger.Log.Info("Успешно запрошен email для смены пароля для пользователя " + user.Nick + " с адреса " + CurrentUser.Ip);
+                Logger.Log.Info("Успешно запрошен email для смены пароля для пользователя " + user.Login + " с адреса " + CurrentUser.Ip);
             } catch (Exception ex)
             {
                 status = false;
-                Logger.Log.Error("Невозможно отправить email для восстановления пароля, запрошена смена пароля для пользователя " + CurrentUser.User.Nick + " с адреса " + CurrentUser.Ip, ex);
+                Logger.Log.Error("Невозможно отправить email для восстановления пароля, запрошена смена пароля для пользователя " + CurrentUser.User.Login + " с адреса " + CurrentUser.Ip, ex);
             }
             return status;
         }

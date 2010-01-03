@@ -110,7 +110,9 @@ namespace ITCommunity
                 _ip = value;
             }
         }
-        // "as is", может содержать небезопасный хтмл, bbcode не учитывается.
+        /// <summary>
+        ///  "as is", может содержать небезопасный хтмл, bbcode не учитывается.
+        /// </summary>
         public string Text
         {
             get
@@ -164,7 +166,7 @@ namespace ITCommunity
             _text = "";
         }
 
-        /// <summar>y
+        /// <summary>
         /// Удаляем коммент
         /// </summary>
         /// <param name="id">Id коммента</param>
@@ -181,6 +183,13 @@ namespace ITCommunity
         public static List<Comment> GetByPost(int postId)
         {
             return GetCommentsFromTable(Database.CommentGetByPost(postId));
+        }
+        /// <summary>
+        /// Забираем комменты по автору
+        /// </summary>
+        /// <param name="authorId">Идентификатор автора</param>
+        public static List<Comment> GetByAuthor(int authorId, int page, int count, ref int totalRecords) {
+            return GetCommentsFromTable(Database.CommentGetByAuthor(authorId, page, count, ref totalRecords));
         }
 
         /// <summary>

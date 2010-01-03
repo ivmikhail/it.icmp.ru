@@ -106,7 +106,7 @@ namespace ITCommunity
                 //ignore 404 error
             } else
             {
-                Logger.Log.Error("Произошла непредвиденная ошибка: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + Request.Url, ex);
+                Logger.Log.Error("Произошла непредвиденная ошибка: пользователь - " + CurrentUser.User.Login + "(" + CurrentUser.Ip + "), запрошенный URL - " + Request.Url, ex);
                 
             }
         }

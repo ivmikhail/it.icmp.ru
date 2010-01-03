@@ -10,7 +10,7 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<%# Eval("createdate", "{0:dd MMMM}")%>  <a href="mailsend.aspx?receiver=<%# Eval("nick") %>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("nick")%></a>
+				<%# Eval("createdate", "{0:dd MMMM}")%>  <a href="user.aspx?login=<%# Eval("login") %>" title="Посетить страницу пользователя" class="user-pm-link"><%# Eval("login")%></a>
 			</li>
 		</ItemTemplate>
 		<FooterTemplate>

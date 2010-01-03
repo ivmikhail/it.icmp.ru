@@ -27,7 +27,7 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<tr class="even">
-				<td><%# Eval("User.Nick") %></td>
+				<td><%# Eval("User.Login") %></td>
 				<td><%# Eval("Text") %></td>
 				<td><%# Eval("CreateDate", "{0:dd MMMM yyyy, HH:mm}")%></td>
 				<td><%# Eval("ShowBeginDate").Equals(DateTime.MinValue) ? "" : Eval("ShowBeginDate", "{0:dd MMMM yyyy, HH:mm}")%></td>
@@ -38,7 +38,7 @@
 		</ItemTemplate>
 		<AlternatingItemTemplate>
 			<tr class="odd">
-				<td><%# Eval("User.Nick")%></td>
+				<td><%# Eval("User.Login")%></td>
 				<td><%# Eval("Text") %></td>
 				<td><%# Eval("CreateDate", "{0:dd MMMM yyyy, HH:mm}")%></td>
 				<td><%# Eval("ShowBeginDate").Equals(DateTime.MinValue) ? "" : Eval("ShowBeginDate", "{0:dd MMMM yyyy, HH:mm}")%></td>
@@ -67,13 +67,13 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<tr class="even">
-				<td><%# Eval("Nick") %></td>
+				<td><%# Eval("Login") %></td>
 				<td><a href="headertexts.aspx?unblock=<%# Eval("Id") %>" title="Дать возможность добавлять текст для хидера">разблокировать</a></td>
 			</tr>
 		</ItemTemplate>
 		<AlternatingItemTemplate>
 			<tr class="odd">
-				<td><%# Eval("Nick") %></td>
+				<td><%# Eval("Login") %></td>
 				<td><a href="headertexts.aspx?unblock=<%# Eval("Id") %>" title="Дать возможность добавлять текст для хидера">разблокировать</a></td>
 			</tr>
 		</AlternatingItemTemplate>
