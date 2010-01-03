@@ -9,7 +9,7 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<a href="mailsend.aspx?receiver=<%# Eval("key") %>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("key")%></a> (<%# Eval("value")%>)
+				<a href="user.aspx?login=<%# Eval("key") %>" title="Посетить страницу пользователя" class="user-pm-link"><%# Eval("key")%></a> (<%# Eval("value")%>)
 			</li>
 		</ItemTemplate>
 		<FooterTemplate>
@@ -23,7 +23,7 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<a href="mailsend.aspx?receiver=<%# Eval("key") %>" title="Отправить личное сообщение" class="user-pm-link"><%# Eval("key")%></a> (<%# Eval("value")%>)
+				<a href="user.aspx?login=<%# Eval("key") %>" title="Посетить страницу пользователя" class="user-pm-link"><%# Eval("key")%></a> (<%# Eval("value")%>)
 			</li>
 		</ItemTemplate>
 		<FooterTemplate>

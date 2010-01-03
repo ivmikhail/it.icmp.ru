@@ -21,6 +21,9 @@
 		<li>
 			<a href="profile.aspx" title="Изменить email или пароль">Профиль</a>
 		</li>
+		<li>		
+			<a href="user.aspx" title="Изменить email или пароль">Моё</a>
+		</li>
 		<li>
 			<a href="addheadertext.aspx" title="Добавить текст для хидера" class="new-link">Текст для хидера</a>
 		</li>

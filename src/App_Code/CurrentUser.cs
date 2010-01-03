@@ -115,7 +115,7 @@ namespace ITCommunity {
 		/// <param name="email">электропочта</param>
 		public static User Register(string login, string pass, string email) {
 			User user = new User();
-			user.Nick = login;
+			user.Login = login;
 			user.Pass = HashPass(pass, login);
 			user.Email = email;
 			user.Role = User.Roles.Poster;

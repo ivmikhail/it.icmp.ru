@@ -26,12 +26,14 @@ namespace ITCommunity {
 
 		private int _id;
 		private string _pass;
-		private string _nick;
+		private string _login;
 		private string _email;
 		private int _role;
 		private DateTime _cdate;
 		private byte _canAddHeaderText;
 		private int _headerTextCounter;
+        private int _postsCount;
+        private int _commentsCount;
 
 		public enum Roles {
 			/// <summary>
@@ -90,12 +92,12 @@ namespace ITCommunity {
 			}
 		}
 
-		public string Nick {
+		public string Login {
 			get {
-				return _nick;
+				return _login;
 			}
 			set {
-				_nick = value;
+				_login = value;
 			}
 		}
 
@@ -126,26 +128,58 @@ namespace ITCommunity {
 			}
 		}
 
-		public User(int id, string nick, string pass, DateTime cdate, User.Roles role, string email, byte canAddHeaderText, int headerTextCounter) {
+        public int CommentsCount {
+            get {
+                return _commentsCount;
+            }
+            set {
+                _commentsCount = value;
+            }
+        }
+
+
+        public int PostsCount {
+            get {
+                return _postsCount;
+            }
+            set {
+                _postsCount = value;
+            }
+        }
+
+		public User(int id, 
+                    string login, 
+                    string pass, 
+                    DateTime cdate, 
+                    User.Roles role, 
+                    string email, 
+                    byte canAddHeaderText, 
+                    int headerTextCounter,
+                    int commentsCount,
+                    int postsCount) {
 			_id = id;
-			_nick = nick;
+			_login = login;
 			_pass = pass;
 			_cdate = cdate;
 			_role = (int)role;
 			_email = email;
 			_canAddHeaderText = canAddHeaderText;
 			_headerTextCounter = headerTextCounter;
+            _commentsCount = commentsCount;
+            _postsCount = postsCount;
 		}
 
 		public User() {
 			_id = -1;
-			_nick = "anonymous";
+			_login = "anonymous";
 			_pass = "";
 			_cdate = DateTime.Now;
 			_role = 3;
 			_email = "bill@microsoft.com";
 			_canAddHeaderText = 1;
 			_headerTextCounter = 0;
+            _commentsCount = 0;
+            _postsCount = 0;
 		}
 
 
@@ -354,7 +388,7 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="User">Пользователь которого хотим добавить в базу</param>
 		public static User Add(User user) {
-			DataRow dr = Database.UserAdd(user.Nick, user.Pass, (byte)user.Role, user.Email);
+			DataRow dr = Database.UserAdd(user.Login, user.Pass, (byte)user.Role, user.Email);
 			return GetUserFromRow(dr);
 		}
 
@@ -385,7 +419,10 @@ namespace ITCommunity {
 								(User.Roles)Convert.ToInt16(dr["role"]),
 								Convert.ToString(dr["email"]),
 								Convert.ToByte(dr["can_add_header_text"]),
-								Convert.ToInt32(dr["header_text_counter"]));
+								Convert.ToInt32(dr["header_text_counter"]),
+                                Convert.ToInt32(dr["comments_count"]),
+                                Convert.ToInt32(dr["posts_count"])
+                                );
 			}
 			return user;
 		}

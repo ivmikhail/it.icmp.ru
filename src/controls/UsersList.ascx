@@ -11,13 +11,13 @@
 	</HeaderTemplate>
 	<ItemTemplate>
 		<tr class="even">
-			<td><%# Eval("nick") %></td>
+			<td><%# Eval("login") %></td>
 			<td><%# Eval("email") %></td>
 		</tr>
 	</ItemTemplate>
 	<AlternatingItemTemplate>
 		<tr class="odd">
-			<td><%# Eval("nick") %></td>
+			<td><%# Eval("login") %></td>
 			<td><%# Eval("email") %></td>
 		</tr>
 	</AlternatingItemTemplate>

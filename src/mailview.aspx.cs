@@ -50,10 +50,10 @@ namespace ITCommunity
                 Literal who = (Literal)item.FindControl("Who");
                 if (IsOutput())
                 {
-					who.Text = "получатель: <a href='mailsend.aspx?receiver=" + current.Receiver.Nick + "' title='Отправить сообщение' class='user-pm-link'>" + current.Receiver.Nick + "</a>";
+					who.Text = "получатель: <a href='mailsend.aspx?receiver=" + current.Receiver.Login + "' title='Отправить сообщение' class='user-pm-link'>" + current.Receiver.Login + "</a>";
                 } else
                 {
-					who.Text = "автор: <a href='mailsend.aspx?receiver=" + current.Sender.Nick + "' title='Отправить сообщение' class='user-pm-link'>" + current.Sender.Nick + "</a>"; 
+					who.Text = "автор: <a href='mailsend.aspx?receiver=" + current.Sender.Login + "' title='Отправить сообщение' class='user-pm-link'>" + current.Sender.Login + "</a>"; 
                 }
             }
         }

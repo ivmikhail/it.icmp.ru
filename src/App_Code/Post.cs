@@ -404,6 +404,17 @@ namespace ITCommunity
 			return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
 		}
 
+
+        /// <summary>
+        /// Возвращает посты определенного автора
+        /// </summary>
+        /// <param name="page">Текущая страница</param>
+        /// <param name="count">Кол-во постов на странице</param>
+        /// <param name="author_id">Идентификатор автора</param>
+        /// <returns>Посты автора</returns>
+        public static List<Post> GetByAuthor(int page, int count, int author_id, ref int posts_count) {
+            return GetPostsFromTable(Database.PostGetByAuthor(page, count, author_id, ref posts_count));
+        }
 		/// <summary>
 		/// Возвращает последние добавленные посты из кеша
 		/// </summary>

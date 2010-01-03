@@ -42,7 +42,7 @@ namespace ITCommunity
 		{
 			if (CurrentUser.isAuth)
 			{
-				userLogin.Text = CurrentUser.User.Nick;
+				userLogin.Text = CurrentUser.User.Login;
 			}
 			else
 			{
@@ -75,7 +75,7 @@ namespace ITCommunity
 					source.Text = "/ <a href='" + post.Source + "' target='_blank'>источник</a>";
 				}
 				// Хреново сделал, дублирование
-				authorLogin.Text = author.Text = post.Author.Nick;
+				authorLogin.Text = author.Text = post.Author.Login;
 				views.Text = post.Views.ToString();
 			}
 			else
@@ -111,9 +111,7 @@ namespace ITCommunity
 
 		private void LoadComments()
 		{
-			List<Comment> comments = Comment.GetByPost(GetPostId());
-			RepeaterComments.DataSource = comments;
-			RepeaterComments.DataBind();
+			CommentsList.DataBind(Comment.GetByPost(GetPostId()));
 
 		}
 
@@ -147,33 +145,6 @@ namespace ITCommunity
 			comm.Text = TextBoxComment.Text;
 			comm = Comment.Add(comm);
 			Response.Redirect("news.aspx?id=" + post.Id + "#comment-" + comm.Id);
-		}
-
-		protected void RepeaterComments_ItemCommand(object source, RepeaterCommandEventArgs e)
-		{
-			if (e.CommandName == "delete")
-			{
-				if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin)
-				{
-					if (IsPostBack)
-					{
-						Comment.Delete(Convert.ToInt32(e.CommandArgument));
-						Response.Redirect("news.aspx?id=" + GetPostId() + "#comments");
-					}
-				}
-			}
-		}
-
-		protected void RepeaterComments_ItemDataBound(object sender, RepeaterItemEventArgs e)
-		{
-
-			if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-			{
-				if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin)
-				{
-					((LinkButton)e.Item.FindControl("DeleteComment")).Visible = true;
-				}
-			}
 		}
 
 		protected void DeletePost_Click(object sender, EventArgs e)

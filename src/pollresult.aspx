@@ -41,7 +41,7 @@
 				<h3><%# Eval("Text") %></h3>
 				<asp:Repeater ID="Voters" runat="server">
 					<ItemTemplate>
-						<a href="mailsend.aspx?receiver=<%# Eval("Nick") %>" title="Отправить сообщение" class="user-pm-link"><%# Eval("Nick") %></a>
+						<a href="user.aspx?login=<%# Eval("Login") %>" title="Посетить страницу пользователя" class="user-pm-link"><%# Eval("Login") %></a>
 					</ItemTemplate>
 				</asp:Repeater>
 			</ItemTemplate>

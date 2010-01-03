@@ -28,7 +28,7 @@ namespace ITCommunity
 				if (rec.Id > 0)
 				{
 					recovery_user = rec.User;
-					RecoveryLogin.Text = recovery_user.Nick;
+					RecoveryLogin.Text = recovery_user.Login;
 					RecoveryPassContainer.Visible = true;
 				}
 				else
@@ -67,7 +67,7 @@ namespace ITCommunity
 		{
 			if (NewPass.Text.Length > 1 && NewPass.Text.Trim() == NewPassConfirm.Text.Trim())
 			{
-				recovery_user.Pass = CurrentUser.HashPass(NewPass.Text.Trim(), recovery_user.Nick);
+				recovery_user.Pass = CurrentUser.HashPass(NewPass.Text.Trim(), recovery_user.Login);
 				recovery_user.Update();
 				Response.Redirect("default.aspx");
 			}

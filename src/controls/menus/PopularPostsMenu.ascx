@@ -13,8 +13,8 @@
 					<%# Eval("value.title")%>
 				</a>
 				by
-				<a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link">
-					<%# Eval("key.nick")%>
+				<a href="user.aspx?login=<%# Eval("key.login")%>" title="Посетить страницу пользователя" class="user-pm-link">
+					<%# Eval("key.login")%>
 				</a>
 				(<%# Eval("value.views")%>)
 			</li>

@@ -49,7 +49,7 @@ namespace ITCommunity {
 		}
 
 		public HeaderText() {
-			Text = "Напиши текст для хидера, " + CurrentUser.User.Nick + "!";
+			Text = "Напиши текст для хидера, " + CurrentUser.User.Login + "!";
 		}
 
 		public HeaderText(int id, User user, string text, DateTime createDate, DateTime showBeginDate, DateTime showEndDate) {

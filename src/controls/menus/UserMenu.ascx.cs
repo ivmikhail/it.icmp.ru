@@ -21,7 +21,7 @@ namespace ITCommunity
 				if (CurrentUser.isAuth)
 				{
 					User user = CurrentUser.User;
-					UserGreetingText.Text = Greeting.GetInstance().GetGreeting() + ", " + user.Nick + "!";
+					UserGreetingText.Text = Greeting.GetInstance().GetGreeting() + ", " + user.Login + "!";
 					UserRoleText.Text = user.Role.ToString();
 					NewMessagesCountText.Text = Message.GetNewCount(user.Id).ToString();
 					this.Visible = true;

@@ -9,8 +9,8 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<a href="mailsend.aspx?receiver=<%# Eval("key.nick")%>" title="Отправить личное сообщение автору" class="user-pm-link">
-					<%# Eval("key.nick")%>
+				<a href="user.aspx?login=<%# Eval("key.login")%>" title="Посетить страницу пользователя" class="user-pm-link">
+					<%# Eval("key.login")%>
 				</a>
 				:
 				<a href='news.aspx?id=<%# Eval("value.postid")%>#comment-<%# Eval("value.id")%>' title="<%# Eval("value.post.title")%>" >
