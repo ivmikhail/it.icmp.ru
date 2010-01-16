@@ -18,6 +18,7 @@
 		- links					ссылки
 		- form-elements			элементы формы
 		- data-table			таблица с данными
+		- user-table			таблица содержащаяся в посте или в комментарии
 		- post					поста
 		- tabs					красивые табы
 		- header				хэдера
@@ -260,7 +261,23 @@ hr {
 .data-table .odd {
 	background: #fafafa;
 }
+.data-table .showing-false {
+	color: #aaaaaa;
+}
 /* data-table: end */
+
+
+/* user-table: begin */
+.user-table {
+	border-bottom: 1px solid #888888;
+	border-right: 1px solid #888888;
+}
+.user-table td {
+	border-left: 1px solid #888888;
+	border-top: 1px solid #888888;
+	padding: 1px 5px;
+}
+/* user-table: end */
 
 
 /* post: begin */
