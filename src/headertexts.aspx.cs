@@ -30,6 +30,10 @@ namespace ITCommunity {
 					HeaderText.Delete(headerTextId);
 				}
 
+				if (Int32.TryParse(Request.QueryString["end"], out headerTextId)) {
+					HeaderText.EndShow(headerTextId);
+				}
+
 				int records_count = 0;
 				HeaderTextsRepeater.DataSource = HeaderText.Get(GetPage(), Global.ConfigNumParam("HeaderTextCount"), ref records_count);
 				HeaderTextsRepeater.DataBind();

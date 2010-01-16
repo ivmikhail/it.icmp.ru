@@ -12,8 +12,9 @@ namespace ITCommunity {
 		private User _user = new User();
 		private string _text = "";
 		private DateTime _createDate = DateTime.Now;
-		private DateTime _showBeginDate = DateTime.MinValue;
+		private DateTime _showBeginDate = DateTime.Now;
 		private DateTime _showEndDate = DateTime.MinValue;
+		private bool _isShowing = true;
 
 		private delegate object CurrentHeaderTextLoader();
 		private static Random random = new Random();
@@ -48,17 +49,23 @@ namespace ITCommunity {
 			set { _showEndDate = value; }
 		}
 
+		public bool IsShowing {
+			get { return _isShowing; }
+			set { _isShowing = value; }
+		}
+
 		public HeaderText() {
 			Text = "Напиши текст для хидера, " + CurrentUser.User.Login + "!";
 		}
 
-		public HeaderText(int id, User user, string text, DateTime createDate, DateTime showBeginDate, DateTime showEndDate) {
+		public HeaderText(int id, User user, string text, DateTime createDate, DateTime showBeginDate, DateTime showEndDate, bool isShowing) {
 			_id = id;
 			_user = user;
 			_text = text;
 			_createDate = createDate;
 			_showBeginDate = showBeginDate;
 			_showEndDate = showEndDate;
+			_isShowing = isShowing;
 		}
 
 		public static HeaderText Add(int userId, string text) {
@@ -68,49 +75,51 @@ namespace ITCommunity {
 
 		public static HeaderText GetCurrent() {
 			List<HeaderText> currents = GetCurrents();
+			if (currents.Count == 0) {
+				return new HeaderText();
+			}
 			return currents[random.Next(currents.Count)];
 		}
 
 		private static List<HeaderText> GetCurrents() {
 			CurrentHeaderTextLoader loader = new CurrentHeaderTextLoader(GetCurrentsFromDB);
-			List<HeaderText> current = (List<HeaderText>)AppCache.Get(
+			List<HeaderText> currents = (List<HeaderText>)AppCache.Get(
 				Global.ConfigStringParam("HeaderTextCacheName"),
 				new object(),
 				loader,
 				new object[] {},
 				DateTime.Now.AddHours(Global.ConfigDoubleParam("HeaderTextCachePer")));
-			return current;
+			return currents;
 		}
 
 		private static List<HeaderText> GetCurrentsFromDB() {
 			List<HeaderText> currents = GetHeaderTextsFromTable(Database.HeaderTextGetCurrents());
-			if (currents.Count == 0){
-				currents.Add(new HeaderText());
-				return currents;
-			}
+			List<HeaderText> toDelete = new List<HeaderText>();
 			foreach (HeaderText current in currents) {
 				// проверяем показывался ли, если нет, то сохраняем дату начала показа
 				if (current.ShowBeginDate == DateTime.MinValue) {
 					current.ShowBeginDate = DateTime.Now;
 					Database.HeaderTextUpdateShowBeginDate(current.Id);
-					//Message.Send(current.User.Id, 0, "Уведомление", "Добрый день!<br />Ваш текст теперь показывется в хидере, поздравляем!");
 				}
 				// проверяем закончился ли период показа, если да, то загружаем следующий текст
-				double hours = Global.ConfigDoubleParam("HeaderTextShowingHours");
-				DateTime date = DateTime.Now.AddHours(-hours);
-				int comp = current.ShowBeginDate.CompareTo(date);
-				if (comp <= 0) {
-					current.ShowEndDate = DateTime.Now;
+				if (!current.IsShowing) {
 					Database.HeaderTextUpdateShowEndDate(current.Id);
-					// Внимание рекурсия!!!
-					return GetCurrentsFromDB();
+					toDelete.Add(current);
 				}
+			}
+			foreach (HeaderText text in toDelete) {
+				currents.Remove(text);
 			}
 			return currents;
 		}
 
 		public static void Delete(int id) {
 			Database.HeaderTextDel(id);
+			AppCache.Remove(Global.ConfigStringParam("HeaderTextCacheName"));
+		}
+
+		public static void EndShow(int id) {
+			Database.HeaderTextUpdateShowEndDate(id);
 			AppCache.Remove(Global.ConfigStringParam("HeaderTextCacheName"));
 		}
 
@@ -131,20 +140,25 @@ namespace ITCommunity {
 			if (dr == null) {
 				headerText = new HeaderText();
 			} else {
-				DateTime showBeginDate = DateTime.MinValue;
+				DateTime showBeginDate = DateTime.Now;
 				DateTime showEndDate = DateTime.MinValue;
 				if (dr["show_begin_date"] != DBNull.Value) {
 					showBeginDate = Convert.ToDateTime(dr["show_begin_date"]);
 				}
 				if (dr["show_end_date"] != DBNull.Value) {
 					showEndDate = Convert.ToDateTime(dr["show_end_date"]);
+				} else {
+					double hours = Global.ConfigDoubleParam("HeaderTextShowingHours");
+					showEndDate = showBeginDate.AddHours(hours);
 				}
+				bool isShowing = (showEndDate.CompareTo(DateTime.Now) > 0);
 				headerText = new HeaderText(Convert.ToInt32(dr["id"]),
 											User.GetById(Convert.ToInt32(dr["user_id"])),
 											Convert.ToString(dr["text"]),
 											Convert.ToDateTime(dr["cdate"]),
 											showBeginDate,
-											showEndDate);
+											showEndDate,
+											isShowing);
 			}
 			return headerText;
 		}
