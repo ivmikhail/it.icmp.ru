@@ -155,14 +155,14 @@ namespace ITCommunity
 			{
 				errors.Add("Количество символов в заголовке должно быть от 1 до 128.");
 			}
-            if (TextAreaPostDesc.Text.Length > 2000)
+            if (TextAreaPostDesc.Text.Length == 0 || TextAreaPostDesc.Text.Length > 2000)
 			{
-				errors.Add("Количество символов в описании(краткое описание) новости должно быть до 2000.");
+				errors.Add("Количество символов в описании(краткое описание) новости должно быть от 1 до 2000.");
 			}
-            if (TextAreaPostText.Text.Length == 0 || TextAreaPostText.Text.Length > 20000)
-			{
-				errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 20000.");
-			}
+           // if (TextAreaPostText.Text.Length == 0 || TextAreaPostText.Text.Length > 20000)
+		   //{
+			//	errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 20000.");
+			//}
 			if (TextBoxSource.Text.Length > 1024)
 			{
 				errors.Add("Количество символов в источнике должно быть от 0 до 1024.");
@@ -172,7 +172,7 @@ namespace ITCommunity
 		}
 		private void WriteErrors(List<string> errors, string title)
 		{
-			string text = "<div  class='error'><h2>" + title + "</h2><ul>";
+			string text = "<div class=\"error\"><h2>" + title + "</h2><ul>";
 			foreach (string message in errors)
 			{
 				text += "<li>" + message + "</li>";
