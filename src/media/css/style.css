@@ -111,6 +111,11 @@ hr {
 	padding: 2px 5px;
 	margin: 5px 0;
 }
+.error ul li 
+{
+	list-style-type:square;
+	margin: 0 0 0 15px;
+}
 
 .note {
 	background: #f8f8f8;
@@ -326,7 +331,7 @@ hr {
 }
 .post .bbcode-list {
 	list-style-type: square;
-	padding-left: 14px;
+	padding: 0 0 0 14px;
 }
 /* post: end */
 

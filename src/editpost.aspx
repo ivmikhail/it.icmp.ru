@@ -114,13 +114,13 @@
 		
 		<h2>Краткое описание</h2>
 		<div class="note">
-			Если описание пустое, на главной появится весь текст новости
+			Обязательное поле
 		</div>
 		<label class="textbox-textarea">
 			<asp:TextBox ID="TextAreaPostDesc" runat="server" Rows="7" MaxLength="2000" TextMode="MultiLine" OnFocus="setCurrentTextArea(this);" />
 		</label>
 		
-		<h2>Текст новости</h2>		
+		<h2>Текст новости</h2>	
         <uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
         <uc:EditorToolbar ID="EditorToolbarText" runat="server" />
 		<label class="textbox-textarea">

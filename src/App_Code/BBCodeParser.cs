@@ -80,10 +80,9 @@ namespace ITCommunity {
 		static BBCodeParser() {
 			_formatters = new List<IHtmlFormatter>();
 
-			_formatters.Add(new SearchReplaceFormatter("\r", ""));
-			//_formatters.Add(new SearchReplaceFormatter("\n\n", "<p></p>"));
-			//_formatters.Add(new SearchReplaceFormatter("\n", "<br />"));
-			_formatters.Add(new RegexFormatter(@"([^\]])\n", "$1<br />"));
+            _formatters.Add(new SearchReplaceFormatter("\r", ""));
+            // _formatters.Add(new RegexFormatter(@"([^\]])\n", "$1<br />"));
+            _formatters.Add(new RegexFormatter("\n", "<br />"));
 
 			_formatters.Add(new RegexFormatter(@"\[b(?:\s*)\]((.|\n)*?)\[/b(?:\s*)\]", "<b>$1</b>"));
 			_formatters.Add(new RegexFormatter(@"\[i(?:\s*)\]((.|\n)*?)\[/i(?:\s*)\]", "<i>$1</i>"));
@@ -149,7 +148,7 @@ namespace ITCommunity {
 			_formatters.Add(new RegexFormatter(@"\[tr(?:\s*)\]((.|\n)*?)\[/tr(?:\s*)\]", "<tr>$1</tr>"));
 			_formatters.Add(new RegexFormatter(@"\[td(?:\s*)\]((.|\n)*?)\[/td(?:\s*)\]", "<td>$1</td>"));
 			_formatters.Add(new RegexFormatter(@"\[td=([0-9]*)(?:\s*)\]((.|\n)*?)\[/td(?:\s*)\]", "<td colspan='$1'>$2</td>"));
-		}
+        }
 		#endregion
 
 		#region Format

@@ -25,7 +25,7 @@ namespace ITCommunity
 			{
 				post.UpdateViews();
 			}
-            DescSeparator.Text = (post.Description.Trim() == "") ? "" : "<hr />";
+            DescSeparator.Text = (post.Description.Trim() == "" || post.Text.Trim() == "") ? "" : "<hr />";
             EditorToolbar.InputId = TextBoxComment.ClientID;
 		}
 
@@ -65,8 +65,8 @@ namespace ITCommunity
 				HyperLinkTitle.Text = post.Title;
 				HyperLinkTitle.NavigateUrl = "news.aspx?id=" + post.Id;
 
-				desc.Text = post.DescriptionFormatted;
-				text.Text = post.TextFormatted;
+                desc.Text = post.DescriptionFormatted == "" ? "" : "<div class=\"post-desc\">" + post.DescriptionFormatted + "</div>";
+                text.Text = post.TextFormatted == "" ? "" : "<div id=\"cut\" class=\"post-text\">" + post.TextFormatted + "</div>";
 				comments_count.Text = post.CommentsCount.ToString();
 				date.Text = post.CreateDate.ToString("dd MMMM yyyy, HH:mm");
 				favorite.Text = post.FavoritesAction;
@@ -96,19 +96,18 @@ namespace ITCommunity
 			}
 			LinksPostCategories.Text = result;
 		}
-		private int GetPostId()
-		{
-			int id = -1;
-			Int32.TryParse(Request.QueryString["id"], out id);
-			return id;
+		private int GetPostId() {
+            return GetRequestParameter("id");
 		}
-		private int GetDelCommentId()
-		{
-			int id = -1;
-			Int32.TryParse(Request.QueryString["cid"], out id);
-			return id;
+		private int GetDelCommentId() {
+            return GetRequestParameter("cid");
 		}
 
+        private int GetRequestParameter(string name) {
+            int paramValue = -1;
+            Int32.TryParse(Request.QueryString[name], out paramValue);
+            return paramValue;
+        }
 		private void LoadComments()
 		{
 			CommentsList.DataBind(Comment.GetByPost(GetPostId()));

@@ -12,15 +12,11 @@
 			<asp:HyperLink ID="HyperLinkTitle" runat="server" CssClass="title-link">HyperLink</asp:HyperLink>
 			(<asp:Literal ID="LinksPostCategories" runat="server"></asp:Literal>)
 		</h1>
-
-		<div class="post-desc">
-			<asp:Literal ID="desc" runat="server" />
-		</div>
-        <asp:Literal ID="DescSeparator" runat="server" />
-		<div id="cut" class="post-text">
-			<asp:Literal ID="text" runat="server" />  
-		</div>
-
+        
+        <asp:Literal ID="desc" runat="server" />
+        <asp:Literal ID="DescSeparator" runat="server" />        
+        <asp:Literal ID="text" runat="server" />  
+        
 		<div class="post-info">
 			<asp:Literal ID="date" runat="server" /> /
 			<asp:Literal ID="favorite" runat="server" /> /
