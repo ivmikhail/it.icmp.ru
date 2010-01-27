@@ -12,11 +12,11 @@ using System.Collections.Generic;
 
 namespace ITCommunity {
     public partial class UserPage : System.Web.UI.Page {
-        User pageUser = new User();
+        
         protected void Page_Load(object sender, EventArgs e) {
 
             if (!IsPostBack) {
-                SetPageUser();
+                User pageUser = GetPageUser();
 
                 if (pageUser.Id > 0) {
 
@@ -59,9 +59,12 @@ namespace ITCommunity {
             }
         }
 
-        private void SetPageUser() {
+        private User GetPageUser() {
             string UserLogin = Request.QueryString["login"];
-            pageUser = (UserLogin == "" || UserLogin == null) ? CurrentUser.User : ITCommunity.User.GetByLogin(UserLogin);
+            if(UserLogin == "" || UserLogin == null) {
+                UserLogin = CurrentUser.User.Login;
+            }
+            return ITCommunity.User.GetByLogin(UserLogin);
         }
 
         private string GetViewMode() {
