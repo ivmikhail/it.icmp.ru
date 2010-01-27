@@ -4,11 +4,13 @@
 	<h1 class="error">Запрашиваемая страница не найдена</h1>
 
 	<div class="note">
-		<div>
+		<div class="info-message">
 			Страница или файл, которую вы искали, уже переехала на новый адрес, либо перемещена/удалена. Воспользуйтесь <a href="search.aspx" title="Найти пропажу поискав по сайту">поиском</a> чтобы найти то, что вы искали.
 		</div>
+		<div class="info-message">
 		<asp:Literal ID="LiteralReferrerUrl" runat="server"/>
-		<div>
+		</div>
+		<div class="info-message">
 			Если вы считаете что нужно известить администраторов, то можете написать письмо по адресу <a href="mailto:it.icmp.ru@gmail.com">it.icmp.ru@gmail.com</a>
 		</div>
 

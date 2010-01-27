@@ -21,8 +21,7 @@ namespace ITCommunity
 			if (identifier == "")
 			{
 				SendRecoveryLink.Visible = true;
-			}
-			else
+			} else
 			{
 				RecoveryPass rec = RecoveryPass.GetByIdentifier(identifier.Trim());
 				if (rec.Id > 0)
@@ -30,12 +29,9 @@ namespace ITCommunity
 					recovery_user = rec.User;
 					RecoveryLogin.Text = recovery_user.Login;
 					RecoveryPassContainer.Visible = true;
-				}
-				else
+				} else
 				{
-					Response.Clear();
-					Response.StatusCode = 404;
-					Response.End();
+                    Response.Redirect("notfound.aspx?aspxerrorpath=" + Request.RawUrl);
 				}
 			}
 		}
