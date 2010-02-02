@@ -45,7 +45,7 @@
 
 			<div id="header">
 			    <noscript>
-			        <div id="noscript-message">Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется. <a href="http://adsense.google.com/support/bin/answer.py?hl=ru&answer=12654" target="_blank">Узнать как включить >>></div>
+			        <div id="noscript-message">Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется.<a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654" target="_blank">Узнать как включить >>></a></div>
 			    </noscript>
 				<a href="default.aspx" class="main-link">
 					<span class="code-class">IT</span> Community →
@@ -73,15 +73,8 @@
 				Данный ресурс поддерживается сообществом АЙТИ коммунистов г.Якутска. Проект некоммерческий.
 				<br />
 				<br />
-				<script language="JavaScript" type="text/javascript">
-					var url = document.location.toString().toLowerCase();
-					if (url == "http://it.icmp.ru/" || url == "http://it.icmp.ru/default.aspx" || url=='http://it.icmp.ru/default.aspx?cat=0') {
-						document.write("<a href='http://www.ykt.ru/yaknet/default.asp'  title='Перейти в рейтинговую систему'>" +
-						"<img src='http://www.ykt.ru/yaknet/image.asp?id=IT_community' alt='Рейтинг Ykt.Ru' border='0' width='50' height='30'></a>");
-					}
-				</script>
+				<asp:Literal ID="YaknetCounter" runat="server" />
 			</div>
-
 		</form>
 	</body>
 </html>

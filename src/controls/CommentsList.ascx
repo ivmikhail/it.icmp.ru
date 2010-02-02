@@ -15,7 +15,7 @@
 						<div class="comment-text">
 							<%# Eval("textformatted")%>
 						</div>
-					<li>
+					</li>
 				</ItemTemplate>
 				<AlternatingItemTemplate>
 					<li id="comment-<%# Eval("id")%>" class="odd">
@@ -28,7 +28,7 @@
 						<div class="comment-text">
 							<%# Eval("textformatted")%>
 						</div>
-					<li>
+					</li>
 				</AlternatingItemTemplate>
 				<FooterTemplate>
 					</ul>

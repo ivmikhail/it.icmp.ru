@@ -12,7 +12,7 @@ namespace ITCommunity
 		{
 			if (!IsPostBack)
 			{
-				TextBoxQuery.Attributes.Add("onKeyPress", "javascript:if (event.keyCode == 13) __doPostBack('" + LinkButtonSearch.UniqueID + "','')");
+				TextBoxQuery.Attributes.Add("onkeypress", "javascript:if (event.keyCode == 13) __doPostBack('" + LinkButtonSearch.UniqueID + "','')");
 			}
 		}
 

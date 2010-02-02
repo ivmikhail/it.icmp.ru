@@ -18,7 +18,7 @@ namespace ITCommunity
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			TextBoxQuery.Attributes.Add("onKeyPress", "javascript:if (event.keyCode == 13) __doPostBack('" + LinkButtonSearch.UniqueID + "','')");
+			TextBoxQuery.Attributes.Add("onkeypress", "javascript:if (event.keyCode == 13) __doPostBack('" + LinkButtonSearch.UniqueID + "','')");
 
 			if (!IsPostBack)
 			{

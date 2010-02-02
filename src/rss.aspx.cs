@@ -36,7 +36,7 @@ namespace ITCommunity
             {
                 RssItem item = new RssItem();
 
-                item.Author = site_domain + " - " + post.Author.Login;
+                item.Author = site_domain + "/user.aspx?login=" + post.Author.Login;
                 item.Link = new Uri(site_domain + "/news.aspx?id=" + post.Id);
                 item.Title = post.Title == "" ? "null" : post.Title;
                 item.Description = post.Description == "" ? post.TextFormatted : post.DescriptionFormatted;
