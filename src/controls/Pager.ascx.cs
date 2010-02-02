@@ -44,7 +44,7 @@ namespace ITCommunity
 			QueryString = "";
 			for (int i = 0; i < queryString.Count; i++)
 			{
-				QueryString += queryString.Keys[i] + "=" + queryString[i] + "&";
+				QueryString += queryString.Keys[i] + "=" + queryString[i] + "&amp;";
 			}
 			
 			this.totalRecords = totalRecords;
