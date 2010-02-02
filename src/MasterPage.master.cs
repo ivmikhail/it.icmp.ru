@@ -22,6 +22,11 @@ namespace ITCommunity
 				HeaderTextLiteral.Text = HeaderText.GetCurrent().Text;
 				ThisYear.Text = DateTime.Now.Year.ToString();
 			}
+            YaknetCounter.Text = "";
+            string url = Request.Url.ToString().ToLower();
+            if(url == "http://it.icmp.ru/" || url == "http://it.icmp.ru/default.aspx" || url == "http://it.icmp.ru/default.aspx?cat=0") {
+                YaknetCounter.Text= "<a href='http://www.ykt.ru/yaknet/default.asp'  title='Перейти в рейтинговую систему'><img src='http://www.ykt.ru/yaknet/image.asp?id=IT_community' alt='Рейтинг Ykt.Ru' border='0' width='50' height='30'/></a>";
+            }
 		}
 
 		private int GetCatId()

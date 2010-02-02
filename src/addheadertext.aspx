@@ -11,7 +11,7 @@
 
 	<label class="textbox-input">
 		<span class="label-title">Текст</span>
-		<asp:TextBox ID="TextBoxText" runat="server" />
+		<asp:TextBox ID="TextBoxText" MaxLength="50" runat="server" />
 	</label>
 	
 	<asp:Literal ID="MessageText" runat="server" Visible="false">
