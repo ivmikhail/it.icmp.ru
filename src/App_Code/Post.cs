@@ -248,7 +248,7 @@ namespace ITCommunity
 					if (IsFavorites(CurrentUser.User.Id))
 					{
 
-                        value = "<a href='favorites.aspx?&a=del&amp;post=" + this.Id + "' title='Убрать из избранного' class='add-to-favorites-link'><img src='media/img/design/is-fav.png' class='fixPNG' alt=''/></a>";
+                        value = "<a href='favorites.aspx?a=del&amp;post=" + this.Id + "' title='Убрать из избранного' class='add-to-favorites-link'><img src='media/img/design/is-fav.png' class='fixPNG' alt=''/></a>";
 					}
 					else
 					{
