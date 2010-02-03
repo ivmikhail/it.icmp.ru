@@ -17,11 +17,11 @@
 		<meta name="author"      content="Ykt IT Community" />
 		<meta name="language"    content="ru" />
 		<meta name="doc-type"    content="web page" />
-		
-        <meta http-equiv="pragma"        content="no-cache" />
-        <meta http-equiv="cache-control" content="no-cache" />
-        <meta http-equiv="expires"       content="now" />
-        
+
+		<meta http-equiv="pragma"        content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires"       content="now" />
+
 		<link rel="shortcut icon" href="favicon.ico"                  type="image/vnd.microsoft.icon" />
 		<link rel="alternate"     href="rss.aspx"                     type="application/rss+xml" charset="utf-8"  title="Ykt IT Community - http://it.icmp.ru" />    
 
@@ -67,13 +67,11 @@
 			<uc:RightSidebar id="RightSidebar" runat="server" />
 
 			<div id="footer">
+				<asp:Literal ID="YaknetCounter" runat="server" />
 				<h2>
 					IT Community &copy; 2005 - <asp:Literal ID="ThisYear" runat="server" />
 				</h2>
 				Данный ресурс поддерживается сообществом АЙТИ коммунистов г.Якутска. Проект некоммерческий.
-				<br />
-				<br />
-				<asp:Literal ID="YaknetCounter" runat="server" />
 			</div>
 		</form>
 	</body>
