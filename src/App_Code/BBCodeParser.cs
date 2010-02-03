@@ -81,8 +81,6 @@ namespace ITCommunity {
 			_formatters = new List<IHtmlFormatter>();
 
             _formatters.Add(new SearchReplaceFormatter("\r", ""));
-            // _formatters.Add(new RegexFormatter(@"([^\]])\n", "$1<br />"));
-            _formatters.Add(new RegexFormatter("\n", "<br />"));
 
 			_formatters.Add(new RegexFormatter(@"\[b(?:\s*)\]((.|\n)*?)\[/b(?:\s*)\]", "<b>$1</b>"));
 			_formatters.Add(new RegexFormatter(@"\[i(?:\s*)\]((.|\n)*?)\[/i(?:\s*)\]", "<i>$1</i>"));
@@ -143,12 +141,18 @@ namespace ITCommunity {
 			_formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]"
 				+ "", abundaEvaluator));
 
+			_formatters.Add(new RegexFormatter(@"(\[table.*?\])\n+", "$1"));
+			_formatters.Add(new RegexFormatter(@"(\[/?tr\])\n+", "$1"));
+			_formatters.Add(new RegexFormatter(@"(\[/?td.*?\])\n+", "$1"));
+
 			_formatters.Add(new RegexFormatter(@"\[table(?:\s*)\]((.|\n)*?)\[/table(?:\s*)\]", "<table class='user-table' cellpadding='0' cellspacing='0' width='100%'>$1</table>"));
 			_formatters.Add(new RegexFormatter(@"\[table=([0-9]*%)(?:\s*)\]((.|\n)*?)\[/table(?:\s*)\]", "<table class='user-table' cellpadding='0' cellspacing='0' width='$1'>$2</table>"));
 			_formatters.Add(new RegexFormatter(@"\[tr(?:\s*)\]((.|\n)*?)\[/tr(?:\s*)\]", "<tr>$1</tr>"));
 			_formatters.Add(new RegexFormatter(@"\[td(?:\s*)\]((.|\n)*?)\[/td(?:\s*)\]", "<td>$1</td>"));
 			_formatters.Add(new RegexFormatter(@"\[td=([0-9]*)(?:\s*)\]((.|\n)*?)\[/td(?:\s*)\]", "<td colspan='$1'>$2</td>"));
-        }
+
+			_formatters.Add(new RegexFormatter("\n", "<br />"));
+		}
 		#endregion
 
 		#region Format

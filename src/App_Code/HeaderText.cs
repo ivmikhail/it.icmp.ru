@@ -12,7 +12,6 @@ namespace ITCommunity {
 		private User _user = new User();
 		private string _text = "";
 		private DateTime _createDate = DateTime.Now;
-		private DateTime _showBeginDate = DateTime.Now;
 		private DateTime _showEndDate = DateTime.MinValue;
 		private bool _isShowing = true;
 
@@ -39,11 +38,6 @@ namespace ITCommunity {
 			set { _createDate = value; }
 		}
 
-		public DateTime ShowBeginDate {
-			get { return _showBeginDate; }
-			set { _showBeginDate = value; }
-		}
-
 		public DateTime ShowEndDate {
 			get { return _showEndDate; }
 			set { _showEndDate = value; }
@@ -58,12 +52,11 @@ namespace ITCommunity {
 			Text = "Напиши текст для хидера, " + CurrentUser.User.Login + "!";
 		}
 
-		public HeaderText(int id, User user, string text, DateTime createDate, DateTime showBeginDate, DateTime showEndDate, bool isShowing) {
+		public HeaderText(int id, User user, string text, DateTime createDate, DateTime showEndDate, bool isShowing) {
 			_id = id;
 			_user = user;
 			_text = text;
 			_createDate = createDate;
-			_showBeginDate = showBeginDate;
 			_showEndDate = showEndDate;
 			_isShowing = isShowing;
 		}
@@ -87,7 +80,7 @@ namespace ITCommunity {
 				Global.ConfigStringParam("HeaderTextCacheName"),
 				new object(),
 				loader,
-				new object[] {},
+				new object[] { },
 				DateTime.Now.AddHours(Global.ConfigDoubleParam("HeaderTextCachePer")));
 			return currents;
 		}
@@ -96,12 +89,6 @@ namespace ITCommunity {
 			List<HeaderText> currents = GetHeaderTextsFromTable(Database.HeaderTextGetCurrents());
 			List<HeaderText> toDelete = new List<HeaderText>();
 			foreach (HeaderText current in currents) {
-				// проверяем показывался ли, если нет, то сохраняем дату начала показа
-				if (current.ShowBeginDate == DateTime.MinValue) {
-					current.ShowBeginDate = DateTime.Now;
-					Database.HeaderTextUpdateShowBeginDate(current.Id);
-				}
-				// проверяем закончился ли период показа, если да, то загружаем следующий текст
 				if (!current.IsShowing) {
 					Database.HeaderTextUpdateShowEndDate(current.Id);
 					toDelete.Add(current);
@@ -139,26 +126,28 @@ namespace ITCommunity {
 			HeaderText headerText;
 			if (dr == null) {
 				headerText = new HeaderText();
-			} else {
-				DateTime showBeginDate = DateTime.Now;
+			}
+			else {
+				DateTime createDate = DateTime.Now;
 				DateTime showEndDate = DateTime.MinValue;
-				if (dr["show_begin_date"] != DBNull.Value) {
-					showBeginDate = Convert.ToDateTime(dr["show_begin_date"]);
+				if (dr["cdate"] != DBNull.Value) {
+					createDate = Convert.ToDateTime(dr["cdate"]);
 				}
 				if (dr["show_end_date"] != DBNull.Value) {
 					showEndDate = Convert.ToDateTime(dr["show_end_date"]);
-				} else {
+				}
+				else {
 					double hours = Global.ConfigDoubleParam("HeaderTextShowingHours");
-					showEndDate = showBeginDate.AddHours(hours);
+					showEndDate = createDate.AddHours(hours);
 				}
 				bool isShowing = (showEndDate.CompareTo(DateTime.Now) > 0);
-				headerText = new HeaderText(Convert.ToInt32(dr["id"]),
-											User.GetById(Convert.ToInt32(dr["user_id"])),
-											Convert.ToString(dr["text"]),
-											Convert.ToDateTime(dr["cdate"]),
-											showBeginDate,
-											showEndDate,
-											isShowing);
+				headerText = new HeaderText(
+					Convert.ToInt32(dr["id"]),
+					User.GetById(Convert.ToInt32(dr["user_id"])),
+					Convert.ToString(dr["text"]),
+					createDate,
+					showEndDate,
+					isShowing);
 			}
 			return headerText;
 		}
