@@ -85,15 +85,18 @@ namespace ITCommunity {
 			// убираем все whitespases внутри тегов ббкода
 			_formatters.Add(new RegexFormatter(@"\[\s*(.*?)\s*\]", "[$1]"));
 
-			// убираем переходы на след. строку в таблице
-			_formatters.Add(new RegexFormatter(@"(\[table.*?\])\n+", "$1"));
-			_formatters.Add(new RegexFormatter(@"\n*(\[/?tr.*?\])\n+", "$1"));
-			_formatters.Add(new RegexFormatter(@"\n*(\[/?td.*?\])\n+", "$1"));
+			// убираем whitespases в таблице
+			_formatters.Add(new RegexFormatter(@"\s*(\[/?tr.*?\])\s*", "$1"));
+			_formatters.Add(new RegexFormatter(@"\s*(\[/?td.*?\])\s*", "$1"));
 
-			// убираем переходы на след. строку в списке
+			// убираем whitespases в списке
 			_formatters.Add(new RegexFormatter(@"(\[list.*?\])\s+", "$1"));
 			_formatters.Add(new RegexFormatter(@"\s*(\[\*\])\s*", "$1"));
 			_formatters.Add(new RegexFormatter(@"\s+(\[/list\])", "$1"));
+
+			// убираем whitespases после открывающего и до закрывающего ббкода
+			_formatters.Add(new RegexFormatter(@"(\[[^/].*?\])\s*", "$1"));
+			_formatters.Add(new RegexFormatter(@"\s*(\[/.*?\])", "$1"));
 
 			_formatters.Add(new RegexFormatter("\n", "<br />"));
 
