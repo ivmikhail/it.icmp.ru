@@ -148,7 +148,7 @@
 
 
 <div class="editor-toolbar">
-	<input type="button" title="Разделитель (ctrl+1)"       rel="hr"         value="hr" />
+	<input type="button" title="Разделитель (ctrl+1)"       rel="hr"        value="hr" />
 	-
 	<input type="button" title="Жирный (ctrl+2)"            rel="bold"      value="b" />
 	<input type="button" title="Подчеркивание (ctrl+3)"     rel="underline" value="u" />

@@ -13,84 +13,72 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using ITCommunity;
 
-namespace ITCommunity
-{
-	public partial class EditPost : System.Web.UI.Page
-	{
+namespace ITCommunity {
+	public partial class EditPost : System.Web.UI.Page {
 		Post current_post = new Post();
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!IsPostBack)
-			{
+		protected void Page_Load(object sender, EventArgs e) {
+			if (!IsPostBack) {
 				LoadCategories();
 				CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
 				ImageOptions.Text = "<div class='note'>Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
-				if (GetPostId() > 0)
-				{
+				if (GetPostId() > 0) {
 					LinkButtonAdd.Text = "Изменить";
 				}
-				else
-				{
+				else {
 					LinkButtonAdd.Text = "Добавить";
 				}
 				InitPostData();
 
-                EditorToolbarText.InputId = TextAreaPostText.ClientID;
+				EditorToolbarText.InputId = TextAreaPostText.ClientID;
 			}
 
 		}
-		private void InitPostData()
-		{
+		private void InitPostData() {
 			User current_user = CurrentUser.User;
 			Post post = Post.GetById(GetPostId());
 
-			if (post.IsPostOwner(CurrentUser.User) || current_user.Role == ITCommunity.User.Roles.Admin)
-			{
+			if (post.IsPostOwner(CurrentUser.User) || current_user.Role == ITCommunity.User.Roles.Admin) {
 				current_post = post;
 				Picture.DeleteTempFolderFiles(current_post);
 				LoadImages(current_post);
 			}
 
-			List<Category> cats = current_post.Categories;
-			foreach (Category cat in cats)
-			{
+			InitPostCategories(current_post.Categories);
+
+			TextBoxTitle.Text = HttpUtility.HtmlDecode(current_post.Title);
+			TextAreaPostDesc.Text = current_post.Description;
+			TextAreaPostText.Text = current_post.Text;
+			TextBoxSource.Text = current_post.Source;
+			CheckBoxAttached.Checked = current_post.Attached;
+		}
+
+		private void InitPostCategories(List<Category> categories) {
+			foreach (Category cat in categories) {
 				CatNamesLiteral.Text += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать' id='" + cat.Id + "'>" + cat.Name + "</a> ";
 
-				if (SelectedCategoriesIds.Value != "")
-				{
+				if (SelectedCategoriesIds.Value != "") {
 					SelectedCategoriesIds.Value += ",";
 				}
 				SelectedCategoriesIds.Value += cat.Id;
 			}
-			TextBoxTitle.Text = HttpUtility.HtmlDecode(current_post.Title);
-            TextAreaPostDesc.Text = current_post.Description;
-			TextAreaPostText.Text = current_post.Text;
-			TextBoxSource.Text = current_post.Source;
-			CheckBoxAttached.Checked = current_post.Attached;
-
 		}
 
-		private void LoadCategories()
-		{
+		private void LoadCategories() {
 			List<Category> cats = Category.GetAll();
 			DropDownListCats.Items.Add(new ListItem("Выбрать...", "-1"));
-			foreach (Category cat in cats)
-			{
+			foreach (Category cat in cats) {
 				DropDownListCats.Items.Add(new ListItem(cat.Name, cat.Id.ToString()));
 			}
 		}
 
-		protected void LinkButtonAdd_Click(object sender, EventArgs e)
-		{
+		protected void LinkButtonAdd_Click(object sender, EventArgs e) {
 			Post editable_post = Post.GetById(GetPostId());
 			List<string> errors = ValidateData();
 			List<Category> cats = GetCategoriesFromPost();
-			if (cats.Count == 0)
-			{
+			if (cats.Count == 0) {
 				errors.Add("Категория не выбрана"); //TODO: Наверно надо переделать? 
 			}
-			if (errors.Count == 0)
-			{
+			if (errors.Count == 0) {
 				editable_post.Categories = cats;
 				editable_post.Title = HttpUtility.HtmlEncode(TextBoxTitle.Text);
 
@@ -118,28 +106,22 @@ namespace ITCommunity
 				Picture.FixImages(inserted_post);
 				Response.Redirect("news.aspx?id=" + inserted_post.Id);
 			}
-			else
-			{
-				SelectedCategoriesIds.Value = "";
-				CatNamesLiteral.Text = "";
+			else {
+				InitPostCategories(cats);
 				WriteErrors(errors, "Новость не добавлена");
 			}
 		}
 
-		private List<Category> GetCategoriesFromPost()
-		{
+		private List<Category> GetCategoriesFromPost() {
 			List<Category> cats = new List<Category>();
 			string[] cat_ids = SelectedCategoriesIds.Value.Split(',');
 
-			foreach (string string_cat_id in cat_ids)
-			{
+			foreach (string string_cat_id in cat_ids) {
 				int cat_id = -1;
 				Int32.TryParse(string_cat_id, out cat_id);
-				if (cat_id > 0 && Category.IsCategoryExist(cat_id))
-				{
+				if (cat_id > 0 && Category.IsCategoryExist(cat_id)) {
 					Category category = Category.GetById(cat_id);
-					if (!cats.Contains(category))
-					{
+					if (!cats.Contains(category)) {
 						cats.Add(category);
 					}
 				}
@@ -147,61 +129,50 @@ namespace ITCommunity
 			return cats;
 		}
 
-		private List<string> ValidateData()
-		{
+		private List<string> ValidateData() {
 			List<string> errors = new List<string>();
 
-			if (TextBoxTitle.Text.Length == 0 || TextBoxTitle.Text.Length > 128)
-			{
+			if (TextBoxTitle.Text.Length == 0 || TextBoxTitle.Text.Length > 128) {
 				errors.Add("Количество символов в заголовке должно быть от 1 до 128.");
 			}
-            if (TextAreaPostDesc.Text.Length == 0 || TextAreaPostDesc.Text.Length > 2000)
-			{
+			if (TextAreaPostDesc.Text.Length == 0 || TextAreaPostDesc.Text.Length > 2000) {
 				errors.Add("Количество символов в описании(краткое описание) новости должно быть от 1 до 2000.");
 			}
-           // if (TextAreaPostText.Text.Length == 0 || TextAreaPostText.Text.Length > 20000)
-		   //{
+			// if (TextAreaPostText.Text.Length == 0 || TextAreaPostText.Text.Length > 20000)
+			//{
 			//	errors.Add("Количество символов в тексте(полное описание) новости должно быть от 1 до 20000.");
 			//}
-			if (TextBoxSource.Text.Length > 1024)
-			{
+			if (TextBoxSource.Text.Length > 1024) {
 				errors.Add("Количество символов в источнике должно быть от 0 до 1024.");
 			}
 
 			return errors;
 		}
-		private void WriteErrors(List<string> errors, string title)
-		{
+		private void WriteErrors(List<string> errors, string title) {
 			string text = "<div class=\"error\"><h2>" + title + "</h2><ul>";
-			foreach (string message in errors)
-			{
+			foreach (string message in errors) {
 				text += "<li>" + message + "</li>";
 			}
 			text += "</ul></div>";
 			AddPostMessages.Text = text;
 			LinkButtonAdd.Focus();
 		}
-		private int GetPostId()
-		{
+		private int GetPostId() {
 			int id;
 			Int32.TryParse(Request.QueryString["id"], out id);
 			return id;
 		}
 
-		protected void AttachImageButton_Click(object sender, EventArgs e)
-		{
+		protected void AttachImageButton_Click(object sender, EventArgs e) {
 			Post post = Post.GetById(GetPostId());
-			if (post.Id < 1)
-			{
+			if (post.Id < 1) {
 				post.Author = CurrentUser.User;
 			}
 			Picture pic = Picture.UploadImage(UploadImage.PostedFile, post);
-			if (pic.Name == "")
-			{
+			if (pic.Name == "") {
 				UploadImageError.Visible = true;
 			}
-			else
-			{
+			else {
 				UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
 			}
 
@@ -209,17 +180,14 @@ namespace ITCommunity
 
 			string selectedIds = SelectedCategoriesIds.Value;
 			string selectedCatsNames = "";
-			if (selectedIds != "")
-			{
+			if (selectedIds != "") {
 				string[] catIds = selectedIds.Split(',');
-				foreach (string stringCatId in catIds)
-				{
+				foreach (string stringCatId in catIds) {
 					int cat_id = -1;
 					Int32.TryParse(stringCatId, out cat_id);
 
 					Category cat = Category.GetById(Convert.ToInt32(cat_id));
-					if (cat.Id > 0)
-					{
+					if (cat.Id > 0) {
 						selectedCatsNames += "<a href='#' id='" + cat.Id + "' onclick='deleteCategory(this);' class='delete-category' title='Убрать'>" + cat.Name + "</a> ";
 					}
 				}
@@ -229,11 +197,9 @@ namespace ITCommunity
 			AttachImageButton.Focus();
 		}
 
-		private void LoadImages(Post post)
-		{
+		private void LoadImages(Post post) {
 			List<Picture> pics = Picture.GetByPost(post);
-			foreach (Picture pic in pics)
-			{
+			foreach (Picture pic in pics) {
 				UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='Загруженная картинка' class='uploaded-image'/>";
 			}
 		}

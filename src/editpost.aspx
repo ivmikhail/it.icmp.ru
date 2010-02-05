@@ -4,37 +4,33 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
 	<script type="text/javascript">
-	    var currentTextAreaId = '<%= TextAreaPostText.ClientID %>';
-	    
-		window.addEvent('domready', function(){
+		var currentTextAreaId = '<%= TextAreaPostText.ClientID %>';
+
+		window.addEvent('domready', function() {
 			// Вставка загруженного изображения
 			$$('.uploaded-image').each(function(el) {
-				el.addEvent('click', function(e){
-						$(currentTextAreaId).insertAtCursor("[popup=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/popup]", false);
-					});
+				el.addEvent('click', function(e) {
+					$(currentTextAreaId).insertAtCursor("[popup=" + (this.src).replace("thumb", "full") + "][img]" + this.src + "[/img]" + "[/popup]", false);
+				});
 			});
 
 			var cat_dropdown = $('<%= DropDownListCats.ClientID %>');
-			var cat_names    = $('<%= SelectedCategoriesNames.ClientID %>');
-			var cat_ids      = $('<%= SelectedCategoriesIds.ClientID %>');
+			var cat_names = $('<%= SelectedCategoriesNames.ClientID %>');
+			var cat_ids = $('<%= SelectedCategoriesIds.ClientID %>');
 
 			cat_dropdown.addEvent('change', function(e) {
 				var cat_name = cat_dropdown.options[cat_dropdown.selectedIndex].text;
-				var cat_id   = cat_dropdown.options[cat_dropdown.selectedIndex].value;
+				var cat_id = cat_dropdown.options[cat_dropdown.selectedIndex].value;
 
-				if(cat_dropdown.options[0].value == -1)
-				{
+				if (cat_dropdown.options[0].value == -1) {
 					cat_dropdown.remove(0);
 				}
 
-				if(cat_id > 0)
-				{
-					if(CategoryIsSelected(cat_ids, cat_id))
-					{
+				if (cat_id > 0) {
+					if (CategoryIsSelected(cat_ids, cat_id)) {
 						alert('Категория уже выбрана');
 					} else {
-						if(cat_ids.value != "")
-						{
+						if (cat_ids.value != "") {
 							cat_ids.value += ",";
 						}
 						cat_ids.value += cat_id;
@@ -43,20 +39,17 @@
 				}
 			});
 		});
-		
-		function setCurrentTextArea(el) {
-		    currentTextAreaId = el.id;
-		    return false;
-		}
-		function CategoryIsSelected(cat_ids, cat_id)
-		{
-			var status = false;
-			var cats   = cat_ids.value.split(",");
 
-			for(i = 0; i < cats.length; i++)
-			{
-				if(cats[i] == cat_id)
-				{
+		function setCurrentTextArea(el) {
+			currentTextAreaId = el.id;
+			return false;
+		}
+		function CategoryIsSelected(cat_ids, cat_id) {
+			var status = false;
+			var cats = cat_ids.value.split(",");
+
+			for (i = 0; i < cats.length; i++) {
+				if (cats[i] == cat_id) {
 					status = true;
 					break;
 				}
@@ -64,17 +57,14 @@
 			return status;
 		}
 
-		function deleteCategory(el)
-		{
+		function deleteCategory(el) {
 			var cat_ids = $('<%= SelectedCategoriesIds.ClientID %>');
 			var cats = cat_ids.value.split(",");
 
 			var true_cats = new Array();
 
-			for(i = 0, j = 0 ; i < cats.length; i++, j++)
-			{
-				if(cats[i] != el.id)
-				{
+			for (i = 0, j = 0; i < cats.length; i++, j++) {
+				if (cats[i] != el.id) {
 					true_cats[j] = cats[i];
 				}
 			};
@@ -121,8 +111,8 @@
 		</label>
 		
 		<h2>Текст новости</h2>	
-        <uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
-        <uc:EditorToolbar ID="EditorToolbarText" runat="server" />
+		<uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
+		<uc:EditorToolbar ID="EditorToolbarText" runat="server" />
 		<label class="textbox-textarea">
 			<asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" MaxLength="20000" TextMode="MultiLine" OnFocus="setCurrentTextArea(this);"/>
 		</label>

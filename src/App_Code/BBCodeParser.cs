@@ -151,11 +151,12 @@ namespace ITCommunity {
 
 			// Video tag formatter test
 			_formatters.Add(new RegexFormatter(@"\[video]http://play\.ykt\.ru/video/(\d+)/.+?\s*\[/video]",
-				@"<embed src='http://play.ykt.ru/player.swf' width='640' height='480' allowscriptaccess='always' allowfullscreen='true' " +
-				@"flashvars='width=640&height=480&file=http://play.ykt.ru/flvideo/$1" +
-				@".flv&image=http://play.ykt.ru/thumb/$1.jpg" +
-				@"&displayheight=480&link=http://play.ykt.ru/video/$1&searchbar=false&linkfromdisplay=true' " +
-				@"pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash' />", true));
+				@"<object data='http://play.ykt.ru/player.swf' width='640' height='480' type='application/x-shockwave-flash'>
+					<param name='allowscriptaccess' value='always' />
+					<param name='allowfullscreen' value='true' />
+					<param name='flashvars' value='width=640&amp;height=480&amp;file=http://play.ykt.ru/flvideo/$1.flv&amp;image=http://play.ykt.ru/thumb/$1.jpg&amp;displayheight=480&amp;link=http://play.ykt.ru/video/$1&amp;searchbar=false&amp;linkfromdisplay=true' />
+					<param name='pluginspage' value='http://www.macromedia.com/go/getflashplayer' />
+				</object>", true));
 			// Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
 			_formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]"
 				+ "", abundaEvaluator));
