@@ -11,34 +11,30 @@ using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using ITCommunity;
 
-namespace ITCommunity
-{
-    public partial class PollsList : System.Web.UI.UserControl
-    {
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!IsPostBack)
-			{
+namespace ITCommunity {
+	public partial class PollsList : System.Web.UI.UserControl {
+		protected void Page_Load(object sender, EventArgs e) {
+			if (!IsPostBack) {
 				LoadPolls();
 			}
 		}
 
-		private void LoadPolls()
-		{
+		private void LoadPolls() {
 			int total_records = 0;
 			int page = GetPage();
 
-			RepeaterPolls.DataSource = Poll.Get(page, Global.ConfigNumParam("PollsCount"), ref total_records);
+			List<Poll> polls = Poll.Get(page, Global.ConfigNumParam("PollsCount"), ref total_records);
+			RepeaterPolls.DataSource = polls;
 			RepeaterPolls.DataBind();
 
 			Pager.DataBind(total_records, Global.ConfigNumParam("PollsCount"));
+			Visible = (polls.Count > 0);
 		}
 
-		private int GetPage()
-		{
+		private int GetPage() {
 			int page_num;
 			Int32.TryParse(Request.QueryString["page"], out page_num);
 			return page_num == 0 ? 1 : page_num;
 		}
-    }
+	}
 }

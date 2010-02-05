@@ -22,7 +22,7 @@
 						<div class="rfc-title">
 							<%# Eval("title")%>
 						</div>
-					<div>
+					</div>
 				</li>
 			</ItemTemplate>
 			<FooterTemplate>
