@@ -4,8 +4,10 @@
 	<HeaderTemplate>
 		<table class="data-table">
 			<thead>
-				<th>login</th>
-				<th>email</th>
+				<tr>
+					<th>login</th>
+					<th>email</th>
+				</tr>
 			</thead>
 			<tbody>
 	</HeaderTemplate>
@@ -22,7 +24,7 @@
 		</tr>
 	</AlternatingItemTemplate>
 	<FooterTemplate>
-		</tbody>
-	</table>
+			</tbody>
+		</table>
 	</FooterTemplate>
 </asp:Repeater>

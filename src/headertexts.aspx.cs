@@ -40,8 +40,10 @@ namespace ITCommunity {
 
 				HeaderTextsPager.DataBind(records_count, Global.ConfigNumParam("HeaderTextCount"));
 
-				BlockedUsersRepeater.DataSource = ITCommunity.User.GetBlocked();
+				List<User> blockedUsers = ITCommunity.User.GetBlocked();
+				BlockedUsersRepeater.DataSource = blockedUsers;
 				BlockedUsersRepeater.DataBind();
+				BlockedUsersRepeater.Visible = (blockedUsers.Count > 0);
 			}
 		}
 

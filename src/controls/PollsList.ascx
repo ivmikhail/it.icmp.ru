@@ -7,11 +7,13 @@
 		<table id="polls-table" class="data-table">
 			<caption>Архив опросов</caption>
 			<thead>
-				<th>Вопрос</th>
-				<th>Проголосовавших</th>
-				<th>Дата начала</th>
-				<th>Дата окончания</th>
-				<th></th>
+				<tr>
+					<th>Вопрос</th>
+					<th>Проголосовавших</th>
+					<th>Дата начала</th>
+					<th>Дата окончания</th>
+					<th></th>
+				</tr>
 			</thead>
 			<tbody>
 	</HeaderTemplate>
