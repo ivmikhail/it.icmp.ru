@@ -3,7 +3,7 @@
 	window.addEvent('domready', function() {
 		var input = $('<asp:Literal Id="Input" runat="server" />');
 
-		var editor = new SimpleEditor(input, $$('.editor-toolbar input'));
+		var editor = new SimpleEditor(input, $$('.editor-toolbar a'));
 
 		editor.addCommands({
 			hr: {
@@ -148,24 +148,24 @@
 
 
 <div class="editor-toolbar">
-	<input type="button" title="Разделитель (ctrl+1)"       rel="hr"        value="hr" />
+	<a title="Разделитель (ctrl+1)"       rel="hr"        >hr</a>
 	-
-	<input type="button" title="Жирный (ctrl+2)"            rel="bold"      value="b" />
-	<input type="button" title="Подчеркивание (ctrl+3)"     rel="underline" value="u" />
-	<input type="button" title="Курсив (ctrl+4)"            rel="italic"    value="i" />
-	<input type="button" title="Зачеркнутый текст (ctrl+5)" rel="strike"    value="s" />
+	<a title="Жирный (ctrl+2)"            rel="bold"      >b</a>
+	<a title="Подчеркивание (ctrl+3)"     rel="underline" >u</a>
+	<a title="Курсив (ctrl+4)"            rel="italic"    >i</a>
+	<a title="Зачеркнутый текст (ctrl+5)" rel="strike"    >s</a>
 	-
-	<input type="button" title="Блок кода (ctrl+6)" rel="code"  value="code"  />
-	<input type="button" title="Цитата (ctrl+7)"    rel="quote" value="quote" />
+	<a title="Блок кода (ctrl+6)" rel="code"  >code</a>
+	<a title="Цитата (ctrl+7)"    rel="quote" >quote</a>
 	-
-	<input type="button" title="Маркированный список (ctrl+8)" rel="bulllist" value="list" />
+	<a title="Маркированный список (ctrl+8)" rel="bulllist" >list</a>
 	-
-	<input type="button" title="Ссылка (ctrl+9)"   rel="link"  value="link"  />
-	<input type="button" title="email (ctrl+0)"    rel="email" value="email" />
-	<input type="button" title="Картинка (ctrl+q)" rel="img"   value="img"   />
-	<input type="button" title="Видео (ctrl+e)"    rel="video" value="video" />
+	<a title="Ссылка (ctrl+9)"   rel="link"  >link</a>
+	<a title="email (ctrl+0)"    rel="email" >email</a>
+	<a title="Картинка (ctrl+q)" rel="img"   >img</a>
+	<a title="Видео (ctrl+e)"    rel="video" >video</a>
 	-
-	<input type="button" title="Таблица (ctrl+y)"          rel="table" value="table" />
-	<input type="button" title="Строка в таблице (ctrl+[)" rel="tr"    value="tr"    />
-	<input type="button" title="Поле таблицы (ctrl+])"     rel="td"    value="td"    />
+	<a title="Таблица (ctrl+y)"          rel="table" >table</a>
+	<a title="Строка в таблице (ctrl+[)" rel="tr"    >tr</a>
+	<a title="Поле таблицы (ctrl+])"     rel="td"    >td</a>
 </div>

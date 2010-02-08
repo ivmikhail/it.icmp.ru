@@ -4,6 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="server">
 	<script type="text/javascript">
+	    <!--
 		var currentTextAreaId = '<%= TextAreaPostText.ClientID %>';
 
 		window.addEvent('domready', function() {
@@ -72,7 +73,7 @@
 			$(el.id).destroy();
 			return false;
 		}
-
+		// -->
 	</script>
 
 	<div id="edit-post">
@@ -107,14 +108,14 @@
 			Обязательное поле
 		</div>
 		<label class="textbox-textarea">
-			<asp:TextBox ID="TextAreaPostDesc" runat="server" Rows="7" MaxLength="2000" TextMode="MultiLine" OnFocus="setCurrentTextArea(this);" />
+			<asp:TextBox ID="TextAreaPostDesc" runat="server" Rows="7" MaxLength="2000" TextMode="MultiLine" onfocus="setCurrentTextArea(this);" />
 		</label>
 		
 		<h2>Текст новости</h2>	
 		<uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
 		<uc:EditorToolbar ID="EditorToolbarText" runat="server" />
 		<label class="textbox-textarea">
-			<asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" MaxLength="20000" TextMode="MultiLine" OnFocus="setCurrentTextArea(this);"/>
+			<asp:TextBox ID="TextAreaPostText" runat="server" Rows="50" MaxLength="20000" TextMode="MultiLine" onfocus="setCurrentTextArea(this);"/>
 		</label>
 
 		<h2>Источник (откуда стырили)</h2>

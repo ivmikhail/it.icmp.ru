@@ -1,13 +1,12 @@
 <%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="pollresult.aspx.cs" Inherits="ITCommunity.PollResultPage" Title="Ykt IT Community | Результаты опросы" %>
 
-<%@ Register Assembly="OpenFlashChart" Namespace="OpenFlashChart" TagPrefix="uc" %>
+<%@ Register Assembly="OpenFlashChartLib" Namespace="OpenFlashChartLib.Controls" TagPrefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
 	<asp:Literal ID="PollMessageText" runat="server" />
 
-	<uc:OpenFlashChartControl ID="OpenFlashChartControl" runat="server" EnableCache="false" Width="100%" LoadingMsg="Загрузка данных..."/>
-
+	<uc:OpenFlashChartControl ID="OpenFlashChartControl" runat="server" FlashUrl="media/other/open-flash-chart.swf" OnDrawChart="DrawChart" />
 	<div>
 		<asp:Literal ID="NoMultiSelectText" runat="server">
 			Можно выбрать только один вариант

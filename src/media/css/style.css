@@ -703,13 +703,17 @@ hr {
 	border: 1px solid #c0c0c0;
 	padding:5px;
 }
-.editor-toolbar input {
+.editor-toolbar a {
 	background-color: #ffffff;
 	border: 1px solid #c0c0c0;
 	cursor: pointer;
 	margin: 1px 0px;
 	padding: 2px 5px 2px 5px;
 	font-family: Verdana;
+	color: #000000;
+}
+.editor-toolbar a:hover {
+	border: 1px solid #000000;
 }
 /* editor-toolbar: end */
 

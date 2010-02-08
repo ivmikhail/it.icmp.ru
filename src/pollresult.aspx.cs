@@ -10,55 +10,49 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 
-using OpenFlashChart;
+using OpenFlashChartLib;
+using OpenFlashChartLib.Charts;
+using OpenFlashChartLib.Controls;
 
 namespace ITCommunity
 {
 	public partial class PollResultPage : System.Web.UI.Page
 	{
-		OpenFlashChart.OpenFlashChart chart = new OpenFlashChart.OpenFlashChart();
 		Poll poll;
 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!IsPostBack)
-			{
-				poll = new Poll();
-				int poll_id = GetPollId();
-				if (poll_id > 0)
-				{
-					poll = Poll.GetById(poll_id);
-				}
-				else
-				{
-					poll = Poll.GetActive();
-				}
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            int poll_id = GetPollId();
+            if (poll_id > 0)
+            {
+                poll = Poll.GetById(poll_id);
+            } else {
+                poll = Poll.GetActive();
+            }
+            OpenFlashChartControl.BuildChart();
+            //загрузка сообщений
+            LoadMessages();
+            //загрузка данных об избирателях
+            LoadVoters();
+        }
 
-				//загрузка опроса, первое что должно быть сделано
-				LoadPollData();
-				//загрузка сообщений
-				LoadMessages();
-				//загрузка данных об избирателях
-				LoadVoters();
-			}
-		}
+        protected void DrawChart(object sender, DrawChartEventArgs e)
+        {
+
+            Graph graph = new Graph();
+            graph.AddElement(GetPieData(poll));
+            graph.Title = new Title(poll.Topic);
+            graph.Title.Style = "{font-size: 24px; color: #767676;}";
+            graph.Bgcolor = "#ffffff";
+           // graph.Tooltip = new ToolTip("#label#, #val# of #total#, #percent# of 100%");
+            e.Graph = graph;           
+        }
 
 		private int GetPollId()
 		{
 			int poll_id;
 			Int32.TryParse(Request.QueryString["id"], out poll_id);
 			return poll_id;
-		}
-
-		private void LoadPollData()
-		{
-			chart.AddElement(GetPieData(poll));
-			chart.Title = new Title(poll.Topic);
-			chart.Title.Style = "{font-size: 24px; color: #767676;}";
-
-			OpenFlashChartControl.EnableCache = false;
-			chart.Bgcolor = "#ffffff";
-			OpenFlashChartControl.Chart = chart;
 		}
 
 		private void LoadMessages()
@@ -82,20 +76,17 @@ namespace ITCommunity
 			DeletePollLink.Visible = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
 		}
 
-		private OpenFlashChart.Pie GetPieData(Poll poll)
+		private Pie GetPieData(Poll poll)
 		{
-			OpenFlashChart.Pie pie = new OpenFlashChart.Pie();
-
-			List<PieValue> values = new List<PieValue>();
+			Pie pie = new Pie();
 			foreach (PollAnswer ans in poll.Answers)
 			{
-				values.Add(new PieValue(ans.VotesCount, ans.Text));
+				pie.Values.Add(new PieValue(ans.VotesCount, ans.Text));
 			}
-			pie.Values = values;
-			pie.FontSize = 10;
-			pie.Alpha = .5;
+			pie.Fontsize = 10;
+			pie.Alpha = 0.4;
 			pie.Colours = new string[] { "#f00ccc", "#2b00db", "#f29100", "#9cc400", "#d6000", "#b1006a", "#29ce00", "#00cb61" };
-			pie.Tooltip = "#label#, #val# of #total#, #percent# of 100%";
+			pie.Animate = true;
 			return pie;
 		}
 
