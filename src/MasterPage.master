@@ -68,7 +68,7 @@
 
 			<div id="footer">
 			        <asp:Literal ID="YaknetCounter" runat="server" />
-	     		    <a href="http://www.vyakutske.ru/rating/"      title="Рейтинг сайтов Якутска"        class="counter"><img src="http://www.vyakutske.ru/rating/button.php?u=itcommunity" alt="Рейтинг сайтов Якутска" border="0" /></a>
+	     		    <a href="http://www.vyakutske.ru/rating/" title="Рейтинг сайтов Якутска" target="_blank" class="counter"><img src="http://www.vyakutske.ru/rating/button.php?u=itcommunity" alt="Рейтинг сайтов Якутска" border="0" /></a>
         		    <h2>
 					    IT Community &copy; 2005 - <asp:Literal ID="ThisYear" runat="server" />
 				    </h2>
