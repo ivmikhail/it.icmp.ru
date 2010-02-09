@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 	<table id="files-table" class="data-table">
 		<caption>
+		<a id="hrefRoot" runat="server" title='В корень'>..</a>
 		<asp:Repeater ID="rptPath" runat="Server" >	
 		<ItemTemplate>/<a href='<%# Eval("Link") %>' title="Перейти в директорию"><%# Eval("Name") %></a></ItemTemplate>
 		</asp:Repeater>
