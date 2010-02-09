@@ -29,7 +29,7 @@ namespace ITCommunity {
 				linkType = LinkType.Files;
 			}
             dir = unescapeLink(dir);
-			bool isViewRootDir = (dir == "");
+			bool isViewRootDir = dir == "/" ;
 			String path = isViewRootDir ? "/" : dir;
 			String[] pathes = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 			dir = BrowseItem.GetRealPathOfLink(linkType, dir);
@@ -39,7 +39,7 @@ namespace ITCommunity {
                     hrefRoot.Visible = false;
                 } else {
                     hrefRoot.Visible = true;
-                    BrowseItem rootDirInfo = BrowseItem.Get(BrowseItem.GetRealPathOfLink(linkType, "/"));
+                    BrowseItem rootDirInfo = BrowseItem.Get(BrowseItem.GetRealPathOfLink(linkType, ""));
                     hrefRoot.HRef = rootDirInfo.Link;
                 }
 				rptPath.DataSource = getPathItems(linkType, pathes);
@@ -75,7 +75,7 @@ namespace ITCommunity {
             try {
                 result = Uri.UnescapeDataString(link);
             } catch (UriFormatException ex) {
-                result = "";
+                result = "/";
             }
             return result;
         }
