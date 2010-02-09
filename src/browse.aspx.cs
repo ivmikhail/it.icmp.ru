@@ -32,7 +32,10 @@ namespace ITCommunity {
 			String path = isViewRootDir ? "/" : dir;
 			String[] pathes = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 			dir = BrowseItem.GetRealPathOfLink(linkType, dir);
+            
 			if (dir != null) {
+                BrowseItem rootDirInfo = BrowseItem.Get(BrowseItem.GetRealPathOfLink(linkType, "/"));
+                hrefRoot.HRef = rootDirInfo.Link;
 				rptPath.DataSource = getPathItems(linkType, pathes);
 				rptPath.DataBind();
 
