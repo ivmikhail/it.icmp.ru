@@ -28,14 +28,20 @@ namespace ITCommunity {
 				Logger.Log.Info("Неправильный queryString при обращении к браузеру файлов, пользователь - " + CurrentUser.User.Login + "(" + CurrentUser.Ip + ")", ex);
 				linkType = LinkType.Files;
 			}
-			bool isViewRootDir = dir == "";
+            dir = unescapeLink(dir);
+			bool isViewRootDir = (dir == "");
 			String path = isViewRootDir ? "/" : dir;
 			String[] pathes = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 			dir = BrowseItem.GetRealPathOfLink(linkType, dir);
             
 			if (dir != null) {
-                BrowseItem rootDirInfo = BrowseItem.Get(BrowseItem.GetRealPathOfLink(linkType, "/"));
-                hrefRoot.HRef = rootDirInfo.Link;
+                if (isViewRootDir) {
+                    hrefRoot.Visible = false;
+                } else {
+                    hrefRoot.Visible = true;
+                    BrowseItem rootDirInfo = BrowseItem.Get(BrowseItem.GetRealPathOfLink(linkType, "/"));
+                    hrefRoot.HRef = rootDirInfo.Link;
+                }
 				rptPath.DataSource = getPathItems(linkType, pathes);
 				rptPath.DataBind();
 
@@ -64,5 +70,14 @@ namespace ITCommunity {
 			}
 			return result;
 		}
+        private String unescapeLink(String link) {
+            String result;
+            try {
+                result = Uri.UnescapeDataString(link);
+            } catch (UriFormatException ex) {
+                result = "";
+            }
+            return result;
+        }
 	}
 }
