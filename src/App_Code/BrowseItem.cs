@@ -185,14 +185,13 @@ namespace ITCommunity {
 		/// Вычисляет реальный путь к папке на диске
 		/// </summary>
 		/// <param name="linkType"></param>
-		/// <param name="link"></param>
+		/// <param name="link">unescaped link, пример "video/adobe"</param>
 		/// <returns>null, если путь нехороший</returns>
 		public static String GetRealPathOfLink(LinkType linkType, String link) {
-			if (!link.StartsWith("/")) {
-				link = "/" + link;
-			}
-			link = Uri.UnescapeDataString(link);
-			String pathBegin = Global.ConfigStringParam("FilesFolder") + Enum.GetName(linkType.GetType(), linkType);
+            if (!link.StartsWith("/")) {
+                link = "/" + link;
+            }
+            String pathBegin = Global.ConfigStringParam("FilesFolder") + Enum.GetName(linkType.GetType(), linkType);
 			String path = pathBegin + link.Replace("/", "\\");
 			if (!path.EndsWith("\\")) {
 				path = path + "\\";
