@@ -144,7 +144,9 @@ namespace ITCommunity {
 			return descriptions;
 		}
 		private static string getLinkOfDir(string dir) {
-
+            if (!dir.EndsWith("\\")) {
+                dir += "\\";
+            }
 			String link = dir.Replace(Global.ConfigStringParam("FilesFolder"), "").Replace("\\", "/");
 			int i = link.IndexOf("/");
 			if (i == -1) {
