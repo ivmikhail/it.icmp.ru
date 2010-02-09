@@ -376,6 +376,36 @@ hr {
 }
 /* tabs: end */
 
+/* editor-toolbar: begin */
+.editor-toolbar {
+	background: #f8f8f8;
+	border: 1px solid #c0c0c0;
+	padding:5px;
+}
+.editor-toolbar a {
+	background-color: #ffffff;
+	border: 1px solid #c0c0c0;
+	cursor: pointer;
+	margin: 1px 0px;
+	padding: 2px 5px 2px 5px;
+	font-family: Verdana;
+	color: #000000;
+}
+.editor-toolbar a:hover {
+	border: 1px solid #000000;
+}
+/* editor-toolbar: end */
+
+
+/* counter: begin */
+.counter {
+	margin: 20px 0 0 10px;
+	float: left;
+}
+.counter:hover {
+	background: none;
+}
+/* counter: end */
 
 /* header: begin */
 #header {
@@ -446,13 +476,13 @@ hr {
 
 /* footer: begin */
 #footer {
+	border-top: 1px solid #afafaf;
 	clear: both;
-	padding: 30px 0 20px 0;
+	padding: 10px 0 20px 0;
 	text-align: right;
 	width: 100%;
 }
 #footer h2 {
-	border-top: 1px solid #afafaf;
 	padding-top: 10px;
 }
 /* footer: end */
@@ -695,35 +725,3 @@ hr {
 	width: 70%;
 }
 /* search: end */
-
-
-/* editor-toolbar: begin */
-.editor-toolbar {
-	background: #f8f8f8;
-	border: 1px solid #c0c0c0;
-	padding:5px;
-}
-.editor-toolbar a {
-	background-color: #ffffff;
-	border: 1px solid #c0c0c0;
-	cursor: pointer;
-	margin: 1px 0px;
-	padding: 2px 5px 2px 5px;
-	font-family: Verdana;
-	color: #000000;
-}
-.editor-toolbar a:hover {
-	border: 1px solid #000000;
-}
-/* editor-toolbar: end */
-
-
-/* yaknet-counter: begin */
-#yaknet-counter {
-	padding: 30px 20px;
-	float: left;
-}
-#yaknet-counter:hover {
-	background: none;
-}
-/* yaknet-counter: end */

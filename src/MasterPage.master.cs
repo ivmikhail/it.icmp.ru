@@ -20,8 +20,9 @@ namespace ITCommunity {
 			}
 			YaknetCounter.Text = "";
 			string url = Request.Url.ToString().ToLower();
-			if (url == "http://it.icmp.ru/" || url == "http://it.icmp.ru/default.aspx" || url == "http://it.icmp.ru/default.aspx?cat=0") {
-				YaknetCounter.Text = "<a href='http://www.ykt.ru/yaknet/default.asp' title='Перейти в рейтинговую систему' id='yaknet-counter'><img src='http://www.ykt.ru/yaknet/image.asp?id=IT_community' alt='Рейтинг Ykt.Ru' border='0' width='50' height='30'/></a>";
+
+            if (url == "http://it.icmp.ru/" || url == "http://it.icmp.ru/default.aspx" || url == "http://it.icmp.ru/default.aspx?cat=0" || url == "http://it.icmp.ru/default.aspx?cat=0&page=1" || url == "http://it.icmp.ru/default.aspx?page=1") {
+				YaknetCounter.Text = "<a href=\"http://www.ykt.ru/yaknet/default.asp\" title=\"Перейти в рейтинговую систему\" class=\"counter\"><img src=\"http://www.ykt.ru/yaknet/image.asp?id=IT_community\" alt=\"Рейтинг Ykt.Ru\" border=\"0\" width=\"50\" height=\"30\"/></a>";
 			}
 		}
 
