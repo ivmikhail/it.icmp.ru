@@ -26,7 +26,7 @@
 		<link rel="alternate"     href="rss.aspx"                     type="application/rss+xml" charset="utf-8"  title="Ykt IT Community - http://it.icmp.ru" />    
 
 		<link rel="stylesheet"    href="media/css/default.css"         type="text/css"            charset="utf-8" />
-		<link rel="stylesheet"    href="media/css/style.css?4"         type="text/css"            charset="utf-8" />
+		<link rel="stylesheet"    href="media/css/style.css?5"         type="text/css"            charset="utf-8" />
 		<!--[if IE 6]><link rel="stylesheet" href="media/css/ie6-fix.css" type="text/css" charset="utf-8" /><![endif]-->
 		<!--[if IE 7]><link rel="stylesheet" href="media/css/ie7-fix.css" type="text/css" charset="utf-8" /><![endif]-->
 		<link rel="stylesheet"    href="media/css/highlight-vs.css"   type="text/css"            charset="utf-8" />
