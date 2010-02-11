@@ -74,7 +74,8 @@ namespace ITCommunity {
             String result;
             try {
                 result = Uri.UnescapeDataString(link);
-            } catch (UriFormatException ex) {
+            } catch (UriFormatException e) {
+                Logger.Log.Error("Кажется нас пытаются хакнуть", e);
                 result = "/";
             }
             return result;
