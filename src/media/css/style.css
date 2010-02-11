@@ -42,6 +42,7 @@
 		- search				поиск
 		- editor-toolbar		кноки форматирования текста
 		- yaknet-counter		счетчик yaknet
+		- rating				рейтинг
 */
 
 
@@ -728,3 +729,9 @@ hr {
 	width: 70%;
 }
 /* search: end */
+
+/* rating: begin */
+.rating {
+	float: right;
+}
+/* rating: end */

@@ -10,7 +10,7 @@
 
 	<label class="textbox-label">
 		Пароль
-		<asp:TextBox ID="TextBoxPass" runat="server"  TextMode="Password" />
+		<asp:TextBox ID="TextBoxPass" runat="server" TextMode="Password" />
 	</label>
 
 	<label class="checkbox-label">
@@ -21,7 +21,7 @@
 	<ul>
 		<li>
 			<asp:LinkButton ID="LogInButton" runat="server" OnClick="LogInButton_Click"  ToolTip="Войти в аккаунт">Вход</asp:LinkButton>
-			<a href="register.aspx" title="Присоединиться к этому чудесному сообществу">Регистрация</a>	
+			<a href="register.aspx" title="Присоединиться к этому чудесному сообществу">Регистрация</a>
 		</li>
 		<li>
 			<a href="recovery.aspx" title="Жми сюда если забыл пароль">Я забыл пароль</a>
