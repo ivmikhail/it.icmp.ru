@@ -1,5 +1,3 @@
-USE [itcommunity]
-GO
 /****** Object:  Table [dbo].[rating_logs]    Script Date: 02/11/2010 18:09:41 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[rating_logs]') AND type in (N'U'))
 DROP TABLE [dbo].[rating_logs]
@@ -40,7 +38,7 @@ CREATE TABLE [dbo].[rating_logs](
 	[entity_type] [int] NOT NULL,
 	[user_id] [int] NOT NULL,
 	[value] [int] NOT NULL,
-	[cdate] [date] NOT NULL,
+	[cdate] [datetime] NOT NULL,
  CONSTRAINT [PK_rating_logs] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
