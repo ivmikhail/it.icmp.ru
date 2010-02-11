@@ -26,8 +26,9 @@ namespace ITCommunity {
 			if (e.CommandName == "delete") {
 				if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin) {
 					if (IsPostBack) {
-						string commentId = e.CommandArgument.ToString().Split(',')[0];
-						string postId = e.CommandArgument.ToString().Split(',')[1];
+						string[] args = e.CommandArgument.ToString().Split(',');
+						string commentId = args[0];
+						string postId = args[1];
 
 						Comment.Delete(Convert.ToInt32(commentId));
 						Response.Redirect("news.aspx?id=" + postId + "#comments");
@@ -37,7 +38,6 @@ namespace ITCommunity {
 		}
 
 		protected void RepeaterComments_ItemDataBound(object sender, RepeaterItemEventArgs e) {
-
 			if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem) {
 				if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin) {
 					((LinkButton)e.Item.FindControl("DeleteComment")).Visible = true;

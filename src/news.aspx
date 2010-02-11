@@ -39,7 +39,7 @@
 
 			<uc:ItCaptcha ID="Captcha" runat="server" Visible="false" EnableViewState="true"/>
 
-            <uc:EditorToolbar ID="EditorToolbar" runat="server" ToolbarElements="" />
+			<uc:EditorToolbar ID="EditorToolbar" runat="server" ToolbarElements="" />
 			<label class="textbox-textarea">
 				<asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="10" MaxLength="512" ValidationGroup="Comment" />
 			</label>
