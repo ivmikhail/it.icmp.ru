@@ -23,7 +23,6 @@ namespace ITCommunity {
 
 		public int Id {
 			get { return _id; }
-			set { _id = value; }
 		}
 
 		public int EntityId {
@@ -48,7 +47,7 @@ namespace ITCommunity {
 			_value = 0;
 		}
 
-		public Rating(int id, int entityId, EntityType type, int value) {
+		private Rating(int id, int entityId, EntityType type, int value) {
 			_id = id;
 			_entityId = entityId;
 			_type = type;
@@ -59,8 +58,17 @@ namespace ITCommunity {
 			return GetRatingFromRow(Database.RatingGetByEntity(entityId, (int)type));
 		}
 
-		public static bool Add(int entityId, EntityType type, int userId, int value) {
-			return false;
+		public static Rating Add(int entityId, EntityType type, int userId, int value) {
+			Database.RatingLogAdd(entityId, (int)type, userId, value);
+			Rating rating = Get(entityId, type);
+			if (rating.Id == 0) {
+				return GetRatingFromRow(Database.RatingAdd(entityId, (int)type, value));
+			}
+			else {
+				rating.Value += value;
+				Database.RatingUpdateValue(rating.Id, rating.Value);
+			}
+			return rating;
 		}
 
 		private static Rating GetRatingFromRow(DataRow dr) {

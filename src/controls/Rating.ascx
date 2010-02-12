@@ -2,11 +2,12 @@
 <%@ Register Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
 
 <span class="rating">
-	<asp:UpdatePanel ID="UpdatePanel1" runat="server">
+	<asp:UpdatePanel ID="RatingUpdatePanel" runat="server" UpdateMode="Conditional">
+		<ContentTemplate>
+			<span class="rating-value"><%# Value %></span>
+			<asp:LinkButton ID="IncRating" runat="server" OnClick="IncRatingClick" CommandArgument="<%# EntityId.ToString() + ',' + Type.ToString() %>" Text="+" />
+			|
+			<asp:LinkButton ID="DecRating" runat="server" OnClick="DecRatingClick"  CommandArgument="<%# EntityId.ToString() + ',' + Type.ToString() %>" Text="-" />
+		</ContentTemplate>
 	</asp:UpdatePanel>
-		<span class="rating-value"><%# Value %></span>
-		<asp:LinkButton ID="IncCommentRating" runat="server" CommandName="IncCommentRating" CommandArgument="<%# Id %>" Text="+" />
-		|
-		<asp:LinkButton ID="DecCommentRating" runat="server" CommandName="DecCommentRating" CommandArgument="<%# Id %>" Text="-" />
-
 </span>
