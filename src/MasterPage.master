@@ -2,6 +2,8 @@
 
 <%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="ITCommunity.MasterPage"  %>
 
+<%@ Register Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
+
 <%@ Register Src="~/controls/LeftSidebar.ascx"   TagName="LeftSidebar"  TagPrefix="uc" %>
 <%@ Register Src="~/controls/RightSidebar.ascx"  TagName="RightSidebar" TagPrefix="uc" %>
 
@@ -43,10 +45,12 @@
 	<body>
 		<form id="MainForm" runat="server">
 
+			<asp:ScriptManager ID="RatingScriptManager" runat="server" />
+
 			<div id="header">
-			    <noscript>
-			        <div id="noscript-message">Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется.<a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654" target="_blank">Узнать как включить >>></a></div>
-			    </noscript>
+				<noscript>
+					<div id="noscript-message">Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется.<a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654" target="_blank">Узнать как включить >>></a></div>
+				</noscript>
 				<a href="default.aspx" class="main-link">
 					<span class="code-class">IT</span> Community →
 					
