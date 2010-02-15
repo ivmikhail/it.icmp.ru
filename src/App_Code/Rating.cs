@@ -55,7 +55,10 @@ namespace ITCommunity {
 		}
 
 		public static Rating Get(int entityId, EntityType type) {
-			return GetRatingFromRow(Database.RatingGetByEntity(entityId, (int)type));
+			Rating rating = GetRatingFromRow(Database.RatingGetByEntity(entityId, (int)type));
+			rating.EntityId = entityId;
+			rating.Type = type;
+			return rating;
 		}
 
 		public static Rating Add(int entityId, EntityType type, int userId, int value) {
@@ -69,6 +72,11 @@ namespace ITCommunity {
 				Database.RatingUpdateValue(rating.Id, rating.Value);
 			}
 			return rating;
+		}
+
+		public static bool IsUserVoted(int entityId, EntityType type, int userId) {
+			DataRow dr = Database.RatingLogGetByEntity(entityId, (int)type, userId);
+			return (dr != null);
 		}
 
 		private static Rating GetRatingFromRow(DataRow dr) {

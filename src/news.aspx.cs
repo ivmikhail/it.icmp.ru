@@ -15,6 +15,11 @@ namespace ITCommunity {
 
 	public partial class News : System.Web.UI.Page {
 		private Post post;
+
+		public Post Post {
+			get { return post; }
+		}
+
 		protected void Page_Load(object sender, EventArgs e) {
 			LoadData();
 			this.Title += post.Title;

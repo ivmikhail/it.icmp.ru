@@ -2075,6 +2075,46 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
+		public static DataRow RatingLogGetByEntity(Int32 entity_id, Int32 entity_type, Int32 user_id) {
+			SqlConnection connection = OpenConnection();
+			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RatingLogGetByEntity", connection);
+			cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+			cmd.Parameters.Add("@entity_id", System.Data.SqlDbType.Int, 0);
+			cmd.Parameters["@entity_id"].Direction = System.Data.ParameterDirection.Input;
+			cmd.Parameters["@entity_id"].Value = entity_id;
+			cmd.Parameters.Add("@entity_type", System.Data.SqlDbType.Int, 0);
+			cmd.Parameters["@entity_type"].Direction = System.Data.ParameterDirection.Input;
+			cmd.Parameters["@entity_type"].Value = entity_type;
+			cmd.Parameters.Add("@user_id", System.Data.SqlDbType.Int, 0);
+			cmd.Parameters["@user_id"].Direction = System.Data.ParameterDirection.Input;
+			cmd.Parameters["@user_id"].Value = user_id;
+			System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+			System.Data.DataTable table = new DataTable();
+
+			for (int i = 0; (i < reader.FieldCount); i++) {
+				System.Type __type;
+				string __name;
+				__type = reader.GetFieldType(i);
+				__name = reader.GetName(i);
+				table.Columns.Add(__name, __type);
+			}
+
+			DataRow result;
+			if (reader.Read()) {
+				System.Data.DataRow row = table.NewRow();
+				object[] rowdata = new object[reader.FieldCount];
+				reader.GetValues(rowdata);
+				row.ItemArray = rowdata;
+				result = row;
+			}
+			else {
+				result = null;
+			}
+			reader.Close();
+			connection.Close();
+			return result;
+		}
 		public static int RatingUpdateValue(Int32 id, Int32 value) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RatingUpdateValue", connection);
