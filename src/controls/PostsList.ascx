@@ -1,6 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="PostsList.ascx.cs" Inherits="ITCommunity.PostsList" %>
 
-<%@ Register Src="~/controls/Pager.ascx" TagName="Pager" TagPrefix="uc" %>
+<%@ Register Src="~/controls/Pager.ascx"  TagName="Pager"  TagPrefix="uc" %>
+<%@ Register Src="~/controls/Rating.ascx" TagName="Rating" TagPrefix="uc" %>
 
 <asp:Repeater ID="RepeaterPosts" runat="server" OnItemDataBound="RepeaterPosts_ItemDataBound">
 	<HeaderTemplate>
@@ -30,6 +31,7 @@
 				просмотров: <%# Eval("views")%> /
 				<a href="news.aspx?id=<%# Eval("id")%>#comments" title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a> /
 				<a href="news.aspx?id=<%# Eval("id")%>#cut" title="Читать далее">подробнее...</a>
+				<uc:Rating ID="PostRating" runat="server" EntityId='<%# Eval("id") %>' Type="Post" />
 			</div>
 		</li>
 	</ItemTemplate>

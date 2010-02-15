@@ -1,9 +1,10 @@
 <%@ Page Language="C#" EnableViewState="true" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="news.aspx.cs" Inherits="ITCommunity.News" Title="Ykt It Community | " %>
 
-<%@ Register src="~/controls/ItCaptcha.ascx"       tagname="ItCaptcha"     tagprefix="uc" %>
-<%@ Register src="~/controls/BBCodeInfo.ascx"      tagname="BBCodeInfo"    tagprefix="uc" %>
-<%@ Register src="~/controls/EditorToolbar.ascx"   tagname="EditorToolbar" tagprefix="uc" %>
-<%@ Register src="~/controls/CommentsList.ascx"    tagname="CommentsList"  tagprefix="uc" %>
+<%@ Register src="~/controls/ItCaptcha.ascx"     tagname="ItCaptcha"     tagprefix="uc" %>
+<%@ Register src="~/controls/BBCodeInfo.ascx"    tagname="BBCodeInfo"    tagprefix="uc" %>
+<%@ Register src="~/controls/EditorToolbar.ascx" tagname="EditorToolbar" tagprefix="uc" %>
+<%@ Register src="~/controls/CommentsList.ascx"  tagname="CommentsList"  tagprefix="uc" %>
+<%@ Register src="~/controls/Rating.ascx"        tagname="Rating"        tagprefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
    
@@ -12,11 +13,11 @@
 			<asp:HyperLink ID="HyperLinkTitle" runat="server" CssClass="title-link">HyperLink</asp:HyperLink>
 			(<asp:Literal ID="LinksPostCategories" runat="server"></asp:Literal>)
 		</h1>
-        
-        <asp:Literal ID="desc" runat="server" />
-        <asp:Literal ID="DescSeparator" runat="server" />        
-        <asp:Literal ID="text" runat="server" />  
-        
+
+		<asp:Literal ID="desc" runat="server" />
+		<asp:Literal ID="DescSeparator" runat="server" />
+		<asp:Literal ID="text" runat="server" />
+
 		<div class="post-info">
 			<asp:Literal ID="date" runat="server" /> /
 			<asp:Literal ID="favorite" runat="server" /> /
@@ -25,6 +26,7 @@
 			<asp:Literal ID="EditPostLink" runat="server" Visible="false" />
 			<asp:LinkButton ID="DeletePostLink" runat="server" OnClick="DeletePost_Click" Visible="false" OnClientClick="return confirm('Точно удалить?')">удалить</asp:LinkButton>
 			<asp:Literal ID="source" runat="server" />
+			<uc:Rating ID="NewsRating" runat="server" EntityId="<%# Post.Id %>" Type="Post" />
 		</div>
 
 		<div id="comments" class="panel">

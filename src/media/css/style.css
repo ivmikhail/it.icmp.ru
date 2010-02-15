@@ -732,6 +732,22 @@ hr {
 
 /* rating: begin */
 .rating {
+	margin-top: 4px;
 	float: right;
+	font-size: 0.8em;
+}
+.rating a {
+	padding: 2px 5px;
+}
+.rating .rating-value {
+	font-weight: bold;
+}
+.rating .sign-positive {
+	color: #20b020;
+}
+.rating .sign-negative {
+	color: #b02020;
+}
+.rating .rating-message {
 }
 /* rating: end */

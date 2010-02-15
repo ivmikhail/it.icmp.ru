@@ -25,7 +25,7 @@
 			<a href="user.aspx" title="Изменить email или пароль">Моё</a>
 		</li>
 		<li>
-			<a href="addheadertext.aspx" title="Добавить текст для хидера" class="new-link">Текст для хидера</a>
+			<a href="addheadertext.aspx" title="Добавить текст для хидера">Текст для хидера</a>
 		</li>
 		<li>
 			<asp:LinkButton ID="LinkButtonExit" runat="server" OnClick="LinkButtonExit_Click" ToolTip="Выйти из аккаунта">Выйти</asp:LinkButton>
