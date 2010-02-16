@@ -11,7 +11,7 @@
 				<a href="user.aspx?login=<%# Eval("author.login")%>" title="Посетить страницу пользователя" class="user-pm-link"><%# Eval("author.login")%></a>
 				- <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%>
 				<a href="news.aspx?id=<%# Eval("postid")%>#comment-<%# Eval("id")%>" title="Постоянная ссылка на комментарий">#</a>
-				<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") + "," + Eval("postid")%>' ID="DeleteComment" runat="server" Text="Удалить" CommandName="delete" OnClientClick="return confirm('Точно удалить?')" />
+				<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") + "," + Eval("postid")%>' ID="DeleteComment" runat="server" Text="удалить" CommandName="delete" OnClientClick="return confirm('Точно удалить?')" />
 			</div>
 			<div class="comment-text">
 				<%# Eval("textformatted")%>
@@ -24,7 +24,7 @@
 				<a href="user.aspx?login=<%# Eval("author.login")%>" title="Посетить страницу пользователя" class="user-pm-link"><%# Eval("author.login")%></a>
 				- <%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%>
 				<a href="news.aspx?id=<%# Eval("postid")%>#comment-<%# Eval("id")%>" title="Постоянная ссылка на комментарий">#</a>
-				<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") + "," + Eval("postid")%>' ID="DeleteComment" runat="server" Text="Удалить" CommandName="delete" OnClientClick="return confirm('Точно удалить?')" />
+				<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") + "," + Eval("postid")%>' ID="DeleteComment" runat="server" Text="удалить" CommandName="delete" OnClientClick="return confirm('Точно удалить?')" />
 			</div>
 			<div class="comment-text">
 				<%# Eval("textformatted")%>

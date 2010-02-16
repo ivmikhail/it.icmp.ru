@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="ITCommunity.MasterPage"  %>
 
@@ -28,7 +28,7 @@
 		<link rel="alternate"     href="rss.aspx"                     type="application/rss+xml" charset="utf-8"  title="Ykt IT Community - http://it.icmp.ru" />    
 
 		<link rel="stylesheet"    href="media/css/default.css"         type="text/css"            charset="utf-8" />
-		<link rel="stylesheet"    href="media/css/style.css?5"         type="text/css"            charset="utf-8" />
+		<link rel="stylesheet"    href="media/css/style.css?6"         type="text/css"            charset="utf-8" />
 		<!--[if IE 6]><link rel="stylesheet" href="media/css/ie6-fix.css" type="text/css" charset="utf-8" /><![endif]-->
 		<!--[if IE 7]><link rel="stylesheet" href="media/css/ie7-fix.css" type="text/css" charset="utf-8" /><![endif]-->
 		<link rel="stylesheet"    href="media/css/highlight-vs.css"   type="text/css"            charset="utf-8" />
@@ -72,7 +72,7 @@
 
 			<div id="footer">
 				<asp:Literal ID="YaknetCounter" runat="server" />
-				<!--<a href="http://www.vyakutske.ru/rating/" title="Рейтинг сайтов Якутска" target="_blank" class="counter"><img src="http://www.vyakutske.ru/rating/button.php?u=itcommunity" alt="Рейтинг сайтов Якутска" border="0" /></a>-->
+				<a href="http://www.vyakutske.ru/rating/" title="Рейтинг сайтов Якутска" target="_blank" class="counter"><img src="http://www.vyakutske.ru/rating/button.php?u=itcommunity" alt="Рейтинг сайтов Якутска" border="0" /></a>
 				<h2>
 					IT Community &copy; 2005 - <asp:Literal ID="ThisYear" runat="server" />
 				</h2>
