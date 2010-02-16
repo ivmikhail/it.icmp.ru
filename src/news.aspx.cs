@@ -33,6 +33,7 @@ namespace ITCommunity {
 
 		private void LoadData() {
 			LoadPost();
+			PostRating.DataBind();
 			LoadCommentData();
 			LoadComments();
 		}

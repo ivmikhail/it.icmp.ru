@@ -735,6 +735,7 @@ hr {
 	margin-top: 4px;
 	float: right;
 	font-size: 0.8em;
+	text-align: right;
 }
 .rating a {
 	padding: 2px 5px;
@@ -747,6 +748,9 @@ hr {
 }
 .rating .sign-negative {
 	color: #b02020;
+}
+.rating .sign-none {
+	color: #b0b0b0;
 }
 .rating .rating-message {
 }

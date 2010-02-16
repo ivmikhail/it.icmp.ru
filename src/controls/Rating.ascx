@@ -4,17 +4,20 @@
 <span class="rating">
 	<asp:UpdatePanel ID="RatingUpdatePanel" runat="server" UpdateMode="Conditional">
 		<ContentTemplate>
-			<span id="RatingMessage" runat="server" class="rating-message" visible="false">
-				<%# Message %>
-			</span>
-			<span id="RatingValue" runat="server" class="rating-value" visible="false">
+			<span id="RatingValue" runat="server" class="rating-value">
 				<span class="sign-<%# ValueSign %>">
 					<%# Value %>
 				</span>
 			</span>
-			<asp:LinkButton ID="IncRating" runat="server" OnClick="IncRatingClick" Text="+" />
-			|
-			<asp:LinkButton ID="DecRating" runat="server" OnClick="DecRatingClick" Text="&ndash;" />
+			<span id="RatingButtons" runat="server" class="rating-buttons">
+				<asp:LinkButton ID="IncRating" runat="server" OnClick="IncRatingClick" Text="+" />
+				|
+				<asp:LinkButton ID="DecRating" runat="server" OnClick="DecRatingClick" Text="&ndash;" />
+			</span>
+			<div id="RatingMessage" runat="server" class="rating-message">
+				<%# Message %>
+			</div>
 		</ContentTemplate>
 	</asp:UpdatePanel>
 </span>
+<div class="clear"></div>

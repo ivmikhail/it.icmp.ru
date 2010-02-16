@@ -8,6 +8,7 @@ namespace ITCommunity {
 	public partial class RatingControl : System.Web.UI.UserControl {
 		private Rating _rating = new Rating();
 		private string _message = "";
+		private int _entityAuthorId = -1;
 
 		public int EntityId {
 			get { return _rating.EntityId; }
@@ -48,15 +49,16 @@ namespace ITCommunity {
 			get { return _message; }
 		}
 
+		public int EntityAuthorId {
+			get { return _entityAuthorId; }
+			set { _entityAuthorId = value; }
+		}
+
 		protected void Page_Load(object sender, EventArgs e) {
-			if (!IsPostBack) {
-				_rating = Rating.Get(EntityId, Type);
-				if (CurrentUser.isAuth) {
-					RatingValue.Visible = IsUserVoted();
-				}
-				RatingUpdatePanel.DataBind();
-			}
-			Visible = false;
+			RatingMessage.Visible = false;
+			_rating = Rating.Get(EntityId, Type);
+			RatingUpdatePanel.DataBind();
+//			Visible = false;
 		}
 
 		protected void IncRatingClick(object sender, EventArgs e) {
@@ -69,10 +71,13 @@ namespace ITCommunity {
 
 		private void AddRating(bool isInc) {
 			if (!CurrentUser.isAuth) {
-				_message = "Вам нужно авторизоваться, чтобы голосовать.";
+				_message = "Авторизуйтесь";
 			}
 			else {
-				if (!IsUserVoted()) {
+				if (CurrentUser.User.Id == EntityAuthorId) {
+					_message = "Это же Ваш пост";
+				}
+				else if (!IsUserVoted()) {
 					int value = isInc ? 1 : -1;
 					// Сюда писать формулы рейтингов
 					switch (Type) {
@@ -83,15 +88,15 @@ namespace ITCommunity {
 							_rating = Rating.Add(EntityId, Type, CurrentUser.User.Id, value);
 							break;
 					}
-					_message = "Ваш голос принят.";
+					_message = "Ваш голос принят";
 				}
 				else {
 					_rating = Rating.Get(EntityId, Type);
-					_message = "Извините, но вы уже голосовали.";
+					_message = "Вы же голосовали";
 				}
-				RatingValue.Visible = true;
 			}
 			RatingMessage.Visible = true;
+			RatingButtons.Visible = false;
 			RatingUpdatePanel.DataBind();
 		}
 
