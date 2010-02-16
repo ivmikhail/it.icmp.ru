@@ -71,11 +71,11 @@ namespace ITCommunity {
 
 		private void AddRating(bool isInc) {
 			if (!CurrentUser.isAuth) {
-				_message = "Авторизуйтесь";
+				_message = "авторизуйтесь";
 			}
 			else {
 				if (CurrentUser.User.Id == EntityAuthorId) {
-					_message = "Это же Ваш пост";
+					_message = "за свое нельзя голосовать";
 				}
 				else if (!IsUserVoted()) {
 					int value = isInc ? 1 : -1;
@@ -88,13 +88,17 @@ namespace ITCommunity {
 							_rating = Rating.Add(EntityId, Type, CurrentUser.User.Id, value);
 							break;
 					}
-					_message = "Ваш голос принят";
+					_message = "ваш голос принят";
 				}
 				else {
 					_rating = Rating.Get(EntityId, Type);
-					_message = "Вы же голосовали";
+					_message = "вы уже голосовали";
 				}
 			}
+            if (_message != "")
+            {
+                _message = ", " + _message;
+            }
 			RatingMessage.Visible = true;
 			RatingButtons.Visible = false;
 			RatingUpdatePanel.DataBind();

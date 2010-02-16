@@ -9,7 +9,7 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<a href='news.aspx?id=<%# Eval("value.id")%>'>
+				<a href="news.aspx?id=<%# Eval("value.id")%>">
 					<%# Eval("value.title")%>
 				</a>
 				by

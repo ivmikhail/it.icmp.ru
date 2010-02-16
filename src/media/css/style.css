@@ -304,6 +304,7 @@ hr {
 }
 .post .post-info {
 	border: 1px dotted #afafaf;
+	font: 0.85em/1.2em Verdana, sans-serif;
 	clear: both;
 	margin: 10px 0;
 	padding: 5px 10px 7px;
@@ -591,6 +592,7 @@ hr {
 #comments .comment-info {
 	border: 1px dotted #afafaf;
 	clear: both;
+	font: 0.85em/1.2em Verdana, sans-serif;
 	padding: 5px 10px 7px;
 }
 #comments .comment-text {
