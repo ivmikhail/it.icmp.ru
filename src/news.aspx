@@ -7,7 +7,7 @@
 <%@ Register src="~/controls/Rating.ascx"        tagname="Rating"        tagprefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-   
+
 	<div class="post"> 
 		<h1>
 			<asp:HyperLink ID="HyperLinkTitle" runat="server" CssClass="title-link">HyperLink</asp:HyperLink>
@@ -26,7 +26,7 @@
 			<asp:Literal ID="EditPostLink" runat="server" Visible="false" />
 			<asp:LinkButton ID="DeletePostLink" runat="server" OnClick="DeletePost_Click" Visible="false" OnClientClick="return confirm('Точно удалить?')">удалить</asp:LinkButton>
 			<asp:Literal ID="source" runat="server" />
-			<uc:Rating ID="NewsRating" runat="server" EntityId="<%# Post.Id %>" Type="Post" />
+			<uc:Rating ID="PostRating" runat="server" EntityId="<%# Post.Id %>" Type="Post" />
 		</div>
 
 		<div id="comments" class="panel">

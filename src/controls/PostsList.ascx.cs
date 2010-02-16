@@ -11,26 +11,20 @@ using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using ITCommunity;
 
-namespace ITCommunity
-{
-	public partial class PostsList : System.Web.UI.UserControl
-	{
-		protected void Page_Load(object sender, EventArgs e)
-		{
+namespace ITCommunity {
+	public partial class PostsList : System.Web.UI.UserControl {
+		protected void Page_Load(object sender, EventArgs e) {
 		}
 
-		public void DataBind(List<Post> PostSource, int totalPosts, int postsPerPage)
-		{
+		public void DataBind(List<Post> PostSource, int totalPosts, int postsPerPage) {
 			RepeaterPosts.DataSource = PostSource;
 			RepeaterPosts.DataBind();
 			Pager.DataBind(totalPosts, postsPerPage);
 		}
-		
-		protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e)
-		{
+
+		protected void RepeaterPosts_ItemDataBound(object sender, RepeaterItemEventArgs e) {
 			RepeaterItem item = e.Item;
-			if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
-			{
+			if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem) {
 				Image AttachedImage = (Image)item.FindControl("AttachedImage");
 				Repeater RepeaterPostCategories = (Repeater)item.FindControl("RepeaterPostCategories");
 				Post current = (Post)item.DataItem;

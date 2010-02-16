@@ -1,4 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="PostsList.ascx.cs" Inherits="ITCommunity.PostsList" %>
+<%@ Register Assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
 
 <%@ Register Src="~/controls/Pager.ascx"  TagName="Pager"  TagPrefix="uc" %>
 <%@ Register Src="~/controls/Rating.ascx" TagName="Rating" TagPrefix="uc" %>
@@ -31,7 +32,7 @@
 				просмотров: <%# Eval("views")%> /
 				<a href="news.aspx?id=<%# Eval("id")%>#comments" title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a> /
 				<a href="news.aspx?id=<%# Eval("id")%>#cut" title="Читать далее">подробнее...</a>
-				<uc:Rating ID="PostRating" runat="server" EntityId='<%# Eval("id") %>' Type="Post" />
+				<uc:Rating ID="PostRating" runat="server" EntityId='<%# Eval("id") %>' Type="Post" EntityAuthorId='<%# Eval("author.id") %>' />
 			</div>
 		</li>
 	</ItemTemplate>
