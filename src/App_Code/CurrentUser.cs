@@ -36,7 +36,6 @@ namespace ITCommunity {
 				}
 				return currentUser;
 			}
-
 		}
 
 		/// <summary>

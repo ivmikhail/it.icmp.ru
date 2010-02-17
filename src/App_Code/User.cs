@@ -17,12 +17,12 @@ namespace ITCommunity {
 	public class User {
 		//делегат метода загрузки посл. зарегистр. юзеров из базы, нужен для организации кеширования
 		private delegate object LastUsersLoader(int count);
-        //делегат метода загрузки активных пользователей за все время, нужен для организации кеширования
+		//делегат метода загрузки активных пользователей за все время, нужен для организации кеширования
 		private delegate object TopPostersLoader(int count);
 		//делегат метода загрузки статистики юзеров из базы, нужен для организации кеширования
 		private delegate object UsersStatLoader();
-        //делегат метода загрузки активных пользователей за последние несколько дней, нужен для организации кеширования
-        private delegate object LastTopPostersLoader(int count, int days);
+		//делегат метода загрузки активных пользователей за последние несколько дней, нужен для организации кеширования
+		private delegate object LastTopPostersLoader(int count, int days);
 
 		private int _id;
 		private string _pass;
@@ -32,8 +32,8 @@ namespace ITCommunity {
 		private DateTime _cdate;
 		private byte _canAddHeaderText;
 		private int _headerTextCounter;
-        private int _postsCount;
-        private int _commentsCount;
+		private int _postsCount;
+		private int _commentsCount;
 
 		public enum Roles {
 			/// <summary>
@@ -57,30 +57,18 @@ namespace ITCommunity {
 		}
 
 		public int Id {
-			get {
-				return _id;
-			}
-			set {
-				_id = value;
-			}
+			get { return _id; }
+			set { _id = value; }
 		}
 
 		public string Pass {
-			get {
-				return _pass;
-			}
-			set {
-				_pass = value;
-			}
+			get { return _pass; }
+			set { _pass = value; }
 		}
 
 		public string Email {
-			get {
-				return _email;
-			}
-			set {
-				_email = value;
-			}
+			get { return _email; }
+			set { _email = value; }
 		}
 
 		public User.Roles Role {
@@ -93,21 +81,13 @@ namespace ITCommunity {
 		}
 
 		public string Login {
-			get {
-				return _login;
-			}
-			set {
-				_login = value;
-			}
+			get { return _login; }
+			set { _login = value; }
 		}
 
 		public DateTime CreateDate {
-			get {
-				return _cdate;
-			}
-			set {
-				_cdate = value;
-			}
+			get { return _cdate; }
+			set { _cdate = value; }
 		}
 
 		public bool CanAddHeaderText {
@@ -120,43 +100,33 @@ namespace ITCommunity {
 		}
 
 		public int HeaderTextCounter {
-			get {
-				return _headerTextCounter;
-			}
+			get { return _headerTextCounter; }
+			set { _headerTextCounter = value; }
+		}
+
+		public int CommentsCount {
+			get { return _commentsCount; }
 			set {
-				_headerTextCounter = value;
+				_commentsCount = value;
 			}
 		}
 
-        public int CommentsCount {
-            get {
-                return _commentsCount;
-            }
-            set {
-                _commentsCount = value;
-            }
-        }
 
+		public int PostsCount {
+			get { return _postsCount; }
+			set { _postsCount = value; }
+		}
 
-        public int PostsCount {
-            get {
-                return _postsCount;
-            }
-            set {
-                _postsCount = value;
-            }
-        }
-
-		public User(int id, 
-                    string login, 
-                    string pass, 
-                    DateTime cdate, 
-                    User.Roles role, 
-                    string email, 
-                    byte canAddHeaderText, 
-                    int headerTextCounter,
-                    int commentsCount,
-                    int postsCount) {
+		public User(int id,
+					string login,
+					string pass,
+					DateTime cdate,
+					User.Roles role,
+					string email,
+					byte canAddHeaderText,
+					int headerTextCounter,
+					int commentsCount,
+					int postsCount) {
 			_id = id;
 			_login = login;
 			_pass = pass;
@@ -165,8 +135,8 @@ namespace ITCommunity {
 			_email = email;
 			_canAddHeaderText = canAddHeaderText;
 			_headerTextCounter = headerTextCounter;
-            _commentsCount = commentsCount;
-            _postsCount = postsCount;
+			_commentsCount = commentsCount;
+			_postsCount = postsCount;
 		}
 
 		public User() {
@@ -178,8 +148,8 @@ namespace ITCommunity {
 			_email = "bill@microsoft.com";
 			_canAddHeaderText = 1;
 			_headerTextCounter = 0;
-            _commentsCount = 0;
-            _postsCount = 0;
+			_commentsCount = 0;
+			_postsCount = 0;
 		}
 
 
@@ -194,7 +164,7 @@ namespace ITCommunity {
 
 		public void Update() {
 			Database.UserUpdate(_id, _pass, (byte)_role, _email, _canAddHeaderText, _headerTextCounter);
-            RemoveUserFromCache(_id);
+			RemoveUserFromCache(_id);
 		}
 
 		/// <summary>
@@ -229,23 +199,23 @@ namespace ITCommunity {
 			return usr;
 		}
 
-        /// <summary>
-        /// Получаем пользователя из кеша
-        /// </summary>
-        /// <param name="userId">идентификатор пользователя</param>
-        /// <returns>обьект пользователь, либо null</returns>
-        private static User GetUserFromCache(int userId) {
-            return (User)HttpRuntime.Cache.Get(Global.ConfigStringParam("UsersListCacheName") + userId);
-        }
+		/// <summary>
+		/// Получаем пользователя из кеша
+		/// </summary>
+		/// <param name="userId">идентификатор пользователя</param>
+		/// <returns>обьект пользователь, либо null</returns>
+		private static User GetUserFromCache(int userId) {
+			return (User)HttpRuntime.Cache.Get(Global.ConfigStringParam("UsersListCacheName") + userId);
+		}
 
-        private static void AddUserToCache(User usr) {
-            HttpRuntime.Cache.Insert(Global.ConfigStringParam("UsersListCacheName") + usr.Id, usr, null, DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersListCachePer")), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-        }
+		private static void AddUserToCache(User usr) {
+			HttpRuntime.Cache.Insert(Global.ConfigStringParam("UsersListCacheName") + usr.Id, usr, null, DateTime.Now.AddHours(Global.ConfigDoubleParam("UsersListCachePer")), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+		}
 
-        private static void RemoveUserFromCache(int userId) {
-            HttpRuntime.Cache.Remove(Global.ConfigStringParam("UsersListCacheName") + userId);
-        }
-        
+		private static void RemoveUserFromCache(int userId) {
+			HttpRuntime.Cache.Remove(Global.ConfigStringParam("UsersListCacheName") + userId);
+		}
+
 		/// <summary>
 		/// Получаем пользователей по ролям
 		/// </summary>
@@ -303,47 +273,47 @@ namespace ITCommunity {
 
 		}
 
-        private static List<KeyValuePair<string, string>> GetTopPostersFromDB(int count) {
-            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
-            DataTable dt = Database.UserGetTopPosters(count);
-            for (int i = 0; i < dt.Rows.Count; i++) {
-                string username = dt.Rows[i]["usernick"].ToString();
-                string text = dt.Rows[i]["postcount"].ToString();
-                top.Add(new KeyValuePair<string, string>(username, text));
-            }
+		private static List<KeyValuePair<string, string>> GetTopPostersFromDB(int count) {
+			List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+			DataTable dt = Database.UserGetTopPosters(count);
+			for (int i = 0; i < dt.Rows.Count; i++) {
+				string username = dt.Rows[i]["usernick"].ToString();
+				string text = dt.Rows[i]["postcount"].ToString();
+				top.Add(new KeyValuePair<string, string>(username, text));
+			}
 
-            return top;
-        }
+			return top;
+		}
 
-        /// <summary>
-        /// Получаем активных постеров за последние N дней
-        /// </summary>
-        /// <param name="count">Сколько пользователей нужно</param>
-        /// <param name="days">Сколько последних дней учитывать</param>
-        /// <returns></returns>
-        public static List<KeyValuePair<string, string>> GetLastTopPosters(int count, int days) {
-            LastTopPostersLoader loader = new LastTopPostersLoader(GetLastTopPostersFromDB);
-            List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)AppCache.Get(Global.ConfigStringParam("LastTopPostersCacheName"),
-                                                                                                      new object(),
-                                                                                                      loader,
-                                                                                                      new object[] { count, days },
-                                                                                                      DateTime.Now.AddHours(Global.ConfigDoubleParam("LastTopPostersCachePer")));
+		/// <summary>
+		/// Получаем активных постеров за последние N дней
+		/// </summary>
+		/// <param name="count">Сколько пользователей нужно</param>
+		/// <param name="days">Сколько последних дней учитывать</param>
+		/// <returns></returns>
+		public static List<KeyValuePair<string, string>> GetLastTopPosters(int count, int days) {
+			LastTopPostersLoader loader = new LastTopPostersLoader(GetLastTopPostersFromDB);
+			List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)AppCache.Get(Global.ConfigStringParam("LastTopPostersCacheName"),
+																									  new object(),
+																									  loader,
+																									  new object[] { count, days },
+																									  DateTime.Now.AddHours(Global.ConfigDoubleParam("LastTopPostersCachePer")));
 
-            return top;
+			return top;
 
-        }
+		}
 
-        private static List<KeyValuePair<string, string>> GetLastTopPostersFromDB(int count, int days) {
-            List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
-            DataTable dt = Database.UserGetLastTopPosters(count, 0 - days);
-            for (int i = 0; i < dt.Rows.Count; i++) {
-                string username = dt.Rows[i]["usernick"].ToString();
-                string text = dt.Rows[i]["postcount"].ToString();
-                top.Add(new KeyValuePair<string, string>(username, text));
-            }
+		private static List<KeyValuePair<string, string>> GetLastTopPostersFromDB(int count, int days) {
+			List<KeyValuePair<string, string>> top = new List<KeyValuePair<string, string>>();
+			DataTable dt = Database.UserGetLastTopPosters(count, 0 - days);
+			for (int i = 0; i < dt.Rows.Count; i++) {
+				string username = dt.Rows[i]["usernick"].ToString();
+				string text = dt.Rows[i]["postcount"].ToString();
+				top.Add(new KeyValuePair<string, string>(username, text));
+			}
 
-            return top;
-        }
+			return top;
+		}
 
 
 
@@ -411,7 +381,8 @@ namespace ITCommunity {
 			User user;
 			if (dr == null) {
 				user = new User();
-			} else {
+			}
+			else {
 				user = new User(Convert.ToInt32(dr["id"]),
 								Convert.ToString(dr["nick"]),
 								Convert.ToString(dr["pass"]),
@@ -420,9 +391,9 @@ namespace ITCommunity {
 								Convert.ToString(dr["email"]),
 								Convert.ToByte(dr["can_add_header_text"]),
 								Convert.ToInt32(dr["header_text_counter"]),
-                                Convert.ToInt32(dr["comments_count"]),
-                                Convert.ToInt32(dr["posts_count"])
-                                );
+								Convert.ToInt32(dr["comments_count"]),
+								Convert.ToInt32(dr["posts_count"])
+								);
 			}
 			return user;
 		}

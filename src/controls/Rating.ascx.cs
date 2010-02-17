@@ -63,7 +63,7 @@ namespace ITCommunity {
 			RatingMessage.Visible = false;
 			_rating = Rating.Get(EntityId, Type);
 			RatingUpdatePanel.DataBind();
-//			Visible = false;
+			//Visible = false;
 		}
 
 		protected void IncRatingClick(object sender, EventArgs e) {
@@ -82,7 +82,13 @@ namespace ITCommunity {
 				if (CurrentUser.User.Id == EntityAuthorId) {
 					_message = "за свое нельзя голосовать";
 				}
-				else if (!IsUserVoted()) {
+				else if (IsUserVoted()) {
+					_message = "вы уже голосовали";
+				}
+				else if (!CanUserToVote()) {
+					_message = "пока вы не можете голосовать";
+				}
+				else {
 					int value = isInc ? 1 : -1;
 					// Сюда писать формулы рейтингов
 					switch (Type) {
@@ -95,15 +101,8 @@ namespace ITCommunity {
 					}
 					_message = "ваш голос принят";
 				}
-				else {
-					_rating = Rating.Get(EntityId, Type);
-					_message = "вы уже голосовали";
-				}
 			}
-            if (_message != "")
-            {
-                _message = ", " + _message;
-            }
+			_message = ", " + _message;
 			RatingMessage.Visible = true;
 			RatingButtons.Visible = false;
 			RatingUpdatePanel.DataBind();
@@ -112,6 +111,18 @@ namespace ITCommunity {
 		private bool IsUserVoted() {
 			if (CurrentUser.isAuth) {
 				return Rating.IsUserVoted(EntityId, Type, CurrentUser.User.Id);
+			}
+			return false;
+		}
+
+		private bool CanUserToVote() {
+			ITCommunity.User user = CurrentUser.User;
+			if (user.PostsCount > 0) {
+				return true;
+			}
+			DateTime date = DateTime.Now.AddDays(-7);
+			if (date.CompareTo(user.CreateDate) > 0) {
+				return true;
 			}
 			return false;
 		}

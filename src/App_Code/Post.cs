@@ -7,14 +7,12 @@ using System.Collections.Generic;
 using System.Data;
 using ITCommunity;
 
-namespace ITCommunity
-{
+namespace ITCommunity {
 
 	/// <summary>
 	/// Собственно новость.
 	/// </summary>
-	public class Post
-	{
+	public class Post {
 		//делегат метода загрузки последних постов из базы, нужен для организации кеширования
 		private delegate object LastPostsLoader(int count);
 		//делегат метода загрузки популярных постов из базы, нужен для организации кеширования
@@ -32,66 +30,36 @@ namespace ITCommunity
 		private string _source;
 		private int _commentsCount;
 
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				_id = value;
-			}
+		public int Id {
+			get { return _id; }
+			set { _id = value; }
 		}
 
-		public string Title
-		{
-			get
-			{
-				return _title;
-			}
-			set
-			{
-				_title = value;
-			}
+		public string Title {
+			get { return _title; }
+			set { _title = value; }
 		}
 		/// <summary>
 		/// Оригинальное описание, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
 		/// </summary>
-		public string Description
-		{
-			get
-			{
-				return _description;
-			}
-			set
-			{
-				_description = value;
-			}
+		public string Description {
+			get { return _description; }
+			set { _description = value; }
 		}
 
 		/// <summary>
 		/// Оригинальный текст, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
 		/// </summary>
-		public string Text
-		{
-			get
-			{
-				return _text;
-			}
-			set
-			{
-				_text = value;
-			}
+		public string Text {
+			get { return _text; }
+			set { _text = value; }
 		}
 
 		/// <summary>
 		/// Полностью форматированное в безопасный хтмл описание
 		/// </summary>
-		public string DescriptionFormatted
-		{
-			get
-			{
+		public string DescriptionFormatted {
+			get {
 				return BBCodeParser.Format(HttpUtility.HtmlEncode(_description));
 			}
 		}
@@ -99,104 +67,65 @@ namespace ITCommunity
 		/// <summary>
 		/// Полностью форматированный в безопасный хтмл текст
 		/// </summary>
-		public string TextFormatted
-		{
-			get
-			{
+		public string TextFormatted {
+			get {
 				return BBCodeParser.Format(HttpUtility.HtmlEncode(_text));
 			}
 		}
 
-		public DateTime CreateDate
-		{
-			get
-			{
-				return _cdate;
-			}
-			set
-			{
-				_cdate = value;
-			}
+		public DateTime CreateDate {
+			get { return _cdate; }
+			set { _cdate = value; }
 		}
 
-		public User Author
-		{
-			get
-			{
+		public User Author {
+			get {
 				//TODO: переделать!!!
 				return User.GetById(_userId);
 			}
-			set
-			{
+			set {
 				_userId = value.Id;
 			}
 		}
 
-		public List<Category> Categories
-		{
-			get
-			{
-				return _cats;
-			}
-			set
-			{
-				_cats = value;
-			}
+		public List<Category> Categories {
+			get { return _cats; }
+			set { _cats = value; }
 		}
 
-		public bool Attached
-		{
-			get
-			{
+		public bool Attached {
+			get {
 				return !(_attached == 0);
 			}
-			set
-			{
+			set {
 				_attached = value ? 1 : 0;
 			}
 		}
 
-		public int Views
-		{
-			get
-			{
-				return _views;
-			}
+		public int Views {
+			get { return _views; }
 		}
 
-		public string Source
-		{
-			get
-			{
+		public string Source {
+			get {
 				return _source;
 			}
-			set
-			{
+			set {
 				//TODO: Накладывает кое-какие ограничения.
-				if (value.Length != 0)
-				{
-					if (0 < value.Length && value.Length < 8)
-					{
+				if (value.Length != 0) {
+					if (0 < value.Length && value.Length < 8) {
 						value = "http://" + value;
 					}
-					else if (value.Substring(0, 7) != "http://")
-					{
+					else if (value.Substring(0, 7) != "http://") {
 						value = "http://" + value;
 					}
 				}
 				_source = value;
 			}
 		}
-		public int CommentsCount
-		{
-			get
-			{
-				return _commentsCount;
-			}
-			set
-			{
-				_commentsCount = value;
-			}
+		public int CommentsCount {
+			get { return _commentsCount; }
+			set { _commentsCount = value; }
 		}
 
 		/// <summary>
@@ -204,19 +133,14 @@ namespace ITCommunity
 		/// </summary>
 		/// <param name="user">Пользователь</param>
 		/// <returns>Значение, если такой новости нет, возвращается труъ</returns>
-		public bool IsPostOwner(User user)
-		{
+		public bool IsPostOwner(User user) {
 			bool is_owner = false;
-			if (this.Id < 1)
-			{
+			if (this.Id < 1) {
 				is_owner = true;
 			}
-			else
-			{
-				if (user.Id > 0)
-				{
-					if (user.Id == this.Author.Id)
-					{
+			else {
+				if (user.Id > 0) {
+					if (user.Id == this.Author.Id) {
 						is_owner = true;
 					}
 				}
@@ -229,30 +153,24 @@ namespace ITCommunity
 		/// </summary>
 		/// <param name="user_id">Данный пользователь</param>
 		/// <returns>Булеан</returns>
-		public bool IsFavorites(int user_id)
-		{
+		public bool IsFavorites(int user_id) {
 			return Convert.ToBoolean(Database.PostIsFavorite(user_id, this.Id));
 		}
 
 		/// <summary>
 		/// Возвращает ссылку на удаление/добавление новости из/в избранное
 		/// </summary>
-		public string FavoritesAction
-		{
+		public string FavoritesAction {
 			//TODO: Переделать!
-			get
-			{
+			get {
 				string value = "<a href='favorites.aspx?a=add&amp;post=" + this.Id + "' title='Добавить в избранное' class='delete-from-favorites-link'><img src='media/img/design/non-fav.png' class='fixPNG' alt=''/></a>";
-				if (CurrentUser.isAuth)
-				{
-					if (IsFavorites(CurrentUser.User.Id))
-					{
+				if (CurrentUser.isAuth) {
+					if (IsFavorites(CurrentUser.User.Id)) {
 
-                        value = "<a href='favorites.aspx?a=del&amp;post=" + this.Id + "' title='Убрать из избранного' class='add-to-favorites-link'><img src='media/img/design/is-fav.png' class='fixPNG' alt=''/></a>";
+						value = "<a href='favorites.aspx?a=del&amp;post=" + this.Id + "' title='Убрать из избранного' class='add-to-favorites-link'><img src='media/img/design/is-fav.png' class='fixPNG' alt=''/></a>";
 					}
-					else
-					{
-                        value = "<a href='favorites.aspx?a=add&amp;post=" + this.Id + "' title='Добавить в избранное' class='delete-from-favorites-link'><img src='media/img/design/non-fav.png' class='fixPNG' alt=''/></a>";
+					else {
+						value = "<a href='favorites.aspx?a=add&amp;post=" + this.Id + "' title='Добавить в избранное' class='delete-from-favorites-link'><img src='media/img/design/non-fav.png' class='fixPNG' alt=''/></a>";
 					}
 				}
 				return value;
@@ -271,8 +189,7 @@ namespace ITCommunity
 		/// 
 		/// * categories - категории новости(отдельные таблицы)
 		/// </summary>
-		public void UpdateWithCategories()
-		{
+		public void UpdateWithCategories() {
 			Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
 			Post.PostAttachCategories(_cats, this);
 		}
@@ -289,21 +206,18 @@ namespace ITCommunity
 		/// 
 		/// </summary>
 
-		public void Update()
-		{
+		public void Update() {
 			Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
 		}
 
 		/// <summary>
 		/// Увеличиваем кол-во просмотров новости на 1 единицу
 		/// </summary>
-		public void UpdateViews()
-		{
+		public void UpdateViews() {
 			Database.PostUpdateViews(_id);
 		}
 
-		public Post(int id, string title, string description, string text, DateTime cdate, int userId, bool attached, int views, string source, int commentsCount, List<Category> cats)
-		{
+		public Post(int id, string title, string description, string text, DateTime cdate, int userId, bool attached, int views, string source, int commentsCount, List<Category> cats) {
 			_id = id;
 			_title = title;
 			_description = description;
@@ -317,8 +231,7 @@ namespace ITCommunity
 			_cats = cats;
 		}
 
-		public Post()
-		{
+		public Post() {
 			_id = -1;
 			_title = "";
 			_description = "";
@@ -332,13 +245,11 @@ namespace ITCommunity
 			_commentsCount = 0;
 		}
 
-		public static Post GetById(int id)
-		{
+		public static Post GetById(int id) {
 			return GetPostFromRow(Database.PostGetById(id));
 		}
 
-		public static void Delete(Post post)
-		{
+		public static void Delete(Post post) {
 
 			Database.PostDel(post.Id);
 			//Чистим кеш популярных постов
@@ -351,8 +262,7 @@ namespace ITCommunity
 		/// </summary>
 		/// <param name="menu">Категории</param>
 		/// <param name="post_id">Новость</param>
-		private static void PostAttachCategories(List<Category> cats, Post post)
-		{
+		private static void PostAttachCategories(List<Category> cats, Post post) {
 			// лучше не придумалось
 
 			/* 
@@ -369,10 +279,8 @@ namespace ITCommunity
 			 */
 			string query = "INSERT INTO post_cat(post_id, cat_id) ";
 			string param = String.Empty;
-			foreach (Category cat in cats)
-			{
-				if (param.Length > 0)
-				{
+			foreach (Category cat in cats) {
+				if (param.Length > 0) {
 					param += " UNION ALL ";
 				}
 				param += "SELECT " + post.Id + "," + cat.Id;
@@ -389,8 +297,7 @@ namespace ITCommunity
 		/// <param name="query">запрос</param>
 		/// <param name="posts_count">кол-во найденных постов</param>
 		/// <returns>Список найденных постов</returns>
-		public static List<Post> Search(int page, int count, string query, ref int posts_count)
-		{
+		public static List<Post> Search(int page, int count, string query, ref int posts_count) {
 			return GetPostsFromTable(Database.PostSearch(query, page, count, ref posts_count));
 		}
 
@@ -399,29 +306,27 @@ namespace ITCommunity
 		/// </summary>
 		/// <param name="page">Страница которая нам нужна</param>
 		/// <param name="count">Кол-во постов на страницу</param>
-		public static List<Post> Get(int page, int count, ref int posts_count)
-		{
+		public static List<Post> Get(int page, int count, ref int posts_count) {
 			return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
 		}
 
 
-        /// <summary>
-        /// Возвращает посты определенного автора
-        /// </summary>
-        /// <param name="page">Текущая страница</param>
-        /// <param name="count">Кол-во постов на странице</param>
-        /// <param name="author_id">Идентификатор автора</param>
-        /// <returns>Посты автора</returns>
-        public static List<Post> GetByAuthor(int page, int count, int author_id, ref int posts_count) {
-            return GetPostsFromTable(Database.PostGetByAuthor(page, count, author_id, ref posts_count));
-        }
+		/// <summary>
+		/// Возвращает посты определенного автора
+		/// </summary>
+		/// <param name="page">Текущая страница</param>
+		/// <param name="count">Кол-во постов на странице</param>
+		/// <param name="author_id">Идентификатор автора</param>
+		/// <returns>Посты автора</returns>
+		public static List<Post> GetByAuthor(int page, int count, int author_id, ref int posts_count) {
+			return GetPostsFromTable(Database.PostGetByAuthor(page, count, author_id, ref posts_count));
+		}
 		/// <summary>
 		/// Возвращает последние добавленные посты из кеша
 		/// </summary>
 		/// <param name="count"></param>
 		/// <returns></returns>
-		public static List<Post> GetLast(int count)
-		{
+		public static List<Post> GetLast(int count) {
 			LastPostsLoader loader = new LastPostsLoader(GetLastPostsFromDB);
 			List<Post> lasts = (List<Post>)AppCache.Get(Global.ConfigStringParam("LastPostsCacheName"),
 														new object(),
@@ -431,8 +336,7 @@ namespace ITCommunity
 			return lasts;
 		}
 
-		private static List<Post> GetLastPostsFromDB(int count)
-		{
+		private static List<Post> GetLastPostsFromDB(int count) {
 			return GetPostsFromTable(Database.PostGetLast(count));
 		}
 
@@ -442,8 +346,7 @@ namespace ITCommunity
 		/// <param name="page">Страница которая нам нужна</param>
 		/// <param name="count">Кол-во постов на страницу</param>
 		/// <param name="count">id категории</param>
-		public static List<Post> GetByCategory(int page, int count, int cat_id, ref int posts_count)
-		{
+		public static List<Post> GetByCategory(int page, int count, int cat_id, ref int posts_count) {
 			return GetPostsFromTable(Database.PostGetByCat(page, count, cat_id, ref posts_count));
 		}
 
@@ -453,8 +356,7 @@ namespace ITCommunity
 		/// </summary>
 		/// <param name="period">Период, в днях. Например, популярные посты за последние N дней.</param>
 		/// <param name="count">Кол-во нужных постов</param>
-		public static List<KeyValuePair<User, Post>> GetTop(int period, int count)
-		{
+		public static List<KeyValuePair<User, Post>> GetTop(int period, int count) {
 			TopPostsLoader loader = new TopPostsLoader(GetTopPostsFromDB);
 			List<KeyValuePair<User, Post>> top_posts = (List<KeyValuePair<User, Post>>)AppCache.Get(Global.ConfigStringParam("TopPostsCacheName"),
 																									new object(),
@@ -465,12 +367,10 @@ namespace ITCommunity
 			return top_posts;
 		}
 
-		private static List<KeyValuePair<User, Post>> GetTopPostsFromDB(int period, int count)
-		{
+		private static List<KeyValuePair<User, Post>> GetTopPostsFromDB(int period, int count) {
 			List<Post> posts = GetPostsFromTable(Database.PostGetTop(period, count));
 			List<KeyValuePair<User, Post>> top = new List<KeyValuePair<User, Post>>();
-			foreach (Post post in posts)
-			{
+			foreach (Post post in posts) {
 				top.Add(new KeyValuePair<User, Post>(post.Author, post));
 			}
 			return top;
@@ -481,8 +381,7 @@ namespace ITCommunity
 		/// Добавление нового поста
 		/// </summary>
 		/// <param name="post">Сам пост, CreateDate будет изменен на дату добавления новости в базу.</param>
-		public static Post Add(Post post)
-		{
+		public static Post Add(Post post) {
 			DataRow dr = Database.PostAdd(post.Title,
 										  post.Description,
 										  post.Text,
@@ -500,8 +399,7 @@ namespace ITCommunity
 		/// </summary>
 		/// <param name="user_id">идентификатор пользователя</param>
 		/// <returns>список постов</returns>
-		public static List<Post> GetFavorites(int user_id, int page, int count, ref int total_records)
-		{
+		public static List<Post> GetFavorites(int user_id, int page, int count, ref int total_records) {
 			return GetPostsFromTable(Database.FavoriteGetByUser(user_id, page, count, ref total_records));
 		}
 
@@ -510,8 +408,7 @@ namespace ITCommunity
 		/// </summary>
 		/// <param name="post_id">идентификатор поста</param>
 		/// <param name="user_id">идентификатор пользователя</param>
-		public static void FavoriteDelete(int post_id, int user_id)
-		{
+		public static void FavoriteDelete(int post_id, int user_id) {
 			Database.FavoriteDel(post_id, user_id);
 		}
 
@@ -520,30 +417,24 @@ namespace ITCommunity
 		/// </summary>
 		/// <param name="post_id">идентификатор поста</param>
 		/// <param name="user_id">идентификатор пользователя</param>
-		public static Post FavoriteAdd(int post_id, int user_id)
-		{
+		public static Post FavoriteAdd(int post_id, int user_id) {
 			return GetPostFromRow(Database.FavoriteAdd(user_id, post_id));
 		}
 
-		private static List<Post> GetPostsFromTable(DataTable dt)
-		{
+		private static List<Post> GetPostsFromTable(DataTable dt) {
 			List<Post> posts = new List<Post>();
-			for (int i = 0; i < dt.Rows.Count; i++)
-			{
+			for (int i = 0; i < dt.Rows.Count; i++) {
 				posts.Add(GetPostFromRow(dt.Rows[i]));
 			}
 			return posts;
 		}
 
-		private static Post GetPostFromRow(DataRow dr)
-		{
+		private static Post GetPostFromRow(DataRow dr) {
 			Post post;
-			if (dr == null)
-			{
+			if (dr == null) {
 				post = new Post();
 			}
-			else
-			{
+			else {
 				int id = Convert.ToInt32(dr["id"]);
 				post = new Post(id,
 							 Convert.ToString(dr["title"]),
