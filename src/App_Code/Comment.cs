@@ -106,13 +106,13 @@ namespace ITCommunity {
 		/// </summary>
 		public string TextFormatted {
 			get {
-				return BBCodeParser.Format(HttpUtility.HtmlEncode(_text));
+				return BBCodeParser.Format(Util.HtmlEncode(_text));
 			}
 		}
 
 		public string ShortText {
 			get {
-				string safely_text = HttpUtility.HtmlEncode(_text);
+				string safely_text = Util.HtmlEncode(_text);
 				safely_text = Regex.Replace(safely_text, "\\[(.*?)\\](.*?)\\[\\/(.*?)\\]", "$2", RegexOptions.Singleline | RegexOptions.IgnoreCase);
 				return (safely_text.Length > 80) ? safely_text.Substring(0, 80) + " ..." : safely_text;
 			}

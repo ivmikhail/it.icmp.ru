@@ -35,7 +35,7 @@ namespace ITCommunity
         {
             if (NewPollIsValid())
             {
-                string topic = HttpUtility.HtmlEncode(TextBoxTopic.Text);
+                string topic = Util.HtmlEncode(TextBoxTopic.Text);
                 bool is_multiselect = RadioButtonListMultiselect.Items[1].Selected;
                 bool is_open = RadioButtonListIsOpen.Items[1].Selected;
 
@@ -49,7 +49,7 @@ namespace ITCommunity
                     }
                     if (pre_answers[i] != "")
                     {
-                        answers += HttpUtility.HtmlEncode(pre_answers[i]);
+                        answers += Util.HtmlEncode(pre_answers[i]);
                     }
                 }
 

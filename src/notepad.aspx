@@ -11,8 +11,8 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<h2><%# Eval("title")%></h2>
-				<p><%# Eval("text")%></p>
+				<h2><%# Eval("TitleFormatted")%></h2>
+				<p><%# Eval("TextFormatted")%></p>
 				<div class="info-panel">
 					<%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <a href='notepad.aspx?del=<%# Eval("id")%>'>Удалить</a>
 				</div>

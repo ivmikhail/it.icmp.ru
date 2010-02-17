@@ -32,7 +32,7 @@ namespace ITCommunity
             }
 
             if (errors == "") {
-                Message.Send(receiver.Id, CurrentUser.User.Id, Server.HtmlEncode(MessageTitle.Text), Server.HtmlEncode(MessageText.Text));
+                Message.Send(receiver.Id, CurrentUser.User.Id, MessageTitle.Text, MessageText.Text);
                 Response.Redirect("mailview.aspx?a=output");
             } else {
                 Errors.Text = "<div class='error'>" + errors + "</div>";

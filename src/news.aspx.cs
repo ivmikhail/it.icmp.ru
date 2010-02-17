@@ -22,7 +22,7 @@ namespace ITCommunity {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			LoadData();
-			this.Title += post.Title;
+			this.Title += post.TitleFormatted;
 			if (CurrentUser.User != post.Author) // пусть пока будет так TODO: приделать чтобы работало через кукисы
 			{
 				post.UpdateViews();
@@ -58,7 +58,7 @@ namespace ITCommunity {
 				}
 
 				WritePostCategories(post);
-				HyperLinkTitle.Text = post.Title;
+				HyperLinkTitle.Text = post.TitleFormatted;
 				HyperLinkTitle.NavigateUrl = "news.aspx?id=" + post.Id;
 
 				desc.Text = post.DescriptionFormatted == "" ? "" : "<div class=\"post-desc\">" + post.DescriptionFormatted + "</div>";
@@ -67,7 +67,7 @@ namespace ITCommunity {
 				date.Text = post.CreateDate.ToString("dd MMMM yyyy, HH:mm");
 				favorite.Text = post.FavoritesAction;
 				if (post.Source != "") {
-					source.Text = "/ <a href='" + post.Source + "' target='_blank'>источник</a>";
+					source.Text = "/ <a href=\"" + post.SourceFormatted + "\" target=\"_blank\">источник</a>";
 				}
 				// Хреново сделал, дублирование
 				authorLogin.Text = author.Text = post.Author.Login;

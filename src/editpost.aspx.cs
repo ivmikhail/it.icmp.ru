@@ -20,7 +20,7 @@ namespace ITCommunity {
 			if (!IsPostBack) {
 				LoadCategories();
 				CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
-				ImageOptions.Text = "<div class='note'>Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
+				ImageOptions.Text = "<div class=\"note\">Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
 				if (GetPostId() > 0) {
 					LinkButtonAdd.Text = "Изменить";
 				}
@@ -45,7 +45,7 @@ namespace ITCommunity {
 
 			InitPostCategories(current_post.Categories);
 
-			TextBoxTitle.Text = HttpUtility.HtmlDecode(current_post.Title);
+			TextBoxTitle.Text = current_post.Title;
 			TextAreaPostDesc.Text = current_post.Description;
 			TextAreaPostText.Text = current_post.Text;
 			TextBoxSource.Text = current_post.Source;
@@ -54,7 +54,7 @@ namespace ITCommunity {
 
 		private void InitPostCategories(List<Category> categories) {
 			foreach (Category cat in categories) {
-				CatNamesLiteral.Text += "<a href='#' onclick='deleteCategory(this);return false;' class='delete-category' title='Убрать' id='" + cat.Id + "'>" + cat.Name + "</a> ";
+				CatNamesLiteral.Text += "<a href=\"#\" onclick=\"deleteCategory(this);return false;\" class=\"delete-category\" title=\"Убрать\" id=\"" + cat.Id + "\">" + cat.Name + "</a> ";
 
 				if (SelectedCategoriesIds.Value != "") {
 					SelectedCategoriesIds.Value += ",";
@@ -80,12 +80,12 @@ namespace ITCommunity {
 			}
 			if (errors.Count == 0) {
 				editable_post.Categories = cats;
-				editable_post.Title = HttpUtility.HtmlEncode(TextBoxTitle.Text);
+				editable_post.Title = TextBoxTitle.Text;
 
 				editable_post.Description = TextAreaPostDesc.Text;
 				editable_post.Text = TextAreaPostText.Text;
 
-				editable_post.Source = Server.HtmlEncode(TextBoxSource.Text);
+				editable_post.Source = TextBoxSource.Text;
 				editable_post.Attached = CheckBoxAttached.Checked;
 
 				Post inserted_post = new Post();
@@ -173,7 +173,7 @@ namespace ITCommunity {
 				UploadImageError.Visible = true;
 			}
 			else {
-				UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='картинка' class='uploaded-image'/>";
+				UploadedImagesList.Text += "<img src=\"" + pic.ThumbUrl + "\" width=\"150\" alt=\"картинка\" class=\"uploaded-image\"/>";
 			}
 
 			//Сохраняем выбранные категории
@@ -188,7 +188,7 @@ namespace ITCommunity {
 
 					Category cat = Category.GetById(Convert.ToInt32(cat_id));
 					if (cat.Id > 0) {
-						selectedCatsNames += "<a href='#' id='" + cat.Id + "' onclick='deleteCategory(this);' class='delete-category' title='Убрать'>" + cat.Name + "</a> ";
+						selectedCatsNames += "<a href=\"#\" id=\"" + cat.Id + "\" onclick=\"deleteCategory(this);\" class=\"delete-category\" title=\"Убрать\">" + cat.Name + "</a> ";
 					}
 				}
 			}
@@ -200,7 +200,7 @@ namespace ITCommunity {
 		private void LoadImages(Post post) {
 			List<Picture> pics = Picture.GetByPost(post);
 			foreach (Picture pic in pics) {
-				UploadedImagesList.Text += "<img src='" + pic.ThumbUrl + "' width='150' alt='Загруженная картинка' class='uploaded-image'/>";
+				UploadedImagesList.Text += "<img src=\"" + pic.ThumbUrl + "\" width=\"150\" alt=\"Загруженная картинка\" class=\"uploaded-image\"/>";
 			}
 		}
 	}

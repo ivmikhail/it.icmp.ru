@@ -20,7 +20,7 @@ namespace ITCommunity
         }
         protected void LinkButtonAdd_Click(object sender, EventArgs e)
         {
-            Note.Add(Server.HtmlEncode(NoteTitle.Text), Server.HtmlEncode(NoteText.Text), CurrentUser.User.Id, DateTime.Now);
+            Note.Add(NoteTitle.Text, NoteText.Text, CurrentUser.User.Id, DateTime.Now);
             Response.Redirect("notepad.aspx");
         }
     }

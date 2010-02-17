@@ -14,7 +14,7 @@
 				<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") + "," + Eval("postid")%>' ID="DeleteComment" runat="server" Text="удалить" CommandName="delete" OnClientClick="return confirm('Точно удалить?')" />
 			</div>
 			<div class="comment-text">
-				<%# Eval("textformatted")%>
+				<%# Eval("TextFormatted")%>
 			</div>
 		</li>
 	</ItemTemplate>
@@ -27,7 +27,7 @@
 				<asp:LinkButton Visible="false" CommandArgument='<%# Eval("id") + "," + Eval("postid")%>' ID="DeleteComment" runat="server" Text="удалить" CommandName="delete" OnClientClick="return confirm('Точно удалить?')" />
 			</div>
 			<div class="comment-text">
-				<%# Eval("textformatted")%>
+				<%# Eval("TextFormatted")%>
 			</div>
 		</li>
 	</AlternatingItemTemplate>

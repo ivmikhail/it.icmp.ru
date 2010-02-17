@@ -23,50 +23,35 @@ namespace ITCommunity
 
         public int Id
         {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
+            get { return _id; }
+            set { _id = value; }
         }
 
         public int UserId
         {
-            get
-            {
-                return _user_id;
-            }
-            set
-            {
-                _user_id = value;
-            }
+            get { return _user_id; }
+            set { _user_id = value; }
         }
 
         public string Title
         {
-            get
-            {
-                return _title;
-            }
-            set
-            {
-                _title = value;
-            }
+            get { return _title; } 
+            set {  _title = value; }
         }
 
         public string Text
         {
-            get
-            {
-                return _text;
-            }
-            set
-            {
-                _text = value;
-            }
+            get { return _text; }
+            set { _text = value; }
+        }
+
+        public string TitleFormatted
+        {
+            get { return Util.HtmlEncode(_title); }
+        }
+        public string TextFormatted
+        {
+            get { return Util.HtmlEncode(_text); }
         }
 
         public Note()
