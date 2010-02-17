@@ -32,7 +32,7 @@
 				просмотров: <%# Eval("views")%> /
 				<a href="news.aspx?id=<%# Eval("id")%>#comments" title="Посмотреть комментарии" class="post-comments-link">комментарии(<%# Eval("commentscount")%>)</a> /
 				<a href="news.aspx?id=<%# Eval("id")%>#cut" title="Читать далее">подробнее...</a>
-				<uc:Rating ID="PostRating" runat="server" EntityId='<%# Eval("id") %>' Type="Post" EntityAuthorId='<%# Eval("author.id") %>' />
+				<uc:Rating ID="PostRating" runat="server" EntityId='<%# Eval("id") %>' Type="Post" EntityAuthorId='<%# Eval("author.id") %>' ButtonsVisible="false" />
 			</div>
 		</li>
 	</ItemTemplate>

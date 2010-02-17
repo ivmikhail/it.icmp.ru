@@ -54,6 +54,11 @@ namespace ITCommunity {
 			set { _entityAuthorId = value; }
 		}
 
+		public bool ButtonsVisible {
+			get { return RatingButtons.Visible; }
+			set { RatingButtons.Visible = value; }
+		}
+
 		protected void Page_Load(object sender, EventArgs e) {
 			RatingMessage.Visible = false;
 			_rating = Rating.Get(EntityId, Type);
