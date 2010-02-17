@@ -225,7 +225,6 @@ hr {
 }
 .dropdown-list-select select,
 .textbox-input input,
-.file-upload-input input,
 .textbox-textarea textarea {
 	color: #444444;
 	font-family: Verdana, sans-serif;
@@ -696,11 +695,8 @@ hr {
 #edit-post .textbox-textarea textarea {
 	font-size: 1em;
 }
-#edit-post .file-upload-input input {
-	width: 70%;
-}
 #edit-post .file-upload-input a {
-	/* font-size: 2.2em; */
+    font-size: 1.4em;
 }
 #edit-post .uploaded-image {
 	border: 3px solid #aaaaaa;
@@ -733,7 +729,7 @@ hr {
 /* search: end */
 
 /* rating: begin */
-.rating {
+.post-rating {
 	margin-top: 4px;
 	float: right;
 	font-size: 0.8em;

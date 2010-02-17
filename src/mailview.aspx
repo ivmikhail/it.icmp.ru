@@ -15,7 +15,7 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<h2><a href='mail.aspx?id=<%# Eval("id")%>'><%# Eval("title")%></a></h2>
+				<h2><a href='mail.aspx?id=<%# Eval("id")%>'><%# Eval("TitleFormatted")%></a></h2>
 				<div class="info-panel">
 					<%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <asp:Literal ID="Who" runat="server" />
 				</div>

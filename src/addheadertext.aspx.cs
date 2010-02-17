@@ -35,7 +35,7 @@ namespace ITCommunity {
 				User current = CurrentUser.User;
 				if (!current.AbleToAddHeaderText())
 					return;
-				string topic = HttpUtility.HtmlEncode(TextBoxText.Text);
+				string topic = Util.HtmlEncode(TextBoxText.Text);
 				HeaderText.Add(current.Id, topic);
 				current.HeaderTextCounter = 0;
 				current.Update();

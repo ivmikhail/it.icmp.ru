@@ -20,4 +20,3 @@
 		</ContentTemplate>
 	</asp:UpdatePanel>
 </div>
-<div class="clear"></div>

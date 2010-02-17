@@ -16,7 +16,7 @@ namespace ITCommunity {
 		//делегат метода загрузки последних постов из базы, нужен для организации кеширования
 		private delegate object LastPostsLoader(int count);
 		//делегат метода загрузки популярных постов из базы, нужен для организации кеширования
-		private delegate object TopPostsLoader(int period, int count);
+		private delegate object TopPostsByViewsLoader(int period, int count);
 
 		private int _id;
 		private string _title;
@@ -39,6 +39,12 @@ namespace ITCommunity {
 			get { return _title; }
 			set { _title = value; }
 		}
+
+        public int AuthorId
+        {
+            get { return _userId; }
+            set { _userId = value; }
+        }
 		/// <summary>
 		/// Оригинальное описание, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
 		/// </summary>
@@ -59,19 +65,22 @@ namespace ITCommunity {
 		/// Полностью форматированное в безопасный хтмл описание
 		/// </summary>
 		public string DescriptionFormatted {
-			get {
-				return BBCodeParser.Format(HttpUtility.HtmlEncode(_description));
-			}
+			get { return BBCodeParser.Format(Util.HtmlEncode(_description)); }
 		}
 
 		/// <summary>
 		/// Полностью форматированный в безопасный хтмл текст
 		/// </summary>
 		public string TextFormatted {
-			get {
-				return BBCodeParser.Format(HttpUtility.HtmlEncode(_text));
-			}
+			get { return BBCodeParser.Format(Util.HtmlEncode(_text)); }
 		}
+        /// <summary>
+        /// Полностью форматированный в безопасный хтмл тайтл, ббкод не действует
+        /// </summary>
+        public string TitleFormatted
+        {
+            get { return Util.HtmlEncode(_title); }
+        }
 
 		public DateTime CreateDate {
 			get { return _cdate; }
@@ -105,6 +114,14 @@ namespace ITCommunity {
 		public int Views {
 			get { return _views; }
 		}
+
+        /// <summary>
+        /// Полностью форматированный в безопасный хтмл текст
+        /// </summary>
+        public string SourceFormatted
+        {
+            get { return Util.HtmlEncode(_source); }
+        }
 
 		public string Source {
 			get {
@@ -356,19 +373,19 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="period">Период, в днях. Например, популярные посты за последние N дней.</param>
 		/// <param name="count">Кол-во нужных постов</param>
-		public static List<KeyValuePair<User, Post>> GetTop(int period, int count) {
-			TopPostsLoader loader = new TopPostsLoader(GetTopPostsFromDB);
-			List<KeyValuePair<User, Post>> top_posts = (List<KeyValuePair<User, Post>>)AppCache.Get(Global.ConfigStringParam("TopPostsCacheName"),
+		public static List<KeyValuePair<User, Post>> GetTopByViews(int period, int count) {
+			TopPostsByViewsLoader loader = new TopPostsByViewsLoader(GetTopPostsByViewsFromDB);
+            List<KeyValuePair<User, Post>> top_posts = (List<KeyValuePair<User, Post>>)AppCache.Get(Global.ConfigStringParam("TopPostsByViewsCacheName"),
 																									new object(),
 																									loader,
 																									new object[] { period, count },
-																									DateTime.Now.AddHours(Global.ConfigDoubleParam("TopPostsCachePer")));
+																									DateTime.Now.AddHours(Global.ConfigDoubleParam("TopPostsByViewsCachePer")));
 
 			return top_posts;
 		}
 
-		private static List<KeyValuePair<User, Post>> GetTopPostsFromDB(int period, int count) {
-			List<Post> posts = GetPostsFromTable(Database.PostGetTop(period, count));
+		private static List<KeyValuePair<User, Post>> GetTopPostsByViewsFromDB(int period, int count) {
+			List<Post> posts = GetPostsFromTable(Database.PostGetTopByViews(period, count));
 			List<KeyValuePair<User, Post>> top = new List<KeyValuePair<User, Post>>();
 			foreach (Post post in posts) {
 				top.Add(new KeyValuePair<User, Post>(post.Author, post));

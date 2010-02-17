@@ -139,8 +139,8 @@
 			</div>
 		</asp:Literal>
 		<label class="file-upload-input">
-			<asp:FileUpload ID="UploadImage" runat="server" />
-			<asp:LinkButton ID="AttachImageButton" runat="server" OnClick="AttachImageButton_Click">Загрузить</asp:LinkButton>
+			<asp:FileUpload ID="UploadImage" runat="server"  />
+			<asp:LinkButton ID="AttachImageButton" runat="server" OnClick="AttachImageButton_Click" ToolTip="Загрузить выбранную картинку на сервер">загрузить</asp:LinkButton>
 		</label>
 
 		<div class="note">

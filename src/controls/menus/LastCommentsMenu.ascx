@@ -13,7 +13,7 @@
 					<%# Eval("key.login")%>
 				</a>
 				:
-				<a href='news.aspx?id=<%# Eval("value.postid")%>#comment-<%# Eval("value.id")%>' title="<%# Eval("value.post.title")%>" >
+				<a href='news.aspx?id=<%# Eval("value.postid")%>#comment-<%# Eval("value.id")%>' title="<%# Eval("value.post.TitleFormatted")%>" >
 					<%# Eval("value.shorttext")%>
 				</a>
 			</li>

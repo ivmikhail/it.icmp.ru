@@ -28,8 +28,8 @@ namespace ITCommunity
 			Message mess = Message.GetById(GetMessageId());
 			if (mess.Receiver.Id == CurrentUser.User.Id || mess.Sender.Id == CurrentUser.User.Id)
 			{
-				MessageTitle.Text = mess.Title;
-				MessageText.Text = mess.Text;
+				MessageTitle.Text = mess.TitleFormatted;
+				MessageText.Text = mess.TextFormatted;
 				mess.MarkAsRead();
 
 				DeterminateIsInput(mess);

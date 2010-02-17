@@ -60,16 +60,16 @@ namespace ITCommunity {
                         case XmlNodeType.Text:
                             if (item != null) {
                                 if (isTextTitle) {
-                                    item.Title = HttpUtility.HtmlEncode(reader.Value);
+                                    item.Title = Util.HtmlEncode(reader.Value);
                                     isTextTitle = false;
                                 } else if (isTextAuthor) {
-                                    item.Author = HttpUtility.HtmlEncode(reader.Value);
+                                    item.Author = Util.HtmlEncode(reader.Value);
                                     isTextAuthor = false;
                                 } else if (isTextContent) {
-                                    item.Text = HttpUtility.HtmlEncode(reader.Value);
+                                    item.Text = Util.HtmlEncode(reader.Value);
                                     isTextContent = false;
                                 } else if (isTextUrl) {
-                                    item.Url = HttpUtility.HtmlEncode(reader.Value);
+                                    item.Url = Util.HtmlEncode(reader.Value);
                                     isTextUrl = false;
                                 }
                             }

@@ -81,7 +81,23 @@ namespace ITCommunity
                 _text = value;
             }
         }
+        /// <summary>
+        /// Безопасный от хтмла тайтл
+        /// </summary>
+        public string TitleFormatted
+        {
+            get
+            {  return Util.HtmlEncode(_title);}
+        }
 
+        /// <summary>
+        /// Безопасный от хтмла текст
+        /// </summary>
+        public string TextFormatted
+        {
+            get
+            { return Util.HtmlEncode(_text); }
+        }
         public DateTime CreateDate
         {
             get
