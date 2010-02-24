@@ -37,7 +37,7 @@ namespace ITCommunity {
                     RegDate.Text = pageUser.CreateDate.ToString("dd MMMM yyyy, HH:mm");
                     int totalRecords = 0;
                     int page = GetPage();
-                    int itemsPerPage = Global.ConfigNumParam("PostsCount");
+                    int itemsPerPage = Config.Num("PostsCount");
 
                     if (GetViewMode() == "posts") {
                         PageInfo.Text = "Посты";

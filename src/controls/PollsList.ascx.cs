@@ -23,11 +23,11 @@ namespace ITCommunity {
 			int total_records = 0;
 			int page = GetPage();
 
-			List<Poll> polls = Poll.Get(page, Global.ConfigNumParam("PollsCount"), ref total_records);
+			List<Poll> polls = Poll.Get(page, Config.Num("PollsCount"), ref total_records);
 			RepeaterPolls.DataSource = polls;
 			RepeaterPolls.DataBind();
 
-			Pager.DataBind(total_records, Global.ConfigNumParam("PollsCount"));
+			Pager.DataBind(total_records, Config.Num("PollsCount"));
 			Visible = (polls.Count > 0);
 		}
 

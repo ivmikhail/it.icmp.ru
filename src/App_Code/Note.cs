@@ -1,135 +1,111 @@
 using System;
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
-using ITCommunity;
 
+namespace ITCommunity {
+	/// <summary>
+	/// Типа блокнот
+	/// </summary>
+	public class Note {
 
-namespace ITCommunity
-{
-/// <summary>
-/// Типа блокнот
-/// </summary>
-    public class Note
-    {
-        private int _id;
-        private int _user_id;
-        private string _title;
-        private string _text;
-        private DateTime _cdate;
+		#region Properties
 
-        public int Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
+		private int _id;
+		private int _userId;
+		private string _title;
+		private string _text;
+		private DateTime _cdate;
 
-        public int UserId
-        {
-            get { return _user_id; }
-            set { _user_id = value; }
-        }
+		public int Id {
+			get { return _id; }
+			set { _id = value; }
+		}
 
-        public string Title
-        {
-            get { return _title; } 
-            set {  _title = value; }
-        }
+		public int UserId {
+			get { return _userId; }
+			set { _userId = value; }
+		}
 
-        public string Text
-        {
-            get { return _text; }
-            set { _text = value; }
-        }
+		public string Title {
+			get { return _title; }
+			set { _title = value; }
+		}
 
-        public string TitleFormatted
-        {
-            get { return Util.HtmlEncode(_title); }
-        }
-        public string TextFormatted
-        {
-            get { return Util.HtmlEncode(_text); }
-        }
+		public string TitleFormatted {
+			get { return Util.HtmlEncode(_title); }
+		}
 
-        public Note()
-        {
-            _id = -1;
-            _user_id = -1;
-            _title = "";
-            _text = "";
-            _cdate = DateTime.Now;
-        }
+		public string Text {
+			get { return _text; }
+			set { _text = value; }
+		}
 
-        public Note(int id, string title, string text, int user_id, DateTime cdate)
-        {
-            _id = id;
-            _user_id = user_id;
-            _title = title;
-            _text = text;
-            _cdate = cdate;
-        }
-        public DateTime CreateDate
-        {
-            get
-            {
-                return _cdate;
-            }
-            set
-            {
-                _cdate = value;
-            }
-        }
+		public string TextFormatted {
+			get { return Util.HtmlEncode(_text); }
+		}
 
-        public static Note Add(string title, string text, int user_id, DateTime cdate)
-        {
-            return GetNoteFromRow(Database.NotesAdd(user_id, title, text, cdate));
-        }
+		public DateTime CreateDate {
+			get { return _cdate; }
+			set { _cdate = value; }
+		}
 
-        public static Note GetById(int id)
-        {
-            return GetNoteFromRow(Database.NotesGetById(id));
-        }
+		#endregion
 
-        public static void Delete(int id)
-        {
-            Database.NotesDel(id);
-        }
+		public Note() {
+			_id = -1;
+			_userId = -1;
+			_title = "";
+			_text = "";
+			_cdate = DateTime.Now;
+		}
 
-        public static List<Note> Get(int page, int count, int user_id, ref int record_count)
-        {
-            return GetNotesFromTable(Database.NotesGet(user_id, page, count, ref record_count));
-        }
+		public Note(int id, string title, string text, int userId, DateTime cdate) {
+			_id = id;
+			_userId = userId;
+			_title = title;
+			_text = text;
+			_cdate = cdate;
+		}
 
-        private static List<Note> GetNotesFromTable(DataTable dt)
-        {
-            List<Note> notes = new List<Note>();
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                notes.Add(GetNoteFromRow(dt.Rows[i]));
-            }
-            return notes;
-        }
+		public static Note Add(string title, string text, int userId, DateTime cdate) {
+			return GetNoteFromRow(Database.NotesAdd(userId, title, text, cdate));
+		}
 
-        private static Note GetNoteFromRow(DataRow dr)
-        {
-            Note note;
-            if (dr == null)
-            {
-                note = new Note();
-            }
-            else
-            {
-                int id = Convert.ToInt32(dr["id"]);
-                note = new Note(id,
-                             Convert.ToString(dr["title"]),
-                             Convert.ToString(dr["text"]),
-                             Convert.ToInt32(dr["user_id"]),
-                             Convert.ToDateTime(dr["cdate"]));
-            }
-            return note;
-        }
-    }
+		public static Note GetById(int id) {
+			return GetNoteFromRow(Database.NotesGetById(id));
+		}
+
+		public static void Delete(int id) {
+			Database.NotesDel(id);
+		}
+
+		public static List<Note> Get(int page, int count, int userId, ref int record_count) {
+			return GetNotesFromTable(Database.NotesGet(userId, page, count, ref record_count));
+		}
+
+		private static List<Note> GetNotesFromTable(DataTable dt) {
+			List<Note> notes = new List<Note>();
+			for (int i = 0; i < dt.Rows.Count; i++) {
+				notes.Add(GetNoteFromRow(dt.Rows[i]));
+			}
+			return notes;
+		}
+
+		private static Note GetNoteFromRow(DataRow dr) {
+			Note note;
+			if (dr == null) {
+				note = new Note();
+			}
+			else {
+				note = new Note(
+					Convert.ToInt32(dr["id"]),
+					Convert.ToString(dr["title"]),
+					Convert.ToString(dr["text"]),
+					Convert.ToInt32(dr["user_id"]),
+					Convert.ToDateTime(dr["cdate"])
+				);
+			}
+			return note;
+		}
+	}
 }

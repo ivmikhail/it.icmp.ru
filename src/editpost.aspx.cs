@@ -20,7 +20,7 @@ namespace ITCommunity {
 			if (!IsPostBack) {
 				LoadCategories();
 				CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
-				ImageOptions.Text = "<div class=\"note\">Размер до " + Global.ConfigStringParam("PostImgWidth") + "x" + Global.ConfigStringParam("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Global.ConfigStringParam("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
+				ImageOptions.Text = "<div class=\"note\">Размер до " + Config.String("PostImgWidth") + "x" + Config.String("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Config.String("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
 				if (GetPostId() > 0) {
 					LinkButtonAdd.Text = "Изменить";
 				}
@@ -119,7 +119,7 @@ namespace ITCommunity {
 			foreach (string string_cat_id in cat_ids) {
 				int cat_id = -1;
 				Int32.TryParse(string_cat_id, out cat_id);
-				if (cat_id > 0 && Category.IsCategoryExist(cat_id)) {
+				if (cat_id > 0 && Category.IsExist(cat_id)) {
 					Category category = Category.GetById(cat_id);
 					if (!cats.Contains(category)) {
 						cats.Add(category);

@@ -35,10 +35,10 @@ namespace ITCommunity {
 				}
 
 				int records_count = 0;
-				HeaderTextsRepeater.DataSource = HeaderText.Get(GetPage(), Global.ConfigNumParam("HeaderTextCount"), ref records_count);
+				HeaderTextsRepeater.DataSource = HeaderText.Get(GetPage(), Config.Num("HeaderTextCount"), ref records_count);
 				HeaderTextsRepeater.DataBind();
 
-				HeaderTextsPager.DataBind(records_count, Global.ConfigNumParam("HeaderTextCount"));
+				HeaderTextsPager.DataBind(records_count, Config.Num("HeaderTextCount"));
 
 				List<User> blockedUsers = ITCommunity.User.GetBlocked();
 				BlockedUsersRepeater.DataSource = blockedUsers;

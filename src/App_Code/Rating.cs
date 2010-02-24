@@ -16,6 +16,8 @@ namespace ITCommunity {
 	/// </summary>
 	public class Rating {
 
+		#region Properties
+
 		private int _id;
 		private int _entityId;
 		private EntityType _type;
@@ -39,6 +41,8 @@ namespace ITCommunity {
 			get { return _value; }
 			set { _value = value; }
 		}
+
+		#endregion
 
 		public Rating() {
 			_id = 0;

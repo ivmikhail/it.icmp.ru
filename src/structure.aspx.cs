@@ -30,8 +30,8 @@ namespace ITCommunity
 		}
 		private void DropCache()
 		{
-			AppCache.Remove(Global.ConfigStringParam("CategoriesCacheName"));
-			AppCache.Remove(Global.ConfigStringParam("MenuCacheName"));
+			AppCache.Remove(Config.String("CategoriesCacheName"));
+			AppCache.Remove(Config.String("MenuCacheName"));
 		}
 		protected void LinkButtonAddCat_Click(object sender, EventArgs e)
 		{

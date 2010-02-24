@@ -31,7 +31,7 @@ namespace ITCommunity
             RssChannel channel = new RssChannel();
 
             string site_domain = Global.SiteAddress;
-            List<Post> last_posts = Post.GetLast(Global.ConfigNumParam("RssPostsCount"));
+            List<Post> last_posts = Post.GetLast(Config.Num("RssPostsCount"));
             foreach (Post post in last_posts)
             {
                 RssItem item = new RssItem();

@@ -1,2 +1,3 @@
 ;wchk <img src='http://it.icmp.ru/media/other/black_overlord.jpg' alt='Черный Властелин следит за тобой' /> Черный Властелин следит за тобой
 ;fowler <img src='http://it.icmp.ru/media/other/120px-nyashka.gif' alt='Черный Властелин' /> Черный Властелин любит тебя
+petch Рефакторь аккуратно

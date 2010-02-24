@@ -75,7 +75,7 @@
 					</DeleteParameters>
 					<UpdateParameters>
 						<asp:Parameter Name="id"   Type="Int32"  Direction="Input" DefaultValue="-1" />
-						<asp:Parameter Name="name" Type="String" Direction="Input" DefaultValue="null"/>
+						<asp:Parameter Name="name" Type="string" Direction="Input" DefaultValue="null"/>
 						<asp:Parameter Name="sort" Type="Int32"  Direction="Input" DefaultValue="0" />
 					</UpdateParameters>
 				</asp:SqlDataSource>
@@ -140,8 +140,8 @@
 					<UpdateParameters>
 						<asp:Parameter Name="id"         Type="Int32"  Direction="Input" DefaultValue="-1" />
 						<asp:Parameter Name="parent_id"  Type="Int32"  Direction="Input" DefaultValue="0"/>
-						<asp:Parameter Name="name"       Type="String" Direction="Input" DefaultValue="0" />
-						<asp:Parameter Name="url"        Type="String" Direction="Input" DefaultValue="-1" />
+						<asp:Parameter Name="name"       Type="string" Direction="Input" DefaultValue="0" />
+						<asp:Parameter Name="url"        Type="string" Direction="Input" DefaultValue="-1" />
 						<asp:Parameter Name="new_window" Type="Int32"  Direction="Input" DefaultValue="1"/>
 						<asp:Parameter Name="sort"       Type="Int32"  Direction="Input" DefaultValue="0" />
 					</UpdateParameters>

@@ -26,7 +26,7 @@ namespace ITCommunity
 			int totalRecords = 0;
 			int catId = GetCatId();
 			int page = GetPage();
-			int postsPerPage = Global.ConfigNumParam("PostsCount");
+			int postsPerPage = Config.Num("PostsCount");
 
 			List<Post> posts;
 			if (catId > 0)

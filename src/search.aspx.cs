@@ -40,7 +40,7 @@ namespace ITCommunity
 		{
 			int total_records = 0;
 			int page = GetPage();
-			int searchedPostsPerPage = Global.ConfigNumParam("PostsCount");
+			int searchedPostsPerPage = Config.Num("PostsCount");
 			List<Post> searchedPosts = Post.Search(page, searchedPostsPerPage, query, ref total_records);
 			FindedPosts.DataBind(searchedPosts, total_records, searchedPostsPerPage);
 

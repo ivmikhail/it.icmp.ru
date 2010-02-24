@@ -1,14 +1,8 @@
 using System;
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.ComponentModel;
 using System.Collections.Generic;
 using System.Data;
-using ITCommunity;
 
 namespace ITCommunity {
-
 	/// <summary>
 	/// Собственно новость.
 	/// </summary>
@@ -18,6 +12,11 @@ namespace ITCommunity {
 		//делегат метода загрузки популярных постов из базы, нужен для организации кеширования
 		private delegate object TopPostsByViewsLoader(int period, int count);
 
+		#region Properties
+
+		private static LastPostsLoader _lastPostsLoader = new LastPostsLoader(GetLastPostsFromDB);
+		private static TopPostsByViewsLoader _topPostsByViewsLoader = new TopPostsByViewsLoader(GetTopPostsByViewsFromDB);
+
 		private int _id;
 		private string _title;
 		private string _description;
@@ -25,7 +24,7 @@ namespace ITCommunity {
 		private DateTime _cdate;
 		private int _userId;
 		private List<Category> _cats;
-		private int _attached;
+		private bool _attached;
 		private int _views;
 		private string _source;
 		private int _commentsCount;
@@ -40,11 +39,10 @@ namespace ITCommunity {
 			set { _title = value; }
 		}
 
-        public int AuthorId
-        {
-            get { return _userId; }
-            set { _userId = value; }
-        }
+		public int AuthorId {
+			get { return _userId; }
+			set { _userId = value; }
+		}
 		/// <summary>
 		/// Оригинальное описание, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
 		/// </summary>
@@ -74,13 +72,12 @@ namespace ITCommunity {
 		public string TextFormatted {
 			get { return BBCodeParser.Format(Util.HtmlEncode(_text)); }
 		}
-        /// <summary>
-        /// Полностью форматированный в безопасный хтмл тайтл, ббкод не действует
-        /// </summary>
-        public string TitleFormatted
-        {
-            get { return Util.HtmlEncode(_title); }
-        }
+		/// <summary>
+		/// Полностью форматированный в безопасный хтмл тайтл, ббкод не действует
+		/// </summary>
+		public string TitleFormatted {
+			get { return Util.HtmlEncode(_title); }
+		}
 
 		public DateTime CreateDate {
 			get { return _cdate; }
@@ -103,25 +100,20 @@ namespace ITCommunity {
 		}
 
 		public bool Attached {
-			get {
-				return !(_attached == 0);
-			}
-			set {
-				_attached = value ? 1 : 0;
-			}
+			get { return _attached; }
+			set { _attached = value; }
 		}
 
 		public int Views {
 			get { return _views; }
 		}
 
-        /// <summary>
-        /// Полностью форматированный в безопасный хтмл текст
-        /// </summary>
-        public string SourceFormatted
-        {
-            get { return Util.HtmlEncode(_source); }
-        }
+		/// <summary>
+		/// Полностью форматированный в безопасный хтмл текст
+		/// </summary>
+		public string SourceFormatted {
+			get { return Util.HtmlEncode(_source); }
+		}
 
 		public string Source {
 			get {
@@ -140,9 +132,40 @@ namespace ITCommunity {
 				_source = value;
 			}
 		}
+
 		public int CommentsCount {
 			get { return _commentsCount; }
 			set { _commentsCount = value; }
+		}
+
+		#endregion
+
+		public Post() {
+			_id = -1;
+			_title = "";
+			_description = "";
+			_text = "";
+			_cdate = DateTime.Now;
+			_userId = -1;
+			_cats = new List<Category>();
+			_attached = false;
+			_views = 0;
+			_source = "";
+			_commentsCount = 0;
+		}
+
+		public Post(int id, string title, string description, string text, DateTime cdate, int userId, bool attached, int views, string source, int commentsCount, List<Category> cats) {
+			_id = id;
+			_title = title;
+			_description = description;
+			_text = text;
+			_cdate = cdate;
+			_userId = userId;
+			_attached = attached;
+			_views = views;
+			_source = source;
+			_commentsCount = commentsCount;
+			_cats = cats;
 		}
 
 		/// <summary>
@@ -207,7 +230,7 @@ namespace ITCommunity {
 		/// * categories - категории новости(отдельные таблицы)
 		/// </summary>
 		public void UpdateWithCategories() {
-			Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
+			Database.PostUpdate(_id, _title, _description, _text, (byte)(_attached ? 1 : 0), _source, _commentsCount);
 			Post.PostAttachCategories(_cats, this);
 		}
 
@@ -222,9 +245,8 @@ namespace ITCommunity {
 		/// * source - Источник(ссылка на оригинал)
 		/// 
 		/// </summary>
-
 		public void Update() {
-			Database.PostUpdate(_id, _title, _description, _text, (byte)_attached, _source, _commentsCount);
+			Database.PostUpdate(_id, _title, _description, _text, (byte)(_attached ? 1 : 0), _source, _commentsCount);
 		}
 
 		/// <summary>
@@ -234,76 +256,16 @@ namespace ITCommunity {
 			Database.PostUpdateViews(_id);
 		}
 
-		public Post(int id, string title, string description, string text, DateTime cdate, int userId, bool attached, int views, string source, int commentsCount, List<Category> cats) {
-			_id = id;
-			_title = title;
-			_description = description;
-			_text = text;
-			_cdate = cdate;
-			_userId = userId;
-			_attached = attached ? 1 : 0;
-			_views = views;
-			_source = source;
-			_commentsCount = commentsCount;
-			_cats = cats;
-		}
-
-		public Post() {
-			_id = -1;
-			_title = "";
-			_description = "";
-			_text = "";
-			_cdate = DateTime.Now;
-			_userId = -1;
-			_cats = new List<Category>();
-			_attached = 0;
-			_views = 0;
-			_source = "";
-			_commentsCount = 0;
-		}
-
 		public static Post GetById(int id) {
 			return GetPostFromRow(Database.PostGetById(id));
 		}
 
 		public static void Delete(Post post) {
-
 			Database.PostDel(post.Id);
 			//Чистим кеш популярных постов
-			AppCache.Remove(Global.ConfigStringParam("TopPostsCacheName"));
+			AppCache.Remove(Config.String("TopPostsByViewsCacheName"));
 			//Чистим кеш комментов комментов
-			AppCache.Remove(Global.ConfigStringParam("LastCommentsCacheName"));
-		}
-		/// <summary>
-		/// Сцепляем новость к категориям
-		/// </summary>
-		/// <param name="menu">Категории</param>
-		/// <param name="post_id">Новость</param>
-		private static void PostAttachCategories(List<Category> cats, Post post) {
-			// лучше не придумалось
-
-			/* 
-				Формируется запрос вида                
-             
-				INSERT INTO post_cat(post_id, cat_id) 
-				SELECT 1,2 
-				UNION ALL
-				SELECT 1,3
-				UNION ALL
-				SELECT 1,4
-              
-				(множественная вставка как в мускле не прокатывает)
-			 */
-			string query = "INSERT INTO post_cat(post_id, cat_id) ";
-			string param = String.Empty;
-			foreach (Category cat in cats) {
-				if (param.Length > 0) {
-					param += " UNION ALL ";
-				}
-				param += "SELECT " + post.Id + "," + cat.Id;
-			}
-			query += param;
-			Database.PostAttachCategories(post.Id, query);
+			AppCache.Remove(Config.String("LastCommentsCacheName"));
 		}
 
 		/// <summary>
@@ -327,7 +289,6 @@ namespace ITCommunity {
 			return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
 		}
 
-
 		/// <summary>
 		/// Возвращает посты определенного автора
 		/// </summary>
@@ -338,23 +299,20 @@ namespace ITCommunity {
 		public static List<Post> GetByAuthor(int page, int count, int author_id, ref int posts_count) {
 			return GetPostsFromTable(Database.PostGetByAuthor(page, count, author_id, ref posts_count));
 		}
+
 		/// <summary>
 		/// Возвращает последние добавленные посты из кеша
 		/// </summary>
 		/// <param name="count"></param>
 		/// <returns></returns>
 		public static List<Post> GetLast(int count) {
-			LastPostsLoader loader = new LastPostsLoader(GetLastPostsFromDB);
-			List<Post> lasts = (List<Post>)AppCache.Get(Global.ConfigStringParam("LastPostsCacheName"),
-														new object(),
-														loader,
-														new object[] { count },
-														DateTime.Now.AddHours(Global.ConfigDoubleParam("LastPostsCachePer")));
-			return lasts;
-		}
-
-		private static List<Post> GetLastPostsFromDB(int count) {
-			return GetPostsFromTable(Database.PostGetLast(count));
+			object lasts = AppCache.Get(
+				Config.String("LastPostsCacheName"),
+				_lastPostsLoader,
+				new object[] { count },
+				Config.Double("LastPostsCachePer")
+			);
+			return (List<Post>)lasts;
 		}
 
 		/// <summary>
@@ -374,37 +332,28 @@ namespace ITCommunity {
 		/// <param name="period">Период, в днях. Например, популярные посты за последние N дней.</param>
 		/// <param name="count">Кол-во нужных постов</param>
 		public static List<KeyValuePair<User, Post>> GetTopByViews(int period, int count) {
-			TopPostsByViewsLoader loader = new TopPostsByViewsLoader(GetTopPostsByViewsFromDB);
-            List<KeyValuePair<User, Post>> top_posts = (List<KeyValuePair<User, Post>>)AppCache.Get(Global.ConfigStringParam("TopPostsByViewsCacheName"),
-																									new object(),
-																									loader,
-																									new object[] { period, count },
-																									DateTime.Now.AddHours(Global.ConfigDoubleParam("TopPostsByViewsCachePer")));
-
-			return top_posts;
+			object top_posts = AppCache.Get(
+				Config.String("TopPostsByViewsCacheName"),
+				_topPostsByViewsLoader,
+				new object[] { period, count },
+				Config.Double("TopPostsByViewsCachePer")
+			);
+			return (List<KeyValuePair<User, Post>>)top_posts;
 		}
-
-		private static List<KeyValuePair<User, Post>> GetTopPostsByViewsFromDB(int period, int count) {
-			List<Post> posts = GetPostsFromTable(Database.PostGetTopByViews(period, count));
-			List<KeyValuePair<User, Post>> top = new List<KeyValuePair<User, Post>>();
-			foreach (Post post in posts) {
-				top.Add(new KeyValuePair<User, Post>(post.Author, post));
-			}
-			return top;
-		}
-
 
 		/// <summary>
 		/// Добавление нового поста
 		/// </summary>
 		/// <param name="post">Сам пост, CreateDate будет изменен на дату добавления новости в базу.</param>
 		public static Post Add(Post post) {
-			DataRow dr = Database.PostAdd(post.Title,
-										  post.Description,
-										  post.Text,
-										  Convert.ToByte(post.Attached),
-										  post.Source,
-										  post.Author.Id);
+			DataRow dr = Database.PostAdd(
+				post.Title,
+				post.Description,
+				post.Text,
+				Convert.ToByte(post.Attached),
+				post.Source,
+				post.Author.Id
+			);
 			List<Category> cats = post.Categories;
 			Post newpost = GetPostFromRow(dr);
 			PostAttachCategories(cats, newpost);
@@ -438,6 +387,51 @@ namespace ITCommunity {
 			return GetPostFromRow(Database.FavoriteAdd(user_id, post_id));
 		}
 
+		/// <summary>
+		/// Сцепляем новость к категориям
+		/// </summary>
+		/// <param name="menu">Категории</param>
+		/// <param name="post_id">Новость</param>
+		private static void PostAttachCategories(List<Category> cats, Post post) {
+			// лучше не придумалось
+
+			/* 
+				Формируется запрос вида
+
+				INSERT INTO post_cat(post_id, cat_id) 
+				SELECT 1,2 
+				UNION ALL
+				SELECT 1,3
+				UNION ALL
+				SELECT 1,4
+
+				(множественная вставка как в мускле не прокатывает)
+			 */
+			string query = "INSERT INTO post_cat(post_id, cat_id) ";
+			string param = string.Empty;
+			foreach (Category cat in cats) {
+				if (param.Length > 0) {
+					param += " UNION ALL ";
+				}
+				param += "SELECT " + post.Id + "," + cat.Id;
+			}
+			query += param;
+			Database.PostAttachCategories(post.Id, query);
+		}
+
+		private static List<Post> GetLastPostsFromDB(int count) {
+			return GetPostsFromTable(Database.PostGetLast(count));
+		}
+
+		private static List<KeyValuePair<User, Post>> GetTopPostsByViewsFromDB(int period, int count) {
+			List<Post> posts = GetPostsFromTable(Database.PostGetTopByViews(period, count));
+			List<KeyValuePair<User, Post>> top = new List<KeyValuePair<User, Post>>();
+			foreach (Post post in posts) {
+				top.Add(new KeyValuePair<User, Post>(post.Author, post));
+			}
+			return top;
+		}
+
 		private static List<Post> GetPostsFromTable(DataTable dt) {
 			List<Post> posts = new List<Post>();
 			for (int i = 0; i < dt.Rows.Count; i++) {
@@ -453,17 +447,19 @@ namespace ITCommunity {
 			}
 			else {
 				int id = Convert.ToInt32(dr["id"]);
-				post = new Post(id,
-							 Convert.ToString(dr["title"]),
-							 Convert.ToString(dr["description"]),
-							 Convert.ToString(dr["text"]),
-							 Convert.ToDateTime(dr["cdate"]),
-							 Convert.ToInt32(dr["user_id"]),
-							 Convert.ToBoolean(dr["attached"]),
-							 Convert.ToInt32(dr["views"]),
-							 Convert.ToString(dr["source"]),
-							 Convert.ToInt32(dr["comments_count"]),
-							 Category.GetPostCategories(id)); //TODO: MZFK
+				post = new Post(
+					id,
+					Convert.ToString(dr["title"]),
+					Convert.ToString(dr["description"]),
+					Convert.ToString(dr["text"]),
+					Convert.ToDateTime(dr["cdate"]),
+					Convert.ToInt32(dr["user_id"]),
+					Convert.ToBoolean(dr["attached"]),
+					Convert.ToInt32(dr["views"]),
+					Convert.ToString(dr["source"]),
+					Convert.ToInt32(dr["comments_count"]),
+					Category.GetPostCategories(id) //TODO: MZFK
+				);
 			}
 			return post;
 		}
