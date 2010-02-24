@@ -1,19 +1,30 @@
 using System;
-using System.ComponentModel;
 using System.Web;
 using System.Web.Security;
-using System.Text;
-using System.Web.Services;
-using System.Web.Services.Protocols;
 using System.Collections.Specialized;
-using ITCommunity;
 
 namespace ITCommunity {
 	/// <summary>
 	/// Текущий пользователь
 	/// </summary>
-	/// 
 	public static class CurrentUser {
+
+		public static bool isAuth {
+			get {
+				return HttpContext.Current.User.Identity.IsAuthenticated;
+			}
+		}
+
+		/// <summary>
+		/// IP текущего пользователя
+		/// </summary>
+		public static string Ip {
+			get {
+				NameValueCollection serverVars = HttpContext.Current.Request.ServerVariables;
+				return serverVars["HTTP_X_FORWARDED_FOR"] ?? serverVars["REMOTE_ADDR"];
+			}
+		}
+
 		/// <summary>
 		/// Возвращаем обьект юзер из сессии/куки, если авторизован.
 		/// </summary>
@@ -36,6 +47,21 @@ namespace ITCommunity {
 				}
 				return currentUser;
 			}
+		}
+
+		/// <summary>
+		/// Шифруем пароль пользователя, в дальнейшем используем выходное значение функции
+		/// в качестве пароля пользователя.
+		/// 
+		/// Таким образом гарантируется что истинный пароль знает только сам пользователь.
+		/// </summary>
+		/// <param name="pass">Истинный пароль</param>
+		/// <param name="login">Логин пользователя</param>
+		/// <returns></returns>
+		public static string HashPass(string pass, string login) {
+			string preparedPass = login.ToUpper() + pass;
+			string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass, "SHA1");
+			return hashedPass;
 		}
 
 		/// <summary>
@@ -73,37 +99,12 @@ namespace ITCommunity {
 		}
 
 		/// <summary>
-		/// Шифруем пароль пользователя, в дальнейшем используем выходное значение функции
-		/// в качестве пароля пользователя.
-		/// 
-		/// Таким образом гарантируется что истинный пароль знает только сам пользователь.
-		/// </summary>
-		/// <param name="pass">Истинный пароль</param>
-		/// <param name="login">Логин пользователя</param>
-		/// <returns></returns>
-		public static string HashPass(string pass, string login) {
-			string preparedPass = login.ToUpper() + pass;
-			string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass, "SHA1");
-			return hashedPass;
-		}
-
-		/// <summary>
 		/// Выход
 		/// </summary>
 		public static void LogOut() {
 			HttpContext.Current.Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
 			HttpContext.Current.Session.Abandon();
 			FormsAuthentication.SignOut();
-		}
-
-		/// <summary>
-		/// IP текущего пользователя
-		/// </summary>
-		public static string Ip {
-			get {
-				NameValueCollection serverVars = HttpContext.Current.Request.ServerVariables;
-				return serverVars["HTTP_X_FORWARDED_FOR"] ?? serverVars["REMOTE_ADDR"];
-			}
 		}
 
 		/// <summary>
@@ -114,6 +115,7 @@ namespace ITCommunity {
 		/// <param name="email">электропочта</param>
 		public static User Register(string login, string pass, string email) {
 			User user = new User();
+
 			user.Login = login;
 			user.Pass = HashPass(pass, login);
 			user.Email = email;
@@ -122,15 +124,9 @@ namespace ITCommunity {
 			return User.Add(user);
 		}
 
-		public static bool isAuth {
-			get {
-				return HttpContext.Current.User.Identity.IsAuthenticated;
-			}
-		}
-
-		static private User GetUserFromCookie() {
-
+		private static User GetUserFromCookie() {
 			User user = new User();
+
 			HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
 			if (authCookie != null) {
 				FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
@@ -140,6 +136,7 @@ namespace ITCommunity {
 					user = User.GetByLogin(ticket.Name);
 				}
 			}
+
 			return user;
 		}
 	}

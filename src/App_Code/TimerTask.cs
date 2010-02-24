@@ -4,13 +4,14 @@ using System.Web;
 using System.Timers;
 
 namespace ITCommunity {
-    public class TimerTask {
-        private readonly Timer timer;
-        public TimerTask(double interval, ElapsedEventHandler handler) {
-            this.timer = new Timer();
-            this.timer.Interval = interval;
-            this.timer.Elapsed += new ElapsedEventHandler(handler);
-            this.timer.Enabled = true;
-        }
-    }
+	public class TimerTask {
+		private readonly Timer _timer;
+
+		public TimerTask(double interval, ElapsedEventHandler handler) {
+			_timer = new Timer();
+			_timer.Interval = interval;
+			_timer.Elapsed += new ElapsedEventHandler(handler);
+			_timer.Enabled = true;
+		}
+	}
 }

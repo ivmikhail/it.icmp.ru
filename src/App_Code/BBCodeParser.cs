@@ -1,11 +1,12 @@
 using System;
-using System.Data;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace ITCommunity {
 	public class BBCodeParser {
+
 		#region Helper Classes
+
 		interface IHtmlFormatter {
 			string Format(string data);
 		}
@@ -16,7 +17,6 @@ namespace ITCommunity {
 
 			public RegexFormatter(string pattern, string replace)
 				: this(pattern, replace, true) {
-
 			}
 
 			public RegexFormatter(string pattern, string replace, bool ignoreCase) {
@@ -48,34 +48,26 @@ namespace ITCommunity {
 				return data.Replace(_pattern, _replace);
 			}
 		}
-		private static string abundaEvaluator(Match m) {
-			int videoId;
-			if (!Int32.TryParse(m.Groups[1].Value, out videoId)) {
-				return "";
-			}
-			String hash = Hash.CalculateMD5(m.Groups[1].Value).Substring(11, 20);
-			return "<embed width='452' height='361' quality='high' "
-				+ "bgcolor='#000000' name='main' id='main' allowfullscreen='true' "
-				+ "allowscriptaccess='always' src='http://tube.abunda.ru/player/vPlayer.swf"
-				+ "?f=http://tube.abunda.ru/player/vConfig_embed.php?vkey="
-				+ hash + "' "
-				+ "type='application/x-shockwave-flash' />";
-		}
+
 		protected class RegexFuncFormatter : IHtmlFormatter {
 			private Regex _regex;
 			MatchEvaluator _function;
+
 			public RegexFuncFormatter(string pattern, MatchEvaluator evaluator) {
 				this._regex = new Regex(pattern);
 				this._function = evaluator;
 			}
+
 			public string Format(string data) {
 				return this._regex.Replace(data, _function);
 			}
 		}
+
 		#endregion
 
 		#region BBCode
-		static List<IHtmlFormatter> _formatters;
+
+		private static List<IHtmlFormatter> _formatters;
 
 		static BBCodeParser() {
 			_formatters = new List<IHtmlFormatter>();
@@ -158,8 +150,7 @@ namespace ITCommunity {
 					<param name='pluginspage' value='http://www.macromedia.com/go/getflashplayer' />
 				</object>", true));
 			// Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
-			_formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]"
-				+ "", abundaEvaluator));
+			_formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]", abundaEvaluator));
 
 			_formatters.Add(new RegexFormatter(@"\[table\]((.|\n)*?)\[/table\]", "<table class='user-table' cellpadding='0' cellspacing='0' width='100%'>$1</table>"));
 			_formatters.Add(new RegexFormatter(@"\[table=([0-9]*%)\]((.|\n)*?)\[/table\]", "<table class='user-table' cellpadding='0' cellspacing='0' width='$1'>$2</table>"));
@@ -167,6 +158,21 @@ namespace ITCommunity {
 			_formatters.Add(new RegexFormatter(@"\[td\]((.|\n)*?)\[/td\]", "<td>$1</td>"));
 			_formatters.Add(new RegexFormatter(@"\[td=([0-9]*)\]((.|\n)*?)\[/td\]", "<td colspan='$1'>$2</td>"));
 		}
+
+		private static string abundaEvaluator(Match match) {
+			int videoId;
+			if (!Int32.TryParse(match.Groups[1].Value, out videoId)) {
+				return "";
+			}
+			string hash = Hash.CalculateMD5(match.Groups[1].Value).Substring(11, 20);
+			return "<embed width='452' height='361' quality='high' "
+				+ "bgcolor='#000000' name='main' id='main' allowfullscreen='true' "
+				+ "allowscriptaccess='always' src='http://tube.abunda.ru/player/vPlayer.swf"
+				+ "?f=http://tube.abunda.ru/player/vConfig_embed.php?vkey="
+				+ hash + "' "
+				+ "type='application/x-shockwave-flash' />";
+		}
+
 		#endregion
 
 		#region Format
@@ -178,11 +184,5 @@ namespace ITCommunity {
 			return data;
 		}
 		#endregion
-
-		public BBCodeParser() {
-			//
-			// TODO: Add constructor logic here
-			//
-		}
 	}
 }

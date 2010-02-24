@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using System.Data;
 
-
 namespace ITCommunity {
 	/// <summary>
 	/// Класс для управления текстов в хидере
 	/// </summary>
 	public class HeaderText {
-		private int _id = -1;
-		private User _user = new User();
-		private string _text = "";
-		private DateTime _createDate = DateTime.Now;
-		private DateTime _showEndDate = DateTime.MinValue;
-		private bool _isShowing = true;
 
 		private delegate object CurrentHeaderTextLoader();
-		private static Random random = new Random();
+
+		#region Properties
+
+		private static Random _random = new Random();
+		private static CurrentHeaderTextLoader _currentHeaderTextLoader = new CurrentHeaderTextLoader(GetCurrentsFromDB);
+
+		private int _id;
+		private User _user;
+		private string _text;
+		private DateTime _createDate;
+		private DateTime _showEndDate;
+		private bool _isShowing;
 
 		public int Id {
 			get { return _id; }
@@ -48,8 +52,15 @@ namespace ITCommunity {
 			set { _isShowing = value; }
 		}
 
+		#endregion
+
 		public HeaderText() {
-			Text = "Напиши текст для хидера, " + CurrentUser.User.Login + "!";
+			_id = -1;
+			_user = new User();
+			_text = "Напиши текст для хидера, " + CurrentUser.User.Login + "!";
+			_createDate = DateTime.Now;
+			_showEndDate = DateTime.MinValue;
+			_isShowing = true;
 		}
 
 		public HeaderText(int id, User user, string text, DateTime createDate, DateTime showEndDate, bool isShowing) {
@@ -62,56 +73,54 @@ namespace ITCommunity {
 		}
 
 		public static HeaderText Add(int userId, string text) {
-			AppCache.Remove(Global.ConfigStringParam("HeaderTextCacheName"));
+			AppCache.Remove(Config.String("HeaderTextCacheName"));
 			return GetHeaderTextFromRow(Database.HeaderTextAdd(userId, text));
 		}
 
-		public static HeaderText GetCurrent() {
-			List<HeaderText> currents = GetCurrents();
-			if (currents.Count == 0) {
-				return new HeaderText();
-			}
-			return currents[random.Next(currents.Count)];
-		}
-
-		private static List<HeaderText> GetCurrents() {
-			CurrentHeaderTextLoader loader = new CurrentHeaderTextLoader(GetCurrentsFromDB);
-			List<HeaderText> currents = (List<HeaderText>)AppCache.Get(
-				Global.ConfigStringParam("HeaderTextCacheName"),
-				new object(),
-				loader,
-				new object[] { },
-				DateTime.Now.AddHours(Global.ConfigDoubleParam("HeaderTextCachePer")));
-			return currents;
-		}
-
-		private static List<HeaderText> GetCurrentsFromDB() {
-			List<HeaderText> currents = GetHeaderTextsFromTable(Database.HeaderTextGetCurrents());
-			List<HeaderText> toDelete = new List<HeaderText>();
-			foreach (HeaderText current in currents) {
-				if (!current.IsShowing) {
-					Database.HeaderTextUpdateShowEndDate(current.Id);
-					toDelete.Add(current);
-				}
-			}
-			foreach (HeaderText text in toDelete) {
-				currents.Remove(text);
-			}
-			return currents;
-		}
-
 		public static void Delete(int id) {
+			AppCache.Remove(Config.String("HeaderTextCacheName"));
 			Database.HeaderTextDel(id);
-			AppCache.Remove(Global.ConfigStringParam("HeaderTextCacheName"));
 		}
 
 		public static void EndShow(int id) {
+			AppCache.Remove(Config.String("HeaderTextCacheName"));
 			Database.HeaderTextUpdateShowEndDate(id);
-			AppCache.Remove(Global.ConfigStringParam("HeaderTextCacheName"));
+		}
+
+		public static HeaderText GetRandom() {
+			List<HeaderText> headerTexts = GetAll();
+			if (headerTexts.Count == 0) {
+				return new HeaderText();
+			}
+			return headerTexts[_random.Next(headerTexts.Count)];
 		}
 
 		public static List<HeaderText> Get(int page, int count, ref int records_count) {
 			return GetHeaderTextsFromTable(Database.HeaderTextGet(page, count, ref records_count));
+		}
+
+		private static List<HeaderText> GetAll() {
+			object headerTexts = AppCache.Get(
+				Config.String("HeaderTextCacheName"),
+				_currentHeaderTextLoader,
+				null,
+				Config.Double("HeaderTextCachePer"));
+			return (List<HeaderText>)headerTexts;
+		}
+
+		private static List<HeaderText> GetCurrentsFromDB() {
+			List<HeaderText> headerTexts = GetHeaderTextsFromTable(Database.HeaderTextGetCurrents());
+			List<HeaderText> toDelete = new List<HeaderText>();
+			foreach (HeaderText headerText in headerTexts) {
+				if (!headerText.IsShowing) {
+					Database.HeaderTextUpdateShowEndDate(headerText.Id);
+					toDelete.Add(headerText);
+				}
+			}
+			foreach (HeaderText text in toDelete) {
+				headerTexts.Remove(text);
+			}
+			return headerTexts;
 		}
 
 		private static List<HeaderText> GetHeaderTextsFromTable(DataTable dt) {
@@ -124,6 +133,7 @@ namespace ITCommunity {
 
 		private static HeaderText GetHeaderTextFromRow(DataRow dr) {
 			HeaderText headerText;
+
 			if (dr == null) {
 				headerText = new HeaderText();
 			}
@@ -137,7 +147,7 @@ namespace ITCommunity {
 					showEndDate = Convert.ToDateTime(dr["show_end_date"]);
 				}
 				else {
-					double hours = Global.ConfigDoubleParam("HeaderTextShowingHours");
+					double hours = Config.Double("HeaderTextShowingHours");
 					showEndDate = createDate.AddHours(hours);
 				}
 				bool isShowing = (showEndDate.CompareTo(DateTime.Now) > 0);
@@ -147,8 +157,10 @@ namespace ITCommunity {
 					Convert.ToString(dr["text"]),
 					createDate,
 					showEndDate,
-					isShowing);
+					isShowing
+				);
 			}
+
 			return headerText;
 		}
 	}

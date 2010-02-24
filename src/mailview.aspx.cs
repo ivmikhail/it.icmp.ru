@@ -30,15 +30,15 @@ namespace ITCommunity
             if (IsOutput())
             {
                 ListTitle.Text = "Исходящие";
-                messages = Message.GetBySender(CurrentUser.User.Id, page, Global.ConfigNumParam("MaxMessageCount"), ref total_records);
+                messages = Message.GetBySender(CurrentUser.User.Id, page, Config.Num("MaxMessageCount"), ref total_records);
              } else
             {
                 ListTitle.Text = "Входящие";
-                messages = Message.GetByReceiver(CurrentUser.User.Id, page, Global.ConfigNumParam("MaxMessageCount"), ref total_records);
+                messages = Message.GetByReceiver(CurrentUser.User.Id, page, Config.Num("MaxMessageCount"), ref total_records);
             }
             RepeaterMessages.DataSource = messages;
             RepeaterMessages.DataBind();
-            MessagePager.DataBind(total_records, Global.ConfigNumParam("MaxMessageCount"));
+            MessagePager.DataBind(total_records, Config.Num("MaxMessageCount"));
         }
 
         protected void RepeaterMessages_ItemDataBound(object sender, RepeaterItemEventArgs e)

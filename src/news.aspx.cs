@@ -78,7 +78,7 @@ namespace ITCommunity {
 			}
 		}
 		private void WritePostCategories(Post post) {
-			string result = String.Empty;
+			string result = string.Empty;
 			foreach (Category cat in Category.GetPostCategories(post.Id)) {
 				if (result.Length > 0) {
 					result += ", ";

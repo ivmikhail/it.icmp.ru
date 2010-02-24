@@ -61,7 +61,7 @@ namespace ITCommunity
 		{
 			int total_records = 0;
 			int page = GetPage();
-			int favoritesPerPage = Global.ConfigNumParam("FavoritesCount");
+			int favoritesPerPage = Config.Num("FavoritesCount");
 			List<Post> favorites = Post.GetFavorites(CurrentUser.User.Id, page, favoritesPerPage, ref total_records);
 
 			FavoritesList.DataBind(favorites, total_records, favoritesPerPage);

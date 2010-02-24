@@ -68,7 +68,7 @@ namespace ITCommunity
                 number = number.Substring(1);
             }
 
-            return "/" + Global.ConfigStringParam("RfcFolder") + "/rfc" + number + ".txt";
+            return "/" + Config.String("RfcFolder") + "/rfc" + number + ".txt";
         }
     }
 }

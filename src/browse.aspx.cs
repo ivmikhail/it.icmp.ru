@@ -17,8 +17,8 @@ using System.Collections.Generic;
 namespace ITCommunity {
 	public partial class Browse : System.Web.UI.Page {
 		protected void Page_Load(object sender, EventArgs e) {
-			String dir = Request.QueryString["dir"] ?? "";
-			String linkTypeQuery = Request.QueryString["cat"] ?? "files";
+			string dir = Request.QueryString["dir"] ?? "";
+			string linkTypeQuery = Request.QueryString["cat"] ?? "files";
 			LinkType linkType = LinkType.Files;
 			try {
 				linkType = (LinkType)Enum.Parse(linkType.GetType(), linkTypeQuery, true);
@@ -30,8 +30,8 @@ namespace ITCommunity {
 			}
             dir = unescapeLink(dir);
 			bool isViewRootDir = dir == "/" ;
-			String path = isViewRootDir ? "/" : dir;
-			String[] pathes = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+			string path = isViewRootDir ? "/" : dir;
+			string[] pathes = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 			dir = BrowseItem.GetRealPathOfLink(linkType, dir);
             
 			if (dir != null) {
@@ -59,7 +59,7 @@ namespace ITCommunity {
 
 		private List<BrowseItem> getPathItems(LinkType linkType, string[] pathes) {
 			List<BrowseItem> result = new List<BrowseItem>(pathes.Length);
-			String path = "";
+			string path = "";
 			for (int i = 0; i < pathes.Length; i++) {
 				path += pathes[i] + "/";
 				BrowseItem bi = BrowseItem.Get(BrowseItem.GetRealPathOfLink(linkType, path));
@@ -70,8 +70,8 @@ namespace ITCommunity {
 			}
 			return result;
 		}
-        private String unescapeLink(String link) {
-            String result;
+        private string unescapeLink(string link) {
+            string result;
             try {
                 result = Uri.UnescapeDataString(link);
             } catch (UriFormatException e) {

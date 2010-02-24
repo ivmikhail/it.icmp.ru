@@ -1,67 +1,53 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 
-namespace ITCommunity
-{
-	public partial class PollMenu : System.Web.UI.UserControl
-	{
+namespace ITCommunity {
+	public partial class PollMenu : UserControl {
+
 		private static Poll current;
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!IsPostBack)
-			{
+
+		protected void Page_Load(object sender, EventArgs e) {
+			if (!IsPostBack) {
 				current = Poll.GetActive();
 				BindPollControlsAndData();
 				bool userAlreadyVote = current.UserAlreadyVoted(CurrentUser.User);
-				if (userAlreadyVote)
-				{
+				if (userAlreadyVote) {
 					LinkButtonVote.Visible = false;
 					UserVotedText.Visible = true;
 				}
-				else
-				{
+				else {
 					LinkButtonVote.Visible = true;
 					UserVotedText.Visible = false;
 				}
 			}
 		}
 
-		private void BindPollControlsAndData()
-		{
+		private void BindPollControlsAndData() {
 			LiteralPollTopic.Text = current.Topic;
 
-			if (current.IsOpen)
-			{
+			if (current.IsOpen) {
 				LiteralNote.Text = "Это открытый опрос. Другие соучастнеги будут видеть, кто как проголосовал.";
 			}
-			else
-			{
+			else {
 				LiteralNote.Text = "Это закрытый опрос. Кто как проголосовал легально узнать нельзя.";
 			}
 
 			List<PollAnswer> source = current.Answers;
 
-			if (current.IsMultiSelect)
-			{
+			if (current.IsMultiSelect) {
 				BindCheckBoxList(source);
 
 			}
-			else
-			{
+			else {
 				BindRadioButtonList(source);
 			}
 		}
-		private void BindCheckBoxList(List<PollAnswer> answers)
-		{
+
+		private void BindCheckBoxList(List<PollAnswer> answers) {
 			CheckBoxListAnswer.Visible = true;
 			RadioButtonListAnswer.Visible = false;
 
@@ -71,8 +57,8 @@ namespace ITCommunity
 			CheckBoxListAnswer.DataTextField = "text";
 			CheckBoxListAnswer.DataBind();
 		}
-		private void BindRadioButtonList(List<PollAnswer> answers)
-		{
+
+		private void BindRadioButtonList(List<PollAnswer> answers) {
 			CheckBoxListAnswer.Visible = false;
 			RadioButtonListAnswer.Visible = true;
 
@@ -84,25 +70,19 @@ namespace ITCommunity
 			RadioButtonListAnswer.DataBind();
 		}
 
-		private string GetVotedIds()
-		{
+		private string GetVotedIds() {
 			string vote_ids = string.Empty;
-			if (current.IsMultiSelect)
-			{
-				foreach (ListItem item in CheckBoxListAnswer.Items)
-				{
-					if (item.Selected)
-					{
-						if (vote_ids.Length > 0)
-						{
+			if (current.IsMultiSelect) {
+				foreach (ListItem item in CheckBoxListAnswer.Items) {
+					if (item.Selected) {
+						if (vote_ids.Length > 0) {
 							vote_ids += ",";
 						}
 						vote_ids += item.Value;
 					}
 				}
 			}
-			else
-			{
+			else {
 				vote_ids = RadioButtonListAnswer.SelectedValue;
 			}
 
@@ -110,25 +90,19 @@ namespace ITCommunity
 		}
 
 
-		protected void LinkButtonVote_Click(object sender, EventArgs e)
-		{
+		protected void LinkButtonVote_Click(object sender, EventArgs e) {
 			string poll_message = "<div class='error'>Вы не можете голосовать, чтобы иметь такую возможность зарегистрируйтесь или авторизируйтесь.</div>";
 
-			if (CurrentUser.isAuth)
-			{
-				if (current.UserAlreadyVoted(CurrentUser.User))
-				{
+			if (CurrentUser.isAuth) {
+				if (current.UserAlreadyVoted(CurrentUser.User)) {
 					poll_message = "<div class='error'>Ваш голос не засчитан. Вы уже голосовали.</div>";
 				}
-				else
-				{
+				else {
 					string vote_ids = GetVotedIds();
-					if (vote_ids == string.Empty)
-					{
+					if (vote_ids == string.Empty) {
 						poll_message = "<div class='error'>Ваш голос не засчитан. Нужно выбрать хотя бы один вариант ответа.</div>";
 					}
-					else
-					{
+					else {
 						current.Vote(CurrentUser.User, vote_ids);
 						poll_message = "<div class='message'>Ваш голос засчитан. Спасибо за проявленную активность!</div>";
 					}

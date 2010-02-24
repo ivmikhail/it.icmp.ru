@@ -12,8 +12,8 @@ using System.Web.UI.HtmlControls;
 namespace ITCommunity {
 	public partial class AddHeaderText : System.Web.UI.Page {
         protected int PostsCount;
-        protected int HeaderTextMaxLength = Global.ConfigNumParam("HeaderTextMaxLength");
-        protected int HeaderTextShowingHours = Global.ConfigNumParam("HeaderTextShowingHours");
+        protected int HeaderTextMaxLength = Config.Num("HeaderTextMaxLength");
+        protected int HeaderTextShowingHours = Config.Num("HeaderTextShowingHours");
 		protected void Page_Load(object sender, EventArgs e) {
 			TextLengthError.Visible = UserBlockedErrorPanel.Visible = ErrorPanel.Visible = MessageText.Visible = false;
 			if (!IsPostBack) {
@@ -23,7 +23,7 @@ namespace ITCommunity {
 					UserBlockedErrorPanel.Visible = true;
 				}
 				else if (!current.AbleToAddHeaderText()) {
-					PostsCount = Global.ConfigNumParam("HeaderTextPostsCount") - current.HeaderTextCounter;
+					PostsCount = Config.Num("HeaderTextPostsCount") - current.HeaderTextCounter;
 					//PostsCountText.Text = count.ToString();
 					ErrorPanel.Visible = true;
 				}
@@ -46,7 +46,7 @@ namespace ITCommunity {
 
 		private bool IsDataValid() {
 			RequiredText.Validate();
-			if (TextBoxText.Text.Length > Global.ConfigNumParam("HeaderTextMaxLength")) {
+			if (TextBoxText.Text.Length > Config.Num("HeaderTextMaxLength")) {
 				TextLengthError.Visible = true;
 				return false;
 			}

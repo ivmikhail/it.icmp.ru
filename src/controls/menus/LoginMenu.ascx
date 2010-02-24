@@ -17,7 +17,7 @@
 		Запомнить
 		<asp:CheckBox ID="CheckBoxIsRemember" runat="server" />
 	</label>
-	
+
 	<ul>
 		<li>
 			<asp:LinkButton ID="LogInButton" runat="server" OnClick="LogInButton_Click"  ToolTip="Войти в аккаунт">Вход</asp:LinkButton>
@@ -27,5 +27,6 @@
 			<a href="recovery.aspx" title="Жми сюда если забыл пароль">Я забыл пароль</a>
 		</li>
 	</ul>
-	<asp:Literal ID="Messages" runat="server" />
+
+	<asp:Literal ID="Errors" runat="server" />
 </div>
