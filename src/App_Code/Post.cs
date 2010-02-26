@@ -300,6 +300,18 @@ namespace ITCommunity {
 		public static List<Post> Get(int page, int count, ref int posts_count) {
 			return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
 		}
+        /// <summary>
+        /// Возвращаем посты, удовлетворяющие условию поиска
+        /// </summary>
+        /// <param name="query">условие поиска</param>
+        /// /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <param name="posts_count"></param>
+        /// <returns>список постов, важно - в Description пишем сниппет ???? </returns>
+        // TODO: подумать
+        public static List<Post> Get(String query, int page, int count) {
+            throw new NotImplementedException();
+        }
 
 		/// <summary>
 		/// Возвращает посты определенного автора

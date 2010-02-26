@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "src", "src\", "{77823C71-1A81-4A92-A0EE-C4F86D5B7D58}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv3.5"
+		ProjectReferences = "{C30A7E20-711F-4EFE-9751-51C80E05765F}|IndexerLib.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/src"
 		Debug.AspNetCompiler.PhysicalPath = "src\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\src\"
@@ -22,6 +23,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "src", "src\", "{77823C71-1A
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "indexer", "indexer\indexer.csproj", "{F312A541-1B95-4027-AE0F-8F208078A40B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndexerLib", "IndexerLib\IndexerLib.csproj", "{C30A7E20-711F-4EFE-9751-51C80E05765F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +64,18 @@ Global
 		{F312A541-1B95-4027-AE0F-8F208078A40B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F312A541-1B95-4027-AE0F-8F208078A40B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F312A541-1B95-4027-AE0F-8F208078A40B}.Release|Win32.ActiveCfg = Release|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Release|.NET.ActiveCfg = Release|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C30A7E20-711F-4EFE-9751-51C80E05765F}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

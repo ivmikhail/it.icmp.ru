@@ -8,60 +8,53 @@ using Lucene.Net.Index;
 using Lucene.Net.Analysis;
 using Lucene.Net.Store;
 using Lucene.Net.Documents;
+using System.Diagnostics;
+using ITCommunity.IndexerLib;
 
 
 namespace indexer {
     class Program {
         static void Main(string[] args) {
-            string webConfigPath = getWebConfigPath(args);
-            string indexPath = getIndexesPath(args);
-            if (webConfigPath == string.Empty || indexPath == string.Empty) {
+            String webConfigPath = getWebConfigPath(args);
+            String indexPath = getIndexesPath(args);
+            if (webConfigPath == String.Empty || indexPath == String.Empty) {
                 Console.WriteLine("indexer <web.config path> <index dir path>");
                 return;
             }
-            string connString = SomeLib.TextUtil.GetConnectionStringFromXml(webConfigPath);
+
+            
+            String connString = SomeLib.TextUtil.GetConnectionStringFromXml(webConfigPath);
             Console.WriteLine(connString);
 
-            string[] files =  System.IO.Directory.GetFiles(indexPath);
-            bool isCreateindexes = files.Length==0;
-            IndexWriter indexWriter = null;
-            Lucene.Net.Store.Directory directory = FSDirectory.Open(new DirectoryInfo(indexPath));
-            try {
-                indexWriter = new IndexWriter(directory, new Lucene.Net.Analysis.Standard.StandardAnalyzer(), isCreateindexes);
-            } catch (LockObtainFailedException ex) {
-                IndexWriter.Unlock(directory);
-                indexWriter = new IndexWriter(directory, new Lucene.Net.Analysis.Standard.StandardAnalyzer(), isCreateindexes);
-            }
+            Indexer.Init(connString, indexPath);
+            Indexer indexer = Indexer.GetInstance();
+
             SqlConnection conn = new SqlConnection(connString);
             conn.Open();
             SqlCommand cmd = new SqlCommand("select * from posts", conn);
             SqlDataReader reader = cmd.ExecuteReader();
             int count = 0;
             while (reader.Read()) {
-                string title = reader["title"].ToString();
-                string text = reader["description"].ToString();
+                String title = reader["title"].ToString();
+                String text = reader["description"].ToString();
                 if(!text.EndsWith(" ")) {
                     text += " ";
                 }
                 text += reader["text"].ToString();
-                string postId = reader["id"].ToString();
-                Document doc = new Document();
-                doc.Add(new Field("title", title, Field.Store.YES, Field.Index.ANALYZED));
-                doc.Add(new Field("post", text, Field.Store.YES, Field.Index.ANALYZED));
-                doc.Add(new Field("post_id", postId, Field.Store.YES, Field.Index.NO));
-                indexWriter.UpdateDocument(new Term(postId), doc);
+                String postId = reader["id"].ToString();
+                indexer.UpdateDocument(title, text, postId);
                 count++;
                 if (count % 100 == 0) {
                     Console.WriteLine(count);
                 }
             }
             conn.Close();
-            indexWriter.Optimize();
-            indexWriter.Close();
+            indexer.Optimize();
+            indexer.Close();
         }
 
         private static string getIndexesPath(string[] args) {
-            string result = string.Empty;
+            String result = String.Empty;
             if (args.Length > 1) {
                 if (!System.IO.Directory.Exists(args[1])) {
                     Console.WriteLine("Index directory " + args[1] + " not exist");
@@ -73,7 +66,7 @@ namespace indexer {
         }
 
         private static string getWebConfigPath(string[] args) {
-            string result = string.Empty;
+            String result = String.Empty;
             if (args.Length > 0) {
                 if(!File.Exists(args[0])) {
                     Console.WriteLine("web.config in " + args[0] + " not exist");
