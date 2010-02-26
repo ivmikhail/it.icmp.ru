@@ -353,8 +353,16 @@ namespace ITCommunity {
 			return (List<Post>)top_posts;
 		}
 
-		public static List<Post> GetTopByRating(int period, int count) {
-			return GetPostsFromTable(Database.PostGetTopByRating(period, count));
+		public static List<KeyValuePair<Post, int>> GetTopByRating(int period, int count) {
+			List<KeyValuePair<Post, int>> result = new List<KeyValuePair<Post, int>>();
+			DataTable dt = Database.PostGetTopByRating(period, count);
+			for (int i = 0; i < dt.Rows.Count; i++) {
+				Post post = GetPostFromRow(dt.Rows[i]);
+				int rating = Convert.ToInt32(dt.Rows[i]["rating_value"]);
+				KeyValuePair<Post, int> pair = new KeyValuePair<Post, int>(post, rating);
+				result.Add(pair);
+			}
+			return result;
 		}
 
 		/// <summary>
