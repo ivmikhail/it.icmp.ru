@@ -1,52 +1,51 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="PopularPostsMenu.ascx.cs" Inherits="ITCommunity.PopularPostsMenu" %>
 
+<%@ Register Src="~/controls/Rating.ascx" TagName="Rating" TagPrefix="uc" %>
+
 <div id="popular-posts-menu" class="menu-panel">
 	<h1>Популярные посты</h1>
 
-    <h3>По просмотрам</h3>
+	<h3>По просмотрам</h3>
 	<asp:Repeater ID="PopularPostsByViews" runat="server" >
 		<HeaderTemplate>
-			<ul>
+			<ul class="by-views">
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<a href="news.aspx?id=<%# Eval("value.id")%>">
-					<%# Eval("value.TitleFormatted")%>
+				<%# Eval("Views")%>
+				<a href="news.aspx?id=<%# Eval("Id")%>">
+					<%# Eval("TitleFormatted")%>
 				</a>
 				by
-				<a href="user.aspx?login=<%# Eval("key.login")%>" title="Посетить страницу пользователя" class="user-pm-link">
-					<%# Eval("key.login")%>
+				<a href="user.aspx?login=<%# Eval("Author.Login")%>" title="Посетить страницу пользователя" class="user-pm-link">
+					<%# Eval("Author.Login")%>
 				</a>
-				(<%# Eval("value.views")%>)
 			</li>
 		</ItemTemplate>
 		<FooterTemplate>
 			</ul>
 		</FooterTemplate>
 	</asp:Repeater>
-    <%-- 
-    <h3>По рейтингу</h3>
-    <asp:Repeater ID="PopularPostsByRating" runat="server" >
+
+	<h3>По рейтингу</h3>
+	<asp:Repeater ID="PopularPostsByRating" runat="server" >
 		<HeaderTemplate>
-			<ul>
+			<ul class="by-rating">
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<a href="news.aspx?id=<%# Eval("value.id")%>">
-					<%# Eval("value.TitleFormatted")%>
+				<uc:Rating ID="PostRating" runat="server" EntityId='<%# Eval("Id")%>' Type="Post" />
+				<a href="news.aspx?id=<%# Eval("Id")%>">
+					<%# Eval("TitleFormatted")%>
 				</a>
 				by
-				<a href="user.aspx?login=<%# Eval("key.login")%>" title="Посетить страницу пользователя" class="user-pm-link">
-					<%# Eval("key.login")%>
+				<a href="user.aspx?login=<%# Eval("Author.Login")%>" title="Посетить страницу пользователя" class="user-pm-link">
+					<%# Eval("Author.Login")%>
 				</a>
-                <div style="float:right;">
-				    <uc:Rating ID="PostRating" runat="server" EntityId='<%# Eval("value.id") %>' Type="Post" EntityAuthorId='<%# Eval("value.authorId") %>' ButtonsVisible="false" />
-			    </div>
-            </li>
+			</li>
 		</ItemTemplate>
 		<FooterTemplate>
 			</ul>
 		</FooterTemplate>
 	</asp:Repeater>
-    --%>    
 </div>

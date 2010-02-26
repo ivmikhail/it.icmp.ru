@@ -43,6 +43,7 @@ namespace ITCommunity {
 			get { return _userId; }
 			set { _userId = value; }
 		}
+
 		/// <summary>
 		/// Оригинальное описание, "как ввел" пользователь (bbcode не отформатирован в хтмл, хтмл не отвалидирован)
 		/// </summary>
@@ -72,6 +73,7 @@ namespace ITCommunity {
 		public string TextFormatted {
 			get { return BBCodeParser.Format(Util.HtmlEncode(_text)); }
 		}
+
 		/// <summary>
 		/// Полностью форматированный в безопасный хтмл тайтл, ббкод не действует
 		/// </summary>
@@ -140,6 +142,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public Post() {
 			_id = -1;
 			_title = "";
@@ -167,6 +171,10 @@ namespace ITCommunity {
 			_commentsCount = commentsCount;
 			_cats = cats;
 		}
+
+		#endregion
+
+		#region Public methods
 
 		/// <summary>
 		/// Выясняем является ли данный пользователь автором(создателем) новости
@@ -256,6 +264,10 @@ namespace ITCommunity {
 			Database.PostUpdateViews(_id);
 		}
 
+		#endregion
+
+		#region Public static methods
+
 		public static Post GetById(int id) {
 			return GetPostFromRow(Database.PostGetById(id));
 		}
@@ -331,14 +343,18 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="period">Период, в днях. Например, популярные посты за последние N дней.</param>
 		/// <param name="count">Кол-во нужных постов</param>
-		public static List<KeyValuePair<User, Post>> GetTopByViews(int period, int count) {
+		public static List<Post> GetTopByViews(int period, int count) {
 			object top_posts = AppCache.Get(
 				Config.String("TopPostsByViewsCacheName"),
 				_topPostsByViewsLoader,
 				new object[] { period, count },
 				Config.Double("TopPostsByViewsCachePer")
 			);
-			return (List<KeyValuePair<User, Post>>)top_posts;
+			return (List<Post>)top_posts;
+		}
+
+		public static List<Post> GetTopByRating(int period, int count) {
+			return GetPostsFromTable(Database.PostGetTopByRating(period, count));
 		}
 
 		/// <summary>
@@ -387,6 +403,10 @@ namespace ITCommunity {
 			return GetPostFromRow(Database.FavoriteAdd(user_id, post_id));
 		}
 
+		#endregion
+
+		#region Private static methods
+
 		/// <summary>
 		/// Сцепляем новость к категориям
 		/// </summary>
@@ -423,13 +443,8 @@ namespace ITCommunity {
 			return GetPostsFromTable(Database.PostGetLast(count));
 		}
 
-		private static List<KeyValuePair<User, Post>> GetTopPostsByViewsFromDB(int period, int count) {
-			List<Post> posts = GetPostsFromTable(Database.PostGetTopByViews(period, count));
-			List<KeyValuePair<User, Post>> top = new List<KeyValuePair<User, Post>>();
-			foreach (Post post in posts) {
-				top.Add(new KeyValuePair<User, Post>(post.Author, post));
-			}
-			return top;
+		private static List<Post> GetTopPostsByViewsFromDB(int period, int count) {
+			return GetPostsFromTable(Database.PostGetTopByViews(period, count));
 		}
 
 		private static List<Post> GetPostsFromTable(DataTable dt) {
@@ -463,5 +478,7 @@ namespace ITCommunity {
 			}
 			return post;
 		}
+
+		#endregion
 	}
 }

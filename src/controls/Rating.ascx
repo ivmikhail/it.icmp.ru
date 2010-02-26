@@ -9,7 +9,7 @@
 					<%# Value %>
 				</span>
 			</span>
-			<span id="RatingButtons" runat="server" class="rating-buttons">
+			<span id="RatingButtons" runat="server" class="rating-buttons" visible="false">
 				<asp:LinkButton ID="IncRating" runat="server" OnClick="IncRatingClick" Text="+" ToolTip="Нравится"/>
 				|
 				<asp:LinkButton ID="DecRating" runat="server" OnClick="DecRatingClick" Text="&ndash;" ToolTip="Не нравится"/>
