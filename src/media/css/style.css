@@ -8,12 +8,13 @@
 		- значение свойства после одного пробела
 		- все цвета записываются в формате #000000
 		- сперва стили тегов, далее стили классов и потом стили айди
-		- не использовать !important
+		- не использовать !important (и это очень !important)
 		- хаки для отдельных броузеров сохранять в отдельных файлах
 			(Например: ie6-fix.css - стили с хаками для Internet Explorer 6)
 
 	Структура:
 		- tags					теги
+
 		- panels				панельки разного назначения
 		- links					ссылки
 		- form-elements			элементы формы
@@ -21,6 +22,10 @@
 		- user-table			таблица содержащаяся в посте или в комментарии
 		- post					поста
 		- tabs					красивые табы
+		- editor-toolbar		кноки форматирования текста
+		- counter				счетчик
+		- rating				рейтинг
+
 		- header				хэдера
 		- left-sidebar			боковая панелька на левой стороне
 		- dynamic-content		контент страницы
@@ -40,9 +45,6 @@
 		- edit-post				редактирование поста
 		- files-table			таблица файлов отображаемых на файл-броузере
 		- search				поиск
-		- editor-toolbar		кноки форматирования текста
-		- yaknet-counter		счетчик yaknet
-		- rating				рейтинг
 */
 
 
@@ -63,7 +65,7 @@ a:hover {
 	text-decoration: none;
 }
 pre {
-    overflow:auto;
+	overflow:auto;
 }
 p {
 	margin: 0 10px 10px;
@@ -71,20 +73,22 @@ p {
 h1,
 h2,
 h3 {
-	color: #767676;
 	font-weight: normal;
 }
 h1 {
+	color: #999999;
 	font-size: 1.8em;
 	margin: 16px 0 8px 0;
 }
 h2 {
-	font-size: 1.5em;
-	margin: 10px 0 7px 0;
+	color: #777777;
+	font-size: 1.45em;
+	margin: 10px 0 10px 0;
 }
 h3 {
+	color: #555555;
 	font-size: 1.2em;
-	margin: 6px 0 3px 0;
+	margin: 8px 0 4px 0;
 }
 hr {
 	background: #bbbbbb;
@@ -116,8 +120,7 @@ hr {
 	padding: 2px 5px;
 	margin: 5px 0;
 }
-.error ul li 
-{
+.error ul li {
 	list-style-type:square;
 	margin: 0 0 0 15px;
 }
@@ -400,7 +403,6 @@ hr {
 }
 /* editor-toolbar: end */
 
-
 /* counter: begin */
 .counter {
 	margin: 20px 0 0 10px;
@@ -410,6 +412,31 @@ hr {
 	background: none;
 }
 /* counter: end */
+
+/* rating: begin */
+.rating a {
+	padding: 2px 5px;
+}
+.rating .rating-value {
+	font-weight: bold;
+}
+.rating .sign-positive {
+	color: #20b020;
+}
+.rating .sign-negative {
+	color: #b02020;
+}
+.rating .sign-none {
+	color: #b0b0b0;
+}
+.rating .rating-message {
+}
+.post-rating {
+	float: right;
+	font-size: 0.8em;
+	text-align: right;
+}
+/* rating: end */
 
 /* header: begin */
 #header {
@@ -573,6 +600,16 @@ hr {
 /* popular-posts-menu: begin */
 #popular-posts-menu li {
 	padding: 2px 0;
+	color: #afafaf;
+}
+#popular-posts-menu .rating {
+	font-size: 0.8em;
+	float: left;
+	margin-top: 2px;
+	padding-right: 5px;
+}
+#popular-posts-menu .rating .sign-positive {
+	color: #afafaf;
 }
 /* popular-posts-menu: end */
 
@@ -696,7 +733,7 @@ hr {
 	font-size: 1em;
 }
 #edit-post .file-upload-input a {
-    font-size: 1.4em;
+	font-size : 1.4em;
 }
 #edit-post .uploaded-image {
 	border: 3px solid #aaaaaa;
@@ -727,29 +764,3 @@ hr {
 	width: 70%;
 }
 /* search: end */
-
-/* rating: begin */
-.post-rating {
-	margin-top: 4px;
-	float: right;
-	font-size: 0.8em;
-	text-align: right;
-}
-.rating a {
-	padding: 2px 5px;
-}
-.rating .rating-value {
-	font-weight: bold;
-}
-.rating .sign-positive {
-	color: #20b020;
-}
-.rating .sign-negative {
-	color: #b02020;
-}
-.rating .sign-none {
-	color: #b0b0b0;
-}
-.rating .rating-message {
-}
-/* rating: end */

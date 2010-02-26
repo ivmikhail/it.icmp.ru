@@ -72,7 +72,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int CaptchaAnswerUpdate(Int32 id, string text, Byte isRight) {
+		public static int CaptchaAnswerUpdate(Int32 id, String text, Byte isRight) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaAnswerUpdate", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -198,7 +198,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int CaptchaQuestionUpdate(Int32 id, string text) {
+		public static int CaptchaQuestionUpdate(Int32 id, String text) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CaptchaQuestionUpdate", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -212,7 +212,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow CategoryAdd(string name, Int32 sort) {
+		public static DataRow CategoryAdd(String name, Int32 sort) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -322,7 +322,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int CategoryUpdate(Int32 id, Int32 sort, string name) {
+		public static int CategoryUpdate(Int32 id, Int32 sort, String name) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CategoryUpdate", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -339,7 +339,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow CommentAdd(Int32 post_id, Int32 user_id, string ip, string text) {
+		public static DataRow CommentAdd(Int32 post_id, Int32 user_id, String ip, String text) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("CommentAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -586,7 +586,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow HeaderTextAdd(Int32 user_id, string text) {
+		public static DataRow HeaderTextAdd(Int32 user_id, String text) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("HeaderTextAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -721,7 +721,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow MenuItemsAdd(Int32 parent_id, string url, Int32 sort, string name, Byte new_window) {
+		public static DataRow MenuItemsAdd(Int32 parent_id, String url, Int32 sort, String name, Byte new_window) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -871,7 +871,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int MenuItemsUpdate(Int32 id, Int32 parent_id, string url, Int32 sort, string name, Byte new_window) {
+		public static int MenuItemsUpdate(Int32 id, Int32 parent_id, String url, Int32 sort, String name, Byte new_window) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MenuItemsUpdate", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -897,7 +897,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow MessageAdd(Int32 receiver_id, Int32 sender_id, string title, string text) {
+		public static DataRow MessageAdd(Int32 receiver_id, Int32 sender_id, String title, String text) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("MessageAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1098,7 +1098,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow NotesAdd(Int32 user_id, string title, string text, DateTime cdate) {
+		public static DataRow NotesAdd(Int32 user_id, String title, String text, DateTime cdate) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("NotesAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1226,7 +1226,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow PollAdd(string topic, Int32 author_id, Int32 is_multiselect, Int32 is_open, string answers) {
+		public static DataRow PollAdd(String topic, Int32 author_id, Int32 is_multiselect, Int32 is_open, String answers) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1495,7 +1495,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int PollVote(Int32 poll_id, Int32 user_id, string answers) {
+		public static int PollVote(Int32 poll_id, Int32 user_id, String answers) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PollVote", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1512,7 +1512,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow PostAdd(string title, string desc, string text, Byte attached, string source, Int32 user_id) {
+		public static DataRow PostAdd(String title, String desc, String text, Byte attached, String source, Int32 user_id) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1561,7 +1561,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int PostAttachCategories(Int32 post_id, string query) {
+		public static int PostAttachCategories(Int32 post_id, String query) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostAttachCategories", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1827,9 +1827,9 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int PostGetTop(Int32 period, Int32 count) {
+		public static DataTable PostGetTopByRating(Int32 period, Int32 count) {
 			SqlConnection connection = OpenConnection();
-			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetTop", connection);
+			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostGetTopByRating", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
 			cmd.Parameters.Add("@period", System.Data.SqlDbType.Int, 0);
@@ -1837,7 +1837,27 @@ namespace ITCommunity {
 			cmd.Parameters["@period"].Value = period;
 			cmd.Parameters.Add("@count", System.Data.SqlDbType.Int, 0);
 			cmd.Parameters["@count"].Direction = System.Data.ParameterDirection.Input;
-			cmd.Parameters["@count"].Value = count; int result = cmd.ExecuteNonQuery();
+			cmd.Parameters["@count"].Value = count;
+			System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
+			System.Data.DataTable table = new DataTable();
+
+			for (int i = 0; (i < reader.FieldCount); i++) {
+				System.Type __type;
+				string __name;
+				__type = reader.GetFieldType(i);
+				__name = reader.GetName(i);
+				table.Columns.Add(__name, __type);
+			}
+
+			while (reader.Read()) {
+				System.Data.DataRow row = table.NewRow();
+				object[] rowdata = new object[reader.FieldCount];
+				reader.GetValues(rowdata);
+				row.ItemArray = rowdata;
+				table.Rows.Add(row);
+			}
+			reader.Close();
+			DataTable result = table;
 			connection.Close();
 			return result;
 		}
@@ -1889,7 +1909,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataTable PostSearch(string query, Int32 page, Int32 count, ref Int32 posts_count) {
+		public static DataTable PostSearch(String query, Int32 page, Int32 count, ref Int32 posts_count) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostSearch", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -1929,7 +1949,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int PostUpdate(Int32 id, string title, string desc, string text, Byte attached, string source, Int32 comments_count) {
+		public static int PostUpdate(Int32 id, String title, String desc, String text, Byte attached, String source, Int32 comments_count) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PostUpdate", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2143,7 +2163,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow RecoveryAdd(string identifier, Int32 user_id) {
+		public static DataRow RecoveryAdd(String identifier, Int32 user_id) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2180,7 +2200,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static int RecoveryDel(string identifier) {
+		public static int RecoveryDel(String identifier) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryDel", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2191,7 +2211,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow RecoveryGetByIdentifier(string identifier) {
+		public static DataRow RecoveryGetByIdentifier(String identifier) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RecoveryGetByIdentifier", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2233,7 +2253,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataTable RfcGetByNum(string num) {
+		public static DataTable RfcGetByNum(String num) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RfcGetByNum", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2264,7 +2284,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataTable RfcSearchByTitle(string query) {
+		public static DataTable RfcSearchByTitle(String query) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("RfcSearchByTitle", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2295,7 +2315,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow UserAdd(string nick, string pass, Byte role, string email) {
+		public static DataRow UserAdd(String nick, String pass, Byte role, String email) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserAdd", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2377,7 +2397,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow UserGetByEmail(string email) {
+		public static DataRow UserGetByEmail(String email) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByEmail", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2445,7 +2465,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow UserGetByLogin(string login) {
+		public static DataRow UserGetByLogin(String login) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserGetByLogin", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -2634,7 +2654,7 @@ namespace ITCommunity {
 			connection.Close();
 			return result;
 		}
-		public static DataRow UserUpdate(Int32 user_id, string pass, Byte role, string email, Byte can_add_header_text, Int32 header_text_counter) {
+		public static DataRow UserUpdate(Int32 user_id, String pass, Byte role, String email, Byte can_add_header_text, Int32 header_text_counter) {
 			SqlConnection connection = OpenConnection();
 			System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("UserUpdate", connection);
 			cmd.CommandType = System.Data.CommandType.StoredProcedure;

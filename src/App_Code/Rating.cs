@@ -59,9 +59,12 @@ namespace ITCommunity {
 		}
 
 		public static Rating Get(int entityId, EntityType type) {
-			Rating rating = GetRatingFromRow(Database.RatingGetByEntity(entityId, (int)type));
-			rating.EntityId = entityId;
-			rating.Type = type;
+			string cacheName = Config.String("RatingPrefixCacheName") + type.ToString()  + entityId.ToString();
+			Rating rating = (Rating)AppCache.Get(cacheName);
+			if (rating == null) {
+				rating = GetFromDB(entityId, type);
+				InsertToCache(rating);
+			}
 			return rating;
 		}
 
@@ -69,12 +72,13 @@ namespace ITCommunity {
 			Database.RatingLogAdd(entityId, (int)type, userId, value);
 			Rating rating = Get(entityId, type);
 			if (rating.Id == 0) {
-				return GetRatingFromRow(Database.RatingAdd(entityId, (int)type, value));
+				rating = GetFromRow(Database.RatingAdd(entityId, (int)type, value));
 			}
 			else {
 				rating.Value += value;
 				Database.RatingUpdateValue(rating.Id, rating.Value);
 			}
+			InsertToCache(rating);
 			return rating;
 		}
 
@@ -83,18 +87,32 @@ namespace ITCommunity {
 			return (dr != null);
 		}
 
-		private static Rating GetRatingFromRow(DataRow dr) {
+		private static void InsertToCache(Rating rating) {
+			string cacheName = Config.String("RatingPrefixCacheName") + rating.Type.ToString() + rating.EntityId.ToString();
+			AppCache.Remove(cacheName);
+			AppCache.Insert(cacheName, rating, Config.Double("RatingCachePer"));
+		}
+
+		private static Rating GetFromDB(int entityId, EntityType type) {
+			Rating rating = GetFromRow(Database.RatingGetByEntity(entityId, (int)type));
+			rating.EntityId = entityId;
+			rating.Type = type;
+			return rating;
+		}
+
+		private static Rating GetFromRow(DataRow dr) {
 			Rating rating;
 			if (dr == null) {
 				rating = new Rating();
 			}
 			else {
-				rating = new Rating(Convert.ToInt32(dr["id"]),
-									Convert.ToInt32(dr["entity_id"]),
-									(EntityType)Convert.ToInt32(dr["entity_type"]),
-									Convert.ToInt32(dr["value"]));
+				rating = new Rating(
+					Convert.ToInt32(dr["id"]),
+					Convert.ToInt32(dr["entity_id"]),
+					(EntityType)Convert.ToInt32(dr["entity_type"]),
+					Convert.ToInt32(dr["value"])
+				);
 			}
-
 			return rating;
 		}
 	}

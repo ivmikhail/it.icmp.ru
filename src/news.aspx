@@ -26,10 +26,10 @@
 			<asp:Literal ID="EditPostLink" runat="server" Visible="false" />
 			<asp:LinkButton ID="DeletePostLink" runat="server" OnClick="DeletePost_Click" Visible="false" OnClientClick="return confirm('Точно удалить?')">удалить</asp:LinkButton>
 			<asp:Literal ID="source" runat="server" />
-            <div class="post-rating">
-			    <uc:Rating ID="PostRating" runat="server" EntityId="<%# Post.Id %>" Type="Post" EntityAuthorId="<%# Post.Author.Id %>" />
-		    </div>
-        </div>
+			<div class="post-rating">
+				<uc:Rating ID="PostRating" runat="server" EntityId="<%# Post.Id %>" Type="Post" EntityAuthorId="<%# Post.Author.Id %>" ButtonsVisible="true" />
+			</div>
+		</div>
 
 		<div id="comments" class="panel">
 			<h2>Комментарии (<asp:Literal ID="comments_count" runat="server" />)</h2>

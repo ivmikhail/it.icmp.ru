@@ -9,6 +9,7 @@ namespace ITCommunity {
 		private Rating _rating = new Rating();
 		private string _message = "";
 		private int _entityAuthorId = -1;
+		private int _showValue = 0;
 
 		public int EntityId {
 			get { return _rating.EntityId; }
@@ -63,7 +64,6 @@ namespace ITCommunity {
 			RatingMessage.Visible = false;
 			_rating = Rating.Get(EntityId, Type);
 			RatingUpdatePanel.DataBind();
-			//Visible = false;
 		}
 
 		protected void IncRatingClick(object sender, EventArgs e) {
