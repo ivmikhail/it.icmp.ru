@@ -9,7 +9,8 @@ namespace ITCommunity {
 	public enum LinkType {
 		Files,
 		Books,
-		Video
+		Video,
+		Audio
 	}
 
 	/// <summary>
