@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Web;
 
 namespace ITCommunity {
 	/// <summary>
@@ -114,7 +115,7 @@ namespace ITCommunity {
 		/// Полностью форматированный в безопасный хтмл текст
 		/// </summary>
 		public string SourceFormatted {
-			get { return Util.HtmlEncode(_source); }
+			get { return HttpUtility.UrlEncode(_source); }
 		}
 
 		public string Source {
