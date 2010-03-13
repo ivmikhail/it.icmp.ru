@@ -3,9 +3,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-	<a href='mailsend.aspx'>Написать</a> |
-	<a href='mailview.aspx'>Входящие</a> |
-	<a href='mailview.aspx?a=output'>Исходящие</a>
+	<a href="mailsend.aspx">Написать</a> |
+	<a href="mailview.aspx">Входящие</a> |
+	<a href="mailview.aspx?a=output">Исходящие</a>
 
 	<h1><asp:Literal ID="ListTitle" runat="server" /></h1>
 
@@ -15,7 +15,7 @@
 		</HeaderTemplate>
 		<ItemTemplate>
 			<li>
-				<h2><a href='mail.aspx?id=<%# Eval("id")%>'><%# Eval("TitleFormatted")%></a></h2>
+				<h2><a href="mail.aspx?id=<%# Eval("id")%>"><%# Eval("TitleFormatted")%></a></h2>
 				<div class="info-panel">
 					<%# Eval("createdate", "{0:dd MMMM yyyy, HH:mm}")%> / <asp:Literal ID="Who" runat="server" />
 				</div>

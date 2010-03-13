@@ -17,8 +17,12 @@ namespace ITCommunity {
 					User user = CurrentUser.User;
 					UserGreetingText.Text = Greeting.Get(user.Login);
 					UserRoleText.Text = user.Role.ToString();
-					NewMessagesCountText.Text = Message.GetNewCount(user.Id).ToString();
-					this.Visible = true;
+
+                    int newMessagesCount = Message.GetNewCount(user.Id);
+                    string cssClass = newMessagesCount > 0 ? " class=\"new-message\" " : "";
+                    
+                    NewMessagesCountText.Text = String.Format("<span " + cssClass + ">{0}</span>", newMessagesCount);
+          			this.Visible = true;
 				}
 				else {
 					this.Visible = false;
