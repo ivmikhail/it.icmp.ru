@@ -5,8 +5,6 @@ using System.Web.UI;
 namespace ITCommunity {
 	public partial class LoginMenu : UserControl {
 
-		private List<string> _errors = new List<string>();
-
 		protected void Page_Load(object sender, EventArgs e) {
 			TextBoxPass.Attributes.Add("onkeypress", "javascript:if (event.keyCode == 13) __doPostBack('" + LogInButton.UniqueID + "','')");
 			if (!IsPostBack) {
@@ -20,45 +18,43 @@ namespace ITCommunity {
 			string pass = TextBoxPass.Text;
 			bool remember = CheckBoxIsRemember.Checked;
 
-			if (Validate()) {
+            List<string> errors = Validate();
+			if (errors.Count == 0) {
 				if (CurrentUser.LogIn(login, pass, remember)) {
 					if (CurrentUser.User.Role == User.Roles.Banned) {
-						_errors.Add("Ваш аккаунт забанен. Вы не можете авторизоваться");
+						errors.Add("Ваш аккаунт забанен. Вы не можете авторизоваться");
 						CurrentUser.LogOut();
-					}
-					else {
+					} else {
 						//Response.Redirect(FormsAuthentication.GetRedirectUrl(login, false));
 						string targetUrl = Request.Params["ReturnUrl"] == null ? Request.Url.OriginalString : Request.Params["ReturnUrl"];
 						Response.Redirect(targetUrl);
 					}
-				}
-				else {
-					_errors.Add("Неправильный логин/пароль");
+				} else {
+					errors.Add("Неправильный логин/пароль");
 				}
 			}
 
-			WriteErrors();
+			WriteErrors(errors);
 		}
 
-		private bool Validate() {
-			bool result = true;
+		private List<string> Validate() {
+			
+		    List<string> errors = new List<string>();
 
 			if (TextBoxLogin.Text == "") {
-				_errors.Add("Введите логин");
-				result = false;
+				errors.Add("Введите логин");
 			}
 			if (TextBoxPass.Text == "") {
-				_errors.Add("Введите пароль");
-				result = false;
+				errors.Add("Введите пароль");
 			}
 
-			return result;
+			return errors;
 		}
 
-		private void WriteErrors() {
+		private void WriteErrors(List<string> errors) {
 			string text = "<div class=\"error\"><ul>";
-			foreach (string error in _errors) {
-				text += "<li>" + error + "</li>";
+			foreach (string err in errors) {
+				text += "<li>" + err + "</li>";
 			}
 			text += "</ul></div>";
 			Errors.Text = text;
