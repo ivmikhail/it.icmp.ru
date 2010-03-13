@@ -434,6 +434,7 @@ hr {
 .post-rating {
 	float: right;
 	font-size: 0.8em;
+	padding-top: 4px;
 	text-align: right;
 }
 /* rating: end */

@@ -45,8 +45,6 @@
 	<body>
 		<form id="MainForm" runat="server">
 
-			<asp:ScriptManager ID="RatingScriptManager" runat="server" />
-
 			<div id="header">
 				<noscript>
 					<div id="noscript-message">Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется.<a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654" target="_blank">Узнать как включить >>></a></div>

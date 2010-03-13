@@ -63,7 +63,7 @@ namespace ITCommunity {
 		protected void Page_Load(object sender, EventArgs e) {
 			RatingMessage.Visible = false;
 			_rating = Rating.Get(EntityId, Type);
-			RatingUpdatePanel.DataBind();
+			RatingPanel.DataBind();
 		}
 
 		protected void IncRatingClick(object sender, EventArgs e) {
@@ -105,7 +105,7 @@ namespace ITCommunity {
 			_message = ", " + _message;
 			RatingMessage.Visible = true;
 			RatingButtons.Visible = false;
-			RatingUpdatePanel.DataBind();
+			DataBind();
 		}
 
 		private bool IsUserVoted() {
