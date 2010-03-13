@@ -14,6 +14,12 @@ namespace ITCommunity
             if (!IsPostBack)
             {
                 MessageReceiver.Text = GetReceiver();
+                int replyMessageId = getReplyMessageId();
+                if (replyMessageId > 0)
+                {
+                    Message replyMessage = Message.GetById(replyMessageId);
+                    MessageTitle.Text = "RE:" + replyMessage.Title;
+                }
             }
         }
         protected void LinkButtonSend_Click(object sender, EventArgs e)
@@ -35,12 +41,18 @@ namespace ITCommunity
                 Message.Send(receiver.Id, CurrentUser.User.Id, MessageTitle.Text, MessageText.Text);
                 Response.Redirect("mailview.aspx?a=output");
             } else {
-                Errors.Text = "<div class='error'>" + errors + "</div>";
+                Errors.Text = "<div class=\"error\">" + errors + "</div>";
             }
         }
         private string GetReceiver()
         {
             return Request.QueryString["receiver"];
+        }
+        private int getReplyMessageId()
+        {
+            int paramValue = -1;
+            Int32.TryParse(Request.QueryString["mid"], out paramValue);
+            return paramValue;
         }
     }
 }

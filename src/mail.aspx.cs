@@ -36,7 +36,7 @@ namespace ITCommunity
 
 				if (is_input)
 				{
-					ReplyLink.Text = "<a href='mailsend.aspx?receiver=" + mess.Sender.Login + "' class='user-pm-link'>Ответить</a>";
+                    ReplyLink.Text = "<a href=\"mailsend.aspx?receiver=" + mess.Sender.Login + "&amp;mid=" + mess.Id + "\" class=\"user-pm-link\">Ответить</a>";
 					LiteralWho.Text = "<h3>От кого</h3>" + mess.Sender.Login;
 				}
 				else
@@ -60,12 +60,10 @@ namespace ITCommunity
 			if (mess.Receiver.Id == CurrentUser.User.Id)
 			{
 				is_input = true;
-			}
-			else if (mess.Sender.Id == CurrentUser.User.Id)
+			} else if (mess.Sender.Id == CurrentUser.User.Id)
 			{
 				is_input = false;
-			}
-			else
+			} else
 			{
 				Response.Redirect("mailview.aspx");
 			}
