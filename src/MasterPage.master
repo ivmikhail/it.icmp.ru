@@ -35,7 +35,7 @@
 
 		<script src="media/js/highlight.pack.js"                     type="text/javascript"     charset="utf-8"></script>
 		<script src="media/js/clientcide.2.2.0.compressed.js"        type="text/javascript"     charset="utf-8"></script>
-		<script src="media/js/popup.js?1"                              type="text/javascript"     charset="utf-8"></script>
+		<script src="media/js/popup.js?v2"                           type="text/javascript"     charset="utf-8"></script>
 		<script type="text/javascript">
 			hljs.initHighlightingOnLoad();
 		</script>
