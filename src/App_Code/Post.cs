@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Web;
+using ITCommunity.IndexerLib;
+using IndexerLib;
 
 namespace ITCommunity {
 	/// <summary>
@@ -292,27 +294,34 @@ namespace ITCommunity {
 		public static List<Post> Search(int page, int count, string query, ref int posts_count) {
 			return GetPostsFromTable(Database.PostSearch(query, page, count, ref posts_count));
 		}
-
-		/// <summary>
-		/// Забираем посты постранично, с учетом даты и аттачей
-		/// </summary>
-		/// <param name="page">Страница которая нам нужна</param>
-		/// <param name="count">Кол-во постов на страницу</param>
-		public static List<Post> Get(int page, int count, ref int posts_count) {
-			return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
-		}
         /// <summary>
-        /// Возвращаем посты, удовлетворяющие условию поиска
+        /// Возвращаем посты, удовлетворяющие условию поиска через Lucene
         /// </summary>
         /// <param name="query">условие поиска</param>
-        /// /// <param name="page"></param>
-        /// <param name="count"></param>
-        /// <param name="posts_count"></param>
+        /// <param name="page">текущая страница</param>
+        /// <param name="count">кол-во постов на страницу</param>
+        /// <param name="posts_count">кол-во найденных постов</param>
         /// <returns>список постов, важно - в Description пишем сниппет ???? </returns>
         // TODO: подумать
-        public static List<Post> Get(String query, int page, int count) {
-            throw new NotImplementedException();
+        public static List<Post> SearchLucene(String query, int page, int count, ref int posts_count) {
+            
+            List<SearchedPost> list = Indexer.GetInstance().Search(query, page, count, ref posts_count);
+            List<Post> result = new List<Post>(list.Count);
+            for (int i = 0; i < list.Count; i++) {
+                Post post = Post.GetById(list[i].Id);
+                result.Add(post);
+            }
+            return result;
         }
+
+        /// <summary>
+        /// Забираем посты постранично, с учетом даты и аттачей
+        /// </summary>
+        /// <param name="page">Страница которая нам нужна</param>
+        /// <param name="count">Кол-во постов на страницу</param>
+        public static List<Post> Get(int page, int count, ref int posts_count) {
+			return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
+		}
 
 		/// <summary>
 		/// Возвращает посты определенного автора
