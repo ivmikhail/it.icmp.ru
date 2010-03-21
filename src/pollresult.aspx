@@ -32,7 +32,7 @@
 		<h2>Кто как голосовал</h2>
 
 		<asp:Literal ID="ClosedPollText" runat="server" Visible="false">
-			Голосование закрытое, данные не доступны.
+			Голосование закрытое, данные недоступны.
 		</asp:Literal>
 
 		<asp:Repeater ID="Answers" runat="server" OnItemDataBound="Answers_ItemDataBound">
