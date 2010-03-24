@@ -7,9 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
-using mvc.Models;
+using ITCommunity.Models;
 
-namespace mvc.Controllers
+namespace ITCommunity.Controllers
 {
 
     [HandleError]
