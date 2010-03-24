@@ -10,7 +10,7 @@
     <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>mvc</RootNamespace>
+    <RootNamespace>ITCommunity</RootNamespace>
     <AssemblyName>mvc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
@@ -33,10 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IndexerLib">
+      <HintPath>..\Indexer\bin\Debug\IndexerLib.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -66,6 +74,13 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="classes\core\AppCache.cs" />
+    <Compile Include="classes\core\Config.cs" />
+    <Compile Include="classes\core\CurrentUser.cs" />
+    <Compile Include="classes\core\Logger.cs" />
+    <Compile Include="classes\db\Database.cs" />
+    <Compile Include="classes\util\BBCodeParser.cs" />
+    <Compile Include="classes\util\Hash.cs" />
     <Compile Include="controllers\AccountController.cs" />
     <Compile Include="controllers\HomeController.cs" />
     <Compile Include="controllers\PostController.cs" />
@@ -73,16 +88,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="models\AccountModels.cs" />
+    <Compile Include="models\Category.cs" />
+    <Compile Include="models\Post.cs" />
+    <Compile Include="models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\log4net.dll" />
     <Content Include="content\css\ie7-fix.css" />
     <Content Include="content\css\ie6-fix.css" />
     <Content Include="content\css\main.css" />
     <Content Include="content\css\reset.css" />
     <Content Include="Global.asax" />
     <Content Include="views\post\list.aspx" />
-    <Content Include="views\post\posts-list.ascx" />
     <Content Include="views\shared\left-sidebar.ascx" />
     <Content Include="views\shared\right-sidebar.ascx" />
     <Content Include="Web.config" />
@@ -116,7 +134,6 @@
     <Content Include="views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="content\img\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

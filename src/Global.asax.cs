@@ -4,14 +4,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Configuration;
+using System.Web.Caching;
+using System.Data.SqlClient;
 
-namespace mvc
+namespace ITCommunity
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
-    public class MvcApplication : System.Web.HttpApplication
+    public class Global : System.Web.HttpApplication
     {
+        public static Cache RuntimeCache()
+        {
+            return HttpRuntime.Cache;
+        }
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -19,7 +26,7 @@ namespace mvc
             routes.MapRoute(
                 "Default",                                              // Route name
                 "{controller}/{action}/{id}",                           // URL with parameters
-                new { controller = "Post", action = "Category", id = "" }  // Parameter defaults
+                new { controller = "Post", action = "Index", id = "" }  // Parameter defaults
             );
 
         }
