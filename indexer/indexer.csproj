@@ -35,12 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lucene.Net, Version=2.9.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="IndexerLib">
+      <HintPath>..\src\Bin\IndexerLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
       <HintPath>..\lib\Lucene.Net.dll</HintPath>
     </Reference>
-    <Reference Include="SomeLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SomeLib">
       <HintPath>..\lib\SomeLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -59,12 +60,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IndexerLib\IndexerLib.csproj">
-      <Project>{C30A7E20-711F-4EFE-9751-51C80E05765F}</Project>
-      <Name>IndexerLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

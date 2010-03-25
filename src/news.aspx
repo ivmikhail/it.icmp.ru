@@ -17,7 +17,8 @@
 		<asp:Literal ID="desc" runat="server" />
 		<asp:Literal ID="DescSeparator" runat="server" />
 		<asp:Literal ID="text" runat="server" />
-
+        <asp:Literal ID="badSource" runat="server" />
+		
 		<div class="post-info">
 			<asp:Literal ID="date" runat="server" /> /
 			<asp:Literal ID="favorite" runat="server" /> /

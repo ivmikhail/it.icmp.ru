@@ -7,7 +7,6 @@ using System.IO;
 using Lucene.Net.Store;
 using Lucene.Net.Documents;
 using System.Diagnostics;
-using IndexerLib;
 using Lucene.Net.Search;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Analysis;

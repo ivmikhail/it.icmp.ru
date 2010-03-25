@@ -20,7 +20,7 @@
 		- form-elements			элементы формы
 		- data-table			таблица с данными
 		- user-table			таблица содержащаяся в посте или в комментарии
-		- post					поста
+		- post					пост
 		- tabs					красивые табы
 		- editor-toolbar		кноки форматирования текста
 		- counter				счетчик
@@ -305,7 +305,8 @@ hr {
 }
 
 .post .post-desc,
-.post .post-text {
+.post .post-text,
+.post .bad-source {
 	font: 1.1em/1.6em Verdana, sans-serif;
 	padding: 10px 15px;
 }
@@ -337,6 +338,10 @@ hr {
 .post .bbcode-list {
 	list-style-type: square;
 	padding: 0 0 0 14px;
+}
+.post .bad-source {
+	font: 0.6em Verdana, sans-serif;	
+    font-style: italic;
 }
 /* post: end */
 

@@ -12,7 +12,7 @@ using System.Diagnostics;
 using ITCommunity.IndexerLib;
 
 
-namespace indexer {
+namespace ITCommunity.IndexerProg {
     class Program {
         static void Main(string[] args) {
             String webConfigPath = getWebConfigPath(args);
