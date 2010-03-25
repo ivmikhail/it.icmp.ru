@@ -90,7 +90,10 @@ namespace ITCommunity {
 				string encryptedTicket = FormsAuthentication.Encrypt(newTicket);
 				HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
 
-				//authCookie.Expires = ticketExpiration;
+				// задаем время для куки, если пользователь выбрал "запомнить"
+				if (remember) {
+					authCookie.Expires = ticketExpiration;
+				}
 				HttpContext.Current.Response.Cookies.Add(authCookie);
 
 				result = true;
