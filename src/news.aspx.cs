@@ -72,7 +72,10 @@ namespace ITCommunity {
                     badSource.Text = "<span class=\"bad-source\">" + HttpUtility.HtmlEncode(post.Source) + "</span>";
                 } else
                 {
-                    source.Text = "/ <a href=\"" + post.SourceFormatted + "\" target=\"_blank\">источник</a>";
+                    if (post.SourceFormatted.Length != 0)
+                    {
+                        source.Text = "/ <a href=\"" + post.SourceFormatted + "\" target=\"_blank\">источник</a>";
+                    }
                 }
 				// Хреново сделал, дублирование
 				authorLogin.Text = author.Text = post.Author.Login;
