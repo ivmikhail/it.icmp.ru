@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Web;
 using ITCommunity.IndexerLib;
-using IndexerLib;
 
 namespace ITCommunity {
 	/// <summary>
@@ -15,6 +14,7 @@ namespace ITCommunity {
 		//делегат метода загрузки популярных постов из базы, нужен для организации кеширования
 		private delegate object TopPostsByViewsLoader(int period, int count);
 
+        private const string HTTP_URL_START = "http://";
 		#region Properties
 
 		private static LastPostsLoader _lastPostsLoader = new LastPostsLoader(GetLastPostsFromDB);
@@ -117,25 +117,27 @@ namespace ITCommunity {
 		/// Полностью форматированный в безопасный хтмл текст
 		/// </summary>
 		public string SourceFormatted {
-			get { return HttpUtility.UrlEncode(_source); }
+			get {
+                string result = "";
+                if (_source.Length != 0)
+                {
+                    try
+                    {
+                        Uri url = new Uri(_source);
+                        result = url.ToString();
+                    } catch (UriFormatException ex)
+                    {
+                        ex = null;
+                        result = "";
+                    }
+                }
+                return result;
+            }
 		}
 
 		public string Source {
-			get {
-				return _source;
-			}
-			set {
-				//TODO: Накладывает кое-какие ограничения.
-				if (value.Length != 0) {
-					if (0 < value.Length && value.Length < 8) {
-						value = "http://" + value;
-					}
-					else if (value.Substring(0, 7) != "http://") {
-						value = "http://" + value;
-					}
-				}
-				_source = value;
-			}
+            get { return _source; }
+			set { _source = value; }
 		}
 
 		public int CommentsCount {

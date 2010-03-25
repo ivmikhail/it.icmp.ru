@@ -66,9 +66,14 @@ namespace ITCommunity {
 				comments_count.Text = post.CommentsCount.ToString();
 				date.Text = post.CreateDate.ToString("dd MMMM yyyy, HH:mm");
 				favorite.Text = post.FavoritesAction;
-				if (post.Source != "") {
-					source.Text = "/ <a href=\"" + post.SourceFormatted + "\" target=\"_blank\">источник</a>";
-				}
+                bool isBadSource = post.SourceFormatted.Length == 0 && post.Source.Length != 0;
+                if (isBadSource)
+                {
+                    badSource.Text = "<span class=\"bad-source\">" + HttpUtility.HtmlEncode(post.Source) + "</span>";
+                } else
+                {
+                    source.Text = "/ <a href=\"" + post.SourceFormatted + "\" target=\"_blank\">источник</a>";
+                }
 				// Хреново сделал, дублирование
 				authorLogin.Text = author.Text = post.Author.Login;
 				views.Text = post.Views.ToString();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IndexerLib {
+namespace ITCommunity.IndexerLib {
     public class SearchedPost {
         private int _id;
         private String _title;
