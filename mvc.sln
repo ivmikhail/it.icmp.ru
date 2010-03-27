@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITCommunity", "src\ITCommunity.csproj", "{5C5D6820-1F3C-476D-BF60-9501840418E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indexer", "indexer\Indexer.csproj", "{F312A541-1B95-4027-AE0F-8F208078A40B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "indexer", "..\trunk\indexer\indexer.csproj", "{F312A541-1B95-4027-AE0F-8F208078A40B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndexerLib", "IndexerLib\IndexerLib.csproj", "{C30A7E20-711F-4EFE-9751-51C80E05765F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndexerLib", "..\trunk\IndexerLib\IndexerLib.csproj", "{C30A7E20-711F-4EFE-9751-51C80E05765F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
