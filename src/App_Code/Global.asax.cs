@@ -5,6 +5,7 @@ using System.Web.Security;
 using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
+using ITCommunity.IndexerLib;
 
 namespace ITCommunity {
 	/// <summary>
@@ -12,7 +13,7 @@ namespace ITCommunity {
 	/// </summary>
 	public class Global : System.Web.HttpApplication {
 
-		private static string _connectionString = null;
+        private static string _connectionString = null;
 		private TimerTask _timerTask;
 
 		public Global() {
@@ -40,10 +41,10 @@ namespace ITCommunity {
 			}
 			return _connectionString;
 		}
-
 		public void Application_Start(object sender, EventArgs e) {
 			Logger.Log.Info("Application started ...");
 			_timerTask = new TimerTask((double)3600 * 1000 * 12, RecoveryPass.PurgeOldRecoveryTasks);
+            Indexer.Init(Global.ConnectionString(), Config.String("IndexerPath"));
 		}
 
 		public void Application_End(object sender, EventArgs e) {

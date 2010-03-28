@@ -19,29 +19,27 @@ namespace ITCommunity
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			TextBoxQuery.Attributes.Add("onkeypress", "javascript:if (event.keyCode == 13) __doPostBack('" + LinkButtonSearch.UniqueID + "','')");
-
-			if (!IsPostBack)
-			{
-				string query = GetQuery();
-				if (query != "")
-				{
-					LoadPosts(query);
-					TextBoxQuery.Text = query;
-				}
-			}
+            if (!IsPostBack) {
+                string query = GetQuery();
+                if (query != "") {
+                    LoadPosts(query);
+                    TextBoxQuery.Text = query;
+                }
+            }
 		}
 
 		protected void LinkButtonSearch_Click(object sender, EventArgs e)
 		{
-			LoadPosts(TextBoxQuery.Text);
+            Response.Redirect("search.aspx?q=" + TextBoxQuery.Text.Trim());
 		}
 
 		private void LoadPosts(string query)
 		{
 			int total_records = 0;
-			int page = GetPage();
+			int page = GetPageFromQuery();
 			int searchedPostsPerPage = Config.Num("PostsCount");
-			List<Post> searchedPosts = Post.Search(page, searchedPostsPerPage, query, ref total_records);
+            //List<Post> searchedPosts = Post.Search(page, searchedPostsPerPage, query, ref total_records);
+            List<Post> searchedPosts = Post.SearchLucene(query, page, searchedPostsPerPage, ref total_records);
 			FindedPosts.DataBind(searchedPosts, total_records, searchedPostsPerPage);
 
 			if (total_records == 0)
@@ -53,7 +51,7 @@ namespace ITCommunity
 				NotFoundText.Visible = false;
 			}
 		}
-		private int GetPage()
+        private int GetPageFromQuery()
 		{
 			int page_num;
 			Int32.TryParse(Request.QueryString["page"], out page_num);
