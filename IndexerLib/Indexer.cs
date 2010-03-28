@@ -105,23 +105,31 @@ namespace ITCommunity.IndexerLib {
         public void Optimize() {
             indexWriter.Optimize();
         }
-
+        /// <summary>
+        /// Возвращает найденные 
+        /// </summary>
+        /// <param name="queryText"></param>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <param name="posts_count"></param>
+        /// <returns></returns>
         public List<SearchedPost> Search(string queryText, int page, int count, ref int posts_count) {
             String[] fields = new String[]{DocField.Title, DocField.Text};
             QueryParser queryParser = new MultiFieldQueryParser(fields, analyzer);
             Query query = queryParser.Parse(queryText);
             IndexSearcher searcher = new IndexSearcher(indexReader);
-            TopFieldDocs topDocs = searcher.Search(searcher.CreateWeight(query), null, 1000, Sort.RELEVANCE);
+            TopFieldDocs topDocs = searcher.Search(searcher.CreateWeight(query), null, 10000, Sort.RELEVANCE);
 
             List<SearchedPost> result = new List<SearchedPost>(topDocs.totalHits);
-            
-            for(int i=0; i<topDocs.scoreDocs.Length; i++) {
+            int startDocIndex = page * count;
+            for(int i = (page-1) * count; i < Math.Min(page*count - 1, topDocs.scoreDocs.Length); i++) {
                 ScoreDoc scoreDoc = topDocs.scoreDocs[i];
                 Document document = searcher.Doc(scoreDoc.doc);
                 SearchedPost post = new SearchedPost(Int32.Parse(document.Get(DocField.Id)), 
                     document.Get(DocField.Title), document.Get(DocField.Text));
                 result.Add(post);
             }
+            posts_count = topDocs.scoreDocs.Length;
             return result;
 
         }
