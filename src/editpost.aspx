@@ -144,7 +144,7 @@
 		</label>
 
 		<div class="note">
-			Нажимая кнопку добавить, вы соглашаетесь с <a href="http://it.icmp.ru:3000/wiki/itc/Правила_постинга" target="_blank" title="Правила постинга">правилами</a>
+			Нажимая кнопку добавить, вы соглашаетесь с <a href="http://it.icmp.ru:3000/wiki/itc/Правила_сайта" target="_blank" title="Правила постинга">правилами</a>
 		</div>
 
 		<asp:Literal ID="AddPostMessages" runat="server" />

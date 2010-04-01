@@ -17,6 +17,9 @@
 				<li>доступ к различным сервисам</li>
 			</ul>
 		</div>
+        <div class="note">
+            Регистрируясь, вы подверждаете свое согласие с <a href="http://it.icmp.ru:3000/wiki/itc/Правила_сайта" target="_blank" title="Ознакомиться с правилами">правилами</a>
+        </div>
 
 		<label class="textbox-input">
 			<span class="label-title">Логин (аккаунт)</span>
