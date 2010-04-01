@@ -2,11 +2,17 @@
 <asp:Content ID="PostListTitle" ContentPlaceHolderID="TitleContent" runat="server">
 </asp:Content>
 <asp:Content ID="PostListContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>test</h1>
+    <h1>Тест вывода каких либо постов</h1>
 
+    <ul style="list-style:square;">
 <% foreach (var post in (List<ITCommunity.Models.Post>)ViewData["posts"])
    { %>
-   <%= post.Title %>
+   <li>
+    <b><%= post.Title %></b>
+    <p>
+        <%= post.DescriptionFormatted %>
+    </p>
+   </li>
 <% }; %>
-
+</ul>
 </asp:Content>

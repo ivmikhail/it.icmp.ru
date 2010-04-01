@@ -17,7 +17,7 @@ namespace ITCommunity.Controllers
         {
 
             int count = 0;
-            IList<Post> posts = Post.GetTopByViews(365, 10);
+            IList<Post> posts = Post.GetByCategory(1, 20, 1, ref count);
             ViewData["posts"] = posts;
 
             return View("list");
