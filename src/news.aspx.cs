@@ -69,7 +69,7 @@ namespace ITCommunity {
                 bool isBadSource = post.SourceFormatted.Length == 0 && post.Source.Length != 0;
                 if (isBadSource)
                 {
-                    badSource.Text = "<span class=\"bad-source\">" + HttpUtility.HtmlEncode(post.Source) + "</span>";
+                    badSource.Text = "<span class=\"bad-source\">Источник: " + HttpUtility.HtmlEncode(post.Source) + "</span>";
                 } else
                 {
                     if (post.SourceFormatted.Length != 0)
@@ -91,7 +91,7 @@ namespace ITCommunity {
 				if (result.Length > 0) {
 					result += ", ";
 				}
-				result += "<a href='default.aspx?cat=" + cat.Id + "' class='category-link'>" + cat.Name + "</a>";
+				result += "<a href=\"default.aspx?cat=" + cat.Id + "\" class=\"category-link\">" + cat.Name + "</a>";
 			}
 			LinksPostCategories.Text = result;
 		}
@@ -113,31 +113,78 @@ namespace ITCommunity {
 		}
 
 		protected void LinkButtonAddComment_Click(object sender, EventArgs e) {
-			if (Captcha.Visible) {
-				if (Captcha.IsRightAnswer()) {
-					AddComment();
-				}
-				else {
-					Captcha.SetErrorMessageVisible();
-					LinkButtonAddComment.Focus();
-				}
-			}
-			else {
-				AddComment();
-			}
-		}
+            Comment comm = new Comment();
+            comm.Author = CurrentUser.User;
+            comm.CreateDate = DateTime.Now;
+            comm.Ip = CurrentUser.Ip;
+            comm.Post = post;
+            comm.Text = TextBoxComment.Text;
+            string error = "";
+            if (comm.Text.Trim() == "")
+            {
+                error = "Комментарий не может быть пустым";
+            }
+            if (comm.Text.Trim().Length > 5048)
+            {
+                error = "Длина комментария слижком большая";
+            }
+            if (error.Length == 0)
+            {
 
-		private void AddComment() {
+                AddCommentErrors.Text = "";
+                bool addComment = false;
+                if (Captcha.Visible)
+                {
+                    if (Captcha.IsRightAnswer())
+                    {
+                        addComment = true;
+                    } else
+                    {
+                        Captcha.SetErrorMessageVisible();
+                        LinkButtonAddComment.Focus();
+                    }
+                } else
+                {
+                    addComment = true;
+                }
+                if (addComment)
+                {
+                    Comment.Add(comm);
+                    Response.Redirect("news.aspx?id=" + post.Id + "#comment-" + comm.Id);
+                }
+            } else
+            {
+                AddCommentErrors.Text = "<div class=\"error\">" + error + "</div>";
+            }
+		}
+        /*
+		protected void AddComment() {
 			Comment comm = new Comment();
 			comm.Author = CurrentUser.User;
 			comm.CreateDate = DateTime.Now;
 			comm.Ip = CurrentUser.Ip;
 			comm.Post = post;
 			comm.Text = TextBoxComment.Text;
-			comm = Comment.Add(comm);
-			Response.Redirect("news.aspx?id=" + post.Id + "#comment-" + comm.Id);
+            string error = "";
+            if (comm.Text.Trim() == "")
+            {
+                error = "Комментарий не может быть пустым";
+            }
+            if (comm.Text.Trim().Length > 5048)
+            {
+                error = "Длина комментария слижком большая";
+            }
+            if (error.Length == 0)
+            {
+                Comment.Add(comm);
+                Response.Redirect("news.aspx?id=" + post.Id + "#comment-" + comm.Id);
+            } else
+            {
+                AddCommentErrors.Text = "<div class=\"error\">" + error + "</div>";
+            }
+	
 		}
-
+        */
 		protected void DeletePost_Click(object sender, EventArgs e) {
 			Post.Delete(post);
 			Response.Redirect("default.aspx");
