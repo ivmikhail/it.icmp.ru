@@ -46,10 +46,10 @@
 
 			<uc:EditorToolbar ID="EditorToolbar" runat="server" ToolbarElements="" />
 			<label class="textbox-textarea">
-				<asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="10" MaxLength="512" ValidationGroup="Comment" TabIndex="1"/>
+				<asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="10" ValidationGroup="Comment" TabIndex="1"/>
 			</label>
 
-			<asp:RequiredFieldValidator ID="RequiredFieldValidatorComment" runat="server" ErrorMessage="Введите комментарий" ControlToValidate="TextBoxComment" ValidationGroup="Comment" />
+			<asp:Literal ID="AddCommentErrors" runat="server" /> 
 
 			<div class="big-button">
 				<asp:LinkButton ID="LinkButtonAddComment" runat="server" OnClick="LinkButtonAddComment_Click" ValidationGroup="Comment" TabIndex="2">Добавить</asp:LinkButton>

@@ -22,7 +22,7 @@
 			<a href="profile.aspx" title="Изменить email или пароль">Профиль</a>
 		</li>
 		<li>		
-			<a href="user.aspx" title="Изменить email или пароль">Моё</a>
+			<a href="user.aspx" title="Мои посты и комментарии">Моё</a>
 		</li>
 		<li>
 			<a href="addheadertext.aspx" title="Добавить текст для хидера">Текст для хидера</a>
