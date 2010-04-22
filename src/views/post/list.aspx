@@ -8,7 +8,7 @@
 <% foreach (var post in (List<ITCommunity.Models.Post>)ViewData["posts"])
    { %>
    <li>
-    <b><%= post.Title %></b>
+    <b><%= Html.ActionLink(post.TitleFormatted, "view/" + post.Id, "post")%></b>
     <p>
         <%= post.DescriptionFormatted %>
     </p>
