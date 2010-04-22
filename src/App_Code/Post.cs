@@ -145,6 +145,21 @@ namespace ITCommunity {
 			set { _commentsCount = value; }
 		}
 
+        /// <summary>
+        /// Может ли редактировать текущий пользователь
+        /// </summary>
+        public bool IsCurrentUserCanEdit
+        {
+            get
+            {
+                DateTime expireDate = this.CreateDate.AddSeconds(Config.Num("EditablePeriod"));
+                bool isDateNotExpired = expireDate.CompareTo(DateTime.Now) == 1;
+                bool isCurrentUserPostAuthor = CurrentUser.isAuth && CurrentUser.User.Id == this.AuthorId;
+
+                return isDateNotExpired && isCurrentUserPostAuthor;
+            }
+        }
+
 		#endregion
 
 		#region Constructors

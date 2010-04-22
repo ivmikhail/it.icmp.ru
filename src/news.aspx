@@ -46,13 +46,13 @@
 
 			<uc:EditorToolbar ID="EditorToolbar" runat="server" ToolbarElements="" />
 			<label class="textbox-textarea">
-				<asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="10" ValidationGroup="Comment" TabIndex="1"/>
+				<asp:TextBox ID="TextBoxComment" runat="server" TextMode="MultiLine" Rows="10" TabIndex="1"/>
 			</label>
 
 			<asp:Literal ID="AddCommentErrors" runat="server" /> 
 
 			<div class="big-button">
-				<asp:LinkButton ID="LinkButtonAddComment" runat="server" OnClick="LinkButtonAddComment_Click" ValidationGroup="Comment" TabIndex="2">Добавить</asp:LinkButton>
+				<asp:LinkButton ID="LinkButtonAddComment" runat="server" OnClick="LinkButtonAddComment_Click" TabIndex="2">Добавить</asp:LinkButton>
 			</div>
 		</div>
 	</div>
