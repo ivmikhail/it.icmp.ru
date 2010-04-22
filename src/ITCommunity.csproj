@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="models\AccountModels.cs" />
     <Compile Include="models\Category.cs" />
+    <Compile Include="models\Comment.cs" />
     <Compile Include="models\Post.cs" />
     <Compile Include="models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +97,7 @@
     <Content Include="content\css\reset.css" />
     <Content Include="Global.asax" />
     <Content Include="views\post\list.aspx" />
+    <Content Include="views\post\view.aspx" />
     <Content Include="views\shared\left-sidebar.ascx" />
     <Content Include="views\shared\right-sidebar.ascx" />
     <Content Include="Web.config" />
