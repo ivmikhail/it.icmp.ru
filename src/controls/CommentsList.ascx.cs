@@ -13,9 +13,12 @@ using ITCommunity;
 
 namespace ITCommunity {
 	public partial class CommentsList : System.Web.UI.UserControl {
-		protected void Page_Load(object sender, EventArgs e) {
-		}
 
+        private const string EDITABLE_COMMENT_INDX_NAME      = "editable_comment_index";
+        private const string EDIT_COMMENT_MESSAGE            = "edit_message";
+		protected void Page_Load(object sender, EventArgs e) {
+        }
+        
 		public void DataBind(List<Comment> comments) {
 			RepeaterComments.DataSource = comments;
 			RepeaterComments.DataBind();
@@ -23,26 +26,121 @@ namespace ITCommunity {
 		}
 
 		protected void RepeaterComments_ItemCommand(object source, RepeaterCommandEventArgs e) {
-			if (e.CommandName == "delete") {
-				if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin) {
-					if (IsPostBack) {
-						string[] args = e.CommandArgument.ToString().Split(',');
-						string commentId = args[0];
-						string postId = args[1];
 
-						Comment.Delete(Convert.ToInt32(commentId));
-						Response.Redirect("news.aspx?id=" + postId + "#comments");
-					}
-				}
-			}
+            string[] args = e.CommandArgument.ToString().Split(',');
+            int commentId = Convert.ToInt32(args[0]);
+            int postId    = Convert.ToInt32(args[1]);
+
+            Comment editableComment = Comment.GetById(commentId);
+            bool isCanEdit = editableComment.IsCurrentUserCanEdit;
+            if (e.CommandName == "delete")
+            {
+                if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin || isCanEdit)
+                {
+                     Comment.Delete(commentId);
+                } else
+                {
+                    Session[EDIT_COMMENT_MESSAGE] = "<div class=\"error\">редактирование невозможно, время редактирования истекло</div>";
+                }
+            } else if (e.CommandName == "update")
+            {
+                string newText = NewTextHidden.Value;
+                if (isCanEdit && newText != "")
+                {
+                    editableComment.Text = newText;
+                    editableComment.Update();
+                    Session[EDITABLE_COMMENT_INDX_NAME] = null;
+                } else
+                {
+                    Session[EDIT_COMMENT_MESSAGE] = newText == "" ? "<div class=\"error\">редактирование невозможно, текст не может быть пустым</div>" : "<div class=\"error\">редактирование невозможно, время редактирования истекло</div>";
+                }
+
+            } else if (e.CommandName == "edit")
+            {
+                if (isCanEdit)
+                {
+                    Session[EDITABLE_COMMENT_INDX_NAME] = e.Item.ItemIndex;
+                } else
+                {
+                   Session[EDIT_COMMENT_MESSAGE] = "<div class=\"error\">редактирование невозможно, время редактирования истекло</div>";
+                }
+            } else if (e.CommandName == "cancel")
+            {
+                Session[EDITABLE_COMMENT_INDX_NAME]     = null;
+                Session[EDIT_COMMENT_MESSAGE]           = null;
+            }
+
+            Response.Redirect("news.aspx?id=" + postId + "#comment-" + commentId);
 		}
 
-		protected void RepeaterComments_ItemDataBound(object sender, RepeaterItemEventArgs e) {
-			if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem) {
-				if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin) {
-					((LinkButton)e.Item.FindControl("DeleteComment")).Visible = true;
-				}
-			}
-		}
+        protected void RepeaterComments_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            int editableItemIndx = -1;
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Comment currentComment = (Comment)e.Item.DataItem;                
+                bool isUserCanEdit = currentComment.IsCurrentUserCanEdit;
+
+                //Управляющие ссылки
+                Literal commentText   = ((Literal)e.Item.FindControl("CommentText"));
+                LinkButton editLink   = ((LinkButton)e.Item.FindControl("EditComment"));
+                LinkButton deleteLink = ((LinkButton)e.Item.FindControl("DeleteComment"));
+                LinkButton updateLink = ((LinkButton)e.Item.FindControl("UpdateComment"));
+                LinkButton cancelLink = ((LinkButton)e.Item.FindControl("CancelEdit"));
+                Literal    editError  = ((Literal)e.Item.FindControl("EditError"));
+                
+                // Биндим текст
+                commentText.Text = currentComment.TextFormatted;
+
+                // Показать ссылку на удаление
+                if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin || currentComment.IsCurrentUserCanEdit)
+                {
+                    deleteLink.Visible = true;
+                }
+                       
+                // Показать ссылку редактировать
+                if (isUserCanEdit)
+                {
+                    editLink.Visible = true;
+                    deleteLink.Visible = true;
+                }
+
+                if (Session[EDITABLE_COMMENT_INDX_NAME] != null)
+                {
+                    editableItemIndx = (int)Session[EDITABLE_COMMENT_INDX_NAME];
+                }
+
+                //Показать текстбокс для редактирования
+                bool isCurrentItemEditable   = editableItemIndx != -1 && editableItemIndx == e.Item.ItemIndex;
+                if (isCurrentItemEditable && isUserCanEdit)              
+                {
+
+                    TextBox newComment = ((TextBox)e.Item.FindControl("NewCommentText"));
+                    newComment.Text = currentComment.Text;
+
+                    newComment.Visible = true;
+
+                    commentText.Visible = false;
+
+                    updateLink.Visible = true;
+                    cancelLink.Visible = true;
+
+                    deleteLink.Visible = false;
+                    editLink.Visible = false;
+                }
+
+                if (isCurrentItemEditable && Session[EDIT_COMMENT_MESSAGE] != null)
+                {
+                    editError.Text = Session[EDIT_COMMENT_MESSAGE].ToString();
+                }
+            }
+        }
+       private int GetParam(string name)
+       {
+            int id;
+            Int32.TryParse(Request.QueryString[name], out id);
+            return id;
+        }
 	}
 }

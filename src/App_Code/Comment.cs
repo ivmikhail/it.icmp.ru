@@ -90,6 +90,20 @@ namespace ITCommunity {
 			}
 		}
 
+        /// <summary>
+        /// Может ли редактировать коммент текущий пользователь
+        /// </summary>
+        public bool IsCurrentUserCanEdit
+        {
+            get
+            {
+                DateTime expireDate = this.CreateDate.AddSeconds(Config.Num("EditablePeriod"));
+                bool isDateNotExpired = expireDate.CompareTo(DateTime.Now) == 1;
+                bool isCurrentUserCommAuthor = CurrentUser.isAuth && CurrentUser.User.Id == this.AuthorId;
+
+                return isDateNotExpired && isCurrentUserCommAuthor;
+            }
+        }
 		public string ShortText {
 			get {
 				string safely_text = Util.HtmlEncode(_text);
@@ -97,6 +111,12 @@ namespace ITCommunity {
 				return (safely_text.Length > 80) ? safely_text.Substring(0, 80) + " ..." : safely_text;
 			}
 		}
+
+        public int AuthorId
+        {
+            get { return _userId; }
+            set { _userId = value; }
+        }
 
 		#endregion
 
@@ -122,12 +142,15 @@ namespace ITCommunity {
 		/// Добавление комментария в базу. Кол-во комментариев поста обновляется на уровне базы
 		/// </summary>
 		/// <param name="comment">Сам коммент</param>
-		public static Comment Add(Comment comm) {
-			Comment comment = GetCommentFromRow(Database.CommentAdd(comm.Post.Id, comm.Author.Id, comm.Ip, comm.Text));
+		public static void Add(Comment comm) {
+			comm.Id = GetCommentFromRow(Database.CommentAdd(comm.Post.Id, comm.Author.Id, comm.Ip, comm.Text)).Id;
 			AppCache.Remove(Config.String("LastCommentsCacheName"));
-			return comment;
 		}
 
+        public static Comment GetById(int commentId)
+        {
+           return  GetCommentFromRow(Database.CommentGetById(commentId));
+        }
 		/// <summary>
 		/// Удаляем коммент
 		/// </summary>
@@ -205,5 +228,9 @@ namespace ITCommunity {
 
 			return comment;
 		}
+        public void Update()
+        {
+            Database.CommentUpdate(_id, _text);
+        }
 	}
 }

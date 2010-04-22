@@ -124,10 +124,6 @@ namespace ITCommunity {
             {
                 error = "Комментарий не может быть пустым";
             }
-            if (comm.Text.Trim().Length > 5048)
-            {
-                error = "Длина комментария слижком большая";
-            }
             if (error.Length == 0)
             {
 
