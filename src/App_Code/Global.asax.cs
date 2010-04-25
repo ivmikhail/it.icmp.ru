@@ -23,7 +23,15 @@ namespace ITCommunity {
 		/// Адрес сайта, например: http://it.icmp.ru (без завершающего слеша).
 		/// </summary>
 		public static string SiteAddress {
-			get { return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority); }
+			get {
+                if(HttpContext.Current.Request.Url.Host=="localhost") {
+                    String url = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Path);
+                    String siteAddr = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+                    return url.Substring(0, url.IndexOf("/", siteAddr.Length + 1));
+                } else {
+                    return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority); 
+                }
+            }
 		}
 
 		/// <summary>

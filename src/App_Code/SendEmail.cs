@@ -21,7 +21,9 @@ namespace ITCommunity {
 							   "______ \n" +
 							   "С уважением, робот находящийся в рабстве у держателей сайта " + Global.SiteAddress;
 				SmtpClient client = new SmtpClient(); // используются параметры из web.config
-				//client.EnableSsl = true;
+                if (client.Host.Contains("gmail.com")) { // Вахаха, простите меня
+                    client.EnableSsl = true;
+                }
 				client.Send(message);
 				Logger.Log.Info("Успешно запрошен email для смены пароля для пользователя " + user.Login + " с адреса " + CurrentUser.Ip);
 			}
