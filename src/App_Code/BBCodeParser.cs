@@ -118,12 +118,12 @@ namespace ITCommunity {
             // http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
             
             String[] trustedSites = Config.String("TrustdedSites").Split(',');
-            String imgPattern = @"(http://(?:";
+            String imgPattern = @"((?:postimages|http://(?:";
             foreach(String site in trustedSites) {
                 imgPattern += Regex.Escape(site.Trim()) + "|";
             }
             imgPattern = imgPattern.Substring(0, imgPattern.Length -1);
-            imgPattern += ")/[^ \"'\\[]*?)";
+            imgPattern += "))/[^ \"'\\[]*?)";
             _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
             _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img src=\"$2\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
             _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$4\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
