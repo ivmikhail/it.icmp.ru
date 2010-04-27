@@ -19,7 +19,7 @@ namespace ITCommunity {
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
 				LoadCategories();
-				CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
+				CheckBoxAttached.Enabled = CurrentUser.IsAdmin;
 				ImageOptions.Text = "<div class=\"note\">Размер до " + Config.String("PostImgWidth") + "x" + Config.String("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Config.String("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
 				bool isEditPost = GetPostId() > 0;
                 if (isEditPost) {

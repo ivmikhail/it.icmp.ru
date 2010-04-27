@@ -56,7 +56,11 @@ namespace ITCommunity {
                 if (post.IsCurrentUserCanEdit)
                 {
                     EditPostLink.Text = "/ <a href='editpost.aspx?id=" + post.Id + "' title='Отредактировать новость'>редактировать</a> /";
-                    EditPostLink.Visible = DeletePostLink.Visible = true;
+                    EditPostLink.Visible = true;
+                }
+                if (post.IsCurrentUserCanDel)
+                {
+                    DeletePostLink.Visible = true;
                 }
 
 				WritePostCategories(post);
@@ -184,7 +188,7 @@ namespace ITCommunity {
 		}
         */
 		protected void DeletePost_Click(object sender, EventArgs e) {
-            if (post.IsCurrentUserCanEdit)
+            if (post.IsCurrentUserCanDel)
             {
                 Post.Delete(post);
             }

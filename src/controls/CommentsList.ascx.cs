@@ -33,9 +33,10 @@ namespace ITCommunity {
 
             Comment editableComment = Comment.GetById(commentId);
             bool isCanEdit = editableComment.IsCurrentUserCanEdit;
+            bool isCanDel  = editableComment.IsCurrentUserCanDel;
             if (e.CommandName == "delete")
             {
-                if (isCanEdit)
+                if (isCanDel)
                 {
                      Comment.Delete(commentId);
                 } else
@@ -81,6 +82,7 @@ namespace ITCommunity {
             {
                 Comment currentComment = (Comment)e.Item.DataItem;                
                 bool isUserCanEdit = currentComment.IsCurrentUserCanEdit;
+                bool isUserCanDel  = currentComment.IsCurrentUserCanDel;
 
                 //Управляющие ссылки
                 Literal commentText   = ((Literal)e.Item.FindControl("CommentText"));
@@ -94,7 +96,7 @@ namespace ITCommunity {
                 commentText.Text = currentComment.TextFormatted;
 
                 // Показать ссылку на удаление
-                if (currentComment.IsCurrentUserCanEdit)
+                if (isUserCanDel)
                 {
                     deleteLink.Visible = true;
                 }
@@ -103,7 +105,6 @@ namespace ITCommunity {
                 if (isUserCanEdit)
                 {
                     editLink.Visible = true;
-                    deleteLink.Visible = true;
                 }
 
                 if (Session[EDITABLE_COMMENT_INDX_NAME] != null)

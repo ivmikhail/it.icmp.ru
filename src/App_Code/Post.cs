@@ -152,18 +152,18 @@ namespace ITCommunity {
         {
             get
             {
-                bool result = false;
-                if (CurrentUser.IsAdmin)
-                {
-                    result = true;
-                } else
-                {
-                    DateTime expireDate = this.CreateDate.AddSeconds(Config.Num("EditablePeriod"));
-                    bool isDateNotExpired = expireDate.CompareTo(DateTime.Now) == 1;
-                    result = isDateNotExpired && IsPostOwner(CurrentUser.User);
-                }
+                DateTime expireDate = this.CreateDate.AddSeconds(Config.Num("EditablePeriod"));
+                bool isDateNotExpired = expireDate.CompareTo(DateTime.Now) == 1;
+                
+                return isDateNotExpired && IsPostOwner(CurrentUser.User);
+            }
+        }
 
-                return result;
+        public bool IsCurrentUserCanDel
+        {
+            get
+            {
+                return CurrentUser.IsAdmin || IsCurrentUserCanEdit;
             }
         }
 
