@@ -24,9 +24,10 @@
 			<asp:Literal ID="favorite" runat="server" /> /
 			<a href='user.aspx?login=<asp:Literal ID="author" runat="server" />' title="Посетить страницу пользователя" class="user-pm-link"><asp:Literal ID="authorLogin" runat="server" /></a> /
 			просмотров: <asp:Literal ID="views" runat="server" />
+            <asp:Literal ID="source" runat="server" />
+
 			<asp:Literal ID="EditPostLink" runat="server" Visible="false" />
 			<asp:LinkButton ID="DeletePostLink" runat="server" OnClick="DeletePost_Click" Visible="false" OnClientClick="return confirm('Точно удалить?')">удалить</asp:LinkButton>
-			<asp:Literal ID="source" runat="server" />
 			<div class="post-rating">
 				<uc:Rating ID="PostRating" runat="server" EntityId="<%# Post.Id %>" Type="Post" EntityAuthorId="<%# Post.Author.Id %>" ButtonsVisible="true" />
 			</div>
