@@ -16,18 +16,22 @@ using ITCommunity;
 namespace ITCommunity {
 	public partial class EditPost : System.Web.UI.Page {
 		Post current_post = new Post();
+
 		protected void Page_Load(object sender, EventArgs e) {
+
 			if (!IsPostBack) {
+
 				LoadCategories();
 				CheckBoxAttached.Enabled = CurrentUser.IsAdmin;
 				ImageOptions.Text = "<div class=\"note\">Размер до " + Config.String("PostImgWidth") + "x" + Config.String("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Config.String("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
-				bool isEditPost = GetPostId() > 0;
+				
+                bool isEditPost = GetPostId() > 0;
                 if (isEditPost) {
 					LinkButtonAdd.Text = "Изменить";
 				}
 				else {
 					LinkButtonAdd.Text = "Добавить";
-                    EditableInfo.Text = "После добавления пост можно будет редактировать/удалить в течении " + Config.Num("EditablePeriod") + " сек.";
+                    EditableInfo.Text  = "После добавления пост можно будет редактировать/удалить в течении " + Config.Num("EditablePeriod") + " сек.";
 				}
 				InitPostData();
 
@@ -39,7 +43,7 @@ namespace ITCommunity {
 			User current_user = CurrentUser.User;
 			Post post = Post.GetById(GetPostId());
 
-			if (post.IsPostOwner(CurrentUser.User) || current_user.Role == ITCommunity.User.Roles.Admin) {
+			if (post.IsCurrentUserCanEdit) {
 				current_post = post;
 				Picture.DeleteTempFolderFiles(current_post);
 				LoadImages(current_post);
@@ -47,10 +51,10 @@ namespace ITCommunity {
 
 			InitPostCategories(current_post.Categories);
 
-			TextBoxTitle.Text = current_post.Title;
-			TextAreaPostDesc.Text = current_post.Description;
-			TextAreaPostText.Text = current_post.Text;
-			TextBoxSource.Text = current_post.Source;
+			TextBoxTitle.Text        = current_post.Title;
+			TextAreaPostDesc.Text    = current_post.Description;
+			TextAreaPostText.Text    = current_post.Text;
+			TextBoxSource.Text       = current_post.Source;
 			CheckBoxAttached.Checked = current_post.Attached;
 		}
 
