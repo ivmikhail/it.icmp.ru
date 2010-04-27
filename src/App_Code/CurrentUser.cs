@@ -49,6 +49,12 @@ namespace ITCommunity {
 			}
 		}
 
+        public static bool IsAdmin {
+            get {
+                return CurrentUser.isAuth && CurrentUser.User.Role == ITCommunity.User.Roles.Admin;
+            }
+        }
+
 		/// <summary>
 		/// Шифруем пароль пользователя, в дальнейшем используем выходное значение функции
 		/// в качестве пароля пользователя.

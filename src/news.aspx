@@ -40,8 +40,7 @@
 		<div id="add-comment-panel" class="panel">
 			<h2>Написать комментарий. Вы - <asp:Literal ID="userLogin" runat="server" /></h2>
 
-			<uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
-
+            <uc:BBCodeInfo ID="BBCodeInfo" runat="server"/>
 			<uc:ItCaptcha ID="Captcha" runat="server" Visible="false" EnableViewState="true"/>
 
 			<uc:EditorToolbar ID="EditorToolbar" runat="server" ToolbarElements="" />

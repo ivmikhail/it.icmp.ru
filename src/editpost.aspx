@@ -142,9 +142,9 @@
 			<asp:FileUpload ID="UploadImage" runat="server"  />
 			<asp:LinkButton ID="AttachImageButton" runat="server" OnClick="AttachImageButton_Click" ToolTip="Загрузить выбранную картинку на сервер">загрузить</asp:LinkButton>
 		</label>
-
 		<div class="note">
-			Нажимая кнопку добавить, вы соглашаетесь с <a href="http://it.icmp.ru:3000/wiki/itc/Правила_сайта" target="_blank" title="Правила постинга">правилами</a>
+			При добавлении/редактировании новости, вы соглашаетесь с <a href="http://it.icmp.ru:3000/wiki/itc/Правила_сайта" target="_blank" title="Правила постинга">правилами</a>. 
+            <asp:Literal ID="EditableInfo" runat="server" />
 		</div>
 
 		<asp:Literal ID="AddPostMessages" runat="server" />
