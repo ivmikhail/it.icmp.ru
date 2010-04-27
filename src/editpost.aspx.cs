@@ -21,11 +21,13 @@ namespace ITCommunity {
 				LoadCategories();
 				CheckBoxAttached.Enabled = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
 				ImageOptions.Text = "<div class=\"note\">Размер до " + Config.String("PostImgWidth") + "x" + Config.String("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Config.String("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
-				if (GetPostId() > 0) {
+				bool isEditPost = GetPostId() > 0;
+                if (isEditPost) {
 					LinkButtonAdd.Text = "Изменить";
 				}
 				else {
 					LinkButtonAdd.Text = "Добавить";
+                    EditableInfo.Text = "После добавления пост можно будет редактировать/удалить в течении " + Config.Num("EditablePeriod") + " сек.";
 				}
 				InitPostData();
 
@@ -73,11 +75,17 @@ namespace ITCommunity {
 
 		protected void LinkButtonAdd_Click(object sender, EventArgs e) {
 			Post editable_post = Post.GetById(GetPostId());
+            bool isNewPost = editable_post.Id < 1;
+
 			List<string> errors = ValidateData();
 			List<Category> cats = GetCategoriesFromPost();
 			if (cats.Count == 0) {
 				errors.Add("Категория не выбрана"); //TODO: Наверно надо переделать? 
 			}
+            if (!isNewPost && !editable_post.IsCurrentUserCanEdit)
+            {
+                errors.Add("Редактирование запрещено, возможно истекло время редактирования");
+            }
 			if (errors.Count == 0) {
 				editable_post.Categories = cats;
 				editable_post.Title = TextBoxTitle.Text;
@@ -89,26 +97,27 @@ namespace ITCommunity {
 				editable_post.Attached = CheckBoxAttached.Checked;
 
 				Post inserted_post = new Post();
-				if (editable_post.Id > 0) //пост редактируют
+				if (isNewPost) 
 				{
-					editable_post.UpdateWithCategories();
-					inserted_post = editable_post;
+
+                    editable_post.Author = CurrentUser.User;
+                    inserted_post = Post.Add(editable_post);
+                    // Увеличиваем счетчик
+                    User current = CurrentUser.User;
+                    current.HeaderTextCounter++;
+                    current.Update();
 				}
-				else // Пост только что создали
+				else 
 				{
-					editable_post.Author = CurrentUser.User;
-					inserted_post = Post.Add(editable_post);
-					// Увеличиваем счетчик
-					User current = CurrentUser.User;
-					current.HeaderTextCounter++;
-					current.Update();
+                    editable_post.UpdateWithCategories();
+                    inserted_post = editable_post;
 				}
 				Picture.FixImages(inserted_post);
 				Response.Redirect("news.aspx?id=" + inserted_post.Id);
 			}
 			else {
 				InitPostCategories(cats);
-				WriteErrors(errors, "Новость не добавлена");
+				WriteErrors(errors, "Новость не добавлена/обновлена");
 			}
 		}
 

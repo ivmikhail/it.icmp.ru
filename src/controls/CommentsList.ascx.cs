@@ -35,7 +35,7 @@ namespace ITCommunity {
             bool isCanEdit = editableComment.IsCurrentUserCanEdit;
             if (e.CommandName == "delete")
             {
-                if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin || isCanEdit)
+                if (isCanEdit)
                 {
                      Comment.Delete(commentId);
                 } else
@@ -94,7 +94,7 @@ namespace ITCommunity {
                 commentText.Text = currentComment.TextFormatted;
 
                 // Показать ссылку на удаление
-                if (CurrentUser.User.Role == ITCommunity.User.Roles.Admin || currentComment.IsCurrentUserCanEdit)
+                if (currentComment.IsCurrentUserCanEdit)
                 {
                     deleteLink.Visible = true;
                 }

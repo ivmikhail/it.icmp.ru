@@ -49,13 +49,15 @@ namespace ITCommunity {
 				Captcha.Visible = true;
 			}
 		}
+
 		private void LoadPost() {
 			post = Post.GetById(GetPostId());
 			if (post.Id > 0) {
-				EditPostLink.Text = "/ <a href='editpost.aspx?id=" + post.Id + "' title='Отредактировать новость'>редактировать</a> /";
-				if (post.IsPostOwner(CurrentUser.User) || CurrentUser.User.Role == ITCommunity.User.Roles.Admin) {
-					EditPostLink.Visible = DeletePostLink.Visible = true;
-				}
+                if (post.IsCurrentUserCanEdit)
+                {
+                    EditPostLink.Text = "/ <a href='editpost.aspx?id=" + post.Id + "' title='Отредактировать новость'>редактировать</a> /";
+                    EditPostLink.Visible = DeletePostLink.Visible = true;
+                }
 
 				WritePostCategories(post);
 				HyperLinkTitle.Text = post.TitleFormatted;
@@ -182,7 +184,10 @@ namespace ITCommunity {
 		}
         */
 		protected void DeletePost_Click(object sender, EventArgs e) {
-			Post.Delete(post);
+            if (post.IsCurrentUserCanEdit)
+            {
+                Post.Delete(post);
+            }
 			Response.Redirect("default.aspx");
 		}
 	}
