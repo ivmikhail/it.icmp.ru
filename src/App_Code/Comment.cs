@@ -97,21 +97,21 @@ namespace ITCommunity {
         {
             get
             {
-                bool result = false;
-                if (CurrentUser.IsAdmin)
-                {
-                    result = true;
-                } else
-                {
-                    DateTime expireDate = this.CreateDate.AddSeconds(Config.Num("EditablePeriod"));
-                    bool isDateNotExpired = expireDate.CompareTo(DateTime.Now) == 1;
-                    bool isCurrentUserCommAuthor = CurrentUser.isAuth && CurrentUser.User.Id == this.AuthorId;
-                    result = isDateNotExpired && isCurrentUserCommAuthor;
-                }
+                DateTime expireDate = this.CreateDate.AddSeconds(Config.Num("EditablePeriod"));
+                bool isDateNotExpired = expireDate.CompareTo(DateTime.Now) == 1;
+                bool isCurrentUserCommAuthor = CurrentUser.isAuth && CurrentUser.User.Id == this.AuthorId;
 
-                return result;
+                return isDateNotExpired && isCurrentUserCommAuthor;
             }
         }
+        public bool IsCurrentUserCanDel
+        {
+            get
+            {
+                return CurrentUser.IsAdmin || IsCurrentUserCanEdit;
+            }
+        }
+
 		public string ShortText {
 			get {
 				string safely_text = Util.HtmlEncode(_text);
