@@ -309,6 +309,7 @@ hr {
 .post .bad-source {
 	font: 1.1em/1.6em Verdana, sans-serif;
 	padding: 10px 15px;
+	overflow:hidden;
 }
 .post .post-info {
 	border: 1px dotted #afafaf;
@@ -645,6 +646,7 @@ hr {
 #comments .comment-text {
 	font: 1em/1.4em Verdana, sans-serif;
 	padding: 5px 15px 0;
+	overflow:hidden;
 }
 #comments .odd .comment-info {
 }
