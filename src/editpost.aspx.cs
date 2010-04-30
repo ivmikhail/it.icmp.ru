@@ -43,7 +43,7 @@ namespace ITCommunity {
 			User current_user = CurrentUser.User;
 			Post post = Post.GetById(GetPostId());
 
-			if (post.IsCurrentUserCanEdit) {
+			if (post.IsCurrentUserCanEdit || CurrentUser.IsAdmin) {
 				current_post = post;
 				Picture.DeleteTempFolderFiles(current_post);
 				LoadImages(current_post);
