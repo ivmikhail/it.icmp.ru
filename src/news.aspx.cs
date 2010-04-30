@@ -53,7 +53,7 @@ namespace ITCommunity {
 		private void LoadPost() {
 			post = Post.GetById(GetPostId());
 			if (post.Id > 0) {
-                if (post.IsCurrentUserCanEdit)
+                if (post.IsCurrentUserCanEdit || CurrentUser.IsAdmin)
                 {
                     EditPostLink.Text = "/ <a href='editpost.aspx?id=" + post.Id + "' title='Отредактировать новость'>редактировать</a> /";
                     EditPostLink.Visible = true;
