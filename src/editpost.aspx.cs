@@ -86,7 +86,7 @@ namespace ITCommunity {
 			if (cats.Count == 0) {
 				errors.Add("Категория не выбрана"); //TODO: Наверно надо переделать? 
 			}
-            if (!isNewPost && !editable_post.IsCurrentUserCanEdit)
+            if (!isNewPost && !editable_post.IsCurrentUserCanEdit && CurrentUser.IsAdmin)
             {
                 errors.Add("Редактирование запрещено, возможно истекло время редактирования");
             }
