@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -14,21 +13,27 @@ namespace ITCommunity {
 	}
 
 	/// <summary>
-	/// Summary description for BrowseItem
+	/// Класс для отображения файлов
 	/// </summary>
 	public class BrowseItem {
 
-		#region Icons
+		#region Constants
 
-		public const string FolderIcon = "folderclosed.gif";
-		public const string ExeIcon = "exe.ico";
-		public const string AnyIcon = "any.ico";
-		public const string UpIcon = "up.ico";
-		private const string descriptionFile = "descript.ion";
+		public const string FOLDER_ICON = "folderclosed.gif";
+		public const string EXE_ICON = "exe.ico";
+		public const string ANY_ICON = "any.ico";
+		public const string UP_ICON = "up.ico";
+		private const string DESCRIPTION_FILENAME = "descript.ion";
 
 		#endregion
 
 		#region Properties
+
+		private static string _filesFolder {
+			get {
+				return Config.Get("FilesFolder");
+			}
+		}
 
 		private bool _isDir;
 		private string _name;
@@ -58,22 +63,18 @@ namespace ITCommunity {
 		}
 
 		public string Size {
-			get {
-				return _size;
-			}
+			get { return _size; }
 			set { _size = value; }
 		}
 
 		public string Description {
-			get {
-				return _description;
-			}
-			set {
-				_description = value;
-			}
+			get { return _description; }
+			set { _description = value; }
 		}
 
 		#endregion
+
+		#region Constructors
 
 		private BrowseItem(bool isDir, string link, string name) {
 			_isDir = isDir;
@@ -81,42 +82,46 @@ namespace ITCommunity {
 			_name = name;
 		}
 
+		#endregion
+
+		#region Public static methods
+
 		public static BrowseItem Get(string dir) {
-			return new BrowseItem(true, GetLinkOfDir(dir), GetDirName(dir));
+			return new BrowseItem(true, GetDirLink(dir), GetDirName(dir));
 		}
 
-		public static List<BrowseItem> GetList(string dir, bool isViewRoot) {
-			List<BrowseItem> result = new List<BrowseItem>();
-			Dictionary<string, string> descriptions = GetDescriptions(dir);
+		public static List<BrowseItem> GetList(string dir, bool isRoot) {
+			var result = new List<BrowseItem>();
+			var descriptions = GetDescriptions(dir);
 
-			if (!isViewRoot) {
-				DirectoryInfo di = Directory.GetParent(dir);
-				BrowseItem bi = new BrowseItem(true, GetLinkOfDir(di.Parent.FullName), "..");
-				bi.Icon = UpIcon;
-				bi.Description = "Выше";
-				result.Add(bi);
+			if (!isRoot) {
+				var parent = Directory.GetParent(dir).Parent;
+				var item = new BrowseItem(true, GetDirLink(parent.FullName), "..");
+				item.Icon = UP_ICON;
+				item.Description = "Выше";
+				result.Add(item);
 			}
 
-			string[] dirs = Directory.GetDirectories(dir);
-			for (int i = 0; i < dirs.Length; i++) {
-				string dirName = GetDirName(dirs[i]);
-				BrowseItem bi = Get(dirs[i]);
-				bi.Icon = FolderIcon;
-				descriptions.TryGetValue(dirName, out bi._description);
-				result.Add(bi);
+			var dirs = Directory.GetDirectories(dir);
+			foreach (var directory in dirs) {
+				BrowseItem item = Get(directory);
+				item.Icon = FOLDER_ICON;
+				descriptions.TryGetValue(item.Name, out item._description);
+				result.Add(item);
 			}
 
-			string[] files = Directory.GetFiles(dir);
-			for (int i = 0; i < files.Length; i++) {
-				FileInfo fi = new FileInfo(files[i]);
-				if (fi.Name.ToLower() == descriptionFile) {
+			var files = Directory.GetFiles(dir);
+			foreach (var file in files) {
+				var info = new FileInfo(file);
+				if (info.Name.ToLower() == DESCRIPTION_FILENAME) {
 					continue;
 				}
-				BrowseItem bi = new BrowseItem(false, GetLinkOfPath(files[i]), fi.Name);
-				bi.Size = SetHumanSize(fi.Length);
-				bi.Icon = GetIcon(fi.Extension);
-				descriptions.TryGetValue(fi.Name, out bi._description);
-				result.Add(bi);
+
+				var item = new BrowseItem(false, GetPathLink(file), info.Name);
+				item.Size = GetHumanSize(info.Length);
+				item.Icon = GetIcon(info.Extension);
+				descriptions.TryGetValue(item.Name, out item._description);
+				result.Add(item);
 			}
 
 			return result;
@@ -132,7 +137,7 @@ namespace ITCommunity {
 			if (!link.StartsWith("/")) {
 				link = "/" + link;
 			}
-			string pathBegin = Config.String("FilesFolder") + Enum.GetName(linkType.GetType(), linkType);
+			string pathBegin = _filesFolder + Enum.GetName(linkType.GetType(), linkType);
 			string path = pathBegin + link.Replace("/", "\\");
 			if (!path.EndsWith("\\")) {
 				path = path + "\\";
@@ -147,27 +152,31 @@ namespace ITCommunity {
 			return path;
 		}
 
+		#endregion
+
+		#region Private static methods
+
 		private static string GetDirName(string dir) {
-			if (dir[dir.Length - 1] == '\\') {
-				dir = dir.Substring(0, dir.Length - 1);
+			if (dir.EndsWith("\\")) {
+				dir = dir.Remove(dir.Length - 2);
 			}
-			return dir.Substring(dir.LastIndexOf("\\") + 1);
+			return dir.Substring(dir.LastIndexOf('\\') + 1);
 		}
 
 		private static Dictionary<string, string> GetDescriptions(string dir) {
-			Dictionary<string, string> descriptions = new Dictionary<string, string>();
+			var descriptions = new Dictionary<string, string>();
 
-			if (File.Exists(dir + descriptionFile)) {
-				string[] descs = File.ReadAllLines(dir + descriptionFile, Encoding.GetEncoding(866));
-				foreach (string line in descs) {
+			if (File.Exists(dir + DESCRIPTION_FILENAME)) {
+				string[] descs = File.ReadAllLines(dir + DESCRIPTION_FILENAME, Encoding.GetEncoding(866));
+				foreach (var line in descs) {
 					string fname = null;
 					string desc = null;
 					int delimeter = -1;
 					if (line.Length > 2 && line[0] == '\"') {
-						delimeter = line.IndexOf("\"", 1);
+						delimeter = line.IndexOf('\"', 1);
 						if (delimeter > 0) {
 							fname = line.Substring(1, delimeter - 1);
-							delimeter = line.IndexOf(" ", delimeter);
+							delimeter = line.IndexOf(' ', delimeter);
 							if (delimeter > 0) {
 								desc = line.Substring(delimeter + 1);
 							}
@@ -189,11 +198,11 @@ namespace ITCommunity {
 			return descriptions;
 		}
 
-		private static string GetLinkOfDir(string dir) {
+		private static string GetDirLink(string dir) {
 			if (!dir.EndsWith("\\")) {
 				dir += "\\";
 			}
-			string link = dir.Replace(Config.String("FilesFolder"), "").Replace("\\", "/");
+			string link = dir.Replace(_filesFolder, "").Replace("\\", "/");
 			int i = link.IndexOf("/");
 			if (i == -1) {
 				i = link.Length;
@@ -207,28 +216,28 @@ namespace ITCommunity {
 		private static string GetIcon(string extention) {
 			switch (extention) {
 				case "exe":
-					return ExeIcon;
+					return EXE_ICON;
 				default:
-					return AnyIcon;
+					return ANY_ICON;
 			}
 		}
 
-		private static string SetHumanSize(long p) {
-			if (p > 1000000) {
-				return Math.Round(p / 1000000f, 2) + "Mb";
-			}
-			else if (p > 1000) {
-				return Math.Round(p / 1000f, 2) + "Kb";
-			}
-			else {
-				return p.ToString();
-			}
-
+		private static string GetPathLink(string path) {
+			string link = path.Replace(_filesFolder, "");
+			return Uri.EscapeDataString(_filesFolder + "/" + link.Replace("\\", "/"));
 		}
 
-		private static string GetLinkOfPath(string path) {
-			string link = path.Replace(Config.String("FilesFolder"), "");
-			return Uri.EscapeDataString(Config.String("FilesLink") + "/" + link.Replace("\\", "/"));
+		private static string GetHumanSize(long p) {
+			if (p > 1048576) {
+				return Math.Round(p / 1048576f, 2) + " MB";
+			}
+			if (p > 1024) {
+				return Math.Round(p / 1024f, 2) + " KB";
+			}
+			return p.ToString() + " B";
 		}
+
+		#endregion
+
 	}
 }

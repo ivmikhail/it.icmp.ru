@@ -8,19 +8,35 @@ namespace ITCommunity {
 	/// </summary>
 	public class MenuItem {
 
+		private class Comparer : IComparer<MenuItem> {
+
+			public int Compare(MenuItem x, MenuItem y) {
+				return x.Sort.CompareTo(y.Sort);
+			}
+
+		}
+
+		#region For caching
+
+		public const string MENU_CACHE_KEY = "Menu";
+
 		//делегат метода загрузки меню из базы, нужен для организации кеширования
 		private delegate object MenuLoader();
 
+		private static MenuLoader _menuLoader = GetMenuFromDB;
+
+		#endregion
+
 		#region Properties
 
-		private static MenuLoader _menuLoader = new MenuLoader(GetMenuFromDB);
+		private static Comparer _comparer = new Comparer();
 
 		private int _id;
 		private int _parentId; // 0 значит родителей нету.
 		private string _url;
 		private int _sort;
 		private string _name;
-		private byte _newWindow; // не 0, открывать ссылку в новом окне
+		private bool _onNewWindow;
 
 		public int Id {
 			get { return _id; }
@@ -33,7 +49,7 @@ namespace ITCommunity {
 					return new MenuItem();
 				}
 				else {
-					return MenuItem.GetById(_parentId);
+					return MenuItem.Get(_parentId);
 				}
 			}
 			set {
@@ -54,16 +70,14 @@ namespace ITCommunity {
 			get { return _sort; }
 			set { _sort = value; }
 		}
-		public bool NewWindow {
-			get {
-				return _newWindow != 0;
-			}
-			set {
-				_newWindow = value ? (byte)1 : (byte)0;
-			}
+		public bool OnNewWindow {
+			get { return _onNewWindow; }
+			set { _onNewWindow = value; }
 		}
 
 		#endregion
+
+		#region Constructors
 
 		public MenuItem() {
 			_id = -1;
@@ -73,14 +87,29 @@ namespace ITCommunity {
 			_name = "";
 		}
 
-		public MenuItem(int id, int parentId, string url, int sort, string name, byte isInNewWindow) {
+		public MenuItem(int id, int parentId, string url, int sort, string name, bool onNewWindow) {
 			_id = id;
 			_parentId = parentId;
 			_url = url;
 			_sort = sort;
 			_name = name;
-			_newWindow = isInNewWindow;
+			_onNewWindow = onNewWindow;
 		}
+
+		#endregion
+
+		/// <summary>
+		/// Обновляем меню, кеш сбрасывается
+		/// </summary>
+		public void Update() {
+			AppCache.Remove(MENU_CACHE_KEY);
+
+			byte onNewWindow = (byte)(_onNewWindow ? 1 : 0);
+
+			Database.MenuItemsUpdate(_id, _parentId, _url, _sort, _name, onNewWindow);
+		}
+
+		#region Public static methods
 
 		/// <summary>
 		/// Добавляем пункт меню
@@ -88,18 +117,11 @@ namespace ITCommunity {
 		/// <param name="MenuItem">Добавляемый пункт</param>
 		/// <returns>Только что добавленный пункт в меню(из БД)</returns>
 		public static MenuItem Add(MenuItem item) {
-			MenuItem new_item = GetItemFromRow(Database.MenuItemsAdd(item.Parent.Id, item.Url, item.Sort, item.Name, item._newWindow));
-			AppCache.Remove(Config.String("MenuCacheName"));
+			AppCache.Remove(MENU_CACHE_KEY);
 
-			return new_item;
-		}
+			byte onNewWindow = (byte)(item.OnNewWindow ? 1 : 0);
 
-		/// <summary>
-		/// Обновляем меню, кеш сбрасывается
-		/// </summary>
-		public void Update() {
-			AppCache.Remove(Config.String("MenuCacheName"));
-			Database.MenuItemsUpdate(this._id, this._parentId, this._url, this._sort, this._name, this._newWindow);
+			return GetItemFromRow(Database.MenuItemsAdd(item.Parent.Id, item.Url, item.Sort, item.Name, onNewWindow));
 		}
 
 		/// <summary>
@@ -107,24 +129,25 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="id">Идентификатор пункта в меню</param>
 		public static void Delete(int id) {
+			AppCache.Remove(MENU_CACHE_KEY);
+
 			Database.MenuItemsDel(id);
-			AppCache.Remove(Config.String("MenuCacheName"));
 		}
 
 		/// <summary>
 		/// Получаем пунктик в меню
 		/// </summary>
 		/// <param name="id">Идентификатор</param>
-		public static MenuItem GetById(int id) {
-			List<MenuItem> menuItems = GetMenu();
-			MenuItem result = new MenuItem();
-			foreach (MenuItem menu in menuItems) {
+		public static MenuItem Get(int id) {
+			var menuItems = GetMenu();
+
+			foreach (var menu in menuItems) {
 				if (menu.Id == id) {
-					result = menu;
-					break;
+					return menu;
 				}
 			}
-			return result;
+
+			return null;
 		}
 
 		/// <summary>
@@ -134,33 +157,30 @@ namespace ITCommunity {
 		/// <param name="parentId">Идентификатор родительского пункта</param>
 		/// <returns>Список подпунктов. Если идентификатор не натуральное число возвращается верхний уровень</returns>
 		public static List<MenuItem> GetByParent(int parentId) {
-			List<MenuItem> result = new List<MenuItem>();
+			var result = new List<MenuItem>();
 
-			int parent = -1;
-			if (parentId > 0) {
-				parent = parentId;
-			}
-			List<MenuItem> menuItems = GetMenu();
-			foreach (MenuItem menu in menuItems) {
-				if (menu.Parent.Id == parent) {
+			var menuItems = GetMenu();
+			foreach (var menu in menuItems) {
+				if (menu._parentId == parentId) {
 					result.Add(menu);
 				}
 			}
-			result.Sort(new MenuItemComparator());
+			result.Sort(_comparer);
 
 			return result;
 		}
+
+		#endregion
+
+		#region Private static methods
 
 		/// <summary>
 		/// Забираем меню из кеша
 		/// </summary>
 		/// <returns>Список пунктов в меню, независимо от вложенности</returns>
 		private static List<MenuItem> GetMenu() {
-			object menu = AppCache.Get(
-				Config.String("MenuCacheName"),
-				_menuLoader,
-				null,
-				Config.Double("MenuCachePer"));
+			var menu = AppCache.Get(MENU_CACHE_KEY, _menuLoader);
+
 			return (List<MenuItem>)menu;
 		}
 
@@ -169,29 +189,37 @@ namespace ITCommunity {
 		}
 
 		private static List<MenuItem> GetItemsFromTable(DataTable dt) {
-			List<MenuItem> items = new List<MenuItem>();
+			var items = new List<MenuItem>();
+
 			for (int i = 0; i < dt.Rows.Count; i++) {
 				items.Add(GetItemFromRow(dt.Rows[i]));
 			}
+
 			return items;
 		}
 
 		private static MenuItem GetItemFromRow(DataRow dr) {
 			MenuItem item;
+
 			if (dr == null) {
 				item = new MenuItem();
 			}
 			else {
+				bool onNewWindow = Convert.ToByte(dr["new_window"]) != 0;
+
 				item = new MenuItem(
 					Convert.ToInt32(dr["id"]),
 					Convert.ToInt32(dr["parent_id"]),
 					Convert.ToString(dr["url"]),
 					Convert.ToInt32(dr["sort"]),
 					Convert.ToString(dr["name"]),
-					Convert.ToByte(dr["new_window"])
+					onNewWindow
 				);
 			}
+
 			return item;
 		}
+
+		#endregion
 	}
 }

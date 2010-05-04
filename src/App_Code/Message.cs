@@ -25,7 +25,7 @@ namespace ITCommunity {
 
 		public User Receiver {
 			get {
-				return User.GetById(_receiverId);
+				return User.Get(_receiverId);
 			}
 			set {
 				_receiverId = value.Id;
@@ -34,7 +34,7 @@ namespace ITCommunity {
 
 		public User Sender {
 			get {
-				return User.GetById(_senderId);
+				return User.Get(_senderId);
 			}
 			set {
 				_senderId = value.Id;
@@ -81,6 +81,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public Message() {
 			_id = -1;
 			_receiverId = -1;
@@ -100,6 +102,22 @@ namespace ITCommunity {
 			_receiverRead = receiverRead;
 		}
 
+		#endregion
+
+		public void DeleteByReceiver() {
+			Database.MessageDelByReceiver(_id);
+		}
+
+		public void DeleteBySender() {
+			Database.MessageDelBySender(_id);
+		}
+
+		public void MarkAsRead() {
+			Database.MessageMarkAsRead(_id);
+		}
+
+		#region Public static methods
+
 		public static List<Message> GetByReceiver(int receiverId, int page, int count, ref int messCount) {
 			return GetMessFromTable(Database.MessageGetByReceiver(receiverId, page, count, ref messCount));
 		}
@@ -112,7 +130,7 @@ namespace ITCommunity {
 			return GetMessFromRow(Database.MessageAdd(receiverId, senderId, title, text));
 		}
 
-		public static Message GetById(int id) {
+		public static Message Get(int id) {
 			return GetMessFromRow(Database.MessageGetById(id));
 		}
 
@@ -120,28 +138,23 @@ namespace ITCommunity {
 			return (int)Database.MessageGetNewCount(recId);
 		}
 
-		public void DeleteByReceiver() {
-			Database.MessageDelByReceiver(this._id);
-		}
+		#endregion
 
-		public void DeleteBySender() {
-			Database.MessageDelBySender(this._id);
-		}
-
-		public void MarkAsRead() {
-			Database.MessageMarkAsRead(this._id);
-		}
+		#region Private static methods
 
 		private static List<Message> GetMessFromTable(DataTable dt) {
-			List<Message> messages = new List<Message>();
+			var messages = new List<Message>();
+
 			for (int i = 0; i < dt.Rows.Count; i++) {
 				messages.Add(GetMessFromRow(dt.Rows[i]));
 			}
+
 			return messages;
 		}
 
 		private static Message GetMessFromRow(DataRow dr) {
 			Message mess;
+
 			if (dr == null) {
 				mess = new Message();
 			}
@@ -156,7 +169,11 @@ namespace ITCommunity {
 					Convert.ToBoolean(dr["receiver_read"])
 				);
 			}
+
 			return mess;
 		}
+
+		#endregion
+
 	}
 }

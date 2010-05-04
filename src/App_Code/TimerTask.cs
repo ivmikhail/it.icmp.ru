@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Timers;
+﻿using System.Timers;
 
 namespace ITCommunity {
+
 	public class TimerTask {
+
 		private readonly Timer _timer;
 
 		public TimerTask(double interval, ElapsedEventHandler handler) {

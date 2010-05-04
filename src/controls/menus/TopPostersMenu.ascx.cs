@@ -10,16 +10,16 @@ namespace ITCommunity {
 			if (!IsPostBack) {
 				LoadTopPosters();
 				LoadLastTopPosters();
-				LastTopPostersDays.Text = Config.Num("LastTopUsersDays").ToString();
+				LastTopPostersDays.Text = Config.GetInt("LastTopUsersDays").ToString();
 			}
 		}
 		private void LoadTopPosters() {
-			TopPosters.DataSource = User.GetTopPosters(Config.Num("TopPostersCount"));
+			TopPosters.DataSource = User.GetTopPosters(Config.GetInt("TopPostersCount"));
 			TopPosters.DataBind();
 		}
 
 		private void LoadLastTopPosters() {
-			LastTopPosters.DataSource = User.GetLastTopPosters(Config.Num("TopPostersCount"), Config.Num("LastTopUsersDays"));
+			LastTopPosters.DataSource = User.GetLastTopPosters(Config.GetInt("TopPostersCount"), Config.GetInt("LastTopUsersDays"));
 			LastTopPosters.DataBind();
 		}
 	}

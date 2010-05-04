@@ -1,34 +1,22 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 
-namespace ITCommunity
-{
-	public partial class ProfilePage : System.Web.UI.Page
-	{
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!IsPostBack)
-			{
+namespace ITCommunity {
+
+	public partial class ProfilePage : Page {
+
+		protected void Page_Load(object sender, EventArgs e) {
+			if (!IsPostBack) {
 				TextBoxEmail.Text = CurrentUser.User.Email;
 			}
 		}
-		protected void EditProfileButton_Click(object sender, EventArgs e)
-		{
+
+		protected void EditProfileButton_Click(object sender, EventArgs e) {
 			User current = CurrentUser.User;
 
-			if (AllIsValid())
-			{
+			if (AllIsValid()) {
 				current.Email = TextBoxEmail.Text.Trim();
-				if (TextBoxNewPass.Text.Trim() != "")
-				{
+				if (TextBoxNewPass.Text.Trim() != "") {
 					current.Pass = CurrentUser.HashPass(TextBoxNewPass.Text, current.Login);
 				}
 				current.Update();
@@ -36,13 +24,11 @@ namespace ITCommunity
 			}
 		}
 
-		private bool AllIsValid()
-		{
+		private bool AllIsValid() {
 			return PassIsValid() && ProfileIsValid() && EmailIsValid();
 		}
 
-		private bool ProfileIsValid()
-		{
+		private bool ProfileIsValid() {
 			RequiredEmail.Validate();
 			EmailValidator.Validate();
 			ConfirmPassword.Validate();
@@ -52,34 +38,28 @@ namespace ITCommunity
 					ConfirmPassword.IsValid;
 		}
 
-		private bool EmailIsValid()
-		{
+		private bool EmailIsValid() {
 			bool status = true;
-			if (CurrentUser.User.Email != TextBoxEmail.Text.Trim())
-			{
+			if (CurrentUser.User.Email != TextBoxEmail.Text.Trim()) {
 				string email = TextBoxEmail.Text.Trim();
 				User user = ITCommunity.User.GetByEmail(email);
-				if (user.Id > 0)
-				{
+				if (user.Id > 0) {
 					status = EmailExist.IsValid = false;
 				}
 			}
 			return status;
 		}
 
-		private bool PassIsValid()
-		{
+		private bool PassIsValid() {
 			bool status = true;
 
-			if (TextBoxNewPassConf.Text.Trim() != TextBoxNewPass.Text.Trim())
-			{
+			if (TextBoxNewPassConf.Text.Trim() != TextBoxNewPass.Text.Trim()) {
 				status = ConfirmPassword.IsValid = false;
 			}
 
 			User current = CurrentUser.User;
 
-			if (current.Pass != CurrentUser.HashPass(TextBoxPassConf.Text, current.Login))
-			{
+			if (current.Pass != CurrentUser.HashPass(TextBoxPassConf.Text, current.Login)) {
 				status = OldPassConfirm.IsValid = false;
 			}
 

@@ -1,27 +1,19 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using ITCommunity;
 
-namespace ITCommunity
-{
-    public partial class Notepadadd : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
+namespace ITCommunity {
 
-        }
-        protected void LinkButtonAdd_Click(object sender, EventArgs e)
-        {
-            Note.Add(NoteTitle.Text, NoteText.Text, CurrentUser.User.Id, DateTime.Now);
-            Response.Redirect("notepad.aspx");
-        }
-    }
+	public partial class Notepadadd : Page {
+
+		protected void LinkButtonAdd_Click(object sender, EventArgs e) {
+			var note = new Note();
+			note.Title = NoteTitle.Text;
+			note.Text = NoteText.Text;
+			note.UserId = CurrentUser.User.Id;
+
+			Note.Add(note);
+			Response.Redirect("notepad.aspx");
+		}
+
+	}
 }

@@ -11,7 +11,7 @@ namespace ITCommunity {
 		}
 
 		private void LoadLastComments() {
-			LastComments.DataSource = Comment.GetLasts(Config.Num("LastCommentsCount"));
+			LastComments.DataSource = Comment.GetLastComments(Config.GetInt("LastCommentsCount"));
 			LastComments.DataBind();
 		}
 	}

@@ -1,21 +1,11 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.IO;
-using System.Diagnostics;
-
-using ITCommunity;
 using System.Collections.Generic;
+using System.Web.UI;
 
 namespace ITCommunity {
-	public partial class Browse : System.Web.UI.Page {
+
+	public partial class Browse : Page {
+
 		protected void Page_Load(object sender, EventArgs e) {
 			string dir = Request.QueryString["dir"] ?? "";
 			string linkTypeQuery = Request.QueryString["cat"] ?? "files";
@@ -24,24 +14,25 @@ namespace ITCommunity {
 				linkType = (LinkType)Enum.Parse(linkType.GetType(), linkTypeQuery, true);
 			}
 			catch (ArgumentException ex) {
-				//Debug.Print(ex.Message);
+//				Debug.Print(ex.Message);
 				Logger.Log.Info("Неправильный queryString при обращении к браузеру файлов, пользователь - " + CurrentUser.User.Login + "(" + CurrentUser.Ip + ")", ex);
 				linkType = LinkType.Files;
 			}
-            dir = unescapeLink(dir);
-			bool isViewRootDir = dir == "/" ;
+			dir = unescapeLink(dir);
+			bool isViewRootDir = dir == "/";
 			string path = isViewRootDir ? "/" : dir;
 			string[] pathes = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 			dir = BrowseItem.GetRealPathOfLink(linkType, dir);
-            
+
 			if (dir != null) {
-                if (isViewRootDir) {
-                    hrefRoot.Visible = false;
-                } else {
-                    hrefRoot.Visible = true;
-                    BrowseItem rootDirInfo = BrowseItem.Get(BrowseItem.GetRealPathOfLink(linkType, ""));
-                    hrefRoot.HRef = rootDirInfo.Link;
-                }
+				if (isViewRootDir) {
+					hrefRoot.Visible = false;
+				}
+				else {
+					hrefRoot.Visible = true;
+					BrowseItem rootDirInfo = BrowseItem.Get(BrowseItem.GetRealPathOfLink(linkType, ""));
+					hrefRoot.HRef = rootDirInfo.Link;
+				}
 				rptPath.DataSource = getPathItems(linkType, pathes);
 				rptPath.DataBind();
 
@@ -70,15 +61,17 @@ namespace ITCommunity {
 			}
 			return result;
 		}
-        private string unescapeLink(string link) {
-            string result;
-            try {
-                result = Uri.UnescapeDataString(link);
-            } catch (UriFormatException e) {
-                Logger.Log.Error("Кажется нас пытаются хакнуть", e);
-                result = "/";
-            }
-            return result;
-        }
+
+		private string unescapeLink(string link) {
+			string result;
+			try {
+				result = Uri.UnescapeDataString(link);
+			}
+			catch (UriFormatException e) {
+				Logger.Log.Error("Кажется нас пытаются хакнуть", e);
+				result = "/";
+			}
+			return result;
+		}
 	}
 }

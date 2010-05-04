@@ -38,6 +38,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public Picture() {
 			_post = new Post();
 			_name = "";
@@ -52,32 +54,46 @@ namespace ITCommunity {
 			if (!isTempFolder) {
 				postId = post.Id;
 			}
-			_fullurl = Config.String("PostImagesFolder") + "/" + post.Author.Id + "/" + postId + "/full/" + name;
-			_thumburl = Config.String("PostImagesFolder") + "/" + post.Author.Id + "/" + postId + "/thumb/" + name;
+			_fullurl = Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/" + postId + "/full/" + name;
+			_thumburl = Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/" + postId + "/thumb/" + name;
 		}
 
-		public static List<Picture> GetByPost(Post post) {
-			List<Picture> pics = new List<Picture>();
+		#endregion
 
-			int userId = post.Author.Id;
-			string path = HttpContext.Current.Request.MapPath(Config.String("PostImagesFolder") + "/" + userId + "/" + post.Id + "/thumb");
-			string[] files = new string[0];
-			if (Directory.Exists(path)) {
-				files = Directory.GetFiles(path);
-			}
-			foreach (string file in files) {
-				pics.Add(new Picture(post, Path.GetFileName(file), false));
+		public void Delete() {
+			string fullPath = HttpContext.Current.Request.MapPath(this.FullUrl);
+			string thumbPath = HttpContext.Current.Request.MapPath(this.ThumbUrl);
+			File.Delete(fullPath);
+			File.Delete(thumbPath);
+		}
+
+		#region Public static methods
+
+		public static List<Picture> GetByPost(Post post) {
+			var pics = new List<Picture>();
+
+			string virtualPath = Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/" + post.Id + "/thumb";
+			string directory = HttpContext.Current.Request.MapPath(virtualPath);
+
+			if (Directory.Exists(directory)) {
+				var files = Directory.GetFiles(directory);
+				foreach (string file in files) {
+					pics.Add(new Picture(post, Path.GetFileName(file), false));
+				}
 			}
 
 			return pics;
 		}
 
 		public static string CreateFolder(int userId, int postId, string folder) {
-			string currentFolder = HttpContext.Current.Request.MapPath(Config.String("PostImagesFolder") + "/" + userId + "/" + postId + "/" + folder);
-			if (!Directory.Exists(currentFolder)) {
-				Directory.CreateDirectory(currentFolder);
+			string virtualPath = Config.Get("PostImagesFolder") + "/" + userId + "/" + postId + "/" + folder;
+			string directory = HttpContext.Current.Request.MapPath(virtualPath);
+			
+			if (!Directory.Exists(directory)) {
+				Directory.CreateDirectory(directory);
 			}
-			return currentFolder;
+
+			return directory;
 		}
 
 		public static Picture UploadImage(HttpPostedFile img, Post post) {
@@ -89,19 +105,19 @@ namespace ITCommunity {
 			string thumbpath = CreateFolder(post.Author.Id, -1, "thumb") + "/" + filename;
 
 			Stream stream = img.InputStream;
-			byte[] buffer = new byte[stream.Length];
-			stream.Read(buffer, 0, (int)stream.Length);
-			int len = (int)stream.Length;
+			int bytesCount = (int)stream.Length;
+			byte[] buffer = new byte[bytesCount];
+			stream.Read(buffer, 0, bytesCount);
 			stream.Dispose();
 			stream.Close();
 
 			FileStream fs = new FileStream(fullpath, FileMode.Create);
-			fs.Write(buffer, 0, len);
+			fs.Write(buffer, 0, bytesCount);
 			Picture pic = new Picture();
 
 			try {
 				Bitmap bmp = new Bitmap(fs);
-				if (fs.Length > Config.Num("PostImgSize") || bmp.Width > Config.Num("PostImgWidth") || bmp.Height > Config.Num("PostImgHeight")) {
+				if (fs.Length > Config.GetInt("PostImgSize") || bmp.Width > Config.GetInt("PostImgWidth") || bmp.Height > Config.GetInt("PostImgHeight")) {
 					Logger.Log.Info("Пользователь(login - " + CurrentUser.User.Login + ") пытается загрузить картинку не подходящую по размерам");
 					throw new Exception("Размеры картинки недопустимы");
 				}
@@ -122,22 +138,15 @@ namespace ITCommunity {
 
 		public static void DeleteTempFolderFiles(Post post) {
 			//temp folder = -1
-			DirectoryInfo dir = new DirectoryInfo(HttpContext.Current.Request.MapPath(Config.String("PostImagesFolder") + "/" + post.Author.Id + "/" + -1 + "/"));
+			DirectoryInfo dir = new DirectoryInfo(HttpContext.Current.Request.MapPath(Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/" + -1 + "/"));
 			if (dir.Exists) {
 				DeleteFiles(dir);
 			}
 		}
 
-		public void Delete() {
-			string fullPath = HttpContext.Current.Request.MapPath(this.FullUrl);
-			string thumbPath = HttpContext.Current.Request.MapPath(this.ThumbUrl);
-			File.Delete(fullPath);
-			File.Delete(thumbPath);
-		}
-
 		private static Picture MakeThumbnail(Bitmap sourceBmp, string filename, string folder, Post post) {
 			// Стандартный метод GetThumbnail генерирует изображения хренового качества
-			int max = Config.Num("MaxThumbWidth");
+			int max = Config.GetInt("MaxThumbWidth");
 			int height = sourceBmp.Height;
 			int width = sourceBmp.Width;
 			if (width > max) { //TODO: проверить на правильность
@@ -187,6 +196,10 @@ namespace ITCommunity {
 			CheckImgInNews(post);
 		}
 
+		#endregion
+
+		#region Private static methods
+
 		private static void CheckImgInNews(Post post) {
 			List<Picture> pics = Picture.GetByPost(post);
 			string desc = post.Description;
@@ -199,11 +212,11 @@ namespace ITCommunity {
 
 			foreach (Picture pic in pics) {
 				if (text.Contains(pic.Name) || desc.Contains(pic.Name)) {
-					fullOldVal = Config.String("PostImagesFolder") + "/" + post.Author.Id + "/" + -1 + "/full/" + pic.Name;
-					fullNewVal = Config.String("PostImagesFolder") + "/" + post.Author.Id + "/" + post.Id + "/full/" + pic.Name;
+					fullOldVal = Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/" + -1 + "/full/" + pic.Name;
+					fullNewVal = Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/" + post.Id + "/full/" + pic.Name;
 
-					thumbOldVal = Config.String("PostImagesFolder") + "/" + post.Author.Id + "/" + -1 + "/thumb/" + pic.Name;
-					thumbNewVal = Config.String("PostImagesFolder") + "/" + post.Author.Id + "/" + post.Id + "/thumb/" + pic.Name;
+					thumbOldVal = Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/" + -1 + "/thumb/" + pic.Name;
+					thumbNewVal = Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/" + post.Id + "/thumb/" + pic.Name;
 
 					desc = desc.Replace(fullOldVal, fullNewVal);
 					desc = desc.Replace(thumbOldVal, thumbNewVal);
@@ -222,7 +235,7 @@ namespace ITCommunity {
 
 		private static void MergeTempAndPostFolder(Post post) {
 			//temp folder = -1
-			string path = Config.String("PostImagesFolder") + "/" + post.Author.Id + "/";
+			string path = Config.Get("PostImagesFolder") + "/" + post.Author.Id + "/";
 			string truepath = HttpContext.Current.Request.MapPath(path);
 
 			if (Directory.Exists(truepath + -1)) {
@@ -265,5 +278,7 @@ namespace ITCommunity {
 				MergeFolders(folder, dest);
 			}
 		}
+
+		#endregion
 	}
 }

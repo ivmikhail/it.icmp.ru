@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ITCommunity {
-	public partial class HeaderTexts : System.Web.UI.Page {
+
+	public partial class HeaderTexts : Page {
+
 		protected void Page_Load(object sender, EventArgs e) {
 			if (!IsPostBack) {
 				int userId;
 				if (Int32.TryParse(Request.QueryString["block"], out userId)) {
-					User user = ITCommunity.User.GetById(userId);
+					User user = ITCommunity.User.Get(userId);
 					if (user.Role != ITCommunity.User.Roles.Admin) {
 						user.CanAddHeaderText = false;
 						user.Update();
@@ -20,7 +20,7 @@ namespace ITCommunity {
 				}
 
 				if (Int32.TryParse(Request.QueryString["unblock"], out userId)) {
-					User user = ITCommunity.User.GetById(userId);
+					User user = ITCommunity.User.Get(userId);
 					user.CanAddHeaderText = true;
 					user.Update();
 				}
@@ -35,10 +35,10 @@ namespace ITCommunity {
 				}
 
 				int records_count = 0;
-				HeaderTextsRepeater.DataSource = HeaderText.Get(GetPage(), Config.Num("HeaderTextCount"), ref records_count);
+				HeaderTextsRepeater.DataSource = HeaderText.Get(GetPage(), Config.GetInt("HeaderTextCount"), ref records_count);
 				HeaderTextsRepeater.DataBind();
 
-				HeaderTextsPager.DataBind(records_count, Config.Num("HeaderTextCount"));
+				HeaderTextsPager.DataBind(records_count, Config.GetInt("HeaderTextCount"));
 
 				List<User> blockedUsers = ITCommunity.User.GetBlocked();
 				BlockedUsersRepeater.DataSource = blockedUsers;

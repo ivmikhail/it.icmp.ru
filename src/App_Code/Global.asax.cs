@@ -13,7 +13,7 @@ namespace ITCommunity {
 	/// </summary>
 	public class Global : System.Web.HttpApplication {
 
-        private static string _connectionString = null;
+		private static string _connectionString = null;
 		private TimerTask _timerTask;
 
 		public Global() {
@@ -24,21 +24,22 @@ namespace ITCommunity {
 		/// </summary>
 		public static string SiteAddress {
 			get {
-                if(HttpContext.Current.Request.Url.Host=="localhost") {
-                    String url = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Path);
-                    String siteAddr = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-                    return url.Substring(0, url.IndexOf("/", siteAddr.Length + 1));
-                } else {
-                    return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority); 
-                }
-            }
+				if (HttpContext.Current.Request.Url.Host == "localhost") {
+					String url = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Path);
+					String siteAddr = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+					return url.Substring(0, url.IndexOf("/", siteAddr.Length + 1));
+				}
+				else {
+					return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+				}
+			}
 		}
 
 		/// <summary>
 		/// Строка соединения с SQL сервером
 		/// </summary>
 		/// <returns></returns>
-		public static string ConnectionString() {
+		public static string GetConnectionString() {
 			if (_connectionString == null) {
 				if (ConfigurationManager.ConnectionStrings[Environment.MachineName] != null) {
 					_connectionString = ConfigurationManager.ConnectionStrings[Environment.MachineName].ConnectionString;
@@ -49,10 +50,11 @@ namespace ITCommunity {
 			}
 			return _connectionString;
 		}
+
 		public void Application_Start(object sender, EventArgs e) {
 			Logger.Log.Info("Application started ...");
 			_timerTask = new TimerTask((double)3600 * 1000 * 12, RecoveryPass.PurgeOldRecoveryTasks);
-            Indexer.Init(Global.ConnectionString(), Config.String("IndexerPath"));
+			Indexer.Init(Global.GetConnectionString(), Config.Get("IndexerPath"));
 		}
 
 		public void Application_End(object sender, EventArgs e) {

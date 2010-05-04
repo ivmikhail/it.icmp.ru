@@ -4,16 +4,23 @@ using System.Data;
 
 namespace ITCommunity {
 	/// <summary>
-	/// Класс для управления текстов в хидере
+	/// Класс текста в хидере
 	/// </summary>
 	public class HeaderText {
 
-		private delegate object CurrentHeaderTextLoader();
+		#region For caching
+
+		public const string HEADER_TEXTS_CACHE_KEY = "HeaderTexts";
+
+		private delegate object CurrentHeaderTextsLoader();
+
+		private static CurrentHeaderTextsLoader _currentHeaderTextsLoader = GetCurrentsFromDB;
+
+		#endregion
 
 		#region Properties
 
 		private static Random _random = new Random();
-		private static CurrentHeaderTextLoader _currentHeaderTextLoader = new CurrentHeaderTextLoader(GetCurrentsFromDB);
 
 		private int _id;
 		private User _user;
@@ -54,6 +61,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public HeaderText() {
 			_id = -1;
 			_user = new User();
@@ -72,26 +81,35 @@ namespace ITCommunity {
 			_isShowing = isShowing;
 		}
 
+		#endregion
+
+		#region Public static methods
+
 		public static HeaderText Add(int userId, string text) {
-			AppCache.Remove(Config.String("HeaderTextCacheName"));
+			AppCache.Remove(HEADER_TEXTS_CACHE_KEY);
+
 			return GetHeaderTextFromRow(Database.HeaderTextAdd(userId, text));
 		}
 
 		public static void Delete(int id) {
-			AppCache.Remove(Config.String("HeaderTextCacheName"));
+			AppCache.Remove(HEADER_TEXTS_CACHE_KEY);
+
 			Database.HeaderTextDel(id);
 		}
 
 		public static void EndShow(int id) {
-			AppCache.Remove(Config.String("HeaderTextCacheName"));
+			AppCache.Remove(HEADER_TEXTS_CACHE_KEY);
+
 			Database.HeaderTextUpdateShowEndDate(id);
 		}
 
 		public static HeaderText GetRandom() {
-			List<HeaderText> headerTexts = GetAll();
+			var headerTexts = GetCurrentHeaderTexts();
+
 			if (headerTexts.Count == 0) {
 				return new HeaderText();
 			}
+
 			return headerTexts[_random.Next(headerTexts.Count)];
 		}
 
@@ -99,36 +117,45 @@ namespace ITCommunity {
 			return GetHeaderTextsFromTable(Database.HeaderTextGet(page, count, ref records_count));
 		}
 
-		private static List<HeaderText> GetAll() {
-			object headerTexts = AppCache.Get(
-				Config.String("HeaderTextCacheName"),
-				_currentHeaderTextLoader,
-				null,
-				Config.Double("HeaderTextCachePer"));
+		#endregion
+
+		#region Private static methods
+
+		private static List<HeaderText> GetCurrentHeaderTexts() {
+			var headerTexts = AppCache.Get(
+				HEADER_TEXTS_CACHE_KEY,
+				_currentHeaderTextsLoader
+			);
+
 			return (List<HeaderText>)headerTexts;
 		}
 
 		private static List<HeaderText> GetCurrentsFromDB() {
-			List<HeaderText> headerTexts = GetHeaderTextsFromTable(Database.HeaderTextGetCurrents());
-			List<HeaderText> toDelete = new List<HeaderText>();
-			foreach (HeaderText headerText in headerTexts) {
+			var headerTexts = GetHeaderTextsFromTable(Database.HeaderTextGetCurrents());
+			var toDelete = new List<HeaderText>();
+
+			foreach (var headerText in headerTexts) {
 				if (!headerText.IsShowing) {
 					Database.HeaderTextUpdateShowEndDate(headerText.Id);
 					toDelete.Add(headerText);
 				}
 			}
+
 			foreach (HeaderText text in toDelete) {
 				headerTexts.Remove(text);
 			}
+
 			return headerTexts;
 		}
 
 		private static List<HeaderText> GetHeaderTextsFromTable(DataTable dt) {
-			List<HeaderText> headerText = new List<HeaderText>();
+			var headerTexts = new List<HeaderText>();
+
 			for (int i = 0; i < dt.Rows.Count; i++) {
-				headerText.Add(GetHeaderTextFromRow(dt.Rows[i]));
+				headerTexts.Add(GetHeaderTextFromRow(dt.Rows[i]));
 			}
-			return headerText;
+
+			return headerTexts;
 		}
 
 		private static HeaderText GetHeaderTextFromRow(DataRow dr) {
@@ -147,13 +174,13 @@ namespace ITCommunity {
 					showEndDate = Convert.ToDateTime(dr["show_end_date"]);
 				}
 				else {
-					double hours = Config.Double("HeaderTextShowingHours");
+					double hours = Config.GetDouble("HeaderTextShowingHours");
 					showEndDate = createDate.AddHours(hours);
 				}
 				bool isShowing = (showEndDate.CompareTo(DateTime.Now) > 0);
 				headerText = new HeaderText(
 					Convert.ToInt32(dr["id"]),
-					User.GetById(Convert.ToInt32(dr["user_id"])),
+					User.Get(Convert.ToInt32(dr["user_id"])),
 					Convert.ToString(dr["text"]),
 					createDate,
 					showEndDate,
@@ -163,5 +190,8 @@ namespace ITCommunity {
 
 			return headerText;
 		}
+
+		#endregion
+
 	}
 }

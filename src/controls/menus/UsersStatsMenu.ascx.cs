@@ -19,7 +19,7 @@ namespace ITCommunity
 
 		private void LoadLastRegistered()
 		{
-			LastRegistered.DataSource = User.GetLastRegistered(Config.Num("LastRegisteredCount"));
+			LastRegistered.DataSource = User.GetLastRegistered(Config.GetInt("LastRegisteredCount"));
 			LastRegistered.DataBind();
 		}
 

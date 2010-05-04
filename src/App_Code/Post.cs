@@ -9,16 +9,30 @@ namespace ITCommunity {
 	/// Собственно новость.
 	/// </summary>
 	public class Post {
+
+		#region For caching
+
+		public const string TOP_POSTS_BY_VIEWS_CAHCE_KEY = "TopPostsByViews";
+		public const string TOP_POSTS_BY_RATING_CAHCE_KEY = "TopPostsByRating";
+		public const string LAST_POSTS_CAHCE_KEY = "LastPosts";
+
 		//делегат метода загрузки последних постов из базы, нужен для организации кеширования
 		private delegate object LastPostsLoader(int count);
 		//делегат метода загрузки популярных постов из базы, нужен для организации кеширования
 		private delegate object TopPostsByViewsLoader(int period, int count);
 
-        private const string HTTP_URL_START = "http://";
-		#region Properties
+		private static LastPostsLoader _lastPostsLoader = GetLastPostsFromDB;
+		private static TopPostsByViewsLoader _topPostsByViewsLoader = GetTopPostsByViewsFromDB;
 
-		private static LastPostsLoader _lastPostsLoader = new LastPostsLoader(GetLastPostsFromDB);
-		private static TopPostsByViewsLoader _topPostsByViewsLoader = new TopPostsByViewsLoader(GetTopPostsByViewsFromDB);
+		#endregion
+
+		#region Constatnts
+
+		private const string HTTP_URL_START = "http://";
+
+		#endregion
+
+		#region Properties
 
 		private int _id;
 		private string _title;
@@ -92,7 +106,7 @@ namespace ITCommunity {
 		public User Author {
 			get {
 				//TODO: переделать!!!
-				return User.GetById(_userId);
+				return User.Get(_userId);
 			}
 			set {
 				_userId = value.Id;
@@ -118,25 +132,23 @@ namespace ITCommunity {
 		/// </summary>
 		public string SourceFormatted {
 			get {
-                string result = "";
-                if (_source.Length != 0)
-                {
-                    try
-                    {
-                        Uri url = new Uri(_source);
-                        result = url.ToString();
-                    } catch (UriFormatException ex)
-                    {
-                        ex = null;
-                        result = "";
-                    }
-                }
-                return result;
-            }
+				string result = "";
+				if (_source.Length != 0) {
+					try {
+						Uri url = new Uri(_source);
+						result = url.ToString();
+					}
+					catch (UriFormatException ex) {
+						ex = null;
+						result = "";
+					}
+				}
+				return result;
+			}
 		}
 
 		public string Source {
-            get { return _source; }
+			get { return _source; }
 			set { _source = value; }
 		}
 
@@ -145,27 +157,23 @@ namespace ITCommunity {
 			set { _commentsCount = value; }
 		}
 
-        /// <summary>
-        /// Может ли редактировать текущий пользователь
-        /// </summary>
-        public bool IsCurrentUserCanEdit
-        {
-            get
-            {
-                DateTime expireDate = this.CreateDate.AddSeconds(Config.Num("EditablePeriod"));
-                bool isDateNotExpired = expireDate.CompareTo(DateTime.Now) == 1;
-                
-                return isDateNotExpired && IsPostOwner(CurrentUser.User);
-            }
-        }
+		/// <summary>
+		/// Может ли редактировать текущий пользователь
+		/// </summary>
+		public bool IsCurrentUserCanEdit {
+			get {
+				DateTime expireDate = this.CreateDate.AddSeconds(Config.GetInt("EditablePeriod"));
+				bool isDateNotExpired = expireDate.CompareTo(DateTime.Now) == 1;
 
-        public bool IsCurrentUserCanDel
-        {
-            get
-            {
-                return CurrentUser.IsAdmin || IsCurrentUserCanEdit;
-            }
-        }
+				return isDateNotExpired && IsPostOwner(CurrentUser.User);
+			}
+		}
+
+		public bool IsCurrentUserCanDel {
+			get {
+				return CurrentUser.IsAdmin || IsCurrentUserCanEdit;
+			}
+		}
 
 		#endregion
 
@@ -295,16 +303,16 @@ namespace ITCommunity {
 
 		#region Public static methods
 
-		public static Post GetById(int id) {
+		public static Post Get(int id) {
 			return GetPostFromRow(Database.PostGetById(id));
 		}
 
 		public static void Delete(Post post) {
 			Database.PostDel(post.Id);
 			//Чистим кеш популярных постов
-			AppCache.Remove(Config.String("TopPostsByViewsCacheName"));
+			AppCache.Remove(TOP_POSTS_BY_VIEWS_CAHCE_KEY);
 			//Чистим кеш комментов комментов
-			AppCache.Remove(Config.String("LastCommentsCacheName"));
+			AppCache.Remove(Comment.LAST_COMMENTS_CACHE_KEY);
 		}
 
 		/// <summary>
@@ -318,32 +326,32 @@ namespace ITCommunity {
 		public static List<Post> Search(int page, int count, string query, ref int posts_count) {
 			return GetPostsFromTable(Database.PostSearch(query, page, count, ref posts_count));
 		}
-        /// <summary>
-        /// Возвращаем посты, удовлетворяющие условию поиска через Lucene
-        /// </summary>
-        /// <param name="query">условие поиска</param>
-        /// <param name="page">текущая страница</param>
-        /// <param name="count">кол-во постов на страницу</param>
-        /// <param name="posts_count">кол-во найденных постов</param>
-        /// <returns>список постов, важно - в Description пишем сниппет ???? </returns>
-        // TODO: подумать
-        public static List<Post> SearchLucene(String query, int page, int count, ref int posts_count) {
-            
-            List<SearchedPost> list = Indexer.GetInstance().Search(query, page, count, ref posts_count);
-            List<Post> result = new List<Post>(list.Count);
-            for (int i = 0; i < list.Count; i++) {
-                Post post = Post.GetById(list[i].Id);
-                result.Add(post);
-            }
-            return result;
-        }
+		/// <summary>
+		/// Возвращаем посты, удовлетворяющие условию поиска через Lucene
+		/// </summary>
+		/// <param name="query">условие поиска</param>
+		/// <param name="page">текущая страница</param>
+		/// <param name="count">кол-во постов на страницу</param>
+		/// <param name="posts_count">кол-во найденных постов</param>
+		/// <returns>список постов, важно - в Description пишем сниппет ???? </returns>
+		// TODO: подумать
+		public static List<Post> SearchLucene(String query, int page, int count, ref int posts_count) {
 
-        /// <summary>
-        /// Забираем посты постранично, с учетом даты и аттачей
-        /// </summary>
-        /// <param name="page">Страница которая нам нужна</param>
-        /// <param name="count">Кол-во постов на страницу</param>
-        public static List<Post> Get(int page, int count, ref int posts_count) {
+			List<SearchedPost> list = Indexer.GetInstance().Search(query, page, count, ref posts_count);
+			List<Post> result = new List<Post>(list.Count);
+			for (int i = 0; i < list.Count; i++) {
+				Post post = Post.Get(list[i].Id);
+				result.Add(post);
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// Забираем посты постранично, с учетом даты и аттачей
+		/// </summary>
+		/// <param name="page">Страница которая нам нужна</param>
+		/// <param name="count">Кол-во постов на страницу</param>
+		public static List<Post> Get(int page, int count, ref int posts_count) {
 			return GetPostsFromTable(Database.PostGet(page, count, ref posts_count));
 		}
 
@@ -364,11 +372,10 @@ namespace ITCommunity {
 		/// <param name="count"></param>
 		/// <returns></returns>
 		public static List<Post> GetLast(int count) {
-			object lasts = AppCache.Get(
-				Config.String("LastPostsCacheName"),
+			var lasts = AppCache.Get(
+				LAST_POSTS_CAHCE_KEY,
 				_lastPostsLoader,
-				new object[] { count },
-				Config.Double("LastPostsCachePer")
+				new object[] { count }
 			);
 			return (List<Post>)lasts;
 		}
@@ -390,13 +397,12 @@ namespace ITCommunity {
 		/// <param name="period">Период, в днях. Например, популярные посты за последние N дней.</param>
 		/// <param name="count">Кол-во нужных постов</param>
 		public static List<Post> GetTopByViews(int period, int count) {
-			object top_posts = AppCache.Get(
-				Config.String("TopPostsByViewsCacheName"),
+			var topPosts = AppCache.Get(
+				TOP_POSTS_BY_VIEWS_CAHCE_KEY,
 				_topPostsByViewsLoader,
-				new object[] { period, count },
-				Config.Double("TopPostsByViewsCachePer")
+				new object[] { period, count }
 			);
-			return (List<Post>)top_posts;
+			return (List<Post>)topPosts;
 		}
 
 		public static List<KeyValuePair<Post, int>> GetTopByRating(int period, int count) {

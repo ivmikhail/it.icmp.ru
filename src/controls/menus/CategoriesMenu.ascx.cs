@@ -14,7 +14,7 @@ namespace ITCommunity {
 		private void LoadCategories() {
 			List<Category> cats = new List<Category>();
 			cats.Add(new Category(0, "Все новости", -1));
-			cats.AddRange(Category.GetAll());
+			cats.AddRange(Category.GetCategories());
 			NewsCategories.DataSource = cats;
 			NewsCategories.DataBind();
 		}

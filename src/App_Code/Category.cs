@@ -8,12 +8,18 @@ namespace ITCommunity {
 	/// </summary>
 	public class Category {
 
+		#region For caching
+
+		public const string CATEGORIES_CAHCE_KEY = "Categories";
+
 		//делегат метода загрузки категорий из базы, нужен для организации кеширования
 		private delegate object CategoriesLoader();
 
-		#region Properties
+		private static CategoriesLoader _categoriesLoader = GetAllCategoriesFromDB;
 
-		private static CategoriesLoader _categoriesLoader = new CategoriesLoader(GetAllCategoriesFromDB);
+		#endregion
+
+		#region Properties
 
 		private int _id;
 		private string _name;
@@ -35,6 +41,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public Category() {
 			_id = -1;
 			_name = "";
@@ -47,48 +55,52 @@ namespace ITCommunity {
 			_sort = sort;
 		}
 
+		#endregion
+
 		/// <summary>
-		/// Проверяем, есть ли категория с данным айдишником
+		/// Изменяем данную категорию, кеш сбрасывается.
 		/// </summary>
-		/// <param name="cat_id">Данный айдишник</param>
-		public static bool IsExist(int catId) {
-			bool isExists = false;
-			List<Category> cats = GetAll();
-			foreach (Category cat in cats) {
-				if (cat.Id == catId) {
-					isExists = true;
-					break;
-				}
-			}
-			return isExists;
+		public void Update() {
+			AppCache.Remove(CATEGORIES_CAHCE_KEY);
+
+			Database.CategoryUpdate(_id, _sort, _name);
+		}
+
+		#region Public static methods
+
+		/// <summary>
+		/// Добавление категории в базу
+		/// </summary>
+		/// <param name="category">Только что добавленная категория</param>
+		public static Category Add(Category category) {
+			AppCache.Remove(CATEGORIES_CAHCE_KEY);
+
+			return GetCategoryFromRow(Database.CategoryAdd(category.Name, category.Sort));
 		}
 
 		/// <summary>
 		/// Берем по идентификатору
 		/// </summary>
 		/// <param name="id">Идентификатор категории</param>
-		public static Category GetById(int id) {
-			List<Category> cats = GetAll();
-			Category result = new Category();
-			foreach (Category cat in cats) {
-				if (cat.Id == id) {
-					result = cat;
-					break;
+		public static Category Get(int id) {
+			var categories = GetCategories();
+
+			foreach (Category category in categories) {
+				if (category.Id == id) {
+					return category;
 				}
 			}
-			return result;
+
+			return null;
 		}
 
 		/// <summary>
 		/// Возвращаем все категории в списке из кеша
 		/// </summary>
-		public static List<Category> GetAll() {
-			List<Category> cats = (List<Category>)AppCache.Get(
-				Config.String("CategoriesCacheName"),
-				_categoriesLoader,
-				null,
-				Config.Double("CategoriesCachePer"));
-			return cats;
+		public static List<Category> GetCategories() {
+			var categories = AppCache.Get(CATEGORIES_CAHCE_KEY, _categoriesLoader);
+
+			return (List<Category>)categories;
 		}
 
 		/// <summary>
@@ -106,28 +118,23 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="id">Идентификатор категории</param>
 		public static void Delete(int id) {
+			AppCache.Remove(CATEGORIES_CAHCE_KEY);
+
 			// Что делать с новостями?
 			Database.CategoryDel(id);
-			AppCache.Remove(Config.String("CategoriesCacheName"));
 		}
 
 		/// <summary>
-		/// Добавление категории в базу(кеш удаляется)
+		/// Проверяем, есть ли категория с данным айдишником
 		/// </summary>
-		/// <param name="category">Только что добавленная категория</param>
-		public static Category Add(Category category) {
-			Category cat = GetCategoryFromRow(Database.CategoryAdd(category.Name, category.Sort));
-			AppCache.Remove(Config.String("CategoriesCacheName"));
-			return cat;
+		/// <param name="id">Данный айдишник</param>
+		public static bool IsExist(int id) {
+			return Get(id) != null;
 		}
 
-		/// <summary>
-		/// Изменяем данную категорию, кеш сбрасывается.
-		/// </summary>
-		public void Update() {
-			Database.CategoryUpdate(_id, _sort, _name);
-			AppCache.Remove(Config.String("CategoriesCacheName"));
-		}
+		#endregion
+
+		#region Private static methods
 
 		private static List<Category> GetAllCategoriesFromDB() {
 			return GetCategoriesFromTable(Database.CategoryGetAll());
@@ -155,5 +162,7 @@ namespace ITCommunity {
 			}
 			return cat;
 		}
+
+		#endregion
 	}
 }

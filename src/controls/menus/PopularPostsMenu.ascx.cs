@@ -14,10 +14,10 @@ namespace ITCommunity {
 		}
 
 		private void LoadPopularPosts() {
-			PopularPostsByViews.DataSource = Post.GetTopByViews(Config.Num("PopularPostsPeriod"), Config.Num("PopularPostsCount"));
+			PopularPostsByViews.DataSource = Post.GetTopByViews(Config.GetInt("PopularPostsPeriod"), Config.GetInt("PopularPostsCount"));
 			PopularPostsByViews.DataBind();
 
-			PopularPostsByRating.DataSource = Post.GetTopByRating(Config.Num("TopRaitngPostsPeriod"), Config.Num("TopRaitngPostsCount"));
+			PopularPostsByRating.DataSource = Post.GetTopByRating(Config.GetInt("TopRaitngPostsPeriod"), Config.GetInt("TopRaitngPostsCount"));
 			PopularPostsByRating.DataBind();
 		}
 	}

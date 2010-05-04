@@ -5,43 +5,51 @@ using System.IO;
 using System.Text;
 
 namespace ITCommunity {
-	/// <summary>
-	/// Summary description for Greeting
-	/// </summary>
+
 	public static class Greeting {
+
+		#region For caching
+
+		public const string GREETINGS_CACHE_KEY = "Greeting";
+		public const string PERSONAL_GREETINGS_CACHE_KEY = "PersonalGreeting";
+
 		private delegate object GreetingLoader();
+
+		private static GreetingLoader _commonGreetingLoader = LoadCommonGreetings;
+		private static GreetingLoader _personalGreetingLoader = LoadPersonalGreetings;
+
+		#endregion
 
 		#region Properties
 
-		private static GreetingLoader _commonGreetingLoader = new GreetingLoader(ReadFromCommonGreetingsFile);
-		private static GreetingLoader _personalGreetingLoader = new GreetingLoader(ReadFromPersonalGreetingsFile);
-		private static readonly Random _random;
-		private static readonly string _fullPathToCommonGreetingsFile;
-		private static readonly string _fullPathToPersonalGreetingsFile;
+		private static readonly Random _random = new Random();
+		private static readonly string _commonGreetingsPath;
+		private static readonly string _personalGreetingsPath;
 
 		#endregion
 
 		static Greeting() {
-			_random = new Random();
-			_fullPathToCommonGreetingsFile = HttpContext.Current.Request.MapPath(HttpContext.Current.Request.ApplicationPath) + Config.String("GreetingPath");
-			_fullPathToPersonalGreetingsFile = HttpContext.Current.Request.MapPath(HttpContext.Current.Request.ApplicationPath) + Config.String("PersonalGreetingPath");
+			var appPath = HttpContext.Current.Request.MapPath(HttpContext.Current.Request.ApplicationPath);
+
+			_commonGreetingsPath = appPath + Config.Get("GreetingPath");
+			_personalGreetingsPath = appPath + Config.Get("PersonalGreetingPath");
 		}
 
 		public static string Get(string nick) {
 			string result;
 
-			List<string> common = GetCommonGreetings();
-			Dictionary<string, string> personal = GetPersonalGreetings();
+			var personalGreetings = GetPersonalGreetings();
 
-			if (personal.ContainsKey(nick.ToLower())) {
-				result = personal[nick.ToLower()];
+			if (personalGreetings.ContainsKey(nick.ToLower())) {
+				result = personalGreetings[nick.ToLower()];
 			}
 			else {
-				if (common.Count == 0) {
+				var commonGreetings = GetCommonGreetings();
+				if (commonGreetings.Count == 0) {
 					result = "Привет";
 				}
 				else {
-					result = common[_random.Next(common.Count)];
+					result = commonGreetings[_random.Next(commonGreetings.Count)];
 				}
 			}
 
@@ -49,58 +57,56 @@ namespace ITCommunity {
 		}
 
 		private static List<string> GetCommonGreetings() {
-			object greetings = AppCache.Get(
-				Config.String("GreetingCacheName"),
-				_commonGreetingLoader,
-				null,
-				Config.Double("GreetingCachePer")
+			var greetings = AppCache.Get(
+				GREETINGS_CACHE_KEY,
+				_commonGreetingLoader
 			);
+
 			return (List<string>)greetings;
 		}
 
 		private static Dictionary<string, string> GetPersonalGreetings() {
-			object greetings = AppCache.Get(
-				Config.String("PersonalGreetingCacheName"),
-				_personalGreetingLoader,
-				null,
-				Config.Double("PersonalGreetingCachePer")
+			var greetings = AppCache.Get(
+				PERSONAL_GREETINGS_CACHE_KEY,
+				_personalGreetingLoader
 			);
+
 			return (Dictionary<string, string>)greetings;
 		}
 
-		private static List<string> ReadFromCommonGreetingsFile() {
-			List<string> result = new List<string>();
+		private static List<string> LoadCommonGreetings() {
+			var greetings = new List<string>();
 
-			if (File.Exists(_fullPathToCommonGreetingsFile)) {
-				string[] lines = File.ReadAllLines(_fullPathToCommonGreetingsFile, Encoding.GetEncoding(1251));
-				foreach (string s in lines) {
-					if (!s.StartsWith(";")) {
-						result.Add(s);
+			if (File.Exists(_commonGreetingsPath)) {
+				string[] lines = File.ReadAllLines(_commonGreetingsPath, Encoding.GetEncoding(1251));
+				foreach (var line in lines) {
+					if (!line.StartsWith(";")) {
+						greetings.Add(line);
 					}
 				}
 			}
 
-			return result;
+			return greetings;
 		}
 
-		private static Dictionary<string, string> ReadFromPersonalGreetingsFile() {
-			Dictionary<string, string> result = new Dictionary<string, string>();
+		private static Dictionary<string, string> LoadPersonalGreetings() {
+			var greetings = new Dictionary<string, string>();
 
-			if (File.Exists(_fullPathToPersonalGreetingsFile)) {
-				string[] lines = File.ReadAllLines(_fullPathToPersonalGreetingsFile, Encoding.GetEncoding(1251));
-				foreach (string s in lines) {
-					if (!s.StartsWith(";")) {
-						int spacePos = s.IndexOf(" ");
+			if (File.Exists(_personalGreetingsPath)) {
+				string[] lines = File.ReadAllLines(_personalGreetingsPath, Encoding.GetEncoding(1251));
+				foreach (var line in lines) {
+					if (!line.StartsWith(";")) {
+						int spacePos = line.IndexOf(" ");
 						if (spacePos > 1) {
-							string nick = s.Substring(0, spacePos).ToLower();
-							string greeting = s.Substring(spacePos + 1);
-							result.Add(nick, greeting);
+							string nick = line.Substring(0, spacePos).ToLower();
+							string text = line.Substring(spacePos + 1);
+							greetings.Add(nick, text);
 						}
 					}
 				}
 			}
 
-			return result;
+			return greetings;
 		}
 	}
 }

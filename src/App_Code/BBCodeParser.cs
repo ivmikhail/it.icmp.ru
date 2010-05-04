@@ -92,7 +92,7 @@ namespace ITCommunity {
 
 			_formatters.Add(new RegexFormatter("\n", "<br />"));
 
-			_formatters.Add(new RegexFormatter(@"\[b\]((.|\n)*?)\[/b\]", "<b>$1</b>"));
+			_formatters.Add(new RegexFormatter(@"\[b\](.*?)\[/b\]", "<b>$1</b>"));
 			_formatters.Add(new RegexFormatter(@"\[i\]((.|\n)*?)\[/i\]", "<i>$1</i>"));
 			_formatters.Add(new RegexFormatter(@"\[u\]((.|\n)*?)\[/u\]", "<u>$1</u>"));
 			_formatters.Add(new RegexFormatter(@"\[s\]((.|\n)*?)\[/s\]", "<strike>$1</strike>"));
@@ -115,21 +115,21 @@ namespace ITCommunity {
 			_formatters.Add(new RegexFormatter(@"\[popup=((.|\n)*?)\]((.|\n)*?)\[/popup\]", "<a href=\"javascript:popup('$1')\" >$3</a>"));
 
 
-            // http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
-            
-            String[] trustedSites = Config.String("TrustdedSites").Split(',');
-            String imgPattern = @"((?:postimages|http://(?:";
-            foreach(String site in trustedSites) {
-                imgPattern += Regex.Escape(site.Trim()) + "|";
-            }
-            imgPattern = imgPattern.Substring(0, imgPattern.Length -1);
-            imgPattern += "))/[^ \"'\\[]*?)";
-            _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img src=\"$2\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$4\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
-            //_formatters.Add(new RegexFormatter(@"\[img\]((.|\n)*?)\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
-            //_formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
-            //_formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+			// http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
+
+			String[] trustedSites = Config.Get("TrustdedSites").Split(',');
+			String imgPattern = @"((?:postimages|http://(?:";
+			foreach (String site in trustedSites) {
+				imgPattern += Regex.Escape(site.Trim()) + "|";
+			}
+			imgPattern = imgPattern.Substring(0, imgPattern.Length - 1);
+			imgPattern += "))/[^ \"'\\[]*?)";
+			_formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+			_formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img src=\"$2\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
+			_formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$4\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+			//_formatters.Add(new RegexFormatter(@"\[img\]((.|\n)*?)\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+			//_formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
+			//_formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
 
 			//_formatters.Add(new RegexFormatter(@"\[color=((.|\n)*?)\]((.|\n)*?)\[/color\]", "<span style=\"color=$1;\">$3</span>"));
 

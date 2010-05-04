@@ -17,14 +17,13 @@ namespace ITCommunity {
 		}
 
 		protected string IsBlank(object dataItem) {
-			string result = "_self";
-			bool isInNew = (bool)DataBinder.Eval(dataItem, "newWindow");
+			var item = (MenuItem)dataItem;
 
-			if (isInNew) {
-				result = "_blank";
+			if (item.OnNewWindow) {
+				return "_blank";
 			}
 
-			return result;
+			return "_self";
 		}
 
 		protected void RepeaterMenu_ItemDataBound(object sender, RepeaterItemEventArgs e) {

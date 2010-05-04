@@ -1,72 +1,59 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Collections.Generic;
 
 using OpenFlashChartLib;
 using OpenFlashChartLib.Charts;
 using OpenFlashChartLib.Controls;
 
-namespace ITCommunity
-{
-	public partial class PollResultPage : System.Web.UI.Page
-	{
+namespace ITCommunity {
+
+	public partial class PollResultPage : Page {
+
 		Poll poll;
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            int poll_id = GetPollId();
-            if (poll_id > 0)
-            {
-                poll = Poll.GetById(poll_id);
-            } else {
-                poll = Poll.GetActive();
-            }
-            OpenFlashChartControl.BuildChart();
-            //загрузка сообщений
-            LoadMessages();
-            //загрузка данных об избирателях
-            LoadVoters();
-        }
+		protected void Page_Load(object sender, EventArgs e) {
+			int poll_id = GetPollId();
+			if (poll_id > 0) {
+				poll = Poll.GetById(poll_id);
+			}
+			else {
+				poll = Poll.GetActive();
+			}
+			OpenFlashChartControl.BuildChart();
+			//загрузка сообщений
+			LoadMessages();
+			//загрузка данных об избирателях
+			LoadVoters();
+		}
 
-        protected void DrawChart(object sender, DrawChartEventArgs e)
-        {
+		protected void DrawChart(object sender, DrawChartEventArgs e) {
 
-            Graph graph = new Graph();
-            graph.AddElement(GetPieData(poll));
-            graph.Title = new Title(poll.Topic);
-            graph.Title.Style = "{font-size: 24px; color: #767676;}";
-            graph.Bgcolor = "#ffffff";
-           // graph.Tooltip = new ToolTip("#label#, #val# of #total#, #percent# of 100%");
-            e.Graph = graph;           
-        }
+			Graph graph = new Graph();
+			graph.AddElement(GetPieData(poll));
+			graph.Title = new Title(poll.Topic);
+			graph.Title.Style = "{font-size: 24px; color: #767676;}";
+			graph.Bgcolor = "#ffffff";
+			// graph.Tooltip = new ToolTip("#label#, #val# of #total#, #percent# of 100%");
+			e.Graph = graph;
+		}
 
-		private int GetPollId()
-		{
+		private int GetPollId() {
 			int poll_id;
 			Int32.TryParse(Request.QueryString["id"], out poll_id);
 			return poll_id;
 		}
 
-		private void LoadMessages()
-		{
+		private void LoadMessages() {
 			// сообщение, защитан ли голос
 			string vote_message = (string)Session["poll_message"];
-			if (vote_message != "")
-			{
+			if (vote_message != "") {
 				PollMessageText.Text = vote_message;
 				Session.Remove("poll_message");
 			}
 
 			// период голосования 
-            VotersCountText.Text = poll.VotesCount.ToString();
+			VotersCountText.Text = poll.VotesCount.ToString();
 			CreateDateText.Text = poll.CreateDate.ToString("dd MMMM yyyy, HH:mm");
 			CloseDateText.Text = poll.EndDateString;
 
@@ -76,11 +63,9 @@ namespace ITCommunity
 			DeletePollLink.Visible = (CurrentUser.User.Role == ITCommunity.User.Roles.Admin);
 		}
 
-		private Pie GetPieData(Poll poll)
-		{
+		private Pie GetPieData(Poll poll) {
 			Pie pie = new Pie();
-			foreach (PollAnswer ans in poll.Answers)
-			{
+			foreach (PollAnswer ans in poll.Answers) {
 				pie.Values.Add(new PieValue(ans.VotesCount, ans.Text));
 			}
 			pie.Fontsize = 10;
@@ -90,21 +75,17 @@ namespace ITCommunity
 			return pie;
 		}
 
-		private void LoadVoters()
-		{
-			if (poll.IsOpen)
-			{
+		private void LoadVoters() {
+			if (poll.IsOpen) {
 				Answers.DataSource = poll.Answers;
 				Answers.DataBind();
 			}
-			else
-			{
+			else {
 				ClosedPollText.Visible = true;
 			}
 		}
 
-		protected void Answers_ItemDataBound(object sender, RepeaterItemEventArgs e)
-		{
+		protected void Answers_ItemDataBound(object sender, RepeaterItemEventArgs e) {
 			Repeater Voters = (Repeater)e.Item.FindControl("Voters");
 
 			Voters.DataSource = ((PollAnswer)e.Item.DataItem).GetUsers();
@@ -112,17 +93,17 @@ namespace ITCommunity
 			Voters.DataBind();
 		}
 
-		protected void DeletePollLink_Click(object sender, EventArgs e)
-		{
+		protected void DeletePollLink_Click(object sender, EventArgs e) {
 			int del_id = GetPollId();
-            if (del_id > 0) {
-                Poll del_poll = Poll.GetById(del_id);
-                if (del_poll.Id > 0) {
-                    Poll.Delete(del_poll.Id);
-                }
-            } else {
-                Poll.Delete(Poll.GetActive().Id);
-            }
+			if (del_id > 0) {
+				Poll del_poll = Poll.GetById(del_id);
+				if (del_poll.Id > 0) {
+					Poll.Delete(del_poll.Id);
+				}
+			}
+			else {
+				Poll.Delete(Poll.GetActive().Id);
+			}
 			Response.Redirect("polls.aspx");
 		}
 	}

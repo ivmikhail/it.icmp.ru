@@ -1,4 +1,3 @@
-using System;
 
 namespace ITCommunity {
 	/// <summary>
@@ -37,5 +36,6 @@ namespace ITCommunity {
 
 		public RedmineActivityItem() {
 		}
+
 	}
 }

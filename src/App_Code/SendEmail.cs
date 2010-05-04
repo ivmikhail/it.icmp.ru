@@ -11,7 +11,7 @@ namespace ITCommunity {
 			bool status = true;
 
 			try {
-				MailMessage message = new MailMessage();
+				var message = new MailMessage();
 				message.To.Add(new MailAddress(user.Email));
 				message.Subject = "Ykt IT Community - восстановление пароля";
 				message.Body = "Здравствуй %username% ! \n\n" +
@@ -20,11 +20,13 @@ namespace ITCommunity {
 							   "Ссылка активна в течении 3-4 дней." + "\n\n" +
 							   "______ \n" +
 							   "С уважением, робот находящийся в рабстве у держателей сайта " + Global.SiteAddress;
-				SmtpClient client = new SmtpClient(); // используются параметры из web.config
-                if (client.Host.Contains("gmail.com")) { // Вахаха, простите меня
-                    client.EnableSsl = true;
-                }
+
+				var client = new SmtpClient(); // используются параметры из web.config
+				if (client.Host.Contains("gmail.com")) { // Вахаха, простите меня
+					client.EnableSsl = true;
+				}
 				client.Send(message);
+
 				Logger.Log.Info("Успешно запрошен email для смены пароля для пользователя " + user.Login + " с адреса " + CurrentUser.Ip);
 			}
 			catch (Exception ex) {

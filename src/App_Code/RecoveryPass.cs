@@ -4,6 +4,7 @@ using System.Data;
 using System.Timers;
 
 namespace ITCommunity {
+
 	public class RecoveryPass {
 
 		#region Properties
@@ -26,7 +27,7 @@ namespace ITCommunity {
 
 		public User User {
 			get {
-				return ITCommunity.User.GetById(_user_id);
+				return User.Get(_user_id);
 			}
 			set {
 				_user_id = value.Id;
@@ -39,6 +40,8 @@ namespace ITCommunity {
 		}
 
 		#endregion
+
+		#region Constructors
 
 		public RecoveryPass() {
 			_id = -1;
@@ -53,6 +56,10 @@ namespace ITCommunity {
 			_user_id = user_id;
 			_cdate = cdate;
 		}
+
+		#endregion
+
+		#region Public static methods
 
 		public static void Delete(string identifier) {
 			Database.RecoveryDel(identifier);
@@ -69,6 +76,10 @@ namespace ITCommunity {
 		public static void PurgeOldRecoveryTasks(object source, ElapsedEventArgs e) {
 			Database.RecoveryPurgeOldTasks();
 		}
+
+		#endregion
+
+		#region Private static methods
 
 		private static List<RecoveryPass> GetRecFromTable(DataTable dt) {
 			List<RecoveryPass> recs = new List<RecoveryPass>();
@@ -93,5 +104,7 @@ namespace ITCommunity {
 			}
 			return rec;
 		}
+
+		#endregion
 	}
 }

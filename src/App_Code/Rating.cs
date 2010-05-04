@@ -5,16 +5,24 @@ using System.Web;
 
 namespace ITCommunity {
 
-	public enum EntityType {
-		Comment = 0,
-		Post = 1,
-		User = 2
-	}
-
 	/// <summary>
 	/// Общий рейтинг
 	/// </summary>
 	public class Rating {
+
+		public enum EntityType {
+			Comment = 0,
+			Post = 1,
+			User = 2
+		}
+
+		#region For caching
+
+		private delegate object RatingLoader(int entityId, EntityType type);
+
+		private static RatingLoader _ratingLoader = GetFromDB;
+
+		#endregion
 
 		#region Properties
 
@@ -44,6 +52,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public Rating() {
 			_id = 0;
 			_entityId = 0;
@@ -58,18 +68,27 @@ namespace ITCommunity {
 			_value = value;
 		}
 
+		#endregion
+
+		#region Public static methods
+
 		public static Rating Get(int entityId, EntityType type) {
-			string cacheName = Config.String("RatingPrefixCacheName") + type.ToString()  + entityId.ToString();
-			Rating rating = (Rating)AppCache.Get(cacheName);
-			if (rating == null) {
-				rating = GetFromDB(entityId, type);
-				InsertToCache(rating);
-			}
-			return rating;
+			string cacheName = Config.Get("RatingCacheNamePrefix") + type.ToString() + entityId.ToString();
+			double cacheTime = Config.GetDouble("RatingCachePer");
+
+			var rating = AppCache.Get(
+				cacheName,
+				_ratingLoader,
+				new object[] { entityId, type },
+				cacheTime
+			);
+
+			return (Rating)rating;
 		}
 
 		public static Rating Add(int entityId, EntityType type, int userId, int value) {
 			Database.RatingLogAdd(entityId, (int)type, userId, value);
+
 			Rating rating = Get(entityId, type);
 			if (rating.Id == 0) {
 				rating = GetFromRow(Database.RatingAdd(entityId, (int)type, value));
@@ -78,7 +97,7 @@ namespace ITCommunity {
 				rating.Value += value;
 				Database.RatingUpdateValue(rating.Id, rating.Value);
 			}
-			InsertToCache(rating);
+
 			return rating;
 		}
 
@@ -87,21 +106,22 @@ namespace ITCommunity {
 			return (dr != null);
 		}
 
-		private static void InsertToCache(Rating rating) {
-			string cacheName = Config.String("RatingPrefixCacheName") + rating.Type.ToString() + rating.EntityId.ToString();
-			AppCache.Remove(cacheName);
-			AppCache.Insert(cacheName, rating, Config.Double("RatingCachePer"));
-		}
+		#endregion
+
+		#region Private static methods
 
 		private static Rating GetFromDB(int entityId, EntityType type) {
 			Rating rating = GetFromRow(Database.RatingGetByEntity(entityId, (int)type));
+
 			rating.EntityId = entityId;
 			rating.Type = type;
+
 			return rating;
 		}
 
 		private static Rating GetFromRow(DataRow dr) {
 			Rating rating;
+
 			if (dr == null) {
 				rating = new Rating();
 			}
@@ -113,7 +133,11 @@ namespace ITCommunity {
 					Convert.ToInt32(dr["value"])
 				);
 			}
+
 			return rating;
 		}
+
+		#endregion
+
 	}
 }
