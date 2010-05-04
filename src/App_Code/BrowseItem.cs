@@ -224,7 +224,7 @@ namespace ITCommunity {
 
 		private static string GetPathLink(string path) {
 			string link = path.Replace(_filesFolder, "");
-			return Uri.EscapeDataString(_filesFolder + "/" + link.Replace("\\", "/"));
+			return Uri.EscapeDataString(Config.Get("FilesLink") + "/" + link.Replace("\\", "/"));
 		}
 
 		private static string GetHumanSize(long p) {
