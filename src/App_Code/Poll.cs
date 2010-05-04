@@ -31,7 +31,7 @@ namespace ITCommunity {
 
 		public User Author {
 			get {
-				return User.GetById(_authorId);
+				return User.Get(_authorId);
 			}
 			set {
 				_authorId = value.Id;
@@ -80,6 +80,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public Poll() {
 			_id = -1;
 			_topic = "null";
@@ -101,6 +103,52 @@ namespace ITCommunity {
 			_answers = answers;
 			_cdate = cdate;
 		}
+
+		#endregion
+
+		/// <summary>
+		/// Голосование, метод сам проверит может ли данный человек голосовать и обновит счетчики.
+		/// </summary>
+		/// <param name="answers">Идентификаторы ответов через запятую, если можно выбрать только один вариант, то за ответ возьмется первый(нулевой) член массива</param>
+		public void Vote(User user, string answers) {
+			Database.PollVote(_id, user.Id, answers);
+		}
+
+		/// <summary>
+		/// Получаем следующий опрос
+		/// </summary>
+		/// <returns></returns>
+		public Poll GetNext() {
+			return GetPollFromRow(Database.PollGetNext(_id));
+		}
+
+		/// <summary>
+		/// Может ли голосовать текущий пользователь(необязательно авторизованный)
+		/// </summary>
+		/// <param name="user">CurrentUser</param>
+		/// <returns></returns>
+		public bool CanVote() {
+			bool result = false;
+
+			if (CurrentUser.isAuth) {
+				if (!UserAlreadyVoted(CurrentUser.User)) {
+					result = true;
+				}
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Голосовал ли данный авторизованный пользователь
+		/// </summary>
+		/// <param name="user">Пользователь</param>
+		/// <returns></returns>
+		public bool UserAlreadyVoted(User user) {
+			return ((int)Database.PollIsUserVoted(user.Id, _id) > 0);
+		}
+
+		#region Public static methods
 
 		/// <summary>
 		/// Добавление нового опроса
@@ -152,47 +200,9 @@ namespace ITCommunity {
 			return GetPollsFromTable(Database.PollGet(page, count, ref polls_count));
 		}
 
-		/// <summary>
-		/// Голосование, метод сам проверит может ли данный человек голосовать и обновит счетчики.
-		/// </summary>
-		/// <param name="answers">Идентификаторы ответов через запятую, если можно выбрать только один вариант, то за ответ возьмется первый(нулевой) член массива</param>
-		public void Vote(User user, string answers) {
-			Database.PollVote(_id, user.Id, answers);
-		}
+		#endregion
 
-		/// <summary>
-		/// Получаем следующий опрос
-		/// </summary>
-		/// <returns></returns>
-		public Poll GetNext() {
-			return GetPollFromRow(Database.PollGetNext(_id));
-		}
-
-		/// <summary>
-		/// Может ли голосовать текущий пользователь(необязательно авторизованный)
-		/// </summary>
-		/// <param name="user">CurrentUser</param>
-		/// <returns></returns>
-		public bool CanVote() {
-			bool result = false;
-
-			if (CurrentUser.isAuth) {
-				if (!UserAlreadyVoted(CurrentUser.User)) {
-					result = true;
-				}
-			}
-
-			return result;
-		}
-
-		/// <summary>
-		/// Голосовал ли данный авторизованный пользователь
-		/// </summary>
-		/// <param name="user">Пользователь</param>
-		/// <returns></returns>
-		public bool UserAlreadyVoted(User user) {
-			return ((int)Database.PollIsUserVoted(user.Id, _id) > 0);
-		}
+		#region Private static methods
 
 		private static List<Poll> GetPollsFromTable(DataTable dt) {
 			List<Poll> polls = new List<Poll>();
@@ -222,5 +232,7 @@ namespace ITCommunity {
 			}
 			return poll;
 		}
+
+		#endregion
 	}
 }

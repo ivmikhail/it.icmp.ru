@@ -1,20 +1,11 @@
 using System;
-using System.Data;
-using System.Configuration;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
-using ITCommunity;
 
 namespace ITCommunity {
-	public partial class EditPost : System.Web.UI.Page {
+
+	public partial class EditPost : Page {
 		Post current_post = new Post();
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -23,15 +14,14 @@ namespace ITCommunity {
 
 				LoadCategories();
 				CheckBoxAttached.Enabled = CurrentUser.IsAdmin;
-				ImageOptions.Text = "<div class=\"note\">Размер до " + Config.String("PostImgWidth") + "x" + Config.String("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Config.String("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
-				
-                bool isEditPost = GetPostId() > 0;
-                if (isEditPost) {
+				ImageOptions.Text = "<div class=\"note\">Размер до " + Config.Get("PostImgWidth") + "x" + Config.Get("PostImgHeight") + "; обьем до " + (Math.Round((decimal.Parse(Config.Get("PostImgSize"))) / 1024, 2)).ToString() + "кб; тип файла изображение(jpeg, gif и т.д).</div>";
+
+				bool isEditPost = GetPostId() > 0;
+				if (isEditPost) {
 					LinkButtonAdd.Text = "Изменить";
-				}
-				else {
+				} else {
 					LinkButtonAdd.Text = "Добавить";
-                    EditableInfo.Text  = "После добавления пост можно будет редактировать/удалить в течении " + Config.Num("EditablePeriod") + " сек.";
+					EditableInfo.Text = "После добавления пост можно будет редактировать/удалить в течении " + Config.GetInt("EditablePeriod") + " сек.";
 				}
 				InitPostData();
 
@@ -39,9 +29,10 @@ namespace ITCommunity {
 			}
 
 		}
+
 		private void InitPostData() {
 			User current_user = CurrentUser.User;
-			Post post = Post.GetById(GetPostId());
+			Post post = Post.Get(GetPostId());
 
 			if (post.IsCurrentUserCanEdit || CurrentUser.IsAdmin) {
 				current_post = post;
@@ -51,10 +42,10 @@ namespace ITCommunity {
 
 			InitPostCategories(current_post.Categories);
 
-			TextBoxTitle.Text        = current_post.Title;
-			TextAreaPostDesc.Text    = current_post.Description;
-			TextAreaPostText.Text    = current_post.Text;
-			TextBoxSource.Text       = current_post.Source;
+			TextBoxTitle.Text = current_post.Title;
+			TextAreaPostDesc.Text = current_post.Description;
+			TextAreaPostText.Text = current_post.Text;
+			TextBoxSource.Text = current_post.Source;
 			CheckBoxAttached.Checked = current_post.Attached;
 		}
 
@@ -70,7 +61,7 @@ namespace ITCommunity {
 		}
 
 		private void LoadCategories() {
-			List<Category> cats = Category.GetAll();
+			List<Category> cats = Category.GetCategories();
 			DropDownListCats.Items.Add(new ListItem("Выбрать...", "-1"));
 			foreach (Category cat in cats) {
 				DropDownListCats.Items.Add(new ListItem(cat.Name, cat.Id.ToString()));
@@ -78,18 +69,17 @@ namespace ITCommunity {
 		}
 
 		protected void LinkButtonAdd_Click(object sender, EventArgs e) {
-			Post editable_post = Post.GetById(GetPostId());
-            bool isNewPost = editable_post.Id < 1;
+			Post editable_post = Post.Get(GetPostId());
+			bool isNewPost = editable_post.Id < 1;
 
 			List<string> errors = ValidateData();
 			List<Category> cats = GetCategoriesFromPost();
 			if (cats.Count == 0) {
 				errors.Add("Категория не выбрана"); //TODO: Наверно надо переделать? 
 			}
-            if (!isNewPost && !editable_post.IsCurrentUserCanEdit && !CurrentUser.IsAdmin)
-            {
-                errors.Add("Редактирование запрещено, возможно истекло время редактирования");
-            }
+			if (!isNewPost && !editable_post.IsCurrentUserCanEdit && !CurrentUser.IsAdmin) {
+				errors.Add("Редактирование запрещено, возможно истекло время редактирования");
+			}
 			if (errors.Count == 0) {
 				editable_post.Categories = cats;
 				editable_post.Title = TextBoxTitle.Text;
@@ -101,25 +91,21 @@ namespace ITCommunity {
 				editable_post.Attached = CheckBoxAttached.Checked;
 
 				Post inserted_post = new Post();
-				if (isNewPost) 
-				{
+				if (isNewPost) {
 
-                    editable_post.Author = CurrentUser.User;
-                    inserted_post = Post.Add(editable_post);
-                    // Увеличиваем счетчик
-                    User current = CurrentUser.User;
-                    current.HeaderTextCounter++;
-                    current.Update();
-				}
-				else 
-				{
-                    editable_post.UpdateWithCategories();
-                    inserted_post = editable_post;
+					editable_post.Author = CurrentUser.User;
+					inserted_post = Post.Add(editable_post);
+					// Увеличиваем счетчик
+					User current = CurrentUser.User;
+					current.HeaderTextCounter++;
+					current.Update();
+				} else {
+					editable_post.UpdateWithCategories();
+					inserted_post = editable_post;
 				}
 				Picture.FixImages(inserted_post);
 				Response.Redirect("news.aspx?id=" + inserted_post.Id);
-			}
-			else {
+			} else {
 				InitPostCategories(cats);
 				WriteErrors(errors, "Новость не добавлена/обновлена");
 			}
@@ -133,7 +119,7 @@ namespace ITCommunity {
 				int cat_id = -1;
 				Int32.TryParse(string_cat_id, out cat_id);
 				if (cat_id > 0 && Category.IsExist(cat_id)) {
-					Category category = Category.GetById(cat_id);
+					Category category = Category.Get(cat_id);
 					if (!cats.Contains(category)) {
 						cats.Add(category);
 					}
@@ -161,6 +147,7 @@ namespace ITCommunity {
 
 			return errors;
 		}
+
 		private void WriteErrors(List<string> errors, string title) {
 			string text = "<div class=\"error\"><h2>" + title + "</h2><ul>";
 			foreach (string message in errors) {
@@ -170,6 +157,7 @@ namespace ITCommunity {
 			AddPostMessages.Text = text;
 			LinkButtonAdd.Focus();
 		}
+
 		private int GetPostId() {
 			int id;
 			Int32.TryParse(Request.QueryString["id"], out id);
@@ -177,15 +165,14 @@ namespace ITCommunity {
 		}
 
 		protected void AttachImageButton_Click(object sender, EventArgs e) {
-			Post post = Post.GetById(GetPostId());
+			Post post = Post.Get(GetPostId());
 			if (post.Id < 1) {
 				post.Author = CurrentUser.User;
 			}
 			Picture pic = Picture.UploadImage(UploadImage.PostedFile, post);
 			if (pic.Name == "") {
 				UploadImageError.Visible = true;
-			}
-			else {
+			} else {
 				UploadedImagesList.Text += "<img src=\"" + pic.ThumbUrl + "\" width=\"150\" alt=\"картинка\" class=\"uploaded-image\"/>";
 			}
 
@@ -199,7 +186,7 @@ namespace ITCommunity {
 					int cat_id = -1;
 					Int32.TryParse(stringCatId, out cat_id);
 
-					Category cat = Category.GetById(Convert.ToInt32(cat_id));
+					Category cat = Category.Get(Convert.ToInt32(cat_id));
 					if (cat.Id > 0) {
 						selectedCatsNames += "<a href=\"#\" id=\"" + cat.Id + "\" onclick=\"deleteCategory(this);\" class=\"delete-category\" title=\"Убрать\">" + cat.Name + "</a> ";
 					}

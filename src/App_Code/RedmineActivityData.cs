@@ -1,29 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Xml;
 
 namespace ITCommunity {
+
 	public static class RedmineActivityData {
+
+		#region For caching
+
+		public const string REDMINE_ACTIVITY_CACHE_KEY = "RedmineActivity";
+
 		//делегат метода загрузки данных
 		private delegate object RedmineActivityLoader(int howView);
 
 		private static RedmineActivityLoader _redmineActivityLoader = new RedmineActivityLoader(LoadDataFromRss);
 
+		#endregion
+
 		public static List<RedmineActivityItem> GetItems() {
-			List<RedmineActivityItem> list = (List<RedmineActivityItem>)AppCache.Get(
-				 Config.String("RedmineActivityCacheName"),
+			var list = AppCache.Get(
+				 REDMINE_ACTIVITY_CACHE_KEY,
 				_redmineActivityLoader,
-				new object[] { Config.Num("RedmineActivityRssHowView") },
-				Config.Double("RedmineActivityCachePer")
+				new object[] { Config.GetInt("RedmineActivityRssHowView") }
 			);
-			return list;
+
+			return (List<RedmineActivityItem>)list;
 		}
 
 		private static List<RedmineActivityItem> LoadDataFromRss(int howGet) {
 			List<RedmineActivityItem> result = new List<RedmineActivityItem>();
-			string rssUrl = Config.String("RedmineActivityRssUrl");
+			string rssUrl = Config.Get("RedmineActivityRssUrl");
 			// не пашет
 			// AtomFeed feed = AtomFeed.Load(new Uri(rssUrl)); -
 

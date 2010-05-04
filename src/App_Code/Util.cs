@@ -1,11 +1,10 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 using System.Text.RegularExpressions;
 
-/// <summary>
-/// Всякое - разное
-/// </summary>
 namespace ITCommunity {
+	/// <summary>
+	/// Всякое - разное
+	/// </summary>
 	public static class Util {
 
 		public static string HtmlEncode(string value) {

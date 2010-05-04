@@ -49,11 +49,11 @@ namespace ITCommunity {
 			}
 		}
 
-        public static bool IsAdmin {
-            get {
-                return CurrentUser.isAuth && CurrentUser.User.Role == ITCommunity.User.Roles.Admin;
-            }
-        }
+		public static bool IsAdmin {
+			get {
+				return CurrentUser.isAuth && CurrentUser.User.Role == ITCommunity.User.Roles.Admin;
+			}
+		}
 
 		/// <summary>
 		/// Шифруем пароль пользователя, в дальнейшем используем выходное значение функции
@@ -77,7 +77,7 @@ namespace ITCommunity {
 		/// <param name="pass">Пароль</param>
 		public static bool LogIn(string login, string pass, bool remember) {
 			bool result = false;
-			User user = User.GetByLogin(login);
+			User user = User.Get(login);
 			string hashedPass = HashPass(pass, login);
 
 			if (user.Id > 0 && user.Pass == hashedPass) {
@@ -86,7 +86,8 @@ namespace ITCommunity {
 				DateTime ticketExpiration = DateTime.Now;
 				if (remember) {
 					ticketExpiration = DateTime.Now.AddYears(50);
-				} else {
+				}
+				else {
 					ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout); // хмм
 				}
 				// Здесь параметр bool IsPersistent почему то неправильно работает, 
@@ -141,8 +142,9 @@ namespace ITCommunity {
 				FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
 				if (ticket.Expired) {
 					LogOut();
-				} else {
-					user = User.GetByLogin(ticket.Name);
+				}
+				else {
+					user = User.Get(ticket.Name);
 				}
 			}
 

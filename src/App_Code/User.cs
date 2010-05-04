@@ -29,6 +29,14 @@ namespace ITCommunity {
 			Banned = 4
 		}
 
+		#region For caching
+
+		public const string LAST_USERS_CACHE_KEY = "LastUsers";
+		public const string LAST_TOP_POSTERS_CACHE_KEY = "LastTopPosters";
+		public const string TOP_POSTERS_CACHE_KEY = "TopPosters";
+		public const string USERS_STAT_CACHE_KEY = "UsersStat";
+		private const string USER_CACHE_NAME_PREFIX = "UserCacheNamePrefix";
+
 		//делегат метода загрузки посл. зарегистр. юзеров из базы, нужен для организации кеширования
 		private delegate object LastUsersLoader(int count);
 		//делегат метода загрузки активных пользователей за все время, нужен для организации кеширования
@@ -37,12 +45,18 @@ namespace ITCommunity {
 		private delegate object UsersStatLoader();
 		//делегат метода загрузки активных пользователей за последние несколько дней, нужен для организации кеширования
 		private delegate object LastTopPostersLoader(int count, int days);
-
-		#region Properties
+		//
+		private delegate object UserLoader(int id);
 
 		private static LastUsersLoader _lastUsersLoader = new LastUsersLoader(GetLastRegisteredFromDB);
 		private static TopPostersLoader _topPostersLoader = new TopPostersLoader(GetTopPostersFromDB);
 		private static LastTopPostersLoader _lastTopPostersLoader = new LastTopPostersLoader(GetLastTopPostersFromDB);
+		private static UsersStatLoader _usersStatLoader = new UsersStatLoader(GetStatsFromDB);
+		private static UserLoader _userLoader = new UserLoader(GetUserFromDB);
+
+		#endregion
+
+		#region Properties
 
 		private int _id;
 		private string _pass;
@@ -107,6 +121,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public User() {
 			_id = -1;
 			_login = "anonymous";
@@ -133,6 +149,8 @@ namespace ITCommunity {
 			_postsCount = postsCount;
 		}
 
+		#endregion
+
 		/// <summary>
 		/// Проверяем забанен ли текущий пользователь
 		/// </summary>
@@ -142,7 +160,7 @@ namespace ITCommunity {
 
 		public bool AbleToAddHeaderText() {
 			bool result = CanAddHeaderText;
-			result &= (HeaderTextCounter >= Config.Num("HeaderTextPostsCount"));
+			result &= (HeaderTextCounter >= Config.GetInt("HeaderTextPostsCount"));
 			result |= (this._role == Roles.Admin);
 			return result;
 		}
@@ -153,11 +171,13 @@ namespace ITCommunity {
 			RemoveUserFromCache(_id);
 		}
 
+		#region Public static methods
+
 		/// <summary>
 		/// Получаем пользователя из базы по логину
 		/// </summary>
 		/// <param name="login">login он же nick</param>
-		public static User GetByLogin(string login) {
+		public static User Get(string login) {
 			return GetUserFromRow(Database.UserGetByLogin(login));
 		}
 
@@ -173,15 +193,14 @@ namespace ITCommunity {
 		/// Получаем пользователя по идентификатору
 		/// </summary>
 		/// <param name="userId">Идентификатор</param>
-		public static User GetById(int userId) {
-			User usr = GetUserFromCache(userId);
-			if (usr == null) {
-				usr = GetUserFromRow(Database.UserGetById(userId));
-				if (usr.Id > 0) {
-					AddUserToCache(usr);
-				}
-			}
-			return usr;
+		public static User Get(int id) {
+			var user = AppCache.Get(
+				Config.Get("UserCacheNamePrefix") + id.ToString(),
+				_userLoader,
+				new object[] { id },
+				Config.GetDouble("UserCachePer")
+			);
+			return (User)user;
 		}
 
 		/// <summary>
@@ -198,13 +217,12 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="count">Количество нужных пользователей</param>
 		public static List<User> GetLastRegistered(int count) {
-			object cats = AppCache.Get(
-				Config.String("LastUsersCacheName"),
+			var lastUsers = AppCache.Get(
+				LAST_USERS_CACHE_KEY,
 				_lastUsersLoader,
-				new object[] { count },
-				Config.Double("LastUsersCachePer")
+				new object[] { count }
 			);
-			return (List<User>)cats;
+			return (List<User>)lastUsers;
 		}
 
 		/// <summary>
@@ -224,11 +242,10 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="count">Кол-во нужных пользователей</param>
 		public static List<KeyValuePair<string, string>> GetTopPosters(int count) {
-			object top = AppCache.Get(
-				Config.String("TopPostersCacheName"),
+			var top = AppCache.Get(
+				TOP_POSTERS_CACHE_KEY,
 				_topPostersLoader,
-				new object[] { count },
-				Config.Double("TopPostersCachePer")
+				new object[] { count }
 			);
 			return (List<KeyValuePair<string, string>>)top;
 		}
@@ -240,25 +257,20 @@ namespace ITCommunity {
 		/// <param name="days">Сколько последних дней учитывать</param>
 		/// <returns></returns>
 		public static List<KeyValuePair<string, string>> GetLastTopPosters(int count, int days) {
-			List<KeyValuePair<string, string>> top = (List<KeyValuePair<string, string>>)AppCache.Get(
-				Config.String("LastTopPostersCacheName"),
+			var top = AppCache.Get(
+				LAST_TOP_POSTERS_CACHE_KEY,
 				_lastTopPostersLoader,
-				new object[] { count, days },
-				Config.Double("LastUsersCachePer"));
-			return top;
+				new object[] { count, days }
+			);
+			return (List<KeyValuePair<string, string>>)top;
 		}
 
 		/// <summary>
 		/// Получаем статистику по пользователям(кол-во пользователей, админов, постеров) из кеша
 		/// </summary>
 		public static List<KeyValuePair<string, string>> GetStats() {
-			UsersStatLoader loader = new UsersStatLoader(GetStatsFromDB);
-			List<KeyValuePair<string, string>> stat = (List<KeyValuePair<string, string>>)AppCache.Get(
-				Config.String("UsersStatCacheName"),
-				loader,
-				null,
-				Config.Double("UsersStatCachePer"));
-			return stat;
+			var stat = AppCache.Get(USERS_STAT_CACHE_KEY, _usersStatLoader);
+			return (List<KeyValuePair<string, string>>)stat;
 		}
 
 		/// <summary>
@@ -285,6 +297,14 @@ namespace ITCommunity {
 		/// </summary>
 		public static List<User> GetBlocked() {
 			return GetUsersFromTable(Database.UserGetBlocked());
+		}
+
+		#endregion
+
+		#region Private static methods
+
+		private static User GetUserFromDB(int id) {
+			return GetUserFromRow(Database.UserGetById(id));
 		}
 
 		private static List<KeyValuePair<string, string>> GetStatsFromDB() {
@@ -330,15 +350,15 @@ namespace ITCommunity {
 		/// <param name="userId">идентификатор пользователя</param>
 		/// <returns>обьект пользователь, либо null</returns>
 		private static User GetUserFromCache(int userId) {
-			return (User)AppCache.Get(Config.String("UsersListCacheName") + userId);
+			return (User)AppCache.Get(Config.Get(USER_CACHE_NAME_PREFIX) + userId);
 		}
 
 		private static void AddUserToCache(User usr) {
-			AppCache.Insert(Config.String("UsersListCacheName") + usr.Id, usr, Config.Double("UsersListCachePer"));
+			AppCache.Insert(Config.Get(USER_CACHE_NAME_PREFIX) + usr.Id, usr, Config.GetDouble("UserCachePer"));
 		}
 
 		private static void RemoveUserFromCache(int userId) {
-			AppCache.Remove(Config.String("UsersListCacheName") + userId);
+			AppCache.Remove(Config.Get(USER_CACHE_NAME_PREFIX) + userId);
 		}
 
 		private static List<User> GetUsersFromTable(DataTable dt) {
@@ -370,5 +390,7 @@ namespace ITCommunity {
 			}
 			return user;
 		}
+
+		#endregion
 	}
 }

@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ITCommunity {
 	public partial class RatingControl : System.Web.UI.UserControl {
+
 		private Rating _rating = new Rating();
 		private string _message = "";
 		private int _entityAuthorId = -1;
-		private int _showValue = 0;
 
 		public int EntityId {
 			get { return _rating.EntityId; }
 			set { _rating.EntityId = value; }
 		}
 
-		public EntityType Type {
+		public Rating.EntityType Type {
 			get { return _rating.Type; }
 			set { _rating.Type = value; }
 		}
@@ -92,9 +88,9 @@ namespace ITCommunity {
 					int value = isInc ? 1 : -1;
 					// Сюда писать формулы рейтингов
 					switch (Type) {
-						case EntityType.Comment:
-						case EntityType.Post:
-						case EntityType.User:
+						case Rating.EntityType.Comment:
+						case Rating.EntityType.Post:
+						case Rating.EntityType.User:
 						default:
 							_rating = Rating.Add(EntityId, Type, CurrentUser.User.Id, value);
 							break;

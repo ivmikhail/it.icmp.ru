@@ -31,7 +31,7 @@ namespace ITCommunity {
             int commentId = Convert.ToInt32(args[0]);
             int postId    = Convert.ToInt32(args[1]);
 
-            Comment editableComment = Comment.GetById(commentId);
+            Comment editableComment = Comment.Get(commentId);
             bool isCanEdit = editableComment.IsCurrentUserCanEdit;
             bool isCanDel  = editableComment.IsCurrentUserCanDel;
             if (e.CommandName == "delete")

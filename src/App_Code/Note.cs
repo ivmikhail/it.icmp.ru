@@ -51,6 +51,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public Note() {
 			_id = -1;
 			_userId = -1;
@@ -67,11 +69,15 @@ namespace ITCommunity {
 			_cdate = cdate;
 		}
 
-		public static Note Add(string title, string text, int userId, DateTime cdate) {
-			return GetNoteFromRow(Database.NotesAdd(userId, title, text, cdate));
+		#endregion
+
+		#region Public static methods
+
+		public static Note Add(Note note) {
+			return GetNoteFromRow(Database.NotesAdd(note.UserId, note.Title, note.Text, DateTime.Now));
 		}
 
-		public static Note GetById(int id) {
+		public static Note Get(int id) {
 			return GetNoteFromRow(Database.NotesGetById(id));
 		}
 
@@ -79,20 +85,27 @@ namespace ITCommunity {
 			Database.NotesDel(id);
 		}
 
-		public static List<Note> Get(int page, int count, int userId, ref int record_count) {
+		public static List<Note> GetPaged(int page, int count, int userId, ref int record_count) {
 			return GetNotesFromTable(Database.NotesGet(userId, page, count, ref record_count));
 		}
 
+		#endregion
+
+		#region Private static methods
+
 		private static List<Note> GetNotesFromTable(DataTable dt) {
-			List<Note> notes = new List<Note>();
+			var notes = new List<Note>();
+
 			for (int i = 0; i < dt.Rows.Count; i++) {
 				notes.Add(GetNoteFromRow(dt.Rows[i]));
 			}
+
 			return notes;
 		}
 
 		private static Note GetNoteFromRow(DataRow dr) {
 			Note note;
+
 			if (dr == null) {
 				note = new Note();
 			}
@@ -105,7 +118,11 @@ namespace ITCommunity {
 					Convert.ToDateTime(dr["cdate"])
 				);
 			}
+
 			return note;
 		}
+
+		#endregion
+
 	}
 }

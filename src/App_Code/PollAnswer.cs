@@ -41,6 +41,8 @@ namespace ITCommunity {
 
 		#endregion
 
+		#region Constructors
+
 		public PollAnswer() {
 			_id = -1;
 			_poll_id = -1;
@@ -54,6 +56,10 @@ namespace ITCommunity {
 			_text = text;
 			_votes_count = votes_count;
 		}
+
+		#endregion
+
+		#region Public static methods
 
 		/// <summary>
 		/// Возвращает список вариантов ответа опроса
@@ -79,6 +85,10 @@ namespace ITCommunity {
 			return users;
 		}
 
+		#endregion
+
+		#region Private static methods
+
 		private static List<PollAnswer> GetAnswersFromTable(DataTable dt) {
 			List<PollAnswer> answers = new List<PollAnswer>();
 			for (int i = 0; i < dt.Rows.Count; i++) {
@@ -102,5 +112,8 @@ namespace ITCommunity {
 			}
 			return answer;
 		}
+
+		#endregion
+
 	}
 }

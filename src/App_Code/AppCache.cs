@@ -10,6 +10,7 @@ namespace ITCommunity {
 
 		private static object @lock = new object();
 
+
 		/// <summary>
 		/// Данный метод возвращает обьект из кеша по ключу. 
 		/// 
@@ -23,21 +24,27 @@ namespace ITCommunity {
 		/// Курево - http://habrahabr.ru/blogs/net/61617/
 		/// </summary>
 		/// <param name="key">Идентификатор</param>
-		/// <param name="data_loader">Делегат на функцию загрузки данных из БД для хранения в кеше</param>
-		/// <param name="loader_params">Параметры передаваемые делегату(функции загрузки данных из БД). 
-		/// Если параметров нет то рекомендуется передавать null</param>
-		/// <param name="cacheTime">Время жизни кеша в часах</param>
+		/// <param name="dataLoader">Делегат на функцию загрузки данных из БД для хранения в кеше</param>
+		/// <param name="loaderParams">Параметры передаваемые делегату(функции загрузки данных из БД)</param>
+		/// <param name="time">Время жизни кеша в часах</param>
 		/// <returns>Обьект из кеша</returns>
-		public static object Get(string key, Delegate data_loader, object[] loader_params, double cacheTime) {
+		public static object Get(string key, Delegate dataLoader, object[] loaderParams, double time) {
 			object obj;
 			lock (@lock) {
-				if ((obj = Get(key))== null) {
-					DateTime absoluteExpiration = DateTime.Now.AddHours(cacheTime);
-					obj = data_loader.DynamicInvoke(loader_params);
-					HttpRuntime.Cache.Insert(key, obj, null, absoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+				if ((obj = Get(key)) == null) {
+					obj = dataLoader.DynamicInvoke(loaderParams);
+					Insert(key, obj, time);
 				}
 			}
 			return obj;
+		}
+
+		public static object Get(string key, Delegate dataLoader, object[] loaderParams) {
+			return Get(key, dataLoader, loaderParams, GetTime(key));
+		}
+
+		public static object Get(string key, Delegate dataLoader) {
+			return Get(key, dataLoader, null);
 		}
 
 		/// <summary>
@@ -46,7 +53,7 @@ namespace ITCommunity {
 		/// <param name="key">Ключ</param>
 		/// <returns>Обьект из кеша</returns>
 		public static object Get(string key) {
-			return HttpRuntime.Cache.Get(key);
+			return HttpRuntime.Cache.Get(GetName(key));
 		}
 
 		/// <summary>
@@ -54,12 +61,15 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="key">Ключ</param>
 		/// <param name="obj">Обьект</param>
+		/// <param name="time">time</param>
 		/// <param name="cacheTime">Время жизни кеша в часах</param>
-		public static void Insert(string key, object obj, double cacheTime) {
-			lock (@lock) {
-				DateTime absoluteExpiration = DateTime.Now.AddHours(cacheTime);
-				HttpRuntime.Cache.Insert(key, obj, null, absoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-			}
+		public static void Insert(string key, object obj, double time) {
+			var expiration = DateTime.Now.AddHours(time);
+			HttpRuntime.Cache.Insert(GetName(key), obj, null, expiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+		}
+
+		public static void Insert(string key, object obj) {
+			Insert(key, obj, GetTime(key));
 		}
 
 		/// <summary>
@@ -67,7 +77,28 @@ namespace ITCommunity {
 		/// </summary>
 		/// <param name="key">Идентификатор обьекта</param>
 		public static void Remove(string key) {
-			HttpRuntime.Cache.Remove(key);
+			HttpRuntime.Cache.Remove(GetName(key));
+		}
+
+
+		/// <summary>
+		/// Берем имя кэша из конфига
+		/// </summary>
+		/// <param name="key">Идентификатор обьекта</param>
+		/// <returns>Если не находит в конфиге, то возвращает параметр key</returns>
+		private static string GetName(string key) {
+			var name = Config.Get(key + "CacheName");
+			return (name == null) ? key : name;
+		}
+
+		/// <summary>
+		/// Берем время кэша из конфига
+		/// </summary>
+		/// <param name="key">Идентификатор обьекта</param>
+		/// <returns>Если не находит в конфиге, то возвращает значение по-умолчанию</returns>
+		private static double GetTime(string key) {
+			var strTime = Config.Get(key + "CachePer");
+			return (strTime == null) ? Config.GetDouble("DefaultCachePer") : Convert.ToDouble(strTime);
 		}
 	}
 }
