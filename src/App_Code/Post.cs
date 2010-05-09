@@ -275,6 +275,7 @@ namespace ITCommunity {
 		public void UpdateWithCategories() {
 			Database.PostUpdate(_id, _title, _description, _text, (byte)(_attached ? 1 : 0), _source, _commentsCount);
 			Post.PostAttachCategories(_cats, this);
+            index(this);
 		}
 
 		/// <summary>
@@ -290,6 +291,7 @@ namespace ITCommunity {
 		/// </summary>
 		public void Update() {
 			Database.PostUpdate(_id, _title, _description, _text, (byte)(_attached ? 1 : 0), _source, _commentsCount);
+            index(this);
 		}
 
 		/// <summary>
@@ -313,6 +315,10 @@ namespace ITCommunity {
 			AppCache.Remove(TOP_POSTS_BY_VIEWS_CAHCE_KEY);
 			//Чистим кеш комментов комментов
 			AppCache.Remove(Comment.LAST_COMMENTS_CACHE_KEY);
+            // Удаляем из индекса Lucene
+            Indexer.GetInstance().Delete(post.Id);
+            // Только закрытие и открытие индексатора дает возможность получения актуальной информации
+            Indexer.GetInstance().Close();
 		}
 
 		/// <summary>
@@ -433,6 +439,7 @@ namespace ITCommunity {
 			List<Category> cats = post.Categories;
 			Post newpost = GetPostFromRow(dr);
 			PostAttachCategories(cats, newpost);
+            index(newpost);
 			return newpost;
 		}
 
@@ -538,7 +545,12 @@ namespace ITCommunity {
 			}
 			return post;
 		}
-
-		#endregion
+        private static void index(Post p ) {
+            Indexer.GetInstance().UpdateDocument(p._title, p._description + " " + p._text, p.Id.ToString());
+            Indexer.GetInstance().Close();
+            //Indexer.GetInstance().Commit();
+            //Indexer.GetInstance().ReopenReader();
+        }
+        #endregion
 	}
 }
