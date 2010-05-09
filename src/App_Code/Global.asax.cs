@@ -58,6 +58,7 @@ namespace ITCommunity {
 		}
 
 		public void Application_End(object sender, EventArgs e) {
+            Indexer.GetInstance().Close();
 			Logger.Log.Info("Application stopped ...");
 		}
 

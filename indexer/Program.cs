@@ -15,6 +15,16 @@ using ITCommunity.IndexerLib;
 namespace ITCommunity.IndexerProg {
     class Program {
         static void Main(string[] args) {
+            index(args);
+            //postCount(args);
+        }
+
+        private static void postCount(string[] args) {
+            Libs libs = new Libs(args[0]);
+            Console.WriteLine(libs.PostFreq(args[1]));
+            libs.Close();
+        }
+        private static void index(String[] args) {
             String webConfigPath = getWebConfigPath(args);
             String indexPath = getIndexesPath(args);
             if (webConfigPath == String.Empty || indexPath == String.Empty) {
@@ -22,7 +32,7 @@ namespace ITCommunity.IndexerProg {
                 return;
             }
 
-            
+
             String connString = SomeLib.TextUtil.GetConnectionStringFromXml(webConfigPath);
             Console.WriteLine(connString);
 
@@ -37,7 +47,7 @@ namespace ITCommunity.IndexerProg {
             while (reader.Read()) {
                 String title = reader["title"].ToString();
                 String text = reader["description"].ToString();
-                if(!text.EndsWith(" ")) {
+                if (!text.EndsWith(" ")) {
                     text += " ";
                 }
                 text += reader["text"].ToString();
@@ -52,7 +62,6 @@ namespace ITCommunity.IndexerProg {
             indexer.Optimize();
             indexer.Close();
         }
-
         private static string getIndexesPath(string[] args) {
             String result = String.Empty;
             if (args.Length > 1) {

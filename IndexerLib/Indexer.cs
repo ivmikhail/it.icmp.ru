@@ -92,8 +92,8 @@ namespace ITCommunity.IndexerLib {
             Document doc = new Document();
             doc.Add(new Field(DocField.Title, title, Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field(DocField.Text, postText, Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field(DocField.Id, postId, Field.Store.YES, Field.Index.NO));
-            indexWriter.UpdateDocument(new Term(postId), doc);
+            doc.Add(new Field(DocField.Id, postId, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            indexWriter.UpdateDocument(new Term(DocField.Id, postId), doc);
 
         }
         public void Commit() {
@@ -101,6 +101,9 @@ namespace ITCommunity.IndexerLib {
         }
         public void Close() {
             indexWriter.Close();
+            indexReader.Close();
+            _indexWriter = null;
+            _indexReader = null;
         }
         public void Optimize() {
             indexWriter.Optimize();
@@ -116,7 +119,9 @@ namespace ITCommunity.IndexerLib {
         public List<SearchedPost> Search(string queryText, int page, int count, ref int posts_count) {
             String[] fields = new String[]{DocField.Title, DocField.Text};
             QueryParser queryParser = new MultiFieldQueryParser(fields, analyzer);
+            queryParser.SetDefaultOperator(QueryParser.Operator.AND);
             Query query = queryParser.Parse(queryText);
+            
             IndexSearcher searcher = new IndexSearcher(indexReader);
             TopFieldDocs topDocs = searcher.Search(searcher.CreateWeight(query), null, 10000, Sort.RELEVANCE);
 
@@ -132,6 +137,17 @@ namespace ITCommunity.IndexerLib {
             posts_count = topDocs.scoreDocs.Length;
             return result;
 
+        }
+
+        public void Delete(int postId) {
+            Term t = new Term(DocField.Id, postId.ToString());
+            indexWriter.DeleteDocuments(t);
+        }
+        public void ReopenReader() {
+            indexReader.Reopen();
+        }
+        public int PostFreq(String postId) {
+            return indexReader.DocFreq(new Term(DocField.Id, postId));
         }
     }
 }
