@@ -158,7 +158,7 @@ namespace ITCommunity {
 
 		private static string GetDirName(string dir) {
 			if (dir.EndsWith("\\")) {
-				dir = dir.Remove(dir.Length - 2);
+				dir = dir.Remove(dir.Length - 1);
 			}
 			return dir.Substring(dir.LastIndexOf('\\') + 1);
 		}
