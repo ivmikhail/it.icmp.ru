@@ -153,7 +153,7 @@ namespace ITCommunity {
 			_formatters.Add(new RegexFormatter(@"\[list=a\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "lower-alpha"), false));
 			_formatters.Add(new RegexFormatter(@"\[list=A\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "upper-alpha"), false));
 
-			// Video tag formatter test
+			// play.ykt.ru
 			_formatters.Add(new RegexFormatter(@"\[video]http://play\.ykt\.ru/video/(\d+)/.+?\s*\[/video]",
 				@"<object data='http://play.ykt.ru/player.swf' width='640' height='480' type='application/x-shockwave-flash'>
 					<param name='allowscriptaccess' value='always' />
@@ -161,6 +161,16 @@ namespace ITCommunity {
 					<param name='flashvars' value='width=640&amp;height=480&amp;file=http://play.ykt.ru/flvideo/$1.flv&amp;image=http://play.ykt.ru/thumb/$1.jpg&amp;displayheight=480&amp;link=http://play.ykt.ru/video/$1&amp;searchbar=false&amp;linkfromdisplay=true' />
 					<param name='pluginspage' value='http://www.macromedia.com/go/getflashplayer' />
 				</object>", true));
+            // tv.ykt.ru 
+            
+            // 
+            
+            // http://tv.ykt.ru/media/videos/SPECREPORT_2_APR_01_sd.mp4
+            _formatters.Add(new RegexFormatter(@"\[video]\s*http://tv\.ykt\.ru/media/videos/(.+?)\.(.+?)\s*\[/video]",
+                @"<embed width='540' height='350' flashvars='provider=http&amp;file=/media/videos/$1.$2&amp;image=/media/thumbnails/full/$1.jpg&amp;playerready=playerReadyCallback&amp;stretching=fill' 
+                menu='false' allowfullscreen='true' allowscriptaccess='always' quality='high' bgcolor='#ffffff' name='mpl' id='mpl' 
+                style='' src='http://tv.ykt.ru/media/player.swf' type='application/x-shockwave-flash'>
+                ", true));
 			// Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
 			_formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]", abundaEvaluator));
 
