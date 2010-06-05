@@ -1,10 +1,11 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
 <%@ Import Namespace="ITCommunity.Db.Tables" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<head id="Head1" runat="server">
+<head id="Head" runat="server">
     <title>
         <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
     </title>
@@ -32,18 +33,17 @@
             <div id="noscript-message">
                 Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется.
                 <a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654" target="_blank">Узнать как включить >>></a>
-             </div>
+            </div>
         </noscript>
-
-        <a href="/" class="main-link">
-            <span class="code-class">IT</span> Community → <span class="code-comment">                
-                <%= Html.Encode(Headers.GetRandom().Text) %>
-            </span>
-        </a>
+        <a href="/" class="main-link"><span class="code-class">IT</span> Community → <span
+            class="code-comment">
+            <%= Html.Encode(Headers.GetRandom().Text) %>
+        </span></a>
     </div>
-     <% Html.RenderPartial("TopMenu"); %>
 
-     <% Html.RenderPartial("LeftSidebar"); %>
+    <% Html.RenderPartial("TopMenu"); %>
+
+    <% Html.RenderPartial("LeftSidebar"); %>
 
     <div id="dynamic-content">
         <div class="content">
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-     <% Html.RenderPartial("RightSidebar"); %>
+    <% Html.RenderPartial("RightSidebar"); %>
 
     <div id="footer">
         <h2>

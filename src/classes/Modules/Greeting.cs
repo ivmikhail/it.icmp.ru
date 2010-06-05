@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using ITCommunity.Core;
 
-namespace ITCommunity.Module {
+namespace ITCommunity.Modules {
 
     public static class Greeting {
 
