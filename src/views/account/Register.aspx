@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<mvc.Models.RegisterModel>" %>
+﻿<%@ Import Namespace="ITCommunity.Models" %>
+<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<ITCommunity.Models.RegisterModel>" %>
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Register
@@ -20,7 +21,7 @@
                 <legend>Account Information</legend>
                 
                 <div class="editor-label">
-                    <%= Html.LabelFor(m => m.UserName) %>
+                    <%=  Html.LabelFor(m => m.UserName) %>
                 </div>
                 <div class="editor-field">
                     <%= Html.TextBoxFor(m => m.UserName) %>

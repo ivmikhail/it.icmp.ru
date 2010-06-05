@@ -39,6 +39,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DynamicData" />
@@ -70,24 +71,33 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="classes\core\AppCache.cs" />
-    <Compile Include="classes\core\Config.cs" />
-    <Compile Include="classes\core\CurrentUser.cs" />
-    <Compile Include="classes\core\Logger.cs" />
-    <Compile Include="classes\db\Database.cs" />
-    <Compile Include="classes\util\BBCodeParser.cs" />
-    <Compile Include="classes\util\Hash.cs" />
+    <Compile Include="Classes\Core\AppCache.cs" />
+    <Compile Include="Classes\Core\Config.cs" />
+    <Compile Include="Classes\Core\CurrentUser.cs" />
+    <Compile Include="Classes\Core\Logger.cs" />
+    <Compile Include="Classes\Core\SendEmail.cs" />
+    <Compile Include="Classes\Core\TimerTask.cs" />
+    <Compile Include="Classes\Db\Database.cs">
+      <DependentUpon>Database.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Db\Database.designer.cs">
+      <DependentUpon>Database.dbml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Classes\Db\Tables\Users.cs" />
+    <Compile Include="Classes\Module\Greeting.cs" />
+    <Compile Include="Classes\Util\BBCodeParser.cs" />
+    <Compile Include="Classes\Util\Hash.cs" />
     <Compile Include="controllers\AccountController.cs" />
     <Compile Include="controllers\HomeController.cs" />
-    <Compile Include="controllers\PostController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="models\AccountModels.cs" />
-    <Compile Include="models\Category.cs" />
-    <Compile Include="models\Comment.cs" />
-    <Compile Include="models\Post.cs" />
-    <Compile Include="models\User.cs" />
+    <Compile Include="Classes\Db\Tables\Headers.cs" />
+    <Compile Include="Classes\Db\Tables\Recoveries.cs" />
+    <Compile Include="Classes\Db\Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,11 +105,17 @@
     <Content Include="content\css\ie6-fix.css" />
     <Content Include="content\css\main.css" />
     <Content Include="content\css\reset.css" />
+    <Content Include="content\other\greetings.txt" />
+    <Content Include="content\other\greetings_personal.txt" />
     <Content Include="Global.asax" />
-    <Content Include="views\post\list.aspx" />
-    <Content Include="views\post\view.aspx" />
-    <Content Include="views\shared\left-sidebar.ascx" />
-    <Content Include="views\shared\right-sidebar.ascx" />
+    <Content Include="views\account\Login.aspx" />
+    <Content Include="views\account\Recovery.aspx" />
+    <Content Include="views\account\Send.aspx" />
+    <Content Include="views\account\Register.aspx" />
+    <Content Include="views\shared\LeftSidebar.ascx" />
+    <Content Include="views\shared\RightSidebar.ascx" />
+    <Content Include="views\home\Index.aspx" />
+    <Content Include="views\shared\TopMenu.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -119,20 +135,14 @@
     <Content Include="content\js\MicrosoftMvcAjax.debug.js" />
     <Content Include="content\js\MicrosoftMvcValidation.js" />
     <Content Include="content\js\MicrosoftMvcValidation.debug.js" />
-    <Content Include="views\account\ChangePassword.aspx" />
-    <Content Include="views\account\ChangePasswordSuccess.aspx" />
-    <Content Include="views\account\LogOn.aspx" />
-    <Content Include="views\account\Register.aspx" />
-    <Content Include="views\home\About.aspx" />
-    <Content Include="views\home\Index.aspx" />
     <Content Include="views\shared\Error.aspx" />
-    <Content Include="views\shared\LogOnUserControl.ascx" />
-    <Content Include="views\shared\site.master" />
+    <Content Include="views\shared\Site.master" />
     <Content Include="views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="content\img\" />
+    <Folder Include="views\post\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\trunk\IndexerLib\IndexerLib.csproj">
@@ -143,6 +153,21 @@
       <Project>{F312A541-1B95-4027-AE0F-8F208078A40B}</Project>
       <Name>indexer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\Db\Database.dbml.layout">
+      <DependentUpon>Database.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\Db\Database.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Database.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -1,11 +1,14 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<%@ Import Namespace="ITCommunity.Db.Tables" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head id="Head1" runat="server">
     <title>
         <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
     </title>
+
     <meta http-equiv="content-language" content="ru" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="программирование, администратор, айти, якутск, саха, якутия, скачать, сеть, компьютеры, ит, виндовс, линух, репозиторий, programming, it, web, yakutsk, sakha, windows, linux, freebsd, говнокод, программист, java, c sharp" />
@@ -16,6 +19,7 @@
     <meta http-equiv="pragma" content="no-cache" />
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="expires" content="now" />
+
     <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
     <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/reset.css") %>" />
     <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/main.css") %>" />
@@ -30,27 +34,28 @@
                 <a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654" target="_blank">Узнать как включить >>></a>
              </div>
         </noscript>
-        
+
         <a href="/" class="main-link">
             <span class="code-class">IT</span> Community → <span class="code-comment">                
-			    <%= Html.Encode(ViewData["HeaderText"]) %>
+                <%= Html.Encode(Headers.GetRandom().Text) %>
             </span>
         </a>
     </div>
-     <% Html.RenderPartial("left-sidebar"); %>
+     <% Html.RenderPartial("TopMenu"); %>
+
+     <% Html.RenderPartial("LeftSidebar"); %>
+
     <div id="dynamic-content">
         <div class="content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
     </div>
-     <% Html.RenderPartial("right-sidebar"); %>
+
+     <% Html.RenderPartial("RightSidebar"); %>
+
     <div id="footer">
-        <%= ViewData["YaknetCounter"] %>
-        <a href="http://www.vyakutske.ru/rating/" title="Рейтинг сайтов Якутска" target="_blank"
-            class="counter">
-            <img src="http://www.vyakutske.ru/rating/button.php?u=itcommunity" alt="Рейтинг сайтов Якутска" /></a>
         <h2>
-            IT Community &copy; 2005 - <%= ViewData["ThisYear"] %>
+            IT Community &copy; 2005 - <%= DateTime.Now.Year %>
         </h2>
         Данный ресурс поддерживается сообществом АЙТИ коммунистов г.Якутска. Проект некоммерческий.
     </div>
