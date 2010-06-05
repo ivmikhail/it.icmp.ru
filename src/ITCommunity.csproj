@@ -86,36 +86,36 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Classes\Db\Tables\Users.cs" />
-    <Compile Include="Classes\Module\Greeting.cs" />
+    <Compile Include="Classes\Modules\Greeting.cs" />
     <Compile Include="Classes\Util\BBCodeParser.cs" />
     <Compile Include="Classes\Util\Hash.cs" />
-    <Compile Include="controllers\AccountController.cs" />
-    <Compile Include="controllers\HomeController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="models\AccountModels.cs" />
+    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Classes\Db\Tables\Headers.cs" />
     <Compile Include="Classes\Db\Tables\Recoveries.cs" />
     <Compile Include="Classes\Db\Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\css\ie7-fix.css" />
-    <Content Include="content\css\ie6-fix.css" />
-    <Content Include="content\css\main.css" />
-    <Content Include="content\css\reset.css" />
-    <Content Include="content\other\greetings.txt" />
-    <Content Include="content\other\greetings_personal.txt" />
+    <Content Include="Content\css\ie7-fix.css" />
+    <Content Include="Content\css\ie6-fix.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\reset.css" />
+    <Content Include="Content\other\greetings.txt" />
+    <Content Include="Content\other\greetings_personal.txt" />
     <Content Include="Global.asax" />
-    <Content Include="views\account\Login.aspx" />
-    <Content Include="views\account\Recovery.aspx" />
-    <Content Include="views\account\Send.aspx" />
-    <Content Include="views\account\Register.aspx" />
-    <Content Include="views\shared\LeftSidebar.ascx" />
-    <Content Include="views\shared\RightSidebar.ascx" />
-    <Content Include="views\home\Index.aspx" />
-    <Content Include="views\shared\TopMenu.ascx" />
+    <Content Include="Views\Account\Login.aspx" />
+    <Content Include="Views\Account\Recovery.aspx" />
+    <Content Include="Views\Account\Send.aspx" />
+    <Content Include="Views\Account\Register.aspx" />
+    <Content Include="Views\Shared\LeftSidebar.ascx" />
+    <Content Include="Views\Shared\RightSidebar.ascx" />
+    <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Shared\TopMenu.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -123,26 +123,26 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="content\js\jquery-1.3.2.js" />
-    <Content Include="content\js\jquery-1.3.2.min.js" />
-    <Content Include="content\js\jquery-1.3.2-vsdoc.js" />
-    <Content Include="content\js\jquery.validate.js" />
-    <Content Include="content\js\jquery.validate.min.js" />
-    <Content Include="content\js\jquery.validate-vsdoc.js" />
-    <Content Include="content\js\MicrosoftAjax.js" />
-    <Content Include="content\js\MicrosoftAjax.debug.js" />
-    <Content Include="content\js\MicrosoftMvcAjax.js" />
-    <Content Include="content\js\MicrosoftMvcAjax.debug.js" />
-    <Content Include="content\js\MicrosoftMvcValidation.js" />
-    <Content Include="content\js\MicrosoftMvcValidation.debug.js" />
-    <Content Include="views\shared\Error.aspx" />
-    <Content Include="views\shared\Site.master" />
-    <Content Include="views\Web.config" />
+    <Content Include="Content\js\jquery-1.3.2.js" />
+    <Content Include="Content\js\jquery-1.3.2.min.js" />
+    <Content Include="Content\js\jquery-1.3.2-vsdoc.js" />
+    <Content Include="Content\js\jquery.validate.js" />
+    <Content Include="Content\js\jquery.validate.min.js" />
+    <Content Include="Content\js\jquery.validate-vsdoc.js" />
+    <Content Include="Content\js\MicrosoftAjax.js" />
+    <Content Include="Content\js\MicrosoftAjax.debug.js" />
+    <Content Include="Content\js\MicrosoftMvcAjax.js" />
+    <Content Include="Content\js\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Content\js\MicrosoftMvcValidation.js" />
+    <Content Include="Content\js\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\Shared\Error.aspx" />
+    <Content Include="Views\Shared\Site.master" />
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="content\img\" />
-    <Folder Include="views\post\" />
+    <Folder Include="Content\img\" />
+    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\trunk\IndexerLib\IndexerLib.csproj">

@@ -10,10 +10,10 @@
             <fieldset>
                               
                 <div class="editor-label">
-                    Ваш логин : <%= Html.DisplayFor(m => m.UserName)%>                    
+                    Ваш логин : <%= Html.DisplayFor(m => m.UserNick)%>                    
                 </div>
                 <div class="editor-field">                                 
-                    <%= Html.HiddenFor(m => m.UserName)%>   
+                    <%= Html.HiddenFor(m => m.UserNick)%>   
                 </div>                          
                 
                 <div class="editor-label">

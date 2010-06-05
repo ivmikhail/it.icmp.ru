@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Configuration;
-using System.Web.Caching;
-using System.Data.SqlClient;
 using ITCommunity.Core;
-using ITCommunity.Models;
 using ITCommunity.Db.Tables;
 
 namespace ITCommunity {
@@ -34,7 +30,6 @@ namespace ITCommunity {
             );
 
         }
-
 
         protected void Application_Start() {
             AreaRegistration.RegisterAllAreas();

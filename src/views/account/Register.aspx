@@ -21,11 +21,11 @@
                 <legend>Account Information</legend>
                 
                 <div class="editor-label">
-                    <%=  Html.LabelFor(m => m.UserName) %>
+                    <%=  Html.LabelFor(m => m.UserNick)%>
                 </div>
                 <div class="editor-field">
-                    <%= Html.TextBoxFor(m => m.UserName) %>
-                    <%= Html.ValidationMessageFor(m => m.UserName) %>
+                    <%= Html.TextBoxFor(m => m.UserNick)%>
+                    <%= Html.ValidationMessageFor(m => m.UserNick)%>
                 </div>
                 
                 <div class="editor-label">
