@@ -2,6 +2,8 @@ using System;
 using System.Web;
 using System.Web.Security;
 using System.Collections.Specialized;
+using ITCommunity.Db.Models;
+using ITCommunity.Db.Tables;
 
 namespace ITCommunity.Core {
 	/// <summary>
@@ -30,7 +32,7 @@ namespace ITCommunity.Core {
 		/// </summary>
 		public static User User {
 			get {
-				User currentUser = new User();
+				User currentUser = User.Anonymous;
 				if (isAuth) {
 					if (HttpContext.Current.Session != null) {
 						currentUser = (User)HttpContext.Current.Session["CurrentUser"];
@@ -41,8 +43,8 @@ namespace ITCommunity.Core {
 						HttpContext.Current.Session["CurrentUser"] = currentUser;
 					}
 
-					if (currentUser.Role == User.Roles.Banned) {
-						CurrentUser.LogOut();
+					if (currentUser.Role == UserRoles.Banned) {
+						CurrentUser.Logout();
 					}
 				}
 				return currentUser;
@@ -58,8 +60,8 @@ namespace ITCommunity.Core {
 		/// <param name="pass">Истинный пароль</param>
 		/// <param name="login">Логин пользователя</param>
 		/// <returns></returns>
-		public static string HashPass(string pass, string login) {
-			string preparedPass = login.ToUpper() + pass;
+        public static string HashPass(string pass, string nick) {
+            string preparedPass = nick.ToUpper() + pass;
 			string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass, "SHA1");
 			return hashedPass;
 		}
@@ -69,12 +71,12 @@ namespace ITCommunity.Core {
 		/// </summary>
 		/// <param name="login">Логин, он же nick</param>
 		/// <param name="pass">Пароль</param>
-		public static bool LogIn(string login, string pass, bool remember) {
+        public static bool Login(string nick, string pass, bool remember) {
 			bool result = false;
-			User user = User.GetByLogin(login);
-			string hashedPass = HashPass(pass, login);
+            User user = Users.Get(nick);
+            string hashedPass = HashPass(pass, nick);
 
-			if (user.Id > 0 && user.Pass == hashedPass) {
+			if (user.Id > 0 && user.Password == hashedPass) {
 				HttpContext.Current.Session["CurrentUser"] = user;
 
 				DateTime ticketExpiration = DateTime.Now;
@@ -85,7 +87,7 @@ namespace ITCommunity.Core {
 				}
 				// Здесь параметр bool IsPersistent почему то неправильно работает, 
 				// сбрасывается после закрытия окна, ниже куке устанавливаю отдельно expired date
-				FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, login, DateTime.Now, ticketExpiration, true, user.Role.ToString(), FormsAuthentication.FormsCookiePath);
+                FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, nick, DateTime.Now, ticketExpiration, true, user.Role.ToString(), FormsAuthentication.FormsCookiePath);
 
 				string encryptedTicket = FormsAuthentication.Encrypt(newTicket);
 				HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
@@ -101,7 +103,7 @@ namespace ITCommunity.Core {
 		/// <summary>
 		/// Выход
 		/// </summary>
-		public static void LogOut() {
+		public static void Logout() {
 			HttpContext.Current.Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
 			HttpContext.Current.Session.Abandon();
 			FormsAuthentication.SignOut();
@@ -113,15 +115,15 @@ namespace ITCommunity.Core {
 		/// <param name="login">login=nick</param>
 		/// <param name="pass">пароль</param>
 		/// <param name="email">электропочта</param>
-		public static User Register(string login, string pass, string email) {
+		public static User Register(string nick, string pass, string email) {
 			User user = new User();
 
-			user.Login = login;
-			user.Pass = HashPass(pass, login);
+            user.Nick = nick;
+            user.Password = HashPass(pass, nick);
 			user.Email = email;
-			user.Role = User.Roles.Poster;
+			user.Role = UserRoles.Poster;
 
-			return User.Add(user);
+			return Users.Add(user);
 		}
 
 		private static User GetUserFromCookie() {
@@ -131,9 +133,9 @@ namespace ITCommunity.Core {
 			if (authCookie != null) {
 				FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
 				if (ticket.Expired) {
-					LogOut();
+					Logout();
 				} else {
-					user = User.GetByLogin(ticket.Name);
+					user = Users.Get(ticket.Name);
 				}
 			}
 
