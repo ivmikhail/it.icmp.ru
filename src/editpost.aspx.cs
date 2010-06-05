@@ -21,7 +21,8 @@ namespace ITCommunity {
 					LinkButtonAdd.Text = "Изменить";
 				} else {
 					LinkButtonAdd.Text = "Добавить";
-					EditableInfo.Text = "После добавления пост можно будет редактировать/удалить в течении " + Config.GetInt("EditablePeriod") + " сек.";
+                    TimeSpan editablePeriod = new TimeSpan(0, 0, Config.GetInt("EditablePeriod"));
+					EditableInfo.Text = "После добавления пост можно будет редактировать/удалить в течении " + String.Format("{0:d} минут и {1:d} секунд", editablePeriod.Minutes, editablePeriod.Seconds);
 				}
 				InitPostData();
 
