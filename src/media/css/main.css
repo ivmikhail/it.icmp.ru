@@ -26,7 +26,7 @@
 		- counter				счетчик
 		- rating				рейтинг
 
-		- header				хэдера
+		- header				шапка
 		- left-sidebar			боковая панелька на левой стороне
 		- dynamic-content		контент страницы
 		- right-sidebar			боковая панелька на правой стороне
@@ -205,14 +205,13 @@ hr {
 .big-button a:hover {
 	background: #ff4455;
 }
-
 .new-link {
 	color: #ff4455;
 }
 .new-link:hover {
 	background: #ffffff;
 }
-/* links: begin */
+/* links: end */
 
 
 /* form-elements: begin */
@@ -472,6 +471,14 @@ hr {
 }
 #header .code-comment {
 	color: #209020;
+}
+#header .links {
+    width: 98%;
+    padding: 0 0 5px 0;
+    text-align:right;
+}
+#header .links a:hover {
+    background: none;
 }
 /* header: end */
 
