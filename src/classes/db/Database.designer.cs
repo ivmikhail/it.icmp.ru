@@ -88,7 +88,7 @@ namespace ITCommunity.Db
     #endregion
 		
 		public Database() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["itcommunityConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["win7"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -316,6 +316,22 @@ namespace ITCommunity.Db
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userId, text, endDate);
 			return ((ISingleResult<ITCommunity.Db.Models.Header>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PostGetByCat")]
+		public ISingleResult<ITCommunity.Db.Models.Post> PostGetByCat([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> page, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> count, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> cat_id, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] ref System.Nullable<int> posts_count)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), page, count, cat_id, posts_count);
+			posts_count = ((System.Nullable<int>)(result.GetParameterValue(3)));
+			return ((ISingleResult<ITCommunity.Db.Models.Post>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PostGet")]
+		public ISingleResult<ITCommunity.Db.Models.Post> PostGet([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> page, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> count, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] ref System.Nullable<int> posts_count)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), page, count, posts_count);
+			posts_count = ((System.Nullable<int>)(result.GetParameterValue(2)));
+			return ((ISingleResult<ITCommunity.Db.Models.Post>)(result.ReturnValue));
 		}
 	}
 }

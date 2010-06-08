@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="itcommunity" EntityNamespace="ITCommunity.Db.Models" ContextNamespace="ITCommunity.Db" Class="Database" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=Tesla-pc;Initial Catalog=itcommunity;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="itcommunityConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=WIN7\SQLEXPRESS;Initial Catalog=itcommunity;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="win7" Provider="System.Data.SqlClient" />
   <Table Name="dbo.CaptchaAnswers" Member="CaptchaAnswers">
     <Type Name="CaptchaAnswer">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -151,7 +151,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Posts" Member="Posts">
-    <Type Name="Post">
+    <Type Name="Post" Id="ID4">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Title" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
@@ -248,5 +248,18 @@
     <Parameter Name="text" Type="System.String" DbType="NVarChar(128)" />
     <Parameter Name="endDate" Type="System.DateTime" DbType="DateTime" />
     <ElementType IdRef="ID3" />
+  </Function>
+  <Function Name="dbo.PostGetByCat" Method="PostGetByCat">
+    <Parameter Name="page" Type="System.Int32" DbType="Int" />
+    <Parameter Name="count" Type="System.Int32" DbType="Int" />
+    <Parameter Name="cat_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="posts_count" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <ElementType IdRef="ID4" />
+  </Function>
+  <Function Name="dbo.PostGet" Method="PostGet">
+    <Parameter Name="page" Type="System.Int32" DbType="Int" />
+    <Parameter Name="count" Type="System.Int32" DbType="Int" />
+    <Parameter Name="posts_count" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <ElementType IdRef="ID4" />
   </Function>
 </Database>

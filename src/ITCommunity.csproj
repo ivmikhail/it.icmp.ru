@@ -85,12 +85,17 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Classes\Db\Models\Comment.cs" />
+    <Compile Include="Classes\Db\Models\Post.cs" />
+    <Compile Include="Classes\Db\Tables\Comments.cs" />
+    <Compile Include="Classes\Db\Tables\Posts.cs" />
     <Compile Include="Classes\Db\Tables\Users.cs" />
     <Compile Include="Classes\Modules\Greeting.cs" />
     <Compile Include="Classes\Util\BBCodeParser.cs" />
     <Compile Include="Classes\Util\Hash.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -112,6 +117,8 @@
     <Content Include="Views\Account\Recovery.aspx" />
     <Content Include="Views\Account\Send.aspx" />
     <Content Include="Views\Account\Register.aspx" />
+    <Content Include="Views\Post\list.aspx" />
+    <Content Include="Views\Post\view.aspx" />
     <Content Include="Views\Shared\LeftSidebar.ascx" />
     <Content Include="Views\Shared\RightSidebar.ascx" />
     <Content Include="Views\Home\Index.aspx" />
@@ -142,7 +149,6 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="Content\img\" />
-    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\trunk\IndexerLib\IndexerLib.csproj">
@@ -184,7 +190,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52956</DevelopmentServerPort>
+          <DevelopmentServerPort>53169</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
