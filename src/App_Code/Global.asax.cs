@@ -111,5 +111,13 @@ namespace ITCommunity {
 				app.Response.AppendHeader("Content-Encoding", "deflate");
 			}
 		}
+        protected void Application_BeginRequest(Object sender, EventArgs e) {
+            RewriteHandler();
+        }
+        private void RewriteHandler() {
+            //bool isBackbone = BackBone.IsBackboneUser();
+        }
+        
+
 	}
 }
