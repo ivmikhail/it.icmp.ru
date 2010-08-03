@@ -9,7 +9,9 @@
 
 <div id="right-sidebar">
 	<div class="content">
-	
+		
+		<div class="ad-banner">
+		
 <!--/* OpenX Javascript Tag v2.8.5 */-->
 
 <script type='text/javascript'><!--//<![CDATA[
@@ -27,7 +29,9 @@
    if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
    document.write ("'><\/scr"+"ipt>");
 //]]>--></script><noscript><a href='http://it.icmp.ru/openx/www/delivery/ck.php?n=a9a7f1b8&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://it.icmp.ru/openx/www/delivery/avw.php?zoneid=1&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a9a7f1b8' border='0' alt='' /></a></noscript>
-
+		
+		</div>
+		
 		<uc:SearchMenu ID="SearchMenu" runat="server" />
 
 		<uc:PollMenu ID="PollMenu" runat="server" />
