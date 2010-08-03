@@ -101,6 +101,12 @@ hr {
 
 
 /* panels: begin */
+.ad-banner {
+	padding-top: 5px;
+}
+.ad-banner:hover {	
+	background: none;
+}
 .menu-panel {
 	padding: 2px 0;
 }
