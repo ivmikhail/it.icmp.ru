@@ -85,45 +85,83 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Classes\Db\Models\Comment.cs" />
-    <Compile Include="Classes\Db\Models\Post.cs" />
+    <Compile Include="Classes\Db\Category.cs" />
+    <Compile Include="Classes\Db\Comment.cs" />
+    <Compile Include="Classes\Db\Captcha.cs" />
+    <Compile Include="Classes\Db\MenuItem.cs" />
+    <Compile Include="Classes\Db\Post.cs" />
+    <Compile Include="Classes\Db\Tables\Categories.cs" />
     <Compile Include="Classes\Db\Tables\Comments.cs" />
+    <Compile Include="Classes\Db\Tables\Captchas.cs" />
+    <Compile Include="Classes\Db\Tables\Favorities.cs" />
+    <Compile Include="Classes\Db\Tables\MenuItems.cs" />
     <Compile Include="Classes\Db\Tables\Posts.cs" />
     <Compile Include="Classes\Db\Tables\Users.cs" />
     <Compile Include="Classes\Modules\Greeting.cs" />
     <Compile Include="Classes\Util\BBCodeParser.cs" />
     <Compile Include="Classes\Util\Hash.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\UserModels.cs" />
     <Compile Include="Classes\Db\Tables\Headers.cs" />
     <Compile Include="Classes\Db\Tables\Recoveries.cs" />
-    <Compile Include="Classes\Db\Models\User.cs" />
+    <Compile Include="Classes\Db\User.cs" />
+    <Compile Include="Models\PaginatorModel.cs" />
+    <Compile Include="Models\PostsModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\footer.css" />
+    <Content Include="Content\css\header.css" />
     <Content Include="Content\css\ie7-fix.css" />
     <Content Include="Content\css\ie6-fix.css" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\menu.css" />
     <Content Include="Content\css\reset.css" />
+    <Content Include="Content\css\tags.css" />
     <Content Include="Content\other\greetings.txt" />
     <Content Include="Content\other\greetings_personal.txt" />
     <Content Include="Global.asax" />
-    <Content Include="Views\Account\Login.aspx" />
-    <Content Include="Views\Account\Recovery.aspx" />
-    <Content Include="Views\Account\Send.aspx" />
-    <Content Include="Views\Account\Register.aspx" />
-    <Content Include="Views\Post\list.aspx" />
-    <Content Include="Views\Post\view.aspx" />
-    <Content Include="Views\Shared\LeftSidebar.ascx" />
-    <Content Include="Views\Shared\RightSidebar.ascx" />
-    <Content Include="Views\Home\Index.aspx" />
-    <Content Include="Views\Shared\TopMenu.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Views\Posts\Discussible.aspx" />
+    <Content Include="Views\Posts\Periods.ascx" />
+    <Content Include="Views\Posts\Popular.aspx" />
+    <Content Include="Views\Posts\UserMenu.ascx" />
+    <Content Include="Views\Posts\Favorite.aspx" />
+    <Content Include="Views\Posts\SidebarItems\Categories.ascx" />
+    <Content Include="Views\Posts\SidebarItems\DiscussiblePosts.ascx" />
+    <Content Include="Views\Posts\SidebarItems\LastComments.ascx" />
+    <Content Include="Views\Posts\SidebarItems\PopularPosts.ascx" />
+    <Content Include="Views\Posts\Add.aspx" />
+    <Content Include="Views\Posts\Sidebar.ascx" />
+    <Content Include="Views\Shared\CategoryLink.ascx" />
+    <Content Include="Views\Shared\EditorToolbar.ascx" />
+    <Content Include="Views\Shared\Footer.ascx" />
+    <Content Include="Views\Shared\Head\Links.ascx" />
+    <Content Include="Views\Shared\Head\Metas.ascx" />
+    <Content Include="Views\Shared\NotFound.aspx" />
+    <Content Include="Views\Shared\ITCaptcha.ascx" />
+    <Content Include="Views\Shared\UserLink.ascx" />
+    <Content Include="Views\User\Login.aspx" />
+    <Content Include="Views\User\Recovery.aspx" />
+    <Content Include="Views\User\Send.aspx" />
+    <Content Include="Views\User\Register.aspx" />
+    <Content Include="Views\Posts\Index.aspx" />
+    <Content Include="Views\Posts\Category.aspx" />
+    <Content Include="Views\Posts\View.aspx" />
+    <Content Include="Views\Posts\PostsList.ascx" />
+    <Content Include="Views\Shared\Header.ascx" />
+    <Content Include="Views\Shared\Pagination.ascx" />
+    <Content Include="Views\User\UserMenu.ascx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

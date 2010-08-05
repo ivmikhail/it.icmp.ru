@@ -48,7 +48,7 @@ namespace ITCommunity.Modules {
                 }
             }
 
-            return result + ", " + nick + "!";
+            return result;
         }
 
         private static List<string> GetCommonGreetings() {

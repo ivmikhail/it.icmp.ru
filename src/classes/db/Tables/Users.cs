@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using ITCommunity.Db.Models;
+using ITCommunity.Db;
 
 namespace ITCommunity.Db.Tables {
 
@@ -7,32 +7,31 @@ namespace ITCommunity.Db.Tables {
 
         public static User Add(User user) {
             using (var db = Database.Connect()) {
-                var result = db.UsersAdd(
-                    user.Nick,
-                    user.Password,
-                    (byte)user.Role,
-                    user.Email
-                );
+                db.Users.InsertOnSubmit(user);
 
-                return result.Single();
+                db.SubmitChanges();
+
+                return user;
             }
         }
 
         public static User Update(User user) {
             using (var db = Database.Connect()) {
-                var userRole = (byte)user.Role;
-                var userCanAddHeader = (byte)(user.CanAddHeader ? 1 : 0);
+                var dbUser = (
+                    from u in db.Users
+                    where u.Id == user.Id
+                    select u
+                ).Single();
 
-                var result = db.UsersUpdate(
-                    user.Id,
-                    user.Password,
-                    userRole,
-                    user.Email,
-                    userCanAddHeader,
-                    user.HeaderCounter
-                );
+                dbUser.Password = user.Password;
+                dbUser.Role = user.Role;
+                dbUser.Email = user.Email;
+                dbUser.CanAddHeader = user.CanAddHeader;
+                dbUser.HeadersCounter = user.HeadersCounter;
 
-                return result.Single();
+                db.SubmitChanges();
+
+                return dbUser;
             }
         }
 
@@ -48,7 +47,10 @@ namespace ITCommunity.Db.Tables {
                     select user
                 ).ToList();
 
-                return (result.Count == 1) ? result[0] : User.Anonymous;
+                if (result.Count == 1) {
+                    return result[0];
+                }
+                return User.Anonymous;
             }
         }
 
@@ -64,7 +66,10 @@ namespace ITCommunity.Db.Tables {
                     select user
                 ).ToList();
 
-                return (result.Count == 1) ? result[0] : User.Anonymous;
+                if (result.Count == 1) {
+                    return result[0];
+                }
+                return User.Anonymous;
             }
         }
     }

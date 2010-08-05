@@ -1,7 +1,5 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
-<%@ Import Namespace="ITCommunity.Db.Tables" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -9,55 +7,44 @@
     <title>
         <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
     </title>
-
-    <meta http-equiv="content-language" content="ru" />
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="программирование, администратор, айти, якутск, саха, якутия, скачать, сеть, компьютеры, ит, виндовс, линух, репозиторий, programming, it, web, yakutsk, sakha, windows, linux, freebsd, говнокод, программист, java, c sharp" />
-    <meta name="description" content="Ykt IT Community - сообщество IT-специалистов Якутска" />
-    <meta name="author" content="Ykt IT Community" />
-    <meta name="language" content="ru" />
-    <meta name="doc-type" content="web page" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="expires" content="now" />
-
-    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
-    <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/reset.css") %>" />
-    <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/main.css") %>" />
-    <!--[if IE 6]><link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/ie6-fix.css") %>" /><![endif]-->
-    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/ie7-fix.css") %>" /><![endif]-->
+    <% Html.RenderPartial("Head/Metas"); %>
+    <% Html.RenderPartial("Head/Links"); %>
 </head>
+
 <body>
+
     <div id="header">
-        <noscript>
-            <div id="noscript-message">
-                Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется.
-                <a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654" target="_blank">Узнать как включить >>></a>
-            </div>
-        </noscript>
-        <a href="/" class="main-link"><span class="code-class">IT</span> Community → <span
-            class="code-comment">
-            <%= Html.Encode(Headers.GetRandom().Text) %>
-        </span></a>
+        <% Html.RenderPartial("Header"); %>
     </div>
 
-    <% Html.RenderPartial("TopMenu"); %>
+    <div id="menu">
+        <div class="left">
+            <asp:ContentPlaceHolder ID="UserMenuContent" runat="server">
+                <% Html.RenderPartial("UserMenu"); %>
+            </asp:ContentPlaceHolder>
+        </div>
 
-    <% Html.RenderPartial("LeftSidebar"); %>
-
-    <div id="dynamic-content">
-        <div class="content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        <div class="right search-form">
+            <% using (Html.BeginForm("search", "posts", FormMethod.Get)) { %>
+                <input class="input-text" type="text" name="q" />
+                <input class="input-submit" type="submit" value="поиск" />
+            <% } %>
         </div>
     </div>
 
-    <% Html.RenderPartial("RightSidebar"); %>
+    <div id="content">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </div>
+
+    <div id="sidebar">
+        <asp:ContentPlaceHolder ID="SidebarContent" runat="server">
+            <% Html.RenderPartial("Sidebar"); %>
+        </asp:ContentPlaceHolder>
+    </div>
 
     <div id="footer">
-        <h2>
-            IT Community &copy; 2005 - <%= DateTime.Now.Year %>
-        </h2>
-        Данный ресурс поддерживается сообществом АЙТИ коммунистов г.Якутска. Проект некоммерческий.
+        <% Html.RenderPartial("Footer"); %>
     </div>
+
 </body>
 </html>

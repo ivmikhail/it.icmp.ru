@@ -1,0 +1,73 @@
+﻿#footer {
+    background-color: #cccccc;
+    color: #666666;
+    clear: both;
+    font-size: 0.8em;
+	margin-top: 32px;
+}
+
+#footer a {
+    color: #787878;
+}
+
+#footer a:hover {
+    color: #333333;
+}
+
+
+#footer .up-arrow {
+    float: left;
+    font-size: 6em;
+    padding: 10px 0;
+    text-align: center;
+    width: 4%;
+}
+
+#footer .up-arrow a {
+    color: #bbbbbb;
+    text-decoration: none;
+}
+
+#footer .up-arrow a:hover {
+    color: #999999;
+}
+
+
+#footer .bottom-menu {
+    padding: 12px 4% 0;
+}
+
+#footer .bottom-menu dl {
+    float: left;
+    padding-top: 12px;
+    text-align: left;
+    width: 12%;
+}
+
+#footer .bottom-menu dl:hover,
+#footer .bottom-menu dl:hover a {
+    color: #333333;
+}
+
+#footer .bottom-menu dl dt {
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+#footer .bottom-menu dl dd {
+    padding: 2px 0;
+}
+
+
+#footer .counters {
+}
+
+
+#footer .copy {
+    background: #000000;
+    clear: both;
+    color: #666666;
+    margin-top: 24px;
+    padding: 8px 0;
+    text-align: center;
+}
