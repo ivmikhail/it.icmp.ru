@@ -1,0 +1,75 @@
+﻿#header {
+    background: #e5e5e5;
+    font-size: 0.9em;
+}
+
+#header a {
+    color: #787878;
+}
+
+#header a:hover {
+    color: #333333;
+}
+
+
+#header .down-arrow {
+    float: left;
+    font-size: 6em;
+    margin-top: 0.15em;
+    text-align: center;
+    width: 4%;
+}
+
+#header .down-arrow a {
+    color: #d0d0d0;
+    text-decoration: none;
+}
+
+#header .down-arrow a:hover {
+    color: #999999;
+}
+
+
+#header .top-menu {
+    color: #787878;
+    height: 1.5em;
+    padding: 4px 4%;
+}
+
+
+#header .header-text {
+    font-family: consolas;
+    font-size: 3em;
+    font-weight: bold;
+    line-height: 1.5em;
+}
+
+#header .header-text a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+#header .header-text .it {
+    color: #2b91af;
+}
+
+#header .header-text .community {
+    color: #333333;
+}
+
+#header .header-text .text {
+    color: #008000;
+}
+
+#header .header-text a:hover .it {
+    color: #4bb1cf;
+}
+
+#header .header-text a:hover .community {
+    color: #535353;
+}
+
+#header .header-text a:hover .text {
+    color: #20a020;
+}

@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/views/common/site.master" Inherits="System.Web.Mvc.ViewPage<System.Web.Mvc.HandleErrorInfo>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<System.Web.Mvc.HandleErrorInfo>" %>
 
-<asp:Content ID="errorTitle" ContentPlaceHolderID="TitleContent" runat="server">
+<asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">
     Error
 </asp:Content>
 
-<asp:Content ID="errorContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Sorry, an error occurred while processing your request.
     </h2>

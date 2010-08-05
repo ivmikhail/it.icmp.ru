@@ -1,0 +1,92 @@
+﻿html {
+    color: #333333;
+    font-family: arial;
+    font-size: 0.9em;
+}
+
+
+body {
+}
+
+
+a {
+    color: #3366ff;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #0033cc;
+    text-decoration: none;
+}
+
+
+h1 {
+    font-size: 1.75em;
+    font-weight: normal;
+    padding-bottom: 0.75em;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: normal;
+    padding-bottom: 0.75em;
+}
+
+h3 {
+    font-size: 1.25em;
+    font-weight: normal;
+    padding-bottom: 0.5em;
+}
+
+h4 {
+    font-size: 1em;
+    padding-bottom: 0.25em;
+}
+
+h5 {
+    font-size: 0.75em;
+}
+
+h6 {
+    font-size: 0.5em;
+}
+
+select,
+input {
+    font-size: 1.5em;
+}
+
+input[type=checkbox] {
+    font-size: 1em;
+}
+
+select,
+input[type=text],
+input[type=password] {
+    padding: 1px 4px;
+}
+
+input[type=submit] {
+    display: block;
+    margin: 1.5em 0 12px;
+    padding: 4px 16px;
+}
+
+textarea {
+    font-family: arial;
+    font-size: 1em;
+    height: 5em;
+    width: 100%;
+} 
+
+
+label,
+.checkbox {
+    display: block;
+    margin: 16px 0 4px;
+}
+
+.checkbox label {
+    display: inline;
+}
+

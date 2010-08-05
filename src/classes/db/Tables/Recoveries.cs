@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Timers;
 using ITCommunity.Core;
-using ITCommunity.Db.Models;
+using ITCommunity.Db;
 
 namespace ITCommunity.Db.Tables {
 
@@ -15,15 +15,29 @@ namespace ITCommunity.Db.Tables {
         /// <returns>Возвращает добавленную запись со сгенерированным Guid</returns>
         public static Recovery Add(int userId) {
             using (var db = Database.Connect()) {
-                var result = db.RecoveriesAdd(userId);
+                var recovery = new Recovery { UserId = userId };
 
-                return result.Single();
+                db.Recoveries.InsertOnSubmit(recovery);
+
+                db.SubmitChanges();
+
+                return recovery;
             }
         }
 
         public static void Delete(string guid) {
             using (var db = Database.Connect()) {
-                db.RecoveriesDelete(guid);
+                var recoveryGuid = new Guid(guid);
+
+                var deletigRecovery = (
+                    from recovery in db.Recoveries
+                    where recovery.Guid == recoveryGuid
+                    select recovery
+                ).Single();
+
+                db.Recoveries.DeleteOnSubmit(deletigRecovery);
+
+                db.SubmitChanges();
             }
         }
 
@@ -43,8 +57,17 @@ namespace ITCommunity.Db.Tables {
 
         public static void Purge() {
             using (var db = Database.Connect()) {
-                int days = Config.GetInt("RecoveryPurgeDays");
-                db.RecoveriesPurge(days);
+                var days = Config.GetInt("RecoveryPurgeDays");
+                var date = DateTime.Now.AddDays(-days);
+
+                var recoveries =
+                    from recovery in db.Recoveries
+                    where recovery.CreateDate < date
+                    select recovery;
+
+                db.Recoveries.DeleteAllOnSubmit(recoveries);
+
+                db.SubmitChanges();
             }
         }
     }

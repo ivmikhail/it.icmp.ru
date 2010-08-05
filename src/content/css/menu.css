@@ -1,0 +1,23 @@
+﻿#menu {
+    background: #e5e5e5;
+    height: 1.5em;
+    padding: 12px 4%;
+}
+
+
+#menu .search-form {
+}
+
+#menu .search-form input {
+    display: inline;
+    font-size: 1em;
+    margin: 0;
+    padding: 2px 8px;
+}
+
+#menu .search-form .input-text {
+    display: inline;
+    font-size: 1em;
+    margin: 0;
+    padding: 1px 4px;
+}

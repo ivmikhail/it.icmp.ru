@@ -1,7 +1,7 @@
 using System;
 using System.Net.Mail;
 using System.Web;
-using ITCommunity.Db.Models;
+using ITCommunity.Db;
 using ITCommunity.Core;
 
 namespace ITCommunity {

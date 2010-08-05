@@ -4,7 +4,6 @@ using System.Data;
 using ITCommunity.Core;
 using ITCommunity.Db;
 using System.Linq;
-using ITCommunity.Db.Models;
 
 namespace ITCommunity.Db.Tables {
 
@@ -14,24 +13,29 @@ namespace ITCommunity.Db.Tables {
 
         private static Random _random = new Random();
 
-        public static Header Add(int userId, string text) {
+        public static Header Add(int userId, string text, double showingHours) {
             using (var db = Database.Connect()) {
-                var showingHours = Config.GetDouble("HeaderTextShowingHours");
                 var endDate = DateTime.Now.AddHours(showingHours);
 
-                var result = db.HeadersAdd(
-                    userId,
-                    text,
-                    endDate
-                ).Single();
+                var header = new Header { UserId = userId, Text = text, EndDate = endDate };
 
-                return result;
+                db.Headers.InsertOnSubmit(header);
+
+                return header;
             }
         }
 
         public static void Delete(int id) {
             using (var db = Database.Connect()) {
-                db.HeadersDelete(id);
+                var deletingHeader = (
+                    from header in db.Headers
+                    where header.Id == id
+                    select header
+                ).Single();
+
+                db.Headers.DeleteOnSubmit(deletingHeader);
+
+                db.SubmitChanges();
             }
         }
 

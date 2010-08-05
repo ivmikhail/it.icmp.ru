@@ -2,7 +2,7 @@ using System;
 using System.Web;
 using System.Web.Security;
 using System.Collections.Specialized;
-using ITCommunity.Db.Models;
+using ITCommunity.Db;
 using ITCommunity.Db.Tables;
 
 namespace ITCommunity.Core {
@@ -122,6 +122,7 @@ namespace ITCommunity.Core {
             user.Password = HashPass(pass, nick);
 			user.Email = email;
 			user.Role = UserRoles.Poster;
+            user.CreateDate = DateTime.Now;
 
 			return Users.Add(user);
 		}
