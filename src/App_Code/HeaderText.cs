@@ -66,7 +66,13 @@ namespace ITCommunity {
 		public HeaderText() {
 			_id = -1;
 			_user = new User();
-			_text = "Напиши текст для хидера, " + CurrentUser.User.Login + "!";
+
+            if (CurrentUser.isAuth) {
+                _text = "Напиши текст для хидера, " + CurrentUser.User.Login + "!";
+            } else {
+                _text = "Привет!";
+            }
+
 			_createDate = DateTime.Now;
 			_showEndDate = DateTime.MinValue;
 			_isShowing = true;
