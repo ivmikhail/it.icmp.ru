@@ -20,10 +20,27 @@ namespace ITCommunity.Controllers {
         }
     }
 
+    public class AccessDeniedResult : ViewResult {
+
+        public AccessDeniedResult()
+            : base() {
+            this.ViewName = "AccessDenied";
+        }
+
+        public override void ExecuteResult(ControllerContext context) {
+            base.ExecuteResult(context);
+            context.HttpContext.Response.StatusCode = 403;
+        }
+    }
+
     public class BaseController : Controller {
 
         public NotFoundResult NotFound() {
             return new NotFoundResult();
+        }
+
+        public AccessDeniedResult AccessDenied() {
+            return new AccessDeniedResult();
         }
     }
 }

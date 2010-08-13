@@ -13,9 +13,9 @@ namespace ITCommunity.Db {
     /// </summary>
     public partial class Post {
 
-        public User GetAuthor() {
-            return Users.Get(AuthorId);
-        }
+        public List<Category> Categories { get; set; }
+
+        public bool IsFavorite { get; set; }
 
         /// <summary>
         /// Полностью форматированное в безопасный хтмл описание
@@ -38,32 +38,12 @@ namespace ITCommunity.Db {
             get { return HttpUtility.HtmlEncode(Title); }
         }
 
-        public List<Category> Categories { get; set; }
-
-        public bool IsFavorite {
-            get {
-                if (CurrentUser.isAuth) {
-                    using (var db = Database.Connect()) {
-                        var favorite =
-                            from fav in db.Favorites
-                            where
-                                fav.PostId == Id &&
-                                fav.UserId == CurrentUser.User.Id
-                            select fav;
-                        return favorite.Any();
-                    }
-                }
-                return false;
-            }
-        }
-
         partial void OnLoaded() {
-            Comments.Load();
+            var loadAuthor = Author;
             Categories = Tables.Categories.GetByPost(Id);
-        }
-
-        public void Validate() {
-
+            if (CurrentUser.isAuth) {
+                IsFavorite = Posts.IsFavorite(Id);
+            }
         }
     }
 }

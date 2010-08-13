@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<ITCommunity.Models.PaginatedModel>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<PaginatedModel>" %>
 
 <ul class="pagination">
     <li>

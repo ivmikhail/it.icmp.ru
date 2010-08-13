@@ -53,7 +53,19 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        
+        public static bool IsFavorite(int postId) {
+            using (var db = Database.Connect()) {
+                var favorite =
+                    from fav in db.Favorites
+                    where
+                        fav.PostId == postId &&
+                        fav.UserId == CurrentUser.User.Id
+                    select fav;
+
+                return favorite.Any();
+            }
+        }
+
         /// <summary>
         /// Забираем посты постранично, с учетом даты и аттачей
         /// </summary>
@@ -88,18 +100,29 @@ namespace ITCommunity.Db.Tables {
         /// Получаем пост из базы по id
         /// </summary>
         /// <param name="id">id</param>
-        public static Post Get(int id) {
+        public static Post Get(int id, bool incViews) {
             using (var db = Database.Connect()) {
                 var result = (
                     from post in db.Posts
                     where post.Id == id
                     select post
-                ).Single();
+                ).First();
+
+                if (result != null && incViews) {
+                    result.ViewsCount += 1;
+                    result.Comments.Load();
+
+                    db.SubmitChanges();
+                }
 
                 return result;
             }
         }
 
+
+        public static Post Get(int id) {
+            return Get(id, false);
+        }
 
         /// <summary>
         /// 
@@ -197,19 +220,6 @@ namespace ITCommunity.Db.Tables {
         }
 
 
-        public static void IncView(int postid) {
-            using (var db = Database.Connect()) {
-                var post = (from p in db.Posts
-                            where p.Id == postid
-                            select p).Single();
-
-                post.ViewsCount += 1;
-
-                db.SubmitChanges();
-            }
-        }
-
-
         public static Post Add(Post post) {
             using (var db = Database.Connect()) {
                 post.CreateDate = DateTime.Now;
@@ -226,6 +236,31 @@ namespace ITCommunity.Db.Tables {
                 db.SubmitChanges();
 
                 return post;
+            }
+        }
+
+        public static void Update(Post editedPost) {
+            using (var db = Database.Connect()) {
+                var post = (
+                    from p in db.Posts
+                    where p.Id == editedPost.Id
+                    select p
+                ).Single();
+
+                post.AuthorId = editedPost.AuthorId;
+                post.Description = editedPost.Description;
+                post.Source = editedPost.Source;
+                post.Text = editedPost.Text;
+                post.Title = editedPost.Title;
+
+                post.PostsCategories.Clear();
+
+                var categories = from cat in editedPost.Categories
+                                 select new PostsCategory { PostId = post.Id, CategoryId = cat.Id };
+
+                db.PostsCategories.InsertAllOnSubmit(categories);
+
+                db.SubmitChanges();
             }
         }
     }

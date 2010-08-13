@@ -53,7 +53,7 @@
     padding: 24px 0 12px;
 }
 #sidebar .validation-summary-errors {
-    color: #ff9999;
+    color: #ff7777;
     font-size: 1.5em;
 }
 #sidebar ul {
@@ -192,4 +192,28 @@
 
 .hidden {
     display: none;
+}
+
+.field-validation-error {
+    color: #ff7777;
+    display: block;
+    padding: 8px 0;
+}
+
+.select-categories li {
+    display: inline;
+    padding-right: 12px;
+    line-height: 1.5em;
+}
+.select-categories .attached-category {
+    color: #2b91af;
+}
+.select-categories .attached-category:hover {
+	color: #006f83;
+}
+.select-categories .disattached-category {
+    color: #999999;
+}
+.select-categories .disattached-category:hover {
+	color: #2b91af;
 }

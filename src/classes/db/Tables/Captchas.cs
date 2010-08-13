@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using ITCommunity.Db;
-using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Linq;
 
 namespace ITCommunity.Db.Tables {
 
@@ -19,33 +17,21 @@ namespace ITCommunity.Db.Tables {
 
                 var result = captchas.Skip(_rand.Next(count)).First();
 
-                if (result != null) {
-                    result.CaptchaAnswers.Load();
-                    return result;
-                }
-
-                return null;
+                return result;
             }
         }
-
 
         public static Captcha Get(int id) {
             using (var db = Database.Connect()) {
 
                 var result = (
-                    from question in db.Captchas
-                    where question.Id == id
-                    select question).ToList();
+                    from captcha in db.Captchas
+                    where captcha.Id == id
+                    select captcha
+                ).First();
 
-                if (result.Count == 1) {
-                    result[0].CaptchaAnswers.Load();
-                    return result[0];
-                }
-
-                return null;
+                return result;
             }
         }
-
-
     }
 }

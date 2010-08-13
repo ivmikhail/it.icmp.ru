@@ -30,6 +30,12 @@ namespace ITCommunity {
             );
 
             routes.MapRoute(
+                "UserPorfile",
+                "user/profile/{nick}",
+                new { controller = "User", action = "profile" }
+            );
+
+            routes.MapRoute(
                 "DiscussiblePosts",
                 "posts/discussible/{period}",
                 new { controller = "Posts", action = "discussible", period = "All" }

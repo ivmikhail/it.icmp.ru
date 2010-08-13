@@ -8,6 +8,6 @@
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
-    <% Html.RenderPartial("PostsList", Model); %>
+    <% Html.RenderPartial("List", Model); %>
 
 </asp:Content>

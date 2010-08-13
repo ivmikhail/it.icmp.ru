@@ -1,18 +1,10 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
-    
-<% Captcha captcha = Captchas.GetRandom(); %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<ITCommunity.Models.Captcha.CaptchaModel>" %>
 
-<label for="captchaanswer">IT-captcha: <%= captcha.Question%></label>
 
-<input type="hidden" name="captchaquestion" value="<%=captcha.Id %>" />
+<input type="hidden" name="QuestionId" id="QuestionId" value="<%= Model.QuestionId %>" />
 
-<select name="captchaanswer">
-    <option selected="selected" value="-1">Выберите ответ</option>
+<label for="AnswerId">
+    <%= Model.Question %>
+</label>
 
-    <% foreach (var answer in captcha.CaptchaAnswers) { %>
-        <option value="<%= answer.Id %>"><%= answer.Text %></option>
-    <% } %>
-</select>        
-
-    
-
+<%= Html.DropDownListFor(m => m.AnswerId, Model.Answers, "Выберите ответ") %>

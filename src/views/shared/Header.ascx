@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
 
 <noscript>
@@ -13,23 +13,17 @@
 
 
 <div class="top-menu">
-<%--
-    <ul class="left">
-        <li><a href="/posts" title="Посмотреть только посты">посты</a></li>
-        <li><a href="/files" title="Посмотреть только файлы">файлы</a></li>
-    </ul>
---%>
     <ul class="right">
         <% if (CurrentUser.isAuth) { %>
             <li>
-                <%= Greeting.Get() %>, <a href="/user/view/<%= CurrentUser.User.Nick %>" title="Мое"><%= CurrentUser.User.Nick %></a>!
+                <%= Greeting.Get() %>, <% Html.RenderPartial("Link/User/CurrentProfile"); %></a>!
             </li>
             <li>
-                <a href="/user/logout" title="Зачем выходить?">выйти</a>
+                <% Html.RenderPartial("Link/User/Logout"); %>
             </li>
         <% } else { %>
             <li>
-                <a href="/user/login" title="Приветствуем!">войти</a>
+                <% Html.RenderPartial("Link/User/Login"); %>
             </li>
         <% } %>
     </ul>
