@@ -39,7 +39,7 @@ namespace ITCommunity {
 				message.Subject = "Ykt IT Community - восстановление пароля";
 				message.Body = "Здравствуй %username% ! \n\n" +
 							   "Вы запросили сброс пароля с сайта " + SiteAddress + ", сделать это можно перейдя по ссылке:" + "\n" +
-							   " " + SiteAddress + "/recovery?guid=" + guid + " \n\n" +
+							   " " + SiteAddress + "/newpassword?guid=" + guid + " \n\n" +
 							   "Ссылка активна в течении 3-4 дней." + "\n\n" +
 							   "______ \n" +
 							   "С уважением, робот находящийся в рабстве у держателей сайта " + SiteAddress;

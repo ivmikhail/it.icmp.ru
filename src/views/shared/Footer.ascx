@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
 
 <div class="up-arrow">

@@ -34,7 +34,7 @@ namespace ITCommunity.Db {
         public string howMuchTimeHasPassed() {
             long ticks = DateTime.Now.AddTicks(-CreateDate.Ticks).Ticks;
             TimeSpan timespan = new TimeSpan(ticks);
-            string time = "";
+            string time = "добавлено ";
             if (timespan.Days != 0)
                 time += timespan.Days.ToString() + "д ";
             if (timespan.Hours != 0)

@@ -2,6 +2,7 @@
 using ITCommunity.Db;
 using System.Collections.Generic;
 using ITCommunity.Core;
+using System;
 
 namespace ITCommunity.Db.Tables {
 
@@ -12,7 +13,7 @@ namespace ITCommunity.Db.Tables {
                 int count = Config.GetInt("LastCommentsCount");
 
                 var result =
-                    from comment in db.Comments                
+                    from comment in db.Comments
                     orderby comment.CreateDate descending
                     select comment;
 
@@ -35,10 +36,16 @@ namespace ITCommunity.Db.Tables {
 
         public static Comment Add(Comment comment) {
             using (var db = Database.Connect()) {
-        
-                    db.Comments.InsertOnSubmit(comment);
-                    db.SubmitChanges();
 
+                comment.UserId = CurrentUser.User.Id;
+                comment.Ip = CurrentUser.Ip;
+                comment.CreateDate = DateTime.Now;
+
+                db.Comments.InsertOnSubmit(comment);
+                db.SubmitChanges();
+
+                comment.Post.CommentsCount++;
+                db.SubmitChanges();
 
                 return comment;
             }

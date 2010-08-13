@@ -13,6 +13,6 @@
         <% Html.RenderPartial("Periods"); %>
     </h1>
 
-    <% Html.RenderPartial("PostsList", Model); %>
+    <% Html.RenderPartial("List", Model); %>
 
 </asp:Content>

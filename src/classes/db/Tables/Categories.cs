@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using ITCommunity.Db;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+
 using ITCommunity.Core;
-using System.Web.Mvc;
+
 
 namespace ITCommunity.Db.Tables {
 
@@ -47,14 +47,15 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<SelectListItem> GetSelectCategories() {
-            var result = from category in GetAll()
-                         select new SelectListItem {
-                             Text = category.Name,
-                             Value = category.Id.ToString()
-                         };
+        public static int GetPostsCount(int id) {
+            using (var db = Database.Connect()) {
+                var result =
+                    from postcat in db.PostsCategories
+                    where postcat.CategoryId == id
+                    select postcat;
 
-            return result.ToList();
+                return result.Count();
+            }
         }
     }
 }

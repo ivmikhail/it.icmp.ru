@@ -10,7 +10,7 @@ namespace ITCommunity.Models {
 
     public class PostsModel : PaginatedModel {
 
-        protected List<Post> _posts;
+        protected List<Db.Post> _posts;
 
         public enum SortBy {
             Date,
@@ -36,7 +36,7 @@ namespace ITCommunity.Models {
             }
         }
 
-        public List<Post> List {
+        public List<Db.Post> List {
             get {
                 if (_posts == null) {
                     _posts = LoadList();
@@ -57,7 +57,7 @@ namespace ITCommunity.Models {
             PeriodDays = ParsePeriod(period);
         }
 
-        protected virtual List<Post> LoadList() {
+        protected virtual List<Db.Post> LoadList() {
             int period = (int)PeriodDays;
 
             switch (Sorting) {
@@ -87,7 +87,7 @@ namespace ITCommunity.Models {
 
         public Category Category { get; set; }
 
-        protected override List<Post> LoadList() {
+        protected override List<Db.Post> LoadList() {
             return Posts.GetPagedByCategory(Page, PerPage, Category.Id, ref ItemsCount);
         }
 
@@ -100,7 +100,7 @@ namespace ITCommunity.Models {
 
     public class FavoritePostsModel : PostsModel {
 
-        protected override List<Post> LoadList() {
+        protected override List<Db.Post> LoadList() {
             return Posts.GetPagedFavorite(Page, PerPage, ref ItemsCount);
         }
 

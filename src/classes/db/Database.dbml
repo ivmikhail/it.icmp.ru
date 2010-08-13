@@ -140,7 +140,7 @@
       <Association Name="Post_Comment" Member="Comments" ThisKey="Id" OtherKey="PostId" Type="Comment" />
       <Association Name="Post_Favorite" Member="Favorites" ThisKey="Id" OtherKey="PostId" Type="Favorite" />
       <Association Name="Post_PostsCategory" Member="PostsCategories" ThisKey="Id" OtherKey="PostId" Type="PostsCategory" />
-      <Association Name="User_Post" Member="User" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_Post" Member="Author" Storage="_User" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.PostsCategories" Member="PostsCategories">

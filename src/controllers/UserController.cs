@@ -12,10 +12,10 @@ using ITCommunity.Core;
 using ITCommunity.Db;
 using ITCommunity.Db.Tables;
 using ITCommunity.Models;
+using ITCommunity.Models.User;
 
 namespace ITCommunity.Controllers {
 
-    [HandleError]
     public class UserController : BaseController {
 
         public ActionResult Logout() {
@@ -40,7 +40,7 @@ namespace ITCommunity.Controllers {
                     }
                 }
                 else {
-                    ModelState.AddModelError("", "Вы неправильно ввели ник или пароль, попробуйте еще");
+                    ModelState.AddModelError("LoginPassword", "Error");
                 }
             }
 
@@ -48,12 +48,14 @@ namespace ITCommunity.Controllers {
         }
 
         public ActionResult Register() {
-            return View();
+            var model = new RegisterModel();
+            model.NewCaptcha();
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterModel model, int? captchaanswer, int? captchaquestion) {
-            if (ModelState.IsValid && Captcha.IsRightAnswer(captchaanswer, captchaquestion)) {
+        public ActionResult Register(RegisterModel model) {
+            if (ModelState.IsValid) {
 
                 var user = CurrentUser.Register(model.UserNick, model.Password, model.Email);
 
@@ -66,10 +68,12 @@ namespace ITCommunity.Controllers {
                 }
             }
 
+            model.NewCaptcha();
+
             return View(model);
         }
 
-        public ActionResult Recover() {
+        public ActionResult NewPassword() {
             var recovery = GetRecovery();
 
             if (recovery != null) {
@@ -83,7 +87,7 @@ namespace ITCommunity.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Recover(NewPasswordModel model) {
+        public ActionResult NewPassword(NewPasswordModel model) {
             var recovery = GetRecovery();
 
             if (recovery != null) {
@@ -91,7 +95,7 @@ namespace ITCommunity.Controllers {
                 if (ModelState.IsValid) {
 
                     var user = Users.Get(recovery.UserId);
-                    user.Password = CurrentUser.HashPass(model.NewPassword.Trim(), user.Nick);
+                    user.Password = CurrentUser.HashPass(model.Password.Trim(), user.Nick);
                     Users.Update(user);
 
                     var guid = Request.QueryString["id"];
@@ -116,12 +120,12 @@ namespace ITCommunity.Controllers {
             return null;
         }
 
-        public ActionResult Send() {
+        public ActionResult ForgotPassword() {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Send(NickModel model) {
+        public ActionResult ForgotPassword(NickModel model) {
             if (ModelState.IsValid) {
                 User user = Users.Get(model.UserNick);
                 if (user != null && user.Id > 0) {
@@ -135,7 +139,7 @@ namespace ITCommunity.Controllers {
                     }
                 }
                 else {
-                    ModelState.AddModelError("", "The user name not exist");
+                    ModelState.AddModelError("", "Пользователя с таким ником нет");
                 }
             }
             return View(model);

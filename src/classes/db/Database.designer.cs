@@ -3130,7 +3130,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_User", ThisKey="AuthorId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public User User
+		public User Author
 		{
 			get
 			{
@@ -3158,7 +3158,7 @@ namespace ITCommunity.Db
 					{
 						this._AuthorId = default(int);
 					}
-					this.SendPropertyChanged("User");
+					this.SendPropertyChanged("Author");
 				}
 			}
 		}
@@ -4554,13 +4554,13 @@ namespace ITCommunity.Db
 		private void attach_Posts(Post entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = this;
+			entity.Author = this;
 		}
 		
 		private void detach_Posts(Post entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = null;
+			entity.Author = null;
 		}
 		
 		private void attach_RatingLogs(RatingLog entity)
