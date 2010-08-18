@@ -171,6 +171,7 @@
     <Content Include="Content\js\highlight.pack.js" />
     <Content Include="Content\other\greetings.txt" />
     <Content Include="Content\other\greetings_personal.txt" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Views\Captcha\Edit.aspx" />
     <Content Include="Views\Captcha\List.aspx" />
@@ -331,16 +332,6 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="Content\img\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\trunk\IndexerLib\IndexerLib.csproj">
-      <Project>{C30A7E20-711F-4EFE-9751-51C80E05765F}</Project>
-      <Name>IndexerLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\trunk\indexer\indexer.csproj">
-      <Project>{F312A541-1B95-4027-AE0F-8F208078A40B}</Project>
-      <Name>indexer</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Classes\Db\Database.dbml.layout">
