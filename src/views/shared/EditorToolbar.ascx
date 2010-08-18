@@ -1,166 +1,9 @@
-﻿<%@ Control Language="C#" Inherits="ViewUserControl<string>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
-<script type="text/javascript">
-    $(function () {
-        var input = $('<%= Model %>');
+<div class="bbcode-info meta">
+    можно использовать <a class="tags-info-link" href="#" title="Узнать как можно форматировать текст">bbcode-теги</a>
 
-        var editor = new SimpleEditor(input, $$('.editor-toolbar a'));
-
-        editor.addCommands({
-            hr: {
-                shortcut: '1',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[hr]',
-                        after: ''
-                    });
-                }
-            },
-            bold: {
-                shortcut: '2',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[b]',
-                        after: '[/b]'
-                    });
-                }
-            },
-            underline: {
-                shortcut: '3',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[u]',
-                        after: '[/u]'
-                    });
-                }
-            },
-            italic: {
-                shortcut: '4',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[i]',
-                        after: '[/i]'
-                    });
-                }
-            },
-            strike: {
-                shortcut: '5',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[s]',
-                        after: '[/s]'
-                    });
-                }
-            },
-            code: {
-                shortcut: '6',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[code]',
-                        after: '[/code]'
-                    });
-                }
-            },
-            quote: {
-                shortcut: '7',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[quote]',
-                        after: '[/quote]'
-                    });
-                }
-            },
-            bulllist: {
-                shortcut: '8',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[list]',
-                        defaultMiddle: '[*]1 элемент[*]2 элемент[*]3 элемент',
-                        after: '[/list]'
-                    });
-                }
-            },
-            link: {
-                shortcut: '9',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[url]',
-                        after: '[/url]'
-                    }); return false;
-                }
-            },
-            email: {
-                shortcut: '0',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[email]',
-                        after: '[/email]'
-                    });
-                }
-            },
-            img: {
-                shortcut: 'q',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[img]',
-                        after: '[/img]'
-                    });
-                }
-            },
-            video: {
-                shortcut: 'e',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[video]',
-                        after: '[/video]'
-                    });
-                }
-            },
-            table: {
-                shortcut: 'e',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[table]',
-                        after: '[/table]'
-                    });
-                }
-            },
-            tr: {
-                shortcut: 'e',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[tr]',
-                        after: '[/tr]'
-                    });
-                }
-            },
-            td: {
-                shortcut: 'e',
-                command: function (input) {
-                    input.insertAroundCursor({
-                        before: '[td]',
-                        after: '[/td]'
-                    });
-                }
-            }
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    function toggle_tags() {
-        $('tagsinfo').setStyle('display', $('tagsinfo').getStyle('display') == "none" ? "" : "none");
-        return false;
-    }
-</script>
-
-<div id="bbcode-info" class="note">
-	Можно использовать <a id="tags-info-link" href="#" onclick="javascript: return toggle_tags();" title="Узнать как можно форматировать текст">bbcode-теги</a>
-
-	<div id="tagsinfo" style="display:none;">
-		<a id="tags-info-close" href="#" onclick="javascript: return toggle_tags();" title="Убрать с глаз долой, сами с усами">закрыть</a>
-
-		<h3>Теги для форматирования</h3>
+	<div class="tags-info hide">
 
 		<dl class="left-block">
 			<dt>
@@ -203,8 +46,8 @@
 			</dt>
 			<dd>
 				внутри тега [url] помещайте ссылки, а внутри [email] адрес электронной почты; 
-				так же [url] можно использовать в виде:
 				<br />
+				так же [url] можно использовать в виде:
 				<br />
 				[url=http://example.com]пример[/url],
 				<br />
@@ -217,7 +60,7 @@
 				[quote][/quote]
 			</dt>
 			<dd>
-				внутри тега [code] можно помещать программный код(подстветка попытается включиться автоматически); для выделения цитат используйте [quote]
+				внутри тега [code] можно помещать программный код (подстветка попытается включиться автоматически); для выделения цитат используйте [quote]
 			</dd>
 		</dl>
 
@@ -295,10 +138,11 @@
 			</dd>
 
 		</dl>
+
 		<div class="clear"></div>
 	</div>
 </div>
-
+<%-- 
 <div class="editor-toolbar">
 	<a title="Разделитель (ctrl+1)"       rel="hr"        >hr</a>
 	-
@@ -321,3 +165,4 @@
 	<a title="Строка в таблице (ctrl+[)" rel="tr"    >tr</a>
 	<a title="Поле таблицы (ctrl+])"     rel="td"    >td</a>
 </div>
+--%>

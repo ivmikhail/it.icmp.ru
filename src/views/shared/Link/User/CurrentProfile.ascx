@@ -3,8 +3,8 @@
 
 <%= Html.ActionLink(
     CurrentUser.User.Nick,
-    "view",
+    "profile",
     "user",
-    new { nick = CurrentUser.User.Nick },
+    null,
     new { title = "Мое" }
 )%>

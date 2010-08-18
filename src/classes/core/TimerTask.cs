@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 
+
 namespace ITCommunity.Core {
 
     public class TimerTask {
@@ -8,10 +9,12 @@ namespace ITCommunity.Core {
         private readonly Timer _timer;
         private Action _action;
 
-        public TimerTask(double interval, Action action) {
+        public TimerTask(double minutes, Action action) {
             _action = action;
 
-            _timer = new Timer(interval);
+            var milliseconds = minutes * 60 * 1000;
+
+            _timer = new Timer(milliseconds);
             _timer.Elapsed += new ElapsedEventHandler(this.Handler);
             _timer.Enabled = true;
         }

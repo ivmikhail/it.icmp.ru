@@ -5,13 +5,12 @@
     <%= CurrentUser.User.Nick %>, ваши избранные посты
 </asp:Content>
 
-
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
     <h1>
         <%= CurrentUser.User.Nick %>, ваши избранные посты
     </h1>
 
-    <% Html.RenderPartial("../Posts/List", Model); %>
+    <% Html.RenderPartial("../Post/List", Model); %>
 
 </asp:Content>

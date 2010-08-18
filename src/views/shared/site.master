@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -18,16 +19,14 @@
     </div>
 
     <div id="menu">
-        <div class="left">
-            <asp:ContentPlaceHolder ID="UserMenuContent" runat="server">
-                <% Html.RenderPartial("UserMenu"); %>
-            </asp:ContentPlaceHolder>
-        </div>
+        <asp:ContentPlaceHolder ID="MenuContent" runat="server">
+            <% Html.RenderPartial("Menu"); %>
+        </asp:ContentPlaceHolder>
 
-        <div class="right search-form">
-            <% using (Html.BeginForm("search", "posts", FormMethod.Get)) { %>
-                <input class="input-text" type="text" name="q" />
-                <input class="input-submit" type="submit" value="поиск" />
+        <div class="search-form">
+            <% using (Html.BeginForm("search", "post", FormMethod.Get)) { %>
+                <input type="text" name="q" />
+                <input type="submit" value="поиск" />
             <% } %>
         </div>
     </div>

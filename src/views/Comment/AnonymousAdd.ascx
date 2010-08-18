@@ -1,11 +1,9 @@
-﻿<%@ Control Language="C#" Inherits="ViewUserControl<ITCommunity.Models.Comment.AnonymousAddModel>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<AnonymousCommentAddModel>" %>
 
 
 <h3 id="add-comment">Вы - anonymous, <% Html.RenderPartial("Link/User/Login"); %>?</h3>
 
-<%--
-    <% Html.RenderPartial("EditorToolbar", "adding-comment"); %>
---%>
+<% Html.RenderPartial("EditorToolbar"); %>
 
 <% using (Html.BeginForm("anonymousadd", "comment")) { %>
 
@@ -13,7 +11,8 @@
 
     <% Html.RenderPartial("ITCaptcha", Model); %>
 
-    <%= Html.TextAreaFor(m => m.Text)%>
+    <%= Html.TextAreaFor(m => m.Text) %>
+    <%= Html.ValidationMessageFor(m => m.Text) %>
 
     <input type="submit" value="добавить" />                
 

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
+
 using ITCommunity.Core;
+using ITCommunity.Utils;
 using ITCommunity.Db.Tables;
-using ITCommunity.Util;
-using System.Web.Mvc;
+
 
 namespace ITCommunity.Db {
 
@@ -15,7 +15,7 @@ namespace ITCommunity.Db {
 
         public List<Category> Categories { get; set; }
 
-        public bool IsFavorite { get; set; }
+        public bool IsFavorite { get; private set; }
 
         /// <summary>
         /// Полностью форматированное в безопасный хтмл описание
@@ -39,10 +39,15 @@ namespace ITCommunity.Db {
         }
 
         partial void OnLoaded() {
+            // будет думать что Author измененился и поэтому не сможет увеличить 
+            // количество просмотров. Поэтому не использую это:
+            // Author = Users.Get(AuthorId); 
             var loadAuthor = Author;
+            
+            // а вот тут уже другое, т.к. Categories - не сгенерированное свойство
             Categories = Tables.Categories.GetByPost(Id);
-            if (CurrentUser.isAuth) {
-                IsFavorite = Posts.IsFavorite(Id);
+            if (CurrentUser.IsAuth) {
+                IsFavorite = Tables.Favorites.IsFavorite(Id);
             }
         }
     }

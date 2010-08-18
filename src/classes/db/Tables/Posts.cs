@@ -1,68 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using ITCommunity.Core;
-using ITCommunity.Db;
 
 namespace ITCommunity.Db.Tables {
 
     public static class Posts {
 
+        public static Post Add(Post post) {
+            using (var db = Database.Connect()) {
+                db.Posts.InsertOnSubmit(post);
+                db.SubmitChanges();
+
+                post.Author.PostsCount++;
+                db.SubmitChanges();
+
+                return post;
+            }
+        }
+
+        public static void Delete(int id) {
+            using (var db = Database.Connect()) {
+                var post = (
+                    from pst in db.Posts
+                    where pst.Id == id
+                    select pst
+                ).SingleOrDefault();
+
+                post.Author.PostsCount--;
+                db.SubmitChanges();
+
+                db.Posts.DeleteOnSubmit(post);
+                db.SubmitChanges();
+            }
+        }
+
+        public static void Update(Post editedPost) {
+            using (var db = Database.Connect()) {
+                var post = (
+                    from pst in db.Posts
+                    where pst.Id == editedPost.Id
+                    select pst
+                ).Single();
+
+                post.Description = editedPost.Description;
+                post.Source = editedPost.Source;
+                post.Text = editedPost.Text;
+                post.Title = editedPost.Title;
+                post.IsAttached = editedPost.IsAttached;
+                post.PostsCategories = editedPost.PostsCategories;
+
+                db.SubmitChanges();
+            }
+        }
+
+        public static void IncViews(int id) {
+            using (var db = Database.Connect()) {
+                var post = (
+                    from pst in db.Posts
+                    where pst.Id == id
+                    select pst
+                ).Single();
+
+                post.ViewsCount++;
+                db.SubmitChanges();
+            }
+        }
+
         /// <summary>
-        /// Забираем посты постранично, с учетом даты, аттачей и категории
+        /// Получаем пост из базы по id
         /// </summary>
-        /// <param name="page">Страница которая нам нужна</param>
-        /// <param name="count">Кол-во постов на страницу</param>
-        /// <param name="cat_id">id категории</param>
-        public static List<Post> GetPagedByCategory(int page, int count, int categoryId, ref int postsCount) {
+        /// <param name="id">id поста</param>
+        /// <returns>Пост</returns>
+        public static Post Get(int id) {
             using (var db = Database.Connect()) {
-                var postsIds =
-                    from postsCategory in db.PostsCategories
-                    where postsCategory.CategoryId == categoryId
-                    select postsCategory.PostId;
+                var post = (
+                    from pst in db.Posts
+                    where pst.Id == id
+                    select pst
+                ).SingleOrDefault();
 
-                var posts =
-                    from post in db.Posts
-                    orderby post.CreateDate descending
-                    where postsIds.Contains(post.Id)
-                    select post;
+                if (post != null) {
+                    post.Comments.Load();
+                }
 
-                postsCount = posts.Count();
-
-                var result = posts.Skip((page - 1) * count).Take(count);
-
-                return result.ToList();
-            }
-        }
-
-
-        public static List<Post> GetPagedFavorite(int page, int count, ref int postsCount) {
-            using (var db = Database.Connect()) {
-                var posts =
-                    from post in db.Posts
-                    let favoriteId = (from favorite in db.Favorites where favorite.UserId == CurrentUser.User.Id select favorite.PostId)
-                    orderby post.CreateDate descending
-                    where favoriteId.Contains(post.Id)
-                    select post;
-
-                postsCount = posts.Count();
-
-                var result = posts.Skip((page - 1) * count).Take(count);
-
-                return result.ToList();
-            }
-        }
-
-        public static bool IsFavorite(int postId) {
-            using (var db = Database.Connect()) {
-                var favorite =
-                    from fav in db.Favorites
-                    where
-                        fav.PostId == postId &&
-                        fav.UserId == CurrentUser.User.Id
-                    select fav;
-
-                return favorite.Any();
+                return post;
             }
         }
 
@@ -71,198 +94,192 @@ namespace ITCommunity.Db.Tables {
         /// </summary>
         /// <param name="page">Страница которая нам нужна</param>
         /// <param name="count">Кол-во постов на страницу</param>
-        public static List<Post> GetPaged(int page, int count, ref int postsCount, int days) {
+        /// <param name="postsCount">Общее количество постов</param>
+        /// <returns>Список постов для данной страницы</returns>
+        public static List<Post> GetPaged(int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
+                var attacheds = (
+                    from pst in db.Posts
+                    where pst.IsAttached
+                    orderby pst.CreateDate descending
+                    select pst
+                ).ToList();
 
-                var allPosts =
+                var disattcheds =
+                    from pst in db.Posts
+                    where pst.IsAttached == false
+                    orderby pst.CreateDate descending
+                    select pst;
+
+                // учитываем прикрипленные посты
+                var disattchedsPaged = disattcheds.Paged(page, count - attacheds.Count, ref totalCount);
+                var attachedsPages = attacheds.Count * totalCount / (count - attacheds.Count);
+                totalCount = totalCount + attachedsPages;
+
+                var posts = attacheds;
+                posts.AddRange(disattchedsPaged);
+
+                return posts;
+            }
+        }
+
+        /// <summary>
+        /// Забираем посты постранично, с учетом даты, аттачей и категории
+        /// </summary>
+        /// <param name="page">Страница которая нам нужна</param>
+        /// <param name="count">Кол-во постов на страницу</param>
+        /// <param name="categoryId">id категории</param>
+        /// <param name="postsCount">Общее количество постов категории</param>
+        /// <returns>Список постов категории для данной страницы</returns>
+        public static List<Post> GetPagedByCategory(int page, int count, int categoryId, ref int totalCount) {
+            using (var db = Database.Connect()) {
+                var attacheds = (
+                    from pst in db.Posts
+                    from pCat in db.PostsCategories
+                    where
+                        pCat.CategoryId == categoryId &&
+                        pCat.PostId == pst.Id &&
+                        pst.IsAttached
+                    orderby pst.CreateDate descending
+                    select pst
+                ).ToList();
+
+                var disattcheds =
+                    from pst in db.Posts
+                    from pCat in db.PostsCategories
+                    where
+                        pCat.CategoryId == categoryId &&
+                        pCat.PostId == pst.Id &&
+                        pst.IsAttached == false
+                    orderby pst.CreateDate descending
+                    select pst;
+
+                var disattchedsPaged = disattcheds.Paged(page, count - attacheds.Count, ref totalCount);
+
+                var posts = attacheds;
+                posts.AddRange(disattchedsPaged);
+
+                return posts;
+            }
+        }
+
+        public static List<Post> GetPagedFavorite(int page, int count, ref int totalCount) {
+            using (var db = Database.Connect()) {
+                var posts =
                     from post in db.Posts
+                    from favorite in db.Favorites
+                    where
+                        favorite.UserId == CurrentUser.User.Id &&
+                        favorite.PostId == post.Id
                     orderby post.CreateDate descending
                     select post;
 
-                if (days != 0) {
-                    var date = DateTime.Now.AddDays(-days);
-                    allPosts =
-                        from post in db.Posts
-                        where post.CreateDate >= date
-                        orderby post.CreateDate descending
-                        select post;
-                }
-
-                postsCount = allPosts.Count();
-                var posts = allPosts.Skip((page - 1) * count).Take(count);
-
-                return posts.ToList();
+                return posts.Paged(page, count, ref totalCount);
             }
         }
 
-
         /// <summary>
-        /// Получаем пост из базы по id
+        /// Забираем посты пользователя постранично, с учетом даты
         /// </summary>
-        /// <param name="id">id</param>
-        public static Post Get(int id, bool incViews) {
+        /// <param name="authorId">id пользователя</param>
+        /// <param name="page">Страница которая нам нужна</param>
+        /// <param name="count">Кол-во постов на страницу</param>
+        /// <param name="postsCount">Общее количество постов</param>
+        /// <returns>Список постов для данной страницы</returns>
+        public static List<Post> GetPagedByUser(int authorId, int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
-                var result = (
+                var posts =
                     from post in db.Posts
-                    where post.Id == id
-                    select post
-                ).First();
+                    where post.AuthorId == authorId
+                    orderby post.CreateDate descending
+                    select post;
 
-                if (result != null && incViews) {
-                    result.ViewsCount += 1;
-                    result.Comments.Load();
-
-                    db.SubmitChanges();
-                }
-
-                return result;
+                return posts.Paged(page, count, ref totalCount);
             }
         }
 
-
-        public static Post Get(int id) {
-            return Get(id, false);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static List<Post> GetPagedPopular(int page, int count, ref int postsCount, int days) {
+        public static List<Post> GetPagedPopulars(int page, int count, ref int postsCount, int days) {
             using (var db = Database.Connect()) {
-                var result = from post in db.Posts
-                             orderby post.ViewsCount descending
-                             select post;
+                var posts =
+                    from post in db.Posts
+                    orderby post.ViewsCount descending
+                    select post;
 
-                if (days != 0) {
+                if (days > 0) {
                     var date = DateTime.Now.AddDays(-days);
 
-                    result =
+                    posts =
                         from post in db.Posts
                         where post.CreateDate >= date
                         orderby post.ViewsCount descending
                         select post;
                 }
-                postsCount = result.Count();
 
-                var posts = result.Skip((page - 1) * count).Take(count);
-
-                return posts.ToList();
+                return posts.Paged(page, count, ref postsCount);
             }
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static List<Post> GetPagedDiscussible(int page, int count, ref int postsCount, int days) {
+        public static List<Post> GetTopPopulars(int count, int days) {
             using (var db = Database.Connect()) {
-                var result =
+                var date = DateTime.Now.AddDays(-days);
+
+                var posts =
+                    from post in db.Posts
+                    where post.CreateDate >= date
+                    orderby post.ViewsCount descending
+                    select post;
+
+                return posts.Take(count).ToList();
+            }
+        }
+
+        public static List<Post> GetTopPopulars() {
+            int days = Config.GetInt("PopularPostsDays");
+            int count = Config.GetInt("PopularPostsCount");
+
+            return AppCache.Get("PopularPosts", () => GetTopPopulars(count, days));
+        }
+
+        public static List<Post> GetPagedDiscussibles(int page, int count, ref int totalCount, int days) {
+            using (var db = Database.Connect()) {
+                var posts =
                     from post in db.Posts
                     orderby post.CommentsCount descending
                     select post;
 
                 if (days != 0) {
                     var date = DateTime.Now.AddDays(-days);
-                    result =
+
+                    posts =
                         from post in db.Posts
                         where post.CreateDate >= date
                         orderby post.CommentsCount descending
                         select post;
                 }
-                postsCount = result.Count();
 
-                var posts = result.Skip((page - 1) * count).Take(count);
-
-                return posts.ToList();
+                return posts.Paged(page, count, ref totalCount);
             }
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static List<Post> GetTopPopular() {
+        public static List<Post> GetTopDiscussibles(int count, int days) {
             using (var db = Database.Connect()) {
-                int days = Config.GetInt("PopularsDays");
-                int count = Config.GetInt("PopularsCount");
-
                 var date = DateTime.Now.AddDays(-days);
 
-                var result =
-                    from post in db.Posts
-                    where post.CreateDate >= date
-                    orderby post.ViewsCount descending
-                    select post;
-
-                return result.Take(count).ToList();
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static List<Post> GetTopDiscussible() {
-            using (var db = Database.Connect()) {
-                int days = Config.GetInt("DiscussionsDays");
-                int count = Config.GetInt("DiscussionsCount");
-
-                var date = DateTime.Now.AddDays(-days);
-
-                var result =
+                var posts =
                     from post in db.Posts
                     where post.CreateDate >= date
                     orderby post.CommentsCount descending
                     select post;
 
-                return result.Take(count).ToList();
+                return posts.Take(count).ToList();
             }
         }
 
+        public static List<Post> GetTopDiscussibles() {
+            int days = Config.GetInt("DiscussiblePostsDays");
+            int count = Config.GetInt("DiscussiblePostsCount");
 
-        public static Post Add(Post post) {
-            using (var db = Database.Connect()) {
-                post.CreateDate = DateTime.Now;
-
-                db.Posts.InsertOnSubmit(post);
-
-                db.SubmitChanges();
-
-                var categories = from cat in post.Categories
-                                 select new PostsCategory { PostId = post.Id, CategoryId = cat.Id };
-
-                db.PostsCategories.InsertAllOnSubmit(categories);
-
-                db.SubmitChanges();
-
-                return post;
-            }
-        }
-
-        public static void Update(Post editedPost) {
-            using (var db = Database.Connect()) {
-                var post = (
-                    from p in db.Posts
-                    where p.Id == editedPost.Id
-                    select p
-                ).Single();
-
-                post.AuthorId = editedPost.AuthorId;
-                post.Description = editedPost.Description;
-                post.Source = editedPost.Source;
-                post.Text = editedPost.Text;
-                post.Title = editedPost.Title;
-
-                post.PostsCategories.Clear();
-
-                var categories = from cat in editedPost.Categories
-                                 select new PostsCategory { PostId = post.Id, CategoryId = cat.Id };
-
-                db.PostsCategories.InsertAllOnSubmit(categories);
-
-                db.SubmitChanges();
-            }
+            return AppCache.Get("DiscussiblePosts", () => GetTopDiscussibles(count, days));
         }
     }
-
 }

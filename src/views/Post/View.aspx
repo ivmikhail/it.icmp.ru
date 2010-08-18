@@ -8,70 +8,85 @@
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="post">
+    <div class="block">
         <h2>
             <%= Model.TitleFormatted %>
         </h2>
 
-        <div class="post-description">
+        <div class="text">
             <%= Model.DescriptionFormatted %>
             <hr id="cut" />
             <%= Model.TextFormatted %>
         </div>
 
-         <div class="post-meta">
-            <div class="menu">
-                <ul class="left">
-                    <li><span class="date"><%= Model.CreateDate.ToString("dd MMMM yyyy, HH:mm") %></span></li>
-                    <li><% Html.RenderPartial("Link/User/Profile", Model.Author); %></li>
-                </ul>
+        <div class="meta">
+            <ul class="left-list">
+                <li class="info">
+                    <%= Model.CreateDate.ToString("dd MMMM yyyy, HH:mm") %>
+                </li>
+                <li>
+                    <% Html.RenderPartial("Link/User/Profile", Model.Author); %>
+                </li>
+            </ul>
 
-                <ul class="right">
-                    <li>просмотров: <b class="views-count">~<%= Model.ViewsCount%></b></li>
-                    <li>рейтинг: <b class="rating-none">0</b></li>
-                </ul>
-            </div>
+            <ul class="right-list">
+                <li>
+                    просмотров: <b class="info">~<%= Model.ViewsCount%></b>
+                </li>
+                <li>
+                    рейтинг: <b class="rating-none">0</b>
+                </li>
+            </ul>
 
-            <div class="menu">
-                <ul class="left">
-                    <% foreach (var category in Model.Categories) { %>
-                        <li><% Html.RenderPartial("Link/Category/Posts", category); %></li>
+            <ul class="left-list">
+                <% foreach (var category in Model.Categories) { %>
+                    <li>
+                        <% Html.RenderPartial("Link/Category/Posts", category); %>
+                    </li>
+                <% } %>
+            </ul>
+
+            <ul class="right-list">
+                <% if (CurrentUser.IsAdmin) { %>
+                    <li>
+                        <% Html.RenderPartial("Link/Post/Delete", Model); %>
+                    </li>
+                <% } %>
+                <% if (CurrentUser.IsAdmin || CurrentUser.User.Id == Model.AuthorId) { %>
+                    <li>
+                        <% Html.RenderPartial("Link/Post/Edit", Model); %>
+                    </li>
+                <% } %>
+                <% if (CurrentUser.IsAuth) { %>
+                    <% if (Model.IsFavorite) { %>
+                        <li>
+                            <% Html.RenderPartial("Link/Favorite/Delete", Model); %>
+                        </li>
+                    <% } else { %>
+                        <li>
+                            <% Html.RenderPartial("Link/Favorite/Add", Model); %>
+                        </li>
                     <% } %>
-                </ul>
+                <% } %>
+                <% if (!string.IsNullOrEmpty(Model.Source)) { %>
+                    <li>
+                        <% Html.RenderPartial("Link/Post/Source", Model); %>
+                    </li>
+                <% } %>
+            </ul>
 
-                <ul class="right">
-                    <% if (CurrentUser.isAuth) {
-                        if (CurrentUser.User.Id == Model.AuthorId) { %>
-                            <li>
-                                <% Html.RenderPartial("Link/Post/Edit", Model); %>
-                            </li>
-                        <% }
-
-                        if (Model.IsFavorite) { %>
-                            <li>
-                                <% Html.RenderPartial("Link/Favorite/Delete", Model); %>
-                            </li>
-                        <% } else { %>
-                            <li>
-                                <% Html.RenderPartial("Link/Favorite/Add", Model); %>
-                            </li>
-                        <%} %>
-                    <% } %>
-                    <% if (Model.Source != "") { %>
-                        <li><% Html.RenderPartial("Link/Post/Source", Model); %></li>
-                    <% } %>
-                </ul>
-            </div>
         </div>
         <div class="clear"></div>
     </div>
 
-    <% Html.RenderPartial("Comments", Model.Comments.ToList()); %>
+    <h2 id="comments">Комментарии (<%= Model.CommentsCount %>)</h2>
 
-    <% if (CurrentUser.isAuth) { %>
-        <% Html.RenderPartial("../Comment/Add", new ITCommunity.Models.Comment.AddModel(Model.Id)); %>
+    <% Html.RenderPartial("../Comment/List", Model.Comments.ToList()); %>
+
+    <% if (CurrentUser.IsAuth) { %>
+        <% Html.RenderPartial("../Comment/Add", new CommentEditModel { PostId = Model.Id }); %>
     <% } else { %>
-        <% Html.RenderPartial("../Comment/AnonymousAdd", new ITCommunity.Models.Comment.AnonymousAddModel(Model.Id)); %>
+        <% Html.RenderPartial("../Comment/AnonymousAdd", new AnonymousCommentAddModel { PostId = Model.Id }); %>
     <% } %>
 
 </asp:Content>

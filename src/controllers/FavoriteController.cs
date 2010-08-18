@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ITCommunity.Models;
+﻿using System.Web.Mvc;
+
+using ITCommunity.Core;
 using ITCommunity.Db;
 using ITCommunity.Db.Tables;
-using ITCommunity.Core;
+using ITCommunity.Models;
+
 
 namespace ITCommunity.Controllers {
 
     public class FavoriteController : BaseController {
 
+        [Authorize]
         public ActionResult Posts(int? page) {
             var model = new FavoritePostsModel(page);
 
             return View(model);
         }
 
+        [Authorize]
         public ActionResult Add(int? id) {
-            if (id == null) {
+            if (id == 0) {
                 return NotFound();
             }
 
@@ -30,18 +30,20 @@ namespace ITCommunity.Controllers {
             Favorite favorite = new Favorite();
             favorite.PostId = id.Value;
             favorite.UserId = CurrentUser.User.Id;
-            favorite.CreateDate = DateTime.Now;
 
-            Favorities.Add(favorite);
+            Favorites.Add(favorite);
 
             return RedirectToAction("posts", "favorite");
         }
 
+        [Authorize]
         public ActionResult Delete(int? id) {
-
-            if (id != null && id > 0) {
-                Favorities.Delete(id.Value, CurrentUser.User.Id);
+            if (id == 0) {
+                return NotFound();
             }
+
+            Favorites.Delete(id.Value, CurrentUser.User.Id);
+
             return RedirectToAction("posts", "favorite");
         }
     }

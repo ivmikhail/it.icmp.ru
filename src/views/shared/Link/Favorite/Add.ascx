@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<Post>" %>
 
 
 <%= Html.ActionLink(

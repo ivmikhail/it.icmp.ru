@@ -3,20 +3,36 @@
 
 <noscript>
     Внимание! У вашего браузера отключен javascript, корректная работа сайта не гарантируется.
-    <a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654" target="_blank">Узнать как включить >>></a>
+    <a href="http://adsense.google.com/support/bin/answer.py?hl=ru&amp;answer=12654">Узнать как включить &rarr;</a>
 </noscript>
 
-
-<div class="down-arrow">
-    <a href="#footer" title="Посмотреть что внизу">&darr;</a>
-</div>
-
+<a href="#footer" class="down-arrow" title="Посмотреть что внизу">&darr;</a>
 
 <div class="top-menu">
-    <ul class="right">
-        <% if (CurrentUser.isAuth) { %>
+
+    <ul class="left-list">
+        <li>
+            <% Html.RenderPartial("Link/Post/List"); %>
+        </li>
+        <% if (CurrentUser.IsAuth) { %>
             <li>
-                <%= Greeting.Get() %>, <% Html.RenderPartial("Link/User/CurrentProfile"); %></a>!
+                <% Html.RenderPartial("Link/Message/CurrentUnreads"); %>
+            </li>
+<%--
+            <li>
+                <% Html.RenderPartial("Link/User/Settings"); %>
+            </li>
+--%>
+            <% if (CurrentUser.IsAdmin) { %>
+               <% Html.RenderPartial("Link/Admin/Index"); %>
+            <% } %>
+        <% } %>
+    </ul>
+
+    <ul class="right-list">
+        <% if (CurrentUser.IsAuth) { %>
+            <li>
+                <%= Greeting.Get() %>, <% Html.RenderPartial("Link/User/CurrentProfile"); %>
             </li>
             <li>
                 <% Html.RenderPartial("Link/User/Logout"); %>
@@ -30,10 +46,9 @@
 
 </div>
 
-
 <div class="header-text">
-    <a href="/" title="Здесь мог бы быть твой текст">
-        <span class="it">IT</span><span class="community">.Community;</span>
-        <span class="text">// <%= Html.Encode(Headers.GetRandom().Text) %></span>
+    <a href="/" title="IT Community">
+        <span class="it">IT</span><span class="community">.Community(beta);</span>
+        <span class="text">// <%= Headers.GetRandom().Text %></span>
     </a>
 </div>

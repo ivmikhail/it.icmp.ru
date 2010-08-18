@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using ITCommunity.Core;
-using ITCommunity.Db;
 using System.Linq;
+
+using ITCommunity.Core;
 
 namespace ITCommunity.Db.Tables {
 
     public static class Headers {
 
-        public const string ACTUALS_KEY = "Headers";
+        public const string CACHE_KEY = "ActualHeaders";
 
-        private static Random _random = new Random();
+        public static List<Header> Actuals {
+            get { return AppCache.Get(CACHE_KEY, GetActuals); }
+        }
 
-        public static Header Add(int userId, string text, double showingHours) {
+        public static Header Add(Header header) {
             using (var db = Database.Connect()) {
-                var endDate = DateTime.Now.AddHours(showingHours);
-
-                var header = new Header { UserId = userId, Text = text, EndDate = endDate };
 
                 db.Headers.InsertOnSubmit(header);
+                db.SubmitChanges();
+
+                AppCache.Remove(CACHE_KEY);
 
                 return header;
             }
@@ -27,39 +28,79 @@ namespace ITCommunity.Db.Tables {
 
         public static void Delete(int id) {
             using (var db = Database.Connect()) {
-                var deletingHeader = (
-                    from header in db.Headers
-                    where header.Id == id
-                    select header
+                var header = (
+                    from hdr in db.Headers
+                    where hdr.Id == id
+                    select hdr
                 ).Single();
 
-                db.Headers.DeleteOnSubmit(deletingHeader);
-
+                db.Headers.DeleteOnSubmit(header);
                 db.SubmitChanges();
+
+                AppCache.Remove(CACHE_KEY);
+            }
+        }
+
+        public static void Stop(int id) {
+            using (var db = Database.Connect()) {
+                var header = (
+                    from hdr in db.Headers
+                    where hdr.Id == id
+                    select hdr
+                ).Single();
+
+                header.EndDate = DateTime.Now;
+                db.SubmitChanges();
+
+                AppCache.Remove(CACHE_KEY);
+            }
+        }
+
+        public static void Show(int id) {
+            using (var db = Database.Connect()) {
+                var header = (
+                    from hdr in db.Headers
+                    where hdr.Id == id
+                    select hdr
+                ).Single();
+
+                header.EndDate = DateTime.Now.AddHours(Config.GetDouble("HeaderShowingHours"));
+                db.SubmitChanges();
+
+                AppCache.Remove(CACHE_KEY);
             }
         }
 
         public static List<Header> GetActuals() {
             using (var db = Database.Connect()) {
-                var result =
-                    from header in db.Headers
-                    where header.EndDate > DateTime.Now
-                    select header;
+                var headers =
+                    from hea in db.Headers
+                    where hea.EndDate > DateTime.Now
+                    select hea;
 
-                return result.ToList();
+                return headers.ToList();
             }
         }
 
         public static Header GetRandom() {
-            var actuals = AppCache.Get(ACTUALS_KEY, () => GetActuals());
-
-            if (actuals.Count == 0) {
+            if (Actuals.Count == 0) {
                 var header = new Header();
                 header.Text = string.Format(Config.Get("HeaderDefaultFormat"), CurrentUser.User.Nick);
                 return header;
             }
 
-            return actuals[_random.Next(actuals.Count)];
+            return Actuals.Random();
+        }
+
+        public static List<Header> GetPaged(int page, int count, ref int totalCount) {
+            using (var db = Database.Connect()) {
+                var headers =
+                    from hdr in db.Headers
+                    orderby hdr.EndDate descending
+                    select hdr;
+
+                return headers.Paged(page, count, ref totalCount);
+            }
         }
     }
 }

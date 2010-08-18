@@ -1,36 +1,91 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+
+using ITCommunity.Core;
+
 
 namespace ITCommunity.Db.Tables {
 
     public static class Captchas {
 
-        private static Random _rand = new Random();
-        
-        public static Captcha GetRandom() {
+        public const string CACHE_KEY = "Captchas";
+
+        public static List<Captcha> All {
+            get { return AppCache.Get(CACHE_KEY, GetAll); }
+        }
+
+        public static Captcha Add(Captcha captcha) {
             using (var db = Database.Connect()) {
-                var captchas =
-                    from captcha in db.Captchas
-                    select captcha;
+                db.Captchas.InsertOnSubmit(captcha);
+                db.SubmitChanges();
 
-                var count = captchas.Count();
+                AppCache.Remove(CACHE_KEY);
+                return captcha;
+            }
+        }
 
-                var result = captchas.Skip(_rand.Next(count)).First();
+        public static void Delete(int id) {
+            using (var db = Database.Connect()) {
+                var captcha = (
+                    from cap in db.Captchas
+                    where cap.Id == id
+                    select cap
+                ).SingleOrDefault();
 
-                return result;
+                db.Captchas.DeleteOnSubmit(captcha);
+                db.SubmitChanges();
+
+                AppCache.Remove(CACHE_KEY);
+            }
+        }
+
+        public static void Update(Captcha editedCaptcha) {
+            using (var db = Database.Connect()) {
+                var captcha = (
+                    from cap in db.Captchas
+                    where cap.Id == editedCaptcha.Id
+                    select cap
+                ).SingleOrDefault();
+
+                captcha.Question = editedCaptcha.Question;
+                captcha.CaptchaAnswers = editedCaptcha.CaptchaAnswers;
+
+                db.SubmitChanges();
+
+                AppCache.Remove(CACHE_KEY);
+            }
+        }
+
+        public static List<Captcha> GetAll() {
+            using (var db = Database.Connect()) {
+                return db.Captchas.ToList();
             }
         }
 
         public static Captcha Get(int id) {
+            var captcha = (
+                from cap in All
+                where cap.Id == id
+                select cap
+            ).SingleOrDefault();
+
+            return captcha;
+        }
+
+        public static Captcha GetRandom() {
+            return All.Random();
+        }
+
+        public static bool IsRightAnswer(int answerId) {
             using (var db = Database.Connect()) {
+                var answer = (
+                    from ans in db.CaptchaAnswers
+                    where ans.Id == answerId
+                    select ans
+                ).SingleOrDefault();
 
-                var result = (
-                    from captcha in db.Captchas
-                    where captcha.Id == id
-                    select captcha
-                ).First();
-
-                return result;
+                return (answer != null) ? answer.IsRight : false;
             }
         }
     }

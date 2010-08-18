@@ -1,0 +1,14 @@
+.pagination {
+    color: #999999;
+    font-size: 1.5em;
+    padding: 2em 0;
+}
+
+.pagination li {
+    display: inline;
+    margin-right: 1em;
+}
+
+.pagination .current-page {
+    color: #333333;
+}

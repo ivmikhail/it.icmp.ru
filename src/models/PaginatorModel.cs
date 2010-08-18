@@ -1,15 +1,10 @@
-﻿using ITCommunity.Util;
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
-using System.Web;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿
 
 namespace ITCommunity.Models {
 
     public class PaginatedModel {
 
-        protected int ItemsCount;
+        public int TotalCount;
 
         public int Page { get; set; }
 
@@ -25,7 +20,7 @@ namespace ITCommunity.Models {
 
         public bool IsEnd {
             get {
-                return PagesCount - Page <= PagesCountOnPage;
+                return (Page - 1) / (PagesCountOnPage - 1) == PagesCount / (PagesCountOnPage - 1  );
             }
         }
 
@@ -49,7 +44,7 @@ namespace ITCommunity.Models {
 
         public int PagesCount {
             get {
-                return ItemsCount / PerPage;
+                return TotalCount / PerPage;
             }
         }
 

@@ -5,11 +5,10 @@
     Посты категории: <%= Model.Category.Name %>
 </asp:Content>
 
-
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
     <h1>Посты категории: <%= Model.Category.Name %></h1>
 
-    <% Html.RenderPartial("../Posts/List", Model); %>
+    <% Html.RenderPartial("../Post/List", Model); %>
 
 </asp:Content>

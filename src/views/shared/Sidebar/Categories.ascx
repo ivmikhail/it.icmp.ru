@@ -7,6 +7,8 @@
     <% foreach (var category in Categories.GetAll()) { %>        
         <li>
             <% Html.RenderPartial("Link/Category/Posts", category); %>
+            - количество постов = 
+            <span class="info"><%= category.PostsCount %></span>
         </li>
     <% } %>
 </ul>

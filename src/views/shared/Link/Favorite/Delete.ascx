@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Post>" %>
 
 
- <%= Html.ActionLink(
+<%= Html.ActionLink(
     "убрать",
     "delete",
     "favorite",

@@ -1,4 +1,5 @@
-﻿<%@ Control Language="C#" Inherits="ViewUserControl<ITCommunity.Models.Post.EditCategoriesModel>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<PostEditCategoriesModel>" %>
+
 
 <ul class="select-categories">
     <% foreach (var category in Categories.GetAll()) { %>

@@ -7,4 +7,4 @@
     "post",
     new { id = Model.Id },
     new { title = "Редактировать пост" }
- )%>
+)%>

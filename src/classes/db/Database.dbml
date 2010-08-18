@@ -5,7 +5,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CaptchaId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="IsRight" Type="System.Int32" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="IsRight" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Association Name="Captcha_CaptchaAnswer" Member="Captcha" ThisKey="CaptchaId" OtherKey="Id" Type="Captcha" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
@@ -15,7 +15,7 @@
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PollId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="AnswerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Association Name="PollAnswer_Vote" Member="PollAnswer" ThisKey="AnswerId" OtherKey="Id" Type="PollAnswer" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="Poll_Vote" Member="Poll" ThisKey="PollId" OtherKey="Id" Type="Poll" IsForeignKey="true" />
       <Association Name="User_Vote" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
@@ -40,8 +40,8 @@
     <Type Name="Comment">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="PostId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="AuthorId" Storage="_UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Ip" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Post_Comment" Member="Post" ThisKey="PostId" OtherKey="Id" Type="Post" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
@@ -52,7 +52,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PostId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Association Name="Post_Favorite" Member="Post" ThisKey="PostId" OtherKey="Id" Type="Post" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="User_Favorite" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
@@ -62,7 +62,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="User_Header" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
@@ -84,12 +84,12 @@
       <Column Name="SenderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Title" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="DeletedForReceiver" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="DeletedForSender" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="IsReceiverRead" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="User_Message" Member="User" ThisKey="ReceiverId" OtherKey="Id" Type="User" IsForeignKey="true" />
-      <Association Name="User_Message1" Member="User1" ThisKey="SenderId" OtherKey="Id" Type="User" IsForeignKey="true" />
+      <Column Name="DeletedForReceiver" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="DeletedForSender" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IsReceiverRead" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="User_Message" Member="Receiver" Storage="_User" ThisKey="ReceiverId" OtherKey="Id" Type="User" IsForeignKey="true" />
+      <Association Name="User_Message1" Member="Sender" Storage="_User1" ThisKey="SenderId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Notes" Member="Notes">
@@ -97,7 +97,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Title" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="User_Note" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
@@ -116,7 +116,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Topic" Type="System.String" DbType="NVarChar(120) NOT NULL" CanBeNull="false" />
       <Column Name="IsMultiselect" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="AuthorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IsOpen" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="VotesCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -131,9 +131,9 @@
       <Column Name="Title" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="AuthorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsAttached" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="IsAttached" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="ViewsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Source" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
       <Column Name="CommentsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -159,7 +159,7 @@
       <Column Name="EntityType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Value" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Association Name="User_RatingLog" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
@@ -173,9 +173,9 @@
   </Table>
   <Table Name="dbo.Recoveries" Member="Recoveries">
     <Type Name="Recovery">
-      <Column Name="Guid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Guid" AutoSync="Never" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Association Name="User_Recovery" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
@@ -191,18 +191,17 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nick" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Password" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Role" Type="UserRoles" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Role" Type="User.Roles" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="Email" Type="System.String" DbType="NVarChar(512) NOT NULL" CanBeNull="false" />
-      <Column Name="CanAddHeader" Type="bool" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="HeadersCounter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PostsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CommentsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="User_Vote" Member="Votes" ThisKey="Id" OtherKey="UserId" Type="Vote" />
       <Association Name="User_Favorite" Member="Favorites" ThisKey="Id" OtherKey="UserId" Type="Favorite" />
       <Association Name="User_Header" Member="Headers" ThisKey="Id" OtherKey="UserId" Type="Header" />
-      <Association Name="User_Message" Member="Messages" ThisKey="Id" OtherKey="ReceiverId" Type="Message" />
-      <Association Name="User_Message1" Member="Messages1" ThisKey="Id" OtherKey="SenderId" Type="Message" />
+      <Association Name="User_Message" Member="ReceivedMessages" Storage="_Messages" ThisKey="Id" OtherKey="ReceiverId" Type="Message" />
+      <Association Name="User_Message1" Member="SentMessages" Storage="_Messages1" ThisKey="Id" OtherKey="SenderId" Type="Message" />
       <Association Name="User_Note" Member="Notes" ThisKey="Id" OtherKey="UserId" Type="Note" />
       <Association Name="User_Poll" Member="Polls" ThisKey="Id" OtherKey="AuthorId" Type="Poll" />
       <Association Name="User_Post" Member="Posts" ThisKey="Id" OtherKey="AuthorId" Type="Post" />

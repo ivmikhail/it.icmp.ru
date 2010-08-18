@@ -1,9 +1,9 @@
-using System;
 using log4net;
 using log4net.Config;
 
 
 namespace ITCommunity.Core {
+
 	public static class Logger {
 
 		private static ILog _instance;
