@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+using ITCommunity.Core;
+
 
 namespace ITCommunity.Utils {
 
@@ -94,7 +96,7 @@ namespace ITCommunity.Utils {
 
             _formatters.Add(new RegexFormatter("\n", "<br />"));
 
-            _formatters.Add(new RegexFormatter(@"\[b\]((.|\n)*?)\[/b\]", "<b>$1</b>"));
+            _formatters.Add(new RegexFormatter(@"\[b\](.*?)\[/b\]", "<b>$1</b>"));
             _formatters.Add(new RegexFormatter(@"\[i\]((.|\n)*?)\[/i\]", "<i>$1</i>"));
             _formatters.Add(new RegexFormatter(@"\[u\]((.|\n)*?)\[/u\]", "<u>$1</u>"));
             _formatters.Add(new RegexFormatter(@"\[s\]((.|\n)*?)\[/s\]", "<strike>$1</strike>"));
@@ -117,9 +119,21 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[popup=((.|\n)*?)\]((.|\n)*?)\[/popup\]", "<a href=\"javascript:popup('$1')\" >$3</a>"));
 
 
-            _formatters.Add(new RegexFormatter(@"\[img\]((.|\n)*?)\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+            // http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
+
+            String[] trustedSites = Config.Get("TrustdedSites").Split(',');
+            String imgPattern = @"((?:postimages|http://(?:";
+            foreach (String site in trustedSites) {
+                imgPattern += Regex.Escape(site.Trim()) + "|";
+            }
+            imgPattern = imgPattern.Substring(0, imgPattern.Length - 1);
+            imgPattern += "))/[^ \"'\\[]*?)";
+            _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+            _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
+            _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)px\]" + imgPattern + @"\[/img\]", "<img width=\"$1px\" height=\"$3px\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+            //_formatters.Add(new RegexFormatter(@"\[img\]((.|\n)*?)\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+            //_formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
+            //_formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
 
             //_formatters.Add(new RegexFormatter(@"\[color=((.|\n)*?)\]((.|\n)*?)\[/color\]", "<span style=\"color=$1;\">$3</span>"));
 
@@ -143,7 +157,7 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[list=a\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "lower-alpha"), false));
             _formatters.Add(new RegexFormatter(@"\[list=A\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "upper-alpha"), false));
 
-            // Video tag formatter test
+            // play.ykt.ru
             _formatters.Add(new RegexFormatter(@"\[video]http://play\.ykt\.ru/video/(\d+)/.+?\s*\[/video]",
                 @"<object data='http://play.ykt.ru/player.swf' width='640' height='480' type='application/x-shockwave-flash'>
 					<param name='allowscriptaccess' value='always' />
@@ -151,6 +165,16 @@ namespace ITCommunity.Utils {
 					<param name='flashvars' value='width=640&amp;height=480&amp;file=http://play.ykt.ru/flvideo/$1.flv&amp;image=http://play.ykt.ru/thumb/$1.jpg&amp;displayheight=480&amp;link=http://play.ykt.ru/video/$1&amp;searchbar=false&amp;linkfromdisplay=true' />
 					<param name='pluginspage' value='http://www.macromedia.com/go/getflashplayer' />
 				</object>", true));
+            // tv.ykt.ru 
+
+            // 
+
+            // http://tv.ykt.ru/media/videos/SPECREPORT_2_APR_01_sd.mp4
+            _formatters.Add(new RegexFormatter(@"\[video]\s*http://tv\.ykt\.ru/media/videos/(.+?)\.(.+?)\s*\[/video]",
+                @"<embed width='540' height='350' flashvars='provider=http&amp;file=/media/videos/$1.$2&amp;image=/media/thumbnails/full/$1.jpg&amp;playerready=playerReadyCallback&amp;stretching=fill' 
+                menu='false' allowfullscreen='true' allowscriptaccess='always' quality='high' bgcolor='#ffffff' name='mpl' id='mpl' 
+                style='' src='http://tv.ykt.ru/media/player.swf' type='application/x-shockwave-flash'>
+                ", true));
             // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
             _formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]", abundaEvaluator));
 
