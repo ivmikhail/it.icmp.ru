@@ -1,22 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Security.Principal;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Security;
 
 using ITCommunity.Core;
 using ITCommunity.Db;
 using ITCommunity.Db.Tables;
 using ITCommunity.Models;
-using ITCommunity.Models.User;
+
 
 namespace ITCommunity.Controllers {
 
     public class UserController : BaseController {
+
+        public ActionResult Profile(string nick) {
+            var userNick = nick ?? CurrentUser.User.Nick;
+            var user = Users.Get(userNick);
+
+            if (user.IsAnonymous) {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        public ActionResult Posts(string nick, int? page) {
+            var userNick = nick ?? CurrentUser.User.Nick;
+            var user = Users.Get(userNick);
+
+            if (user.IsAnonymous) {
+                return NotFound();
+            }
+
+            var model = new UserPostsModel(user, page);
+
+            return View(model);
+        }
+
+        public ActionResult Comments(string nick, int? page) {
+            var userNick = nick ?? CurrentUser.User.Nick;
+            var user = Users.Get(userNick);
+
+            if (user.IsAnonymous) {
+                return NotFound();
+            }
+
+            var model = new UserCommentsModel(user, page);
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult List(string role, int? page) {
+            var model = new UserListModel(role, page);
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult ChangeRole(string nick, string role) {
+            if (nick == null) {
+                return NotFound();
+            }
+
+            var user = Users.Get(nick);
+
+            if (user.IsAnonymous) {
+                return NotFound();
+            }
+
+            User.Roles changingRole;
+
+            if (Enum.TryParse(role, true, out changingRole)) {
+                user.Role = changingRole;
+                Users.Update(user);
+            }
+
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
 
         public ActionResult Logout() {
             CurrentUser.Logout();
@@ -29,17 +89,15 @@ namespace ITCommunity.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Login(LoginModel model, string returnUrl) {
+        public ActionResult Login(UserLoginModel model, string returnUrl) {
             if (ModelState.IsValid) {
                 if (CurrentUser.Login(model.UserNick, model.Password, model.RememberMe)) {
                     if (!String.IsNullOrEmpty(returnUrl)) {
                         return Redirect(returnUrl);
-                    }
-                    else {
+                    } else {
                         return Redirect("/");
                     }
-                }
-                else {
+                } else {
                     ModelState.AddModelError("LoginPassword", "Error");
                 }
             }
@@ -48,24 +106,19 @@ namespace ITCommunity.Controllers {
         }
 
         public ActionResult Register() {
-            var model = new RegisterModel();
-            model.NewCaptcha();
+            var model = new UserRegisterModel();
+
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterModel model) {
+        public ActionResult Register(UserRegisterModel model) {
             if (ModelState.IsValid) {
-
                 var user = CurrentUser.Register(model.UserNick, model.Password, model.Email);
 
-                if (user.Id > 0) {
-                    CurrentUser.Login(model.UserNick, model.Password, false);
-                    return Redirect("/");
-                }
-                else {
-                    ModelState.AddModelError("", "Can't create new user");
-                }
+                CurrentUser.Login(model.UserNick, model.Password, false);
+
+                return Redirect("/");
             }
 
             model.NewCaptcha();
@@ -76,38 +129,58 @@ namespace ITCommunity.Controllers {
         public ActionResult NewPassword() {
             var recovery = GetRecovery();
 
-            if (recovery != null) {
-                var model = new NewPasswordModel();
-                var user = Users.Get(recovery.UserId);
-                model.UserNick = user.Nick;
-                return View(model);
+            if (recovery == null) {
+                return View("ForgotPassword");
             }
 
-            return Redirect("/");
+            var model = new UserNewPasswordModel(recovery);
+
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult NewPassword(NewPasswordModel model) {
+        public ActionResult NewPassword(UserNewPasswordModel model) {
             var recovery = GetRecovery();
 
-            if (recovery != null) {
-
-                if (ModelState.IsValid) {
-
-                    var user = Users.Get(recovery.UserId);
-                    user.Password = CurrentUser.HashPass(model.Password.Trim(), user.Nick);
-                    Users.Update(user);
-
-                    var guid = Request.QueryString["id"];
-                    Recoveries.Delete(guid);
-
-                    return RedirectToAction("Login", "Account");
-                }
-
-                return View(model);
+            if (recovery == null) {
+                return View("ForgotPassword");
             }
 
-            return Redirect("/");
+            if (ModelState.IsValid) {
+                recovery.User.Password = CurrentUser.HashPassword(model.Password, recovery.User.Nick);
+                Users.Update(recovery.User);
+                Recoveries.Delete(recovery.Guid);
+
+                CurrentUser.Login(recovery.User.Nick, model.Password, false);
+
+                return Redirect("/");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult ForgotPassword() {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(UserNickModel model) {
+            if (model == null) {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid) {
+                var user = Users.Get(model.UserNick);
+                var recovery = Recoveries.Add(user.Id);
+
+                if (EmailSender.NewPasswordEmail(user, recovery)) {
+                    return View("ForgotPasswordSent", model);
+                } else {
+                    ModelState.AddModelError("Error", "Can't send e-mail");
+                }
+            }
+
+            return View(model);
         }
 
         private Recovery GetRecovery() {
@@ -119,31 +192,5 @@ namespace ITCommunity.Controllers {
 
             return null;
         }
-
-        public ActionResult ForgotPassword() {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ForgotPassword(NickModel model) {
-            if (ModelState.IsValid) {
-                User user = Users.Get(model.UserNick);
-                if (user != null && user.Id > 0) {
-                    var recovery = Recoveries.Add(user.Id);
-                    bool sended = SendEmail.SendRecoveryEmail(user, recovery.Guid.ToString());
-                    if (sended) {
-                        Redirect("/");
-                    }
-                    else {
-                        ModelState.AddModelError("", "Письмо не отправлено. Причина записана в логах (увы вам она не видна). Попробуйте еще раз. Если все равно не работает, обратитесь к администрации");
-                    }
-                }
-                else {
-                    ModelState.AddModelError("", "Пользователя с таким ником нет");
-                }
-            }
-            return View(model);
-        }
-
     }
 }

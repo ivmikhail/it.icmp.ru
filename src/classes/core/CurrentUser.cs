@@ -1,28 +1,38 @@
 using System;
 using System.Web;
 using System.Web.Security;
-using System.Collections.Specialized;
+
 using ITCommunity.Db;
 using ITCommunity.Db.Tables;
 
+
 namespace ITCommunity.Core {
-	/// <summary>
+
+    /// <summary>
 	/// Текущий пользователь
 	/// </summary>
 	public static class CurrentUser {
 
-		public static bool isAuth {
+        public const string SESSION_NAME = "CurrentUser";
+
+		public static bool IsAuth {
 			get {
 				return HttpContext.Current.User.Identity.IsAuthenticated;
 			}
 		}
+
+        public static bool IsAdmin {
+            get {
+                return IsAuth && User.Role == User.Roles.Admin;
+            }
+        }
 
 		/// <summary>
 		/// IP текущего пользователя
 		/// </summary>
 		public static string Ip {
 			get {
-				NameValueCollection serverVars = HttpContext.Current.Request.ServerVariables;
+				var serverVars = HttpContext.Current.Request.ServerVariables;
 				return serverVars["HTTP_X_FORWARDED_FOR"] ?? serverVars["REMOTE_ADDR"];
 			}
 		}
@@ -32,21 +42,23 @@ namespace ITCommunity.Core {
 		/// </summary>
 		public static User User {
 			get {
-				User currentUser = User.Anonymous;
-				if (isAuth) {
+				var currentUser = User.Anonymous;
+
+				if (IsAuth) {
 					if (HttpContext.Current.Session != null) {
-						currentUser = (User)HttpContext.Current.Session["CurrentUser"];
+                        currentUser = (User)HttpContext.Current.Session[SESSION_NAME];
 					}
 
 					if (currentUser == null) {
 						currentUser = GetUserFromCookie();
-						HttpContext.Current.Session["CurrentUser"] = currentUser;
+                        HttpContext.Current.Session[SESSION_NAME] = currentUser;
 					}
 
-					if (currentUser.Role == UserRoles.Banned) {
+					if (currentUser.Role == User.Roles.Banned) {
 						CurrentUser.Logout();
 					}
 				}
+
 				return currentUser;
 			}
 		}
@@ -57,47 +69,53 @@ namespace ITCommunity.Core {
 		/// 
 		/// Таким образом гарантируется что истинный пароль знает только сам пользователь.
 		/// </summary>
-		/// <param name="pass">Истинный пароль</param>
-		/// <param name="login">Логин пользователя</param>
-		/// <returns></returns>
-        public static string HashPass(string pass, string nick) {
-            string preparedPass = nick.ToUpper() + pass;
-			string hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass, "SHA1");
+		/// <param name="password">Истинный пароль</param>
+        /// <param name="nick">Ник пользователя</param>
+		/// <returns>Хэшированный пароль</returns>
+        public static string HashPassword(string password, string nick) {
+            var preparedPass = nick.Trim().ToUpper() + password;
+			var hashedPass = FormsAuthentication.HashPasswordForStoringInConfigFile(preparedPass, "SHA1");
 			return hashedPass;
 		}
 
 		/// <summary>
-		/// Авторизация: запихиваем юзера в сессию и куки(если надо)
+		/// Авторизация: запихиваем юзера в сессию и куки
 		/// </summary>
-		/// <param name="login">Логин, он же nick</param>
-		/// <param name="pass">Пароль</param>
-        public static bool Login(string nick, string pass, bool remember) {
-			bool result = false;
-            User user = Users.Get(nick);
-            string hashedPass = HashPass(pass, nick);
+        /// <param name="nick">Ник пользователя</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="remember">Запоминать в куки на долгое время или нет</param>
+        /// <returns>Успешно авторизовался или нет</returns>
+        public static bool Login(string nick, string password, bool remember) {
+            var user = Users.Get(nick);
+            var hashedPass = HashPassword(password, nick);
 
-			if (user.Id > 0 && user.Password == hashedPass) {
-				HttpContext.Current.Session["CurrentUser"] = user;
+			if (!user.IsAnonymous && user.Password == hashedPass) {
+                HttpContext.Current.Session[SESSION_NAME] = user;
 
-				DateTime ticketExpiration = DateTime.Now;
+				var ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout);;
 				if (remember) {
 					ticketExpiration = DateTime.Now.AddYears(50);
-				} else {
-					ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout); // хмм
 				}
-				// Здесь параметр bool IsPersistent почему то неправильно работает, 
-				// сбрасывается после закрытия окна, ниже куке устанавливаю отдельно expired date
-                FormsAuthenticationTicket newTicket = new FormsAuthenticationTicket(1, nick, DateTime.Now, ticketExpiration, true, user.Role.ToString(), FormsAuthentication.FormsCookiePath);
 
-				string encryptedTicket = FormsAuthentication.Encrypt(newTicket);
-				HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                var newTicket = new FormsAuthenticationTicket(
+                    1, 
+                    nick, 
+                    DateTime.Now, 
+                    ticketExpiration, 
+                    true, 
+                    user.Role.ToString(), 
+                    FormsAuthentication.FormsCookiePath
+                );
+
+                var encryptedTicket = FormsAuthentication.Encrypt(newTicket);
+                var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
 
 				authCookie.Expires = ticketExpiration;
 				HttpContext.Current.Response.Cookies.Add(authCookie);
 
-				result = true;
+				return true;
 			}
-			return result;
+			return false;
 		}
 
 		/// <summary>
@@ -112,27 +130,27 @@ namespace ITCommunity.Core {
 		/// <summary>
 		/// Регистрируем нового пользователя
 		/// </summary>
-		/// <param name="login">login=nick</param>
-		/// <param name="pass">пароль</param>
-		/// <param name="email">электропочта</param>
-		public static User Register(string nick, string pass, string email) {
-			User user = new User();
+        /// <param name="nick">Ник пользователя</param>
+        /// <param name="password">Пароль</param>
+		/// <param name="email">Электропочта</param>
+        /// <returns>Возвращает созданного пользователя</returns>
+        public static User Register(string nick, string password, string email) {
+			var user = new User();
 
             user.Nick = nick;
-            user.Password = HashPass(pass, nick);
+            user.Password = HashPassword(password, nick);
 			user.Email = email;
-			user.Role = UserRoles.Poster;
-            user.CreateDate = DateTime.Now;
+			user.Role = User.Roles.Poster;
 
 			return Users.Add(user);
 		}
 
 		private static User GetUserFromCookie() {
-			User user = new User();
+			var user = new User();
 
-			HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+			var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
 			if (authCookie != null) {
-				FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+				var ticket = FormsAuthentication.Decrypt(authCookie.Value);
 				if (ticket.Expired) {
 					Logout();
 				} else {

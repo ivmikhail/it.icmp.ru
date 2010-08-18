@@ -6,6 +6,6 @@
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Упс, ничего не найдено</h2>
+    <h1>Упс, ничего не найдено</h1>
 
 </asp:Content>

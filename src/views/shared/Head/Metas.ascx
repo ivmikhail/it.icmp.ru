@@ -1,4 +1,5 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
+
 
 <meta http-equiv="content-language" content="ru" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />

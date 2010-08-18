@@ -2,12 +2,11 @@
 
 
 <h2>
-    Обсуждаемое
-    <% Html.RenderPartial("Link/Post/DiscussibleMore"); %>
+    Обсуждаемые
 </h2>
 
 <ul>
-    <% foreach (var post in Posts.GetTopDiscussible()) { %>        
+    <% foreach (var post in Posts.GetTopDiscussibles()) { %>        
         <li>
             <% Html.RenderPartial("Link/Post/Discussible", post); %>
         </li>

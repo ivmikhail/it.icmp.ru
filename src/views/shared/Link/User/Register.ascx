@@ -4,5 +4,7 @@
 <%= Html.ActionLink(
     "зарегистрироваться",
     "register",
-    "user"
- )%>
+    "user",
+    null,
+    new { title = "Присоединяйтесь!" }
+)%>

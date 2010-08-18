@@ -6,5 +6,5 @@
     "profile",
     "user",
     new { nick = Model.Nick },
-    new { @class = "user-link", title = "Посетить страницу пользователя" }
+    new { @class = "user-link", title = "Посетить страницу - " + Model.Nick }
 )%>

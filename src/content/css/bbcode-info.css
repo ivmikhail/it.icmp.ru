@@ -1,0 +1,33 @@
+.bbcode-info {
+    padding-bottom: 4px;
+}
+
+.bbcode-info .hide {
+    display: none;
+}
+
+.bbcode-info .tags-info-close {
+    float: right;
+}
+
+.bbcode-info .tags-info {
+    background: #f0f0f0;
+    color: #333333;
+    padding: 1% 2%;
+}
+.bbcode-info .tags-info dt {
+    font-weight: bold;
+    line-height: 1.5em;
+}
+.bbcode-info .tags-info dd {
+    padding: 4px 0 4px 12px;
+}
+
+.bbcode-info .left-block {
+    float: left;
+    width: 30%;
+}
+.bbcode-info .right-block {
+    float: right;
+    width: 65%;
+}

@@ -1,44 +1,99 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+
 using ITCommunity.Core;
-using ITCommunity.Db;
 using ITCommunity.Db.Tables;
-using ITCommunity.Models.Comment;
+using ITCommunity.Models;
+
 
 namespace ITCommunity.Controllers {
 
     public class CommentController : BaseController {
 
-        public ActionResult Add(AddModel model) {
-            if (!CurrentUser.isAuth) {
-                return NotFound();
+        [HttpPost]
+        public ActionResult AnonymousAdd(AnonymousCommentAddModel model) {
+            if (ModelState.IsValid) {
+                var comment = model.ToComment();
+
+                comment = Comments.Add(comment);
+
+                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
+            model.NewCaptcha();
+            return View("AnonymousAddPage", model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Add(CommentEditModel model) {
             if (ModelState.IsValid) {
-                var comment = new Comment();
-                comment.PostId = model.PostId;
-                comment.Text = model.Text;
+                var comment = model.ToComment();
+
                 comment = Comments.Add(comment);
+
                 return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
             return View("AddPage", model);
         }
 
-        public ActionResult AnonymousAdd(AnonymousAddModel model) {
+        [Authorize]
+        public ActionResult Edit(int? id) {
+            if (id == 0) {
+                return NotFound();
+            }
+
+            var comment = Comments.Get(id.Value);
+
+            if (comment == null) {
+                return NotFound();
+            }
+
+            if (!comment.Editable) {
+                return AccessDenied();
+            }
+
+            return View("EditPage", new CommentEditModel(comment));
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Edit(int? id, CommentEditModel model) {
+            if (id == 0) {
+                return NotFound();
+            }
+
+            var comment = Comments.Get(id.Value);
+
+            if (comment == null) {
+                return NotFound();
+            }
+
+            if (!comment.Editable) {
+                return AccessDenied();
+            }
+
             if (ModelState.IsValid) {
-                var comment = new Comment();
-                comment.PostId = model.PostId;
-                comment.Text = model.Text;
-                comment = Comments.Add(comment);
+                var editedComment = model.ToComment();
+
+                editedComment.Id = id.Value;
+                Comments.Update(editedComment);
+
                 return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
-            model.NewCaptcha();
-            return View("AnonymousAddPage", model);
+            return View("EditPage", model);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult Delete(int? id) {
+            if (id == 0) {
+                return NotFound();
+            }
+
+            Comments.Delete(id.Value);
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
     }
 }

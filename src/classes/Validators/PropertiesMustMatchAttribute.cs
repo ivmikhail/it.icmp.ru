@@ -13,9 +13,15 @@ namespace ITCommunity.Validators {
 
         private readonly object _typeId = new object();
 
-        public string ConfirmProperty { get; private set; }
+        public string ConfirmProperty {
+            get;
+            private set;
+        }
 
-        public string OriginalProperty { get; private set; }
+        public string OriginalProperty {
+            get;
+            private set;
+        }
 
         public override object TypeId {
             get { return _typeId; }

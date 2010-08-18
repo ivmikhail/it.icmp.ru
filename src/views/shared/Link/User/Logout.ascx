@@ -4,7 +4,5 @@
 <%= Html.ActionLink(
     "выйти",
     "logout",
-    "user",
-    null,
-    new { title = "Зачем выходить?" }
+    "user"
 )%>

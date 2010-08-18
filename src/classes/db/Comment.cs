@@ -1,28 +1,41 @@
-using ITCommunity.Core;
-using ITCommunity.Util;
-using ITCommunity.Db.Tables;
-using System.Web;
 using System;
 using System.Text.RegularExpressions;
+using System.Web;
+
+using ITCommunity.Core;
+using ITCommunity.Db.Tables;
+using ITCommunity.Utils;
+
 
 namespace ITCommunity.Db {
 
-    /// <summary>
-    /// Пост хранящийся в БД
-    /// </summary>
     public partial class Comment {
 
         /// <summary>
         /// Пользователь оставивший комментарий, если это сделал не авторизованный человек,
-        /// то возвращается "пустой" пользователь
+        /// то возвращается анонимный пользователь
         /// </summary>
-        public User getAuthor() {
-            return Users.Get(UserId);
+        public User Author {
+            get;
+            private set;
+        }
+
+        public string ShortText {
+            get {
+                var safelyText = HttpUtility.HtmlEncode(Text);
+                safelyText = Regex.Replace(safelyText, "\\[(.*?)\\](.*?)\\[\\/(.*?)\\]", "$2", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+
+                if (safelyText.Length < Config.GetInt("LastCommentsSize")) {
+                    return safelyText;
+                }
+
+                return safelyText.Substring(0, Config.GetInt("LastCommentsSize")) + "...";
+            }
         }
 
         public bool Editable {
             get {
-                if (!CurrentUser.isAuth || CurrentUser.User.Id != UserId) {
+                if (!CurrentUser.IsAuth || CurrentUser.User.Id != AuthorId) {
                     return false;
                 }
 
@@ -31,10 +44,11 @@ namespace ITCommunity.Db {
             }
         }
 
-        public string howMuchTimeHasPassed() {
-            long ticks = DateTime.Now.AddTicks(-CreateDate.Ticks).Ticks;
-            TimeSpan timespan = new TimeSpan(ticks);
-            string time = "добавлено ";
+        public string TimePassed() {
+            var ticks = DateTime.Now.AddTicks(-CreateDate.Ticks).Ticks;
+            var timespan = new TimeSpan(ticks);
+            var time = "Добавлено ";
+
             if (timespan.Days != 0)
                 time += timespan.Days.ToString() + "д ";
             if (timespan.Hours != 0)
@@ -43,21 +57,8 @@ namespace ITCommunity.Db {
                 time += timespan.Minutes.ToString() + "м ";
             if (time.Length == 0)
                 time += timespan.Seconds.ToString() + "с ";
+
             return time + "назад";
-        }
-
-
-        public string ShortText {
-            get {
-                var safelyText = HttpUtility.HtmlEncode(Text);
-                safelyText = Regex.Replace(safelyText, "\\[(.*?)\\](.*?)\\[\\/(.*?)\\]", "$2", RegexOptions.Singleline | RegexOptions.IgnoreCase);
-                
-                if (safelyText.Length < Config.GetInt("LastCommentsSize")) {
-                    return safelyText;
-                }
-
-                return safelyText.Substring(0, Config.GetInt("LastCommentsSize")) + "...";
-            }
         }
 
         /// <summary>
@@ -67,5 +68,8 @@ namespace ITCommunity.Db {
             get { return BBCodeParser.Format(HttpUtility.HtmlEncode(Text)); }
         }
 
+        partial void OnLoaded() {
+            Author = Users.Get(AuthorId);
+        }
     }
 }

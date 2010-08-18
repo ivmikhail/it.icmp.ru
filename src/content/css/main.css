@@ -6,182 +6,75 @@
 
 #content h1 {
     border-bottom: 4px solid #f0f0f0;
+    margin-bottom: 0.4em;
 }
+
+/* совсем уникальные стили для вложенных айдишников, что есть не хорошо */
 
 #content #cut {
     border: 1px solid #f0f0f0;
 }
 
 #content #comments {
-    padding: 1em 0 0 0;
+    padding-top: 1em;
 }
 
 #content #add-comment {
     padding-top: 1em;
 }
 
-#content .comment {
-    border-bottom: 1px solid #f0f0f0;
-    padding: 1em 0;
-}
+/* базовые блоки и панели, так сказать "кирпичики" */
 
-#content select,
-#content input[type=text],
-#content input[type=password] {
-    padding: 1px 0;
-    width: 100%;
-}
-
-
-#content textarea.post-description {
-    height: 10em;
-}
-
-#content textarea.post-text {
-    height: 30em;
-}
-
-#sidebar {
-    background: #f0f0f0;
-    color: #999999;
-    float: right;
-    padding: 16px 4%;
-    width: 27%;    
-}
-#sidebar .validation-summary-errors,
-#sidebar h2 {
-    padding: 24px 0 12px;
-}
-#sidebar .validation-summary-errors {
-    color: #ff7777;
-    font-size: 1.5em;
-}
-#sidebar ul {
-    padding: 0 0 12px;
-    line-height: 1.25em;
-}
-#sidebar ul .sidebar-link {
-    color: #999999;
-}
-#sidebar ul .sidebar-link:hover {
-    color: #333333;
-}
-#sidebar li {
-    padding: 4px 0;
-}
-#sidebar .more-link {
-    font-size: 0.5em;
-    vertical-align: top;
-}
-
-
-.menu .left,
-.menu .right {
-    line-height: 2em;
-}
-
-.left {
-    clear: left;
-    float: left;
-    text-align: left;
-}
-.left li {
-    display: inline;
-    margin-right: 12px;
-}
-.right {
-    clear: right;
-    float: right;
-    text-align: right;
-}
-.right li {
-    display: inline;
-    margin-left: 12px;
-}
-
-.post {
-	padding: 1em 0 1em;
+.block {
+	padding: 1em 0;
 	border-bottom: 2px solid #f0f0f0;
 	margin-bottom: 1em;
 }
-.post .post-description {
+
+.light-block {
+    border-bottom: 1px solid #f0f0f0;
+	margin-bottom: 0.5em;
+    padding: 0.5em 0;
+}
+
+.text {
 	line-height: 1.5em;
 	padding-bottom: 1em;
 }
-.post-meta {
+
+.meta {
 	color: #999999;
 	font-size: 0.75em;
 }
-.post .post-meta ul {
-	padding-top: 4px;
-}
 
-.meta {
-	font-size: 0.75em;
-}
-.meta .meta-item {
-	margin-left: 8px;
-}
-
-.comments-count {
-    color: #666666;
-}
-
-.pagination {
-    font-size: 1.5em;
-    padding: 2em 0;
-}
-.pagination li {
-    display: inline;
-    margin-right: 1em;
-}
-
-.date,
-.views-count {
+.info {
 	color: #666666;
 }
 
-.rating-negative {
-	color: #c03030;
-}
-.rating-positive {
-	color: #008000;
+.none-active {
+	color: #999999;
 }
 
-.content-menu {
-	font-size: 0.875em;
-	line-height: 32px;
+.left-list {
+    clear: left;
+    float: left;
+    line-height: 2em;
+    text-align: left;
 }
-.content-menu li {
-	display: inline;
-	margin-right: 24px;
-}
-
-.main-link {
-	font-size: 1.375em;
+.left-list li {
+    display: inline;
+    margin-right: 12px;
 }
 
-
-.category-link {
-    color: #2b91af;
+.right-list {
+    clear: right;
+    float: right;
+    line-height: 2em;
+    text-align: right;
 }
-.category-link:hover {
-	color: #006f83;
-}
-.user-link {
-	color: #30a030;
-	font-style: italic;
-}
-.user-link:hover {
-	color: #006000;
-}
-
-.page-link {
-    border-bottom: 1px dotted;
-    text-decoration: none;
-}
-.page-link:hover {
-    border-bottom: none;
+.right-list li {
+    display: inline;
+    margin-left: 12px;
 }
 
 .clear {
@@ -190,15 +83,108 @@
     display: block;
 }
 
-.hidden {
-    display: none;
+/* этакие стили сущностей */
+
+.rating-negative {
+	color: #c03030;
+}
+.rating-positive {
+	color: #008000;
 }
 
-.field-validation-error {
+/* стили ссылок */
+
+#content .main-link {
+	font-size: 1.375em;
+}
+
+#header .important-link,
+#content .important-link {
+    color: #eb5e5e;
+}
+#header .important-link:hover,
+#content .important-link:hover {
+    color: #e91111;
+}
+
+#sidebar .category-link,
+#content .category-link {
+    color: #2b91af;
+}
+#sidebar .category-link:hover,
+#content .category-link:hover {
+	color: #006f83;
+}
+
+#menu .user-link,
+#sidebar .user-link,
+#content .user-link {
+	color: #30a030;
+	font-style: italic;
+}
+#menu .user-link:hover,
+#sidebar .user-link:hover,
+#content .user-link:hover {
+	color: #006000;
+}
+
+#content .page-link {
+    border-bottom: 1px dotted;
+    text-decoration: none;
+}
+#content .page-link:hover {
+    border-bottom: none;
+}
+
+#footer .up-arrow,
+#header .down-arrow {
+    display: block;
+    float: left;
+    font-size: 6em;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    width: 4%;
+}
+#footer .up-arrow:hover,
+#header .down-arrow:hover {
+    color: #999999;
+}
+#footer .up-arrow {
+    color: #bbbbbb;
+}
+#header .down-arrow {
+    color: #d0d0d0;
+    margin-top: 0.7em;
+}
+
+/* стили сообщений валитаторов */
+
+#sidebar .validation-summary-errors,
+#content .validation-summary-errors {
+    color: #ff7777;
+    font-size: 1.5em;
+    padding: 24px 0 12px;
+}
+#sidebar .validation-summary-errors ul,
+#content .validation-summary-errors ul {
+    line-height: 1em;
+    padding: 0;
+}
+#sidebar .validation-summary-errors ul li,
+#content .validation-summary-errors ul li {
+    list-style-type: disc;
+    list-style-position: inside;
+    padding: 0.5em 0 0 0.5em;
+}
+
+#content .field-validation-error {
     color: #ff7777;
     display: block;
     padding: 8px 0;
 }
+
+/* стили нужные для отображения выбора категорий при добавлении и редактировании поста */
 
 .select-categories li {
     display: inline;

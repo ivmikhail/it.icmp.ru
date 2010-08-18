@@ -4,5 +4,7 @@
 <%= Html.ActionLink(
     "забыл пароль",
     "forgotpassword",
-    "user"
- )%>
+    "user",
+    null,
+    new { title = "Помочь?" }
+)%>

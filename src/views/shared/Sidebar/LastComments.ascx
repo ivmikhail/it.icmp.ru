@@ -4,10 +4,10 @@
 <h2>Последние комментарии</h2>
 
 <ul>
-    <% foreach (var comment in Comments.GetLastComments()) { %>        
+    <% foreach (var comment in Comments.GetLasts()) { %>        
         <li>
 
-            <% Html.RenderPartial("Link/User/Profile", comment.getAuthor()); %>
+            <% Html.RenderPartial("Link/User/Profile", comment.Author); %>
 
             &rarr;
 

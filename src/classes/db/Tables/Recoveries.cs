@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using System.Timers;
+
 using ITCommunity.Core;
-using ITCommunity.Db;
+
 
 namespace ITCommunity.Db.Tables {
 
@@ -18,40 +18,36 @@ namespace ITCommunity.Db.Tables {
                 var recovery = new Recovery { UserId = userId };
 
                 db.Recoveries.InsertOnSubmit(recovery);
-
                 db.SubmitChanges();
 
                 return recovery;
             }
         }
 
-        public static void Delete(string guid) {
+        public static void Delete(Guid guid) {
             using (var db = Database.Connect()) {
-                var recoveryGuid = new Guid(guid);
-
                 var deletigRecovery = (
-                    from recovery in db.Recoveries
-                    where recovery.Guid == recoveryGuid
-                    select recovery
+                    from rec in db.Recoveries
+                    where rec.Guid == guid
+                    select rec
                 ).Single();
 
                 db.Recoveries.DeleteOnSubmit(deletigRecovery);
-
                 db.SubmitChanges();
             }
         }
 
         public static Recovery Get(string guid) {
             using (var db = Database.Connect()) {
-                var guidObj = new Guid(guid);
+                var recoveryGuid = new Guid(guid);
 
                 var result = (
-                    from recovery in db.Recoveries
-                    where recovery.Guid == guidObj
-                    select recovery
-                ).ToList();
+                    from rec in db.Recoveries
+                    where rec.Guid == recoveryGuid
+                    select rec
+                ).SingleOrDefault();
 
-                return (result.Count == 1) ? result[0] : null;
+                return result;
             }
         }
 
@@ -61,12 +57,11 @@ namespace ITCommunity.Db.Tables {
                 var date = DateTime.Now.AddDays(-days);
 
                 var recoveries =
-                    from recovery in db.Recoveries
-                    where recovery.CreateDate < date
-                    select recovery;
+                    from rec in db.Recoveries
+                    where rec.CreateDate < date
+                    select rec;
 
                 db.Recoveries.DeleteAllOnSubmit(recoveries);
-
                 db.SubmitChanges();
             }
         }

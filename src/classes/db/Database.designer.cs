@@ -284,7 +284,7 @@ namespace ITCommunity.Db
 		
 		private string _Text;
 		
-		private int _IsRight;
+		private bool _IsRight;
 		
 		private EntityRef<Captcha> _Captcha;
 		
@@ -298,7 +298,7 @@ namespace ITCommunity.Db
     partial void OnCaptchaIdChanged();
     partial void OnTextChanging(string value);
     partial void OnTextChanged();
-    partial void OnIsRightChanging(int value);
+    partial void OnIsRightChanging(bool value);
     partial void OnIsRightChanged();
     #endregion
 		
@@ -373,7 +373,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsRight", DbType="TinyInt NOT NULL")]
-		public int IsRight
+		public bool IsRight
 		{
 			get
 			{
@@ -585,7 +585,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -1008,8 +1008,8 @@ namespace ITCommunity.Db
     partial void OnIdChanged();
     partial void OnPostIdChanging(int value);
     partial void OnPostIdChanged();
-    partial void OnUserIdChanging(int value);
-    partial void OnUserIdChanged();
+    partial void OnAuthorIdChanging(int value);
+    partial void OnAuthorIdChanged();
     partial void OnCreateDateChanging(System.DateTime value);
     partial void OnCreateDateChanged();
     partial void OnIpChanging(string value);
@@ -1069,7 +1069,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
-		public int UserId
+		public int AuthorId
 		{
 			get
 			{
@@ -1079,16 +1079,16 @@ namespace ITCommunity.Db
 			{
 				if ((this._UserId != value))
 				{
-					this.OnUserIdChanging(value);
+					this.OnAuthorIdChanging(value);
 					this.SendPropertyChanging();
 					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
+					this.SendPropertyChanged("AuthorId");
+					this.OnAuthorIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -1310,7 +1310,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -1523,7 +1523,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -1816,13 +1816,13 @@ namespace ITCommunity.Db
 		
 		private string _Text;
 		
-		private byte _DeletedForReceiver;
+		private bool _DeletedForReceiver;
 		
-		private byte _DeletedForSender;
+		private bool _DeletedForSender;
 		
 		private System.DateTime _CreateDate;
 		
-		private byte _IsReceiverRead;
+		private bool _IsReceiverRead;
 		
 		private EntityRef<User> _User;
 		
@@ -1842,13 +1842,13 @@ namespace ITCommunity.Db
     partial void OnTitleChanged();
     partial void OnTextChanging(string value);
     partial void OnTextChanged();
-    partial void OnDeletedForReceiverChanging(byte value);
+    partial void OnDeletedForReceiverChanging(bool value);
     partial void OnDeletedForReceiverChanged();
-    partial void OnDeletedForSenderChanging(byte value);
+    partial void OnDeletedForSenderChanging(bool value);
     partial void OnDeletedForSenderChanged();
     partial void OnCreateDateChanging(System.DateTime value);
     partial void OnCreateDateChanged();
-    partial void OnIsReceiverReadChanging(byte value);
+    partial void OnIsReceiverReadChanging(bool value);
     partial void OnIsReceiverReadChanged();
     #endregion
 		
@@ -1968,7 +1968,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeletedForReceiver", DbType="TinyInt NOT NULL")]
-		public byte DeletedForReceiver
+		public bool DeletedForReceiver
 		{
 			get
 			{
@@ -1988,7 +1988,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeletedForSender", DbType="TinyInt NOT NULL")]
-		public byte DeletedForSender
+		public bool DeletedForSender
 		{
 			get
 			{
@@ -2007,7 +2007,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -2028,7 +2028,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsReceiverRead", DbType="TinyInt NOT NULL")]
-		public byte IsReceiverRead
+		public bool IsReceiverRead
 		{
 			get
 			{
@@ -2048,7 +2048,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message", Storage="_User", ThisKey="ReceiverId", OtherKey="Id", IsForeignKey=true)]
-		public User User
+		public User Receiver
 		{
 			get
 			{
@@ -2064,25 +2064,25 @@ namespace ITCommunity.Db
 					if ((previousValue != null))
 					{
 						this._User.Entity = null;
-						previousValue.Messages.Remove(this);
+						previousValue.ReceivedMessages.Remove(this);
 					}
 					this._User.Entity = value;
 					if ((value != null))
 					{
-						value.Messages.Add(this);
+						value.ReceivedMessages.Add(this);
 						this._ReceiverId = value.Id;
 					}
 					else
 					{
 						this._ReceiverId = default(int);
 					}
-					this.SendPropertyChanged("User");
+					this.SendPropertyChanged("Receiver");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message1", Storage="_User1", ThisKey="SenderId", OtherKey="Id", IsForeignKey=true)]
-		public User User1
+		public User Sender
 		{
 			get
 			{
@@ -2098,19 +2098,19 @@ namespace ITCommunity.Db
 					if ((previousValue != null))
 					{
 						this._User1.Entity = null;
-						previousValue.Messages1.Remove(this);
+						previousValue.SentMessages.Remove(this);
 					}
 					this._User1.Entity = value;
 					if ((value != null))
 					{
-						value.Messages1.Add(this);
+						value.SentMessages.Add(this);
 						this._SenderId = value.Id;
 					}
 					else
 					{
 						this._SenderId = default(int);
 					}
-					this.SendPropertyChanged("User1");
+					this.SendPropertyChanged("Sender");
 				}
 			}
 		}
@@ -2236,7 +2236,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -2628,7 +2628,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -2835,7 +2835,7 @@ namespace ITCommunity.Db
 		
 		private int _AuthorId;
 		
-		private byte _IsAttached;
+		private bool _IsAttached;
 		
 		private int _ViewsCount;
 		
@@ -2867,7 +2867,7 @@ namespace ITCommunity.Db
     partial void OnCreateDateChanged();
     partial void OnAuthorIdChanging(int value);
     partial void OnAuthorIdChanged();
-    partial void OnIsAttachedChanging(byte value);
+    partial void OnIsAttachedChanging(bool value);
     partial void OnIsAttachedChanged();
     partial void OnViewsCountChanging(int value);
     partial void OnViewsCountChanged();
@@ -2966,7 +2966,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -3011,7 +3011,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAttached", DbType="TinyInt NOT NULL")]
-		public byte IsAttached
+		public bool IsAttached
 		{
 			get
 			{
@@ -3560,7 +3560,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -3801,7 +3801,7 @@ namespace ITCommunity.Db
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Guid", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Guid", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
 		public System.Guid Guid
 		{
 			get
@@ -3845,7 +3845,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -4044,11 +4044,9 @@ namespace ITCommunity.Db
 		
 		private System.DateTime _CreateDate;
 		
-		private UserRoles _Role;
+		private User.Roles _Role;
 		
 		private string _Email;
-		
-		private bool _CanAddHeader;
 		
 		private int _HeadersCounter;
 		
@@ -4088,12 +4086,10 @@ namespace ITCommunity.Db
     partial void OnPasswordChanged();
     partial void OnCreateDateChanging(System.DateTime value);
     partial void OnCreateDateChanged();
-    partial void OnRoleChanging(UserRoles value);
+    partial void OnRoleChanging(User.Roles value);
     partial void OnRoleChanged();
     partial void OnEmailChanging(string value);
     partial void OnEmailChanged();
-    partial void OnCanAddHeaderChanging(bool value);
-    partial void OnCanAddHeaderChanged();
     partial void OnHeadersCounterChanging(int value);
     partial void OnHeadersCounterChanged();
     partial void OnPostsCountChanging(int value);
@@ -4177,7 +4173,7 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
 		public System.DateTime CreateDate
 		{
 			get
@@ -4198,7 +4194,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Role", DbType="TinyInt NOT NULL", CanBeNull=false)]
-		public UserRoles Role
+		public User.Roles Role
 		{
 			get
 			{
@@ -4233,26 +4229,6 @@ namespace ITCommunity.Db
 					this._Email = value;
 					this.SendPropertyChanged("Email");
 					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanAddHeader", DbType="TinyInt NOT NULL")]
-		public bool CanAddHeader
-		{
-			get
-			{
-				return this._CanAddHeader;
-			}
-			set
-			{
-				if ((this._CanAddHeader != value))
-				{
-					this.OnCanAddHeaderChanging(value);
-					this.SendPropertyChanging();
-					this._CanAddHeader = value;
-					this.SendPropertyChanged("CanAddHeader");
-					this.OnCanAddHeaderChanged();
 				}
 			}
 		}
@@ -4357,7 +4333,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message", Storage="_Messages", ThisKey="Id", OtherKey="ReceiverId")]
-		public EntitySet<Message> Messages
+		public EntitySet<Message> ReceivedMessages
 		{
 			get
 			{
@@ -4370,7 +4346,7 @@ namespace ITCommunity.Db
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Message1", Storage="_Messages1", ThisKey="Id", OtherKey="SenderId")]
-		public EntitySet<Message> Messages1
+		public EntitySet<Message> SentMessages
 		{
 			get
 			{
@@ -4506,25 +4482,25 @@ namespace ITCommunity.Db
 		private void attach_Messages(Message entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = this;
+			entity.Receiver = this;
 		}
 		
 		private void detach_Messages(Message entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = null;
+			entity.Receiver = null;
 		}
 		
 		private void attach_Messages1(Message entity)
 		{
 			this.SendPropertyChanging();
-			entity.User1 = this;
+			entity.Sender = this;
 		}
 		
 		private void detach_Messages1(Message entity)
 		{
 			this.SendPropertyChanging();
-			entity.User1 = null;
+			entity.Sender = null;
 		}
 		
 		private void attach_Notes(Note entity)

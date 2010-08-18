@@ -2,12 +2,11 @@
 
 
 <h2>
-    Популярные посты 
-    <% Html.RenderPartial("Link/Post/PopularMore"); %>
+    Популярные посты
 </h2>
 
 <ul>
-    <% foreach (var post in Posts.GetTopPopular() ) { %>        
+    <% foreach (var post in Posts.GetTopPopulars() ) { %>        
         <li>
             <% Html.RenderPartial("Link/Post/Popular", post); %>
         </li>
