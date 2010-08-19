@@ -17,7 +17,7 @@ namespace ITCommunity.Models {
 
         public HeaderListModel(int? page)
             : base(page) {
-            PerPage = 15;
+            PerPage = Config.GetInt("HeadersPerPage");
             List = GetHeaders();
         }
 
