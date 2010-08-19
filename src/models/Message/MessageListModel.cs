@@ -17,7 +17,7 @@ namespace ITCommunity.Models {
 
         public MessageListModel(int? page)
             : base(page) {
-            PerPage = 20;
+            PerPage = Config.GetInt("MessagesPerPage");
             List = GetMessages();
         }
 

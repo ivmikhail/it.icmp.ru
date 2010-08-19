@@ -13,21 +13,13 @@ namespace ITCommunity.Models {
         private Db.Captcha captcha = new Db.Captcha();
 
         public int QuestionId {
-            get {
-                return captcha.Id;
-            }
-            set {
-                captcha.Id = value;
-            }
+            get { return captcha.Id; }
+            set { captcha.Id = value; }
         }
 
         public string Question {
-            get {
-                return captcha.Question;
-            }
-            set {
-                captcha.Question = value;
-            }
+            get { return captcha.Question; }
+            set { captcha.Question = value; }
         }
 
         [CaptchaAnswer]
