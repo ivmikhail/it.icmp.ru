@@ -2,9 +2,9 @@
 
 
 <%= Html.ActionLink(
-    "посты",
+    "все посты",
     "list",
     "post",
     null,
-    new { title = "Посмотреть посты" }
+    new { title = "Посмотреть все посты" }
  )%>

@@ -3,7 +3,7 @@
 
 <%= Html.ActionLink(
     "сообщения",
-    "unreads",
+    "unreadlist",
     "message",
     null,
     new { 

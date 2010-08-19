@@ -7,8 +7,7 @@
     <% foreach (var userCountPair in Users.GetTopPosters()) { %>        
         <li>
             <% Html.RenderPartial("Link/User/Profile", userCountPair.Key); %>
-            написал всего комментариев:
-            <span class="info"><%= userCountPair.Value %></span>
+            - <span class="info"><%= userCountPair.Value %></span>
         </li>
     <% } %>
 </ul>

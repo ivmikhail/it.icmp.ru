@@ -28,7 +28,7 @@ namespace ITCommunity.Models {
             User.Roles role;
 
             if (Enum.TryParse(_showRole, true, out role)) {
-                return Users.GetByRolePaged(role, Page, PerPage, ref TotalCount);
+                return Users.GetPagedByRole(role, Page, PerPage, ref TotalCount);
             }
 
             return Users.GetPaged(Page, PerPage, ref TotalCount);

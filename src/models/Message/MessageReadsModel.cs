@@ -7,14 +7,14 @@ using ITCommunity.Db.Tables;
 
 namespace ITCommunity.Models {
 
-    public class MessageReadsModel : MessageListModel {
+    public class MessageReadListModel : MessageListModel {
 
-        public MessageReadsModel(int? page)
+        public MessageReadListModel(int? page)
             : base(page) {
         }
 
         protected override List<Message> GetMessages() {
-            return Messages.GetReads(CurrentUser.User.Id, Page, PerPage, ref TotalCount);
+            return Messages.GetRead(CurrentUser.User.Id, Page, PerPage, ref TotalCount);
         }
     }
 }

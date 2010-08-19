@@ -2,7 +2,7 @@
 
 
 <%= Html.ActionLink(
-    "добавить",
+    "избранное",
     "add",
     "favorite",
     new { id = Model.Id },

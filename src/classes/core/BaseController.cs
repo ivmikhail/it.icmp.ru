@@ -46,5 +46,13 @@ namespace ITCommunity.Core {
         public AccessDeniedResult AccessDenied() {
             return new AccessDeniedResult();
         }
+
+        /// <summary>
+        /// Происходит редирект в реферрер
+        /// </summary>
+        /// <returns></returns>
+        public RedirectResult Redirect() {
+            return Redirect(Request.UrlReferrer.ToString());
+        }
     }
 }

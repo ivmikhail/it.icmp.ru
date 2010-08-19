@@ -3,7 +3,7 @@
 
 <%= Html.ActionLink(
     "новые",
-    "unreads",
+    "unreadlist",
     "message",
     null,
     new { title = "Полученные не прочитанные сообщения" }

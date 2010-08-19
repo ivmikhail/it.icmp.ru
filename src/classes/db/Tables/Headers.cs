@@ -10,8 +10,8 @@ namespace ITCommunity.Db.Tables {
 
         public const string CACHE_KEY = "ActualHeaders";
 
-        public static List<Header> Actuals {
-            get { return AppCache.Get(CACHE_KEY, GetActuals); }
+        public static List<Header> Actual {
+            get { return AppCache.Get(CACHE_KEY, GetActual); }
         }
 
         public static Header Add(Header header) {
@@ -71,7 +71,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Header> GetActuals() {
+        public static List<Header> GetActual() {
             using (var db = Database.Connect()) {
                 var headers =
                     from hea in db.Headers
@@ -83,13 +83,13 @@ namespace ITCommunity.Db.Tables {
         }
 
         public static Header GetRandom() {
-            if (Actuals.Count == 0) {
+            if (Actual.Count == 0) {
                 var header = new Header();
                 header.Text = string.Format(Config.Get("HeaderDefaultFormat"), CurrentUser.User.Nick);
                 return header;
             }
 
-            return Actuals.Random();
+            return Actual.Random();
         }
 
         public static List<Header> GetPaged(int page, int count, ref int totalCount) {

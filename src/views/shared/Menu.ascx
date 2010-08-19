@@ -14,9 +14,9 @@
         </li>
     <% } %>
     <li>
-        <% Html.RenderPartial("Link/Post/Discussibles"); %>
+        <% Html.RenderPartial("Link/Post/DiscussibleList"); %>
     </li>
     <li>
-        <% Html.RenderPartial("Link/Post/Populars"); %>
+        <% Html.RenderPartial("Link/Post/PopularList"); %>
     </li>
 </ul>

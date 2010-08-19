@@ -7,14 +7,14 @@ using ITCommunity.Db.Tables;
 
 namespace ITCommunity.Models {
 
-    public class MessageUnreadsModel : MessageListModel {
+    public class MessageUnreadListModel : MessageListModel {
 
-        public MessageUnreadsModel(int? page)
+        public MessageUnreadListModel(int? page)
             : base(page) {
         }
 
         protected override List<Message> GetMessages() {
-            return Messages.GetUnreads(CurrentUser.User.Id, Page, PerPage, ref TotalCount);
+            return Messages.GetUnread(CurrentUser.User.Id, Page, PerPage, ref TotalCount);
         }
     }
 }

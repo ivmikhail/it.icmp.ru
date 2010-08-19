@@ -46,7 +46,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Message> GetUnreads(int userId, int page, int count, ref int totalCount) {
+        public static List<Message> GetUnread(int userId, int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
@@ -61,7 +61,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static int GetUnreadsCount(int userId) {
+        public static int GetUnreadCount(int userId) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
@@ -75,7 +75,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Message> GetReads(int userId, int page, int count, ref int totalCount) {
+        public static List<Message> GetRead(int userId, int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
@@ -90,7 +90,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Message> GetSents(int userId, int page, int count, ref int totalCount) {
+        public static List<Message> GetSent(int userId, int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
@@ -105,7 +105,7 @@ namespace ITCommunity.Db.Tables {
         }
 
 
-        public static void SetDeletedAllUnreads(int userId) {
+        public static void SetDeletedAllUnread(int userId) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
@@ -124,7 +124,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static void ReadAllUnreads(int userId) {
+        public static void ReadAllUnread(int userId) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
@@ -143,7 +143,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static void SetDeletedAllReads(int userId) {
+        public static void SetDeletedAllRead(int userId) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
@@ -162,7 +162,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static void SetDeletedAllSents(int userId) {
+        public static void SetDeletedAllSent(int userId) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages

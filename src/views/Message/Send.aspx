@@ -21,7 +21,7 @@
 
         <%= Html.LabelFor(m => m.Text) %>
         <% Html.RenderPartial("EditorToolbar"); %>
-        <%= Html.TextAreaFor(m => m.Text, new { @class = "message-textarea" })%>
+        <%= Html.TextAreaFor(m => m.Text)%>
         <%= Html.ValidationMessageFor(m => m.Text) %>
 
         <input type="submit" value="отправить" />                

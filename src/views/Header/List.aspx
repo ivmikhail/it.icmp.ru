@@ -32,7 +32,12 @@
                         добавил <span class="info"><%= header.CreateDate.ToString("dd MMMM yyyy, HH:mm") %></span>
                     </li>
                     <li>
-                        показывается до <span class="info"><%= header.EndDate.Value.ToString("dd MMMM yyyy, HH:mm") %></span>
+                        <% if (header.EndDate > DateTime.Now) { %>
+                            показывается
+                        <% } else { %>
+                            показывался
+                        <% } %>
+                        до <span class="info"><%= header.EndDate.Value.ToString("dd MMMM yyyy, HH:mm") %></span>
                     </li>
                 </ul>
                 <ul class="right-list meta">

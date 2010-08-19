@@ -32,7 +32,7 @@
     <%= Html.ValidationSummary(true, "Вы неправильно ввели ник или пароль, попробуйте еще") %>
 
     <h2>
-        Если у Вас нет аккаунта, то всегда можете <% Html.RenderPartial("Link/User/Register"); %>
+        Введите ник и пароль
     </h2>
 
 </asp:Content>
