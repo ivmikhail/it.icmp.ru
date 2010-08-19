@@ -31,7 +31,9 @@ namespace ITCommunity.Db.Tables {
                 db.SubmitChanges();
 
                 comment.Post.CommentsCount++;
-                comment.Author.CommentsCount++;
+                if (comment.Author != null) {
+                    comment.Author.CommentsCount++;
+                }
                 db.SubmitChanges();
 
                 return comment;

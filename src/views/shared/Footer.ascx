@@ -23,6 +23,7 @@
 <div class="footer-bottom">
 
     <ul class="counters">
+        <li></li>
     </ul>
 
     <div class="copy">

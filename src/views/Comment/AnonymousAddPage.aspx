@@ -7,7 +7,7 @@
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
     
-    <h1><%= Html.ValidationSummary() %></h1>
+    <h1>Добавление комментария</h1>
     
     <% Html.RenderPartial("AnonymousAdd", Model); %>
 

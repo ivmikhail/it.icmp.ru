@@ -109,12 +109,12 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[code\]((.|\n)*?)\[/code\]", "<pre><code>$1</code></pre>"));
             _formatters.Add(new RegexFormatter(@"\[code=(.*?)\]((.|\n)*?)\[/code\]", "<pre><code class=\"$1\">$2</code></pre>"));
 
-            _formatters.Add(new RegexFormatter(@"\[url\]www\.(.*?)\[/url\]", "<a class=\"bbcode-link\" href=\"http://www.$1\" target=\"_blank\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" target=\"_blank\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url=""((.|\n)*?)""\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" target=\"_blank\" title=\"$1\">$3</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url=((.|\n)*?)\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" target=\"_blank\" title=\"$1\">$3</a>"));
-            _formatters.Add(new RegexFormatter(@"\[link\]((.|\n)*?)\[/link\]", "<a class=\"bbcode-link\" href=\"$1\" target=\"_blank\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[link=((.|\n)*?)\]((.|\n)*?)\[/link\]", "<a class=\"bbcode-link\" href=\"$1\" target=\"_blank\" title=\"$1\">$3</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url\]www\.(.*?)\[/url\]", "<a class=\"bbcode-link\" href=\"http://www.$1\" title=\"$1\">$1</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$1</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url=""((.|\n)*?)""\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$3</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url=((.|\n)*?)\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$3</a>"));
+            _formatters.Add(new RegexFormatter(@"\[link\]((.|\n)*?)\[/link\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$1</a>"));
+            _formatters.Add(new RegexFormatter(@"\[link=((.|\n)*?)\]((.|\n)*?)\[/link\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$3</a>"));
 
             _formatters.Add(new RegexFormatter(@"\[popup=((.|\n)*?)\]((.|\n)*?)\[/popup\]", "<a href=\"javascript:popup('$1')\" >$3</a>"));
 
@@ -128,9 +128,9 @@ namespace ITCommunity.Utils {
             }
             imgPattern = imgPattern.Substring(0, imgPattern.Length - 1);
             imgPattern += "))/[^ \"'\\[]*?)";
-            _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)px\]" + imgPattern + @"\[/img\]", "<img width=\"$1px\" height=\"$3px\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+            _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" alt=\"\" class=\"bbcode-img\" />"));
+            _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img src=\"$3\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
+            _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)px\]" + imgPattern + @"\[/img\]", "<img width=\"$1px\" height=\"$3px\" src=\"$5\" alt=\"\" class=\"bbcode-img\" />"));
             //_formatters.Add(new RegexFormatter(@"\[img\]((.|\n)*?)\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
             //_formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
             //_formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
