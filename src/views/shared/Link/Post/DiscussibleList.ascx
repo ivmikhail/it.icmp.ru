@@ -3,7 +3,7 @@
 
 <%= Html.ActionLink(
     "обсуждаемые",
-    "discussibles",
+    "discussiblelist",
     "post",
     new { period = "week" },
     new { title = "Посмотреть обсуждаемые за последнюю неделю посты" }

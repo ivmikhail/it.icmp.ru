@@ -66,9 +66,9 @@ namespace ITCommunity.Models {
 
             switch (Sorting) {
                 case SortBy.Views:
-                    return Posts.GetPagedPopulars(Page, PerPage, ref TotalCount, period);
+                    return Posts.GetPagedPopular(Page, PerPage, ref TotalCount, period);
                 case SortBy.Comments:
-                    return Posts.GetPagedDiscussibles(Page, PerPage, ref TotalCount, period);
+                    return Posts.GetPagedDiscussible(Page, PerPage, ref TotalCount, period);
                 default:
                     return Posts.GetPaged(Page, PerPage, ref TotalCount);
             }

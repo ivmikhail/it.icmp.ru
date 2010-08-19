@@ -3,4 +3,4 @@
 
 <a  href="/post/view/<%= Model.Id %>#cut"
     title="Читать далее"
-    class="main-link">дальше</a>
+    class="main-link">далее</a>

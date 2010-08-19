@@ -1,8 +1,9 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Post>" %>
 
 
+<%-- It looks like ActionLink always uses calls HttpUtility.Encode on the link text --%>
 <%= Html.ActionLink(
-    (Model.TitleFormatted != "") ? Model.TitleFormatted : "Без названия",
+    (Model.Title != "") ? Model.Title : "Без названия",
     "view",
     "post",
     new { id = Model.Id },

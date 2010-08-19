@@ -224,7 +224,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<User> GetByRolePaged(User.Roles role, int page, int count, ref int totalCount) {
+        public static List<User> GetPagedByRole(User.Roles role, int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
                 var users =
                     from usr in db.Users

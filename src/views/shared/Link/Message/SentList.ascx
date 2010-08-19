@@ -3,7 +3,7 @@
 
 <%= Html.ActionLink(
     "отправленные",
-    "sents",
+    "sentlist",
     "message",
     null,
     new { title = "Отправленные сообщения" }

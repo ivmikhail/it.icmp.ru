@@ -28,14 +28,14 @@ namespace ITCommunity {
 
             routes.MapRoute(
                 "PostPopulars",
-                "post/populars/{period}",
-                new { controller = "Post", action = "Populars", period = "All" }
+                "post/popularlist/{period}",
+                new { controller = "Post", action = "PopularList", period = "All" }
             );
 
             routes.MapRoute(
                 "PostDiscussibles",
-                "post/discussibles/{period}",
-                new { controller = "Post", action = "Discussibles", period = "All" }
+                "post/discussiblelist/{period}",
+                new { controller = "Post", action = "DiscussibleList", period = "All" }
             );
 
             routes.MapRoute(

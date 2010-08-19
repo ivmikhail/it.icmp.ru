@@ -3,7 +3,7 @@
 
 
 <%
-    var action = (Model.Sorting == PostListModel.SortBy.Views) ? "populars" : "discussibles";
+    var action = (Model.Sorting == PostListModel.SortBy.Views) ? "popularlist" : "discussiblelist";
 %>
 
 <ul class="right-list meta">

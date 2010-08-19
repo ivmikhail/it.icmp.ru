@@ -1,14 +1,18 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
 
-<h2>Активные постеры</h2>
+<h2>
+    Активные постеры
+    <span class="period">
+        <%= Config.Get("ActivePostersTimeText") %>
+    </span>
+</h2>
 
 <ul>
     <% foreach (var userCountPair in Users.GetActivePosters()) { %>        
         <li>
             <% Html.RenderPartial("Link/User/Profile", userCountPair.Key); %>
-            за <%= Config.Get("ActivePostersTimeText") %> написал постов:
-            <span class="info"><%= userCountPair.Value%></span>
+            - <span class="info"><%= userCountPair.Value%></span>
         </li>
     <% } %>
 </ul>

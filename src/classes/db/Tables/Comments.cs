@@ -8,13 +8,13 @@ namespace ITCommunity.Db.Tables {
 
     public static class Comments {
 
-        public static List<Comment> GetLasts() {
+        public static List<Comment> GetLast() {
             var count = Config.GetInt("LastCommentsCount");
 
-            return AppCache.Get("LastComments", () => GetLasts(count));
+            return AppCache.Get("LastComments", () => GetLast(count));
         }
 
-        public static List<Comment> GetLasts(int count) {
+        public static List<Comment> GetLast(int count) {
             using (var db = Database.Connect()) {
                 var comments =
                     from com in db.Comments

@@ -45,7 +45,7 @@ namespace ITCommunity.Db {
         }
 
         public int UnreadMessagesCount {
-            get { return Messages.GetUnreadsCount(Id); }
+            get { return Messages.GetUnreadCount(Id); }
         }
     }
 }

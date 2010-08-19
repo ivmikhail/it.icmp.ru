@@ -7,8 +7,7 @@
     <% foreach (var user in Users.GetLastRegistered()) { %>        
         <li>
             <% Html.RenderPartial("Link/User/Profile", user); %>
-            - зарегистрирован
-            <span class="info"><%= user.CreateDate.ToString("dd MMMM")%></span>
+            - <span class="info"><%= user.CreateDate.ToString("dd MMMM")%></span>
         </li>
     <% } %>
 </ul>

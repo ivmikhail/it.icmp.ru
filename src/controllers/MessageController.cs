@@ -1,10 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 using ITCommunity.Core;
-using ITCommunity.Db;
 using ITCommunity.Db.Tables;
 using ITCommunity.Models;
-using System;
 
 
 namespace ITCommunity.Controllers {
@@ -26,7 +25,7 @@ namespace ITCommunity.Controllers {
             message.IsReceiverRead = true;
             Messages.UpdateStatuses(message);
 
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect();
         }
 
         [Authorize]
@@ -51,22 +50,22 @@ namespace ITCommunity.Controllers {
         }
 
         [Authorize]
-        public ActionResult Unreads(int? page) {
-            var model = new MessageUnreadsModel(page);
+        public ActionResult UnreadList(int? page) {
+            var model = new MessageUnreadListModel(page);
 
             return View(model);
         }
 
         [Authorize]
-        public ActionResult Reads(int? page) {
-            var model = new MessageReadsModel(page);
+        public ActionResult ReadList(int? page) {
+            var model = new MessageReadListModel(page);
 
             return View(model);
         }
 
         [Authorize]
-        public ActionResult Sents(int? page) {
-            var model = new MessageSentsModel(page);
+        public ActionResult SentList(int? page) {
+            var model = new MessageSentListModel(page);
 
             return View(model);
         }
@@ -91,29 +90,29 @@ namespace ITCommunity.Controllers {
 
             Messages.UpdateStatuses(message);
 
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect();
         }
 
         [Authorize]
         public ActionResult ReadAll() {
-            Messages.ReadAllUnreads(CurrentUser.User.Id);
+            Messages.ReadAllUnread(CurrentUser.User.Id);
 
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect();
         }
 
         [Authorize]
         public ActionResult DeleteAll(string messages) {
-            if (messages.EndsWith("unreads", StringComparison.CurrentCultureIgnoreCase)) {
-                Messages.SetDeletedAllUnreads(CurrentUser.User.Id);
-            } else if (messages.EndsWith("reads", StringComparison.CurrentCultureIgnoreCase)) {
-                Messages.SetDeletedAllReads(CurrentUser.User.Id);
-            } else if (messages.EndsWith("sents", StringComparison.CurrentCultureIgnoreCase)) {
-                Messages.SetDeletedAllSents(CurrentUser.User.Id);
+            if (messages.EndsWith("unread", StringComparison.CurrentCultureIgnoreCase)) {
+                Messages.SetDeletedAllUnread(CurrentUser.User.Id);
+            } else if (messages.EndsWith("read", StringComparison.CurrentCultureIgnoreCase)) {
+                Messages.SetDeletedAllRead(CurrentUser.User.Id);
+            } else if (messages.EndsWith("sent", StringComparison.CurrentCultureIgnoreCase)) {
+                Messages.SetDeletedAllSent(CurrentUser.User.Id);
             } else {
                 return NotFound();
             }
 
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect();
         }
     }
 }

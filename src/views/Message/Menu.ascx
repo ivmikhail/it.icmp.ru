@@ -6,12 +6,12 @@
         <% Html.RenderPartial("Link/Message/Send", User.Anonymous); %>
     </li>
     <li>
-        <% Html.RenderPartial("Link/Message/Unreads"); %>
+        <% Html.RenderPartial("Link/Message/UnreadList"); %>
     </li>
     <li>
-        <% Html.RenderPartial("Link/Message/Reads"); %>
+        <% Html.RenderPartial("Link/Message/ReadList"); %>
     </li>
     <li>
-        <% Html.RenderPartial("Link/Message/Sents"); %>
+        <% Html.RenderPartial("Link/Message/SentList"); %>
     </li>
 </ul>

@@ -32,13 +32,13 @@ namespace ITCommunity.Controllers {
             return View("ListPage", model);
         }
 
-        public ActionResult Populars(string period, int? page) {
+        public ActionResult PopularList(string period, int? page) {
             var model = new PostListModel(PostListModel.SortBy.Views, period, page);
 
             return View(model);
         }
 
-        public ActionResult Discussibles(string period, int? page) {
+        public ActionResult DiscussibleList(string period, int? page) {
             var model = new PostListModel(PostListModel.SortBy.Comments, period, page);
 
             return View(model);

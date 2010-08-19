@@ -198,7 +198,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Post> GetPagedPopulars(int page, int count, ref int postsCount, int days) {
+        public static List<Post> GetPagedPopular(int page, int count, ref int postsCount, int days) {
             using (var db = Database.Connect()) {
                 var posts =
                     from post in db.Posts
@@ -219,7 +219,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Post> GetTopPopulars(int count, int days) {
+        public static List<Post> GetTopPopular(int count, int days) {
             using (var db = Database.Connect()) {
                 var date = DateTime.Now.AddDays(-days);
 
@@ -233,14 +233,14 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Post> GetTopPopulars() {
+        public static List<Post> GetTopPopular() {
             int days = Config.GetInt("PopularPostsDays");
             int count = Config.GetInt("PopularPostsCount");
 
-            return AppCache.Get("PopularPosts", () => GetTopPopulars(count, days));
+            return AppCache.Get("PopularPosts", () => GetTopPopular(count, days));
         }
 
-        public static List<Post> GetPagedDiscussibles(int page, int count, ref int totalCount, int days) {
+        public static List<Post> GetPagedDiscussible(int page, int count, ref int totalCount, int days) {
             using (var db = Database.Connect()) {
                 var posts =
                     from post in db.Posts
@@ -261,7 +261,7 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Post> GetTopDiscussibles(int count, int days) {
+        public static List<Post> GetTopDiscussible(int count, int days) {
             using (var db = Database.Connect()) {
                 var date = DateTime.Now.AddDays(-days);
 
@@ -275,11 +275,11 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static List<Post> GetTopDiscussibles() {
+        public static List<Post> GetTopDiscussible() {
             int days = Config.GetInt("DiscussiblePostsDays");
             int count = Config.GetInt("DiscussiblePostsCount");
 
-            return AppCache.Get("DiscussiblePosts", () => GetTopDiscussibles(count, days));
+            return AppCache.Get("DiscussiblePosts", () => GetTopDiscussible(count, days));
         }
     }
 }
