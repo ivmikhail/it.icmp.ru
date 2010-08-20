@@ -9,8 +9,8 @@ namespace ITCommunity.Models {
 
     public class MenuItemEditModel {
 
-        [Required(ErrorMessage = "Введите Id родидельской ссылки")]
-        [DisplayName("Id родидельской ссылки")]
+        [Required(ErrorMessage = "Введите ID родидельской ссылки")]
+        [DisplayName("ID родительской ссылки")]
         public int ParentId { get; set; }
 
         [Required(ErrorMessage = "Введите название ссылки")]

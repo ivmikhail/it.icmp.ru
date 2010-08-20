@@ -52,7 +52,7 @@
 
 <div class="header-text">
     <a href="/" title="IT Community">
-        <span class="it">IT</span><span class="community">.Community(beta);</span>
+        <span class="it">IT</span>.<span class="community">Community</span>&lt;<span class="in">in</span> <span class="beta">Beta</span>&gt;;
         <span class="text">// <%= Headers.GetRandom().Text %></span>
     </a>
 </div>

@@ -3,13 +3,13 @@
 
 <h3 id="add-comment">Вы - anonymous, <% Html.RenderPartial("Link/User/Login"); %>?</h3>
 
-<% Html.RenderPartial("EditorToolbar"); %>
-
 <% using (Html.BeginForm("anonymousadd", "comment")) { %>
 
     <%= Html.HiddenFor(m => m.PostId) %>
 
     <% Html.RenderPartial("ITCaptcha", Model); %>
+
+    <% Html.RenderPartial("EditorToolbar"); %>
 
     <%= Html.TextAreaFor(m => m.Text) %>
     <%= Html.ValidationMessageFor(m => m.Text) %>

@@ -340,6 +340,7 @@
     <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App.config" />
     <None Include="Classes\Db\Database.dbml.layout">
       <DependentUpon>Database.dbml</DependentUpon>
     </None>

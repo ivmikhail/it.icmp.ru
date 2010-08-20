@@ -2,12 +2,12 @@
 
 
 <asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">
-    Отправка сообщении
+    Отправка сообщения
 </asp:Content>
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h1>Отправка сообщении</h1>
+    <h1>Отправка сообщения</h1>
 
     <% using (Html.BeginForm()) { %>
 
