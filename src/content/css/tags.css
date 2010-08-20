@@ -52,12 +52,17 @@ label {
     display: block;
     margin: 16px 0 4px;
 }
+label.radio {
+    display: inline;
+    margin: 0;
+}
 
 select,
 input {
     font-size: 1.5em;
 }
 
+input[type=radio],
 input[type=checkbox] {
     font-size: 1em;
 }

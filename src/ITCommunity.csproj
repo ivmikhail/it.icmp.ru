@@ -113,6 +113,7 @@
     <Compile Include="Classes\Core\BaseController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Controllers\HeaderController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
@@ -122,6 +123,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Captcha\CaptchaEditModel.cs" />
+    <Compile Include="Models\Captcha\CaptchaListModel.cs" />
     <Compile Include="Models\Category\CategoryEditModel.cs" />
     <Compile Include="Models\Comment\AnonymousCommentAddModel.cs" />
     <Compile Include="Models\Comment\CommentEditModel.cs" />
@@ -173,6 +176,7 @@
     <Content Include="Content\other\greetings_personal.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Captcha\EditAnswers.ascx" />
     <Content Include="Views\Captcha\Edit.aspx" />
     <Content Include="Views\Captcha\List.aspx" />
     <Content Include="Views\Category\List.aspx" />

@@ -8,7 +8,7 @@ namespace ITCommunity.Models {
 
     public class PostEditCategoriesModel {
 
-        public const string SESSION_NAME = "AddCategoriesModel";
+        public const string SESSION_NAME = "PostEditCategories";
 
         public Dictionary<int, bool> IsAttached;
 
@@ -30,6 +30,10 @@ namespace ITCommunity.Models {
             set {
                 HttpContext.Current.Session[SESSION_NAME] = value;
             }
+        }
+
+        public void Clear() {
+            HttpContext.Current.Session.Remove(SESSION_NAME);
         }
     }
 }

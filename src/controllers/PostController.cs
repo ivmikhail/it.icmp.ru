@@ -60,7 +60,6 @@ namespace ITCommunity.Controllers {
                 var post = model.ToPost();
 
                 post = Posts.Add(post);
-                Session.Remove(PostEditCategoriesModel.SESSION_NAME);
 
                 if (CurrentUser.IsAdmin == false) {
                     var user = CurrentUser.User;
@@ -86,10 +85,6 @@ namespace ITCommunity.Controllers {
                 return AccessDenied();
             }
 
-            foreach (var category in post.Categories) {
-                PostEditCategoriesModel.Current.IsAttached[category.Id] = true;
-            }
-
             var model = new PostEditModel(post);
 
             return View(model);
@@ -113,7 +108,6 @@ namespace ITCommunity.Controllers {
                 editedPost.Id = post.Id;
 
                 Posts.Update(editedPost);
-                Session.Remove(PostEditCategoriesModel.SESSION_NAME);
 
                 return RedirectToAction("view", "post", new { id = post.Id });
             }
