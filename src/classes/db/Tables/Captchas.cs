@@ -25,6 +25,16 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
+        public static CaptchaAnswer AddAnswer(CaptchaAnswer answer) {
+            using (var db = Database.Connect()) {
+                db.CaptchaAnswers.InsertOnSubmit(answer);
+                db.SubmitChanges();
+
+                AppCache.Remove(CACHE_KEY);
+                return answer;
+            }
+        }
+
         public static void Delete(int id) {
             using (var db = Database.Connect()) {
                 var captcha = (
@@ -64,17 +74,34 @@ namespace ITCommunity.Db.Tables {
         }
 
         public static Captcha Get(int id) {
-            var captcha = (
-                from cap in All
-                where cap.Id == id
-                select cap
-            ).SingleOrDefault();
+            using (var db = Database.Connect()) {
+                var captcha = (
+                    from cap in db.Captchas
+                    where cap.Id == id
+                    select cap
+                ).SingleOrDefault();
 
-            return captcha;
+                return captcha;
+            }
         }
 
         public static Captcha GetRandom() {
             return All.Random();
+        }
+
+        public static void DeleteAnswer(int id) {
+            using (var db = Database.Connect()) {
+                var answer = (
+                    from ans in db.CaptchaAnswers
+                    where ans.Id == id
+                    select ans
+                ).SingleOrDefault();
+
+                db.CaptchaAnswers.DeleteOnSubmit(answer);
+                db.SubmitChanges();
+
+                AppCache.Remove(CACHE_KEY);
+            }
         }
 
         public static bool IsRightAnswer(int answerId) {
@@ -86,6 +113,29 @@ namespace ITCommunity.Db.Tables {
                 ).SingleOrDefault();
 
                 return (answer != null) ? answer.IsRight : false;
+            }
+        }
+
+        public static List<Captcha> GetPaged(int page, int count, ref int totalCount) {
+            using (var db = Database.Connect()) {
+                var captchas =
+                    from cap in db.Captchas
+                    orderby cap.Id descending
+                    select cap;
+
+                return captchas.Paged(page, count, ref totalCount);
+            }
+        }
+
+        public static int GetIdByAnswer(int answerId) {
+            using (var db = Database.Connect()) {
+                var answer = (
+                    from ans in db.CaptchaAnswers
+                    where ans.Id == answerId
+                    select ans
+                ).SingleOrDefault();
+
+                return answer.Captcha.Id;
             }
         }
     }

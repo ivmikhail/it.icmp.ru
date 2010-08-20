@@ -1,34 +1,51 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="ViewPage<HeaderAddModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="ViewPage<CaptchaEditModel>" %>
 
 
 <asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">
-    Добавление текста для хидера
+    Редактирование капчи
+</asp:Content>
+
+<asp:Content ID="Menu" ContentPlaceHolderID="MenuContent" runat="server">
+    <% Html.RenderPartial("../Admin/Menu"); %>
 </asp:Content>
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h1>Добавление текста для хидера</h1>
+    <h1>Редактирование капчи</h1>
 
     <% using (Html.BeginForm()) { %>
+        <div class="block">
 
-        <div class="meta">
-            Вы можете написать любой текст длиной <span class="info">до <%= ITCommunity.Db.Header.MaxLength%> символов</span>, который будет появляться наверху (в header) сайта. 
-            <br />
-		    Тексты появляются в случайном порядке.
-            <br />
-		    Текст будет <span class="info">жить <%= ITCommunity.Db.Header.ShowingHours%> часов</span> после добавления.
-		    <br />
-		    Запрещена любая реклама, нецензурщина и оскорбления. Несоответствующие требованиям тексты будут удаляться.
-		    <br />
-		    Желательно чтобы текст мог помещаться на одной строке.
+            <%= Html.HiddenFor(m => m.Id) %>
+
+            <%= Html.LabelFor(m => m.Question) %>
+            <%= Html.TextBoxFor(m => m.Question) %>
+            <%= Html.ValidationMessageFor(m => m.Question) %>
+
+            <div id="EditAnswers">
+                <% Html.RenderPartial("EditAnswers", Model.Answers); %>
+            </div>
+            <%= Html.ValidationMessageFor(m => m.RightAnswerId) %>
+
+            <input type="submit" value="сохранить" />
+
         </div>
-
-        <%= Html.LabelFor(m => m.Text) %>
-        <%= Html.TextBoxFor(m => m.Text, new { maxlength = ITCommunity.Db.Header.MaxLength })%>
-        <%= Html.ValidationMessageFor(m => m.Text)%>
-
-        <input type="submit" value="добавить" />                
-
     <% } %>
+
+
+    <h2>Добавить ответ</h2>
+    <% using (Ajax.BeginForm("AddAnswer", new AjaxOptions { UpdateTargetId = "EditAnswers" })) { %>
+        <div>
+
+            <%= Html.Hidden("CaptchaId", Model.Id) %>
+
+            <%= Html.Label("Ответ") %>
+            <%= Html.TextBox("Text") %>
+
+            <input type="submit" value="добавить" />
+
+        </div>
+    <% } %>
+
 
 </asp:Content>

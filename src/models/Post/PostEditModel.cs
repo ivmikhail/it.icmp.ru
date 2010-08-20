@@ -38,6 +38,11 @@ namespace ITCommunity.Models {
             Text = post.Text;
             Source = post.Source;
             IsAttached = post.IsAttached;
+
+            foreach (var category in post.Categories) {
+                PostEditCategoriesModel.Current.Clear();
+                PostEditCategoriesModel.Current.IsAttached[category.Id] = true;
+            }
         }
 
         public Post ToPost() {
@@ -55,6 +60,8 @@ namespace ITCommunity.Models {
                     post.PostsCategories.Add(new PostsCategory { CategoryId = isAttached.Key });
                 }
             }
+
+            PostEditCategoriesModel.Current.Clear();
 
             return post;
         }
