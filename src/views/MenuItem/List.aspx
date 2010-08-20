@@ -17,6 +17,9 @@
         <% using (Html.BeginForm()) { %>
 
             <%= Html.LabelFor(m => m.ParentId) %>
+            <div class="meta">
+                eсли указать ID родительского меню равным 0, то данный пункт будет сам родителем
+            </div>
             <%= Html.TextBoxFor(m => m.ParentId)%>
             <%= Html.ValidationMessageFor(m => m.ParentId)%>
 
