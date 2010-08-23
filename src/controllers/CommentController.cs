@@ -16,7 +16,7 @@ namespace ITCommunity.Controllers {
 
                 comment = Comments.Add(comment);
 
-                return Redirect("/pst/view/" + comment.PostId + "#comment-" + comment.Id);
+                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
             model.NewCaptcha();
@@ -31,7 +31,7 @@ namespace ITCommunity.Controllers {
 
                 comment = Comments.Add(comment);
 
-                return Redirect("/pst/view/" + comment.PostId + "#comment-" + comment.Id);
+                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
             return View("AddPage", model);
@@ -79,7 +79,7 @@ namespace ITCommunity.Controllers {
                 editedComment.Id = id.Value;
                 Comments.Update(editedComment);
 
-                return Redirect("/pst/view/" + comment.PostId + "#comment-" + comment.Id);
+                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
             return View("EditPage", model);
