@@ -2,7 +2,7 @@
 
 
 <h2>
-    Обсуждаемые
+    <% Html.RenderPartial("Link/Post/DiscussibleList"); %>
     <span class="period">
         <%= Config.Get("DiscussiblePostsTimeText")%>
     </span>

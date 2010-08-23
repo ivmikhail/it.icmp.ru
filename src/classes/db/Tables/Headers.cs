@@ -4,7 +4,7 @@ using System.Linq;
 
 using ITCommunity.Core;
 
-namespace ITCommunity.Db.Tables {
+namespace ITCommunity.DB.Tables {
 
     public static class Headers {
 
@@ -16,7 +16,6 @@ namespace ITCommunity.Db.Tables {
 
         public static Header Add(Header header) {
             using (var db = Database.Connect()) {
-
                 db.Headers.InsertOnSubmit(header);
                 db.SubmitChanges();
 
@@ -74,9 +73,9 @@ namespace ITCommunity.Db.Tables {
         public static List<Header> GetActual() {
             using (var db = Database.Connect()) {
                 var headers =
-                    from hea in db.Headers
-                    where hea.EndDate > DateTime.Now
-                    select hea;
+                    from hdr in db.Headers
+                    where hdr.EndDate > DateTime.Now
+                    select hdr;
 
                 return headers.ToList();
             }

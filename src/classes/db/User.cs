@@ -1,8 +1,8 @@
 using ITCommunity.Core;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 
 
-namespace ITCommunity.Db {
+namespace ITCommunity.DB {
 
     /// <summary>
     /// Пользователь хранящийся в БД

@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 
 using ITCommunity.Core;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 using ITCommunity.Models;
 
 
@@ -18,7 +18,7 @@ namespace ITCommunity.Controllers {
 
             if (post != null) {
                 if (CurrentUser.User.Id != post.AuthorId) {
-                    Posts.IncViews(post.Id);
+                    Posts.IncViews(post);
                 }
                 return View(post);
             }

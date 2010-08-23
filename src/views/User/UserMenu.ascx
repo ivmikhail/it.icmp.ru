@@ -5,10 +5,16 @@
     <li>
         <% Html.RenderPartial("Link/User/Profile", Model); %>
     </li>
-    <% if (CurrentUser.IsAuth && CurrentUser.User.Id != Model.Id) { %>
-        <li>
-            <% Html.RenderPartial("Link/Message/Send", Model); %>
-        </li>
+    <% if (CurrentUser.IsAuth) { %>
+        <% if (CurrentUser.User.Id != Model.Id) { %>
+            <li>
+                <% Html.RenderPartial("Link/Message/Send", Model); %>
+            </li>
+        <% } else { %>
+            <li>
+                <% Html.RenderPartial("Link/User/Edit", Model); %>
+            </li>
+        <% } %>
     <% } %>
     <li>
         <% Html.RenderPartial("Link/User/Posts", Model); %>

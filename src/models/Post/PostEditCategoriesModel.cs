@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web;
 
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 
 
 namespace ITCommunity.Models {

@@ -15,6 +15,7 @@ namespace ITCommunity.Core {
         public override void ExecuteResult(ControllerContext context) {
             base.ExecuteResult(context);
             context.HttpContext.Response.StatusCode = 404;
+            Logger.Log.Info("Страница не найдена: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + context.HttpContext.Request.Url);
         }
     }
 
@@ -31,12 +32,14 @@ namespace ITCommunity.Core {
 
         public override void ExecuteResult(ControllerContext context) {
             base.ExecuteResult(context);
-            context.HttpContext.Response.StatusCode = 401;
+            context.HttpContext.Response.StatusCode = 403;
+            Logger.Log.Info("Попытка взлома: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + context.HttpContext.Request.Url);
         }
     }
 
     #endregion
 
+    [ValidateInput(false)]
     public class BaseController : Controller {
 
         public NotFoundResult NotFound() {

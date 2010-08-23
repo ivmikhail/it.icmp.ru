@@ -6,12 +6,10 @@ namespace ITCommunity.Models {
 
     public class UserLoginModel : UserNickModel {
 
-        [Required(ErrorMessage = "Введите пароль")]
         [DisplayName("Пароль")]
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Введите пароль")]
         public string Password { get; set; }
 
-        [DisplayName("Запомнить?")]
         public bool RememberMe { get; set; }
 
     }

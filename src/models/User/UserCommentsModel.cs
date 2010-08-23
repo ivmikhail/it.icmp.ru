@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using ITCommunity.Core;
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
 
 
 namespace ITCommunity.Models {

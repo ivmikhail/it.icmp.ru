@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="ViewUserControl<ITCommunity.Db.MenuItem>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<ITCommunity.DB.MenuItem>" %>
 
 
 <a  href="<%= Model.Url %>"

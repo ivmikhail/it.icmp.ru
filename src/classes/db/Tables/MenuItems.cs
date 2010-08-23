@@ -4,7 +4,7 @@ using System.Linq;
 using ITCommunity.Core;
 
 
-namespace ITCommunity.Db.Tables {
+namespace ITCommunity.DB.Tables {
 
     public static class MenuItems {
 
@@ -60,11 +60,7 @@ namespace ITCommunity.Db.Tables {
 
         public static List<MenuItem> GetAll() {
             using (var db = Database.Connect()) {
-                var items =
-                    from item in db.MenuItems
-                    select item;
-
-                return items.ToList();
+                return db.MenuItems.ToList();
             }
         }
 
@@ -80,20 +76,20 @@ namespace ITCommunity.Db.Tables {
 
         public static List<MenuItem> GetRoot() {
             var items =
-                from item in All
-                where item.ParentId == 0
-                orderby item.Sort ascending
-                select item;
+                from itm in All
+                where itm.ParentId == 0
+                orderby itm.Sort ascending
+                select itm;
 
             return items.ToList();
         }
 
         public static List<MenuItem> GetChilds(int parentId) {
             var childs =
-                from item in All
-                where item.ParentId == parentId
-                orderby item.Sort ascending
-                select item;
+                from itm in All
+                where itm.ParentId == parentId
+                orderby itm.Sort ascending
+                select itm;
 
             return childs.ToList();
         }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 using ITCommunity.Core;
+using ITCommunity.DB;
 
 
 namespace ITCommunity.Models {
@@ -15,13 +16,13 @@ namespace ITCommunity.Models {
         public CommentEditModel() {
         }
 
-        public CommentEditModel(Db.Comment comment) {
+        public CommentEditModel(Comment comment) {
             PostId = comment.PostId;
             Text = comment.Text;
         }
 
-        public Db.Comment ToComment() {
-            var comment = new Db.Comment();
+        public Comment ToComment() {
+            var comment = new Comment();
 
             comment.PostId = PostId;
             comment.Text = Text;

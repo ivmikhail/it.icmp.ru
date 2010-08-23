@@ -2,9 +2,9 @@
 
 
 <%= Html.ActionLink(
-    "популярные",
+    "Популярные",
     "popularlist",
     "post",
-    new { period = "week" },
-    new { title = "Посмотреть популярные за последнюю неделю посты" }
+    new { period = "month" },
+    new { title = "Посмотреть популярные посты" }
 )%>

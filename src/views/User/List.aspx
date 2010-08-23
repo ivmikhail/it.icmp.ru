@@ -64,28 +64,28 @@
                 </ul>
                 <ul class="right-list meta">
                     <li>
-                        <% if (user.Role != ITCommunity.Db.User.Roles.Admin) { %>
+                        <% if (user.Role != ITCommunity.DB.User.Roles.Admin) { %>
                             <% Html.RenderPartial("Link/User/Role/ToAdmin", user); %>
                         <% } else { %>
                             админ
                         <% } %>
                     </li>
                     <li>
-                        <% if (user.Role != ITCommunity.Db.User.Roles.Poster) { %>
+                        <% if (user.Role != ITCommunity.DB.User.Roles.Poster) { %>
                             <% Html.RenderPartial("Link/User/Role/ToPoster", user); %>
                         <% } else { %>
                             постер
                         <% } %>
                     </li>
                     <li>
-                        <% if (user.Role != ITCommunity.Db.User.Roles.User) { %>
+                        <% if (user.Role != ITCommunity.DB.User.Roles.User) { %>
                             <% Html.RenderPartial("Link/User/Role/ToUser", user); %>
                         <% } else { %>
                             юзер
                         <% } %>
                     </li>
                     <li>
-                        <% if (user.Role != ITCommunity.Db.User.Roles.Banned) { %>
+                        <% if (user.Role != ITCommunity.DB.User.Roles.Banned) { %>
                             <% Html.RenderPartial("Link/User/Role/ToBanned", user); %>
                         <% } else { %>
                             забанен

@@ -1,20 +1,20 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
 
 
 namespace ITCommunity.Models {
 
     public class CategoryEditModel {
 
-        [Required(ErrorMessage = "Введите название категории")]
         [DisplayName("Название категории")]
+        [Required(ErrorMessage = "Введите название категории")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Введите порядок сортировки")]
         [DisplayName("Порядок сортировки")]
+        [Required(ErrorMessage = "Введите порядок сортировки")]
         public int Sort { get; set; }
 
         public CategoryEditModel() {

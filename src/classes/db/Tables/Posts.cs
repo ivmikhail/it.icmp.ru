@@ -4,7 +4,7 @@ using System.Linq;
 
 using ITCommunity.Core;
 
-namespace ITCommunity.Db.Tables {
+namespace ITCommunity.DB.Tables {
 
     public static class Posts {
 
@@ -55,14 +55,15 @@ namespace ITCommunity.Db.Tables {
             }
         }
 
-        public static void IncViews(int id) {
+        public static void IncViews(Post targetPost) {
             using (var db = Database.Connect()) {
                 var post = (
                     from pst in db.Posts
-                    where pst.Id == id
+                    where pst.Id == targetPost.Id
                     select pst
                 ).Single();
 
+                targetPost.ViewsCount++;
                 post.ViewsCount++;
                 db.SubmitChanges();
             }
@@ -94,30 +95,30 @@ namespace ITCommunity.Db.Tables {
         /// </summary>
         /// <param name="page">Страница которая нам нужна</param>
         /// <param name="count">Кол-во постов на страницу</param>
-        /// <param name="postsCount">Общее количество постов</param>
+        /// <param name="totalCount">Общее количество постов</param>
         /// <returns>Список постов для данной страницы</returns>
         public static List<Post> GetPaged(int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
-                var attacheds = (
+                var attachedPosts = (
                     from pst in db.Posts
                     where pst.IsAttached
                     orderby pst.CreateDate descending
                     select pst
                 ).ToList();
 
-                var disattcheds =
+                var disattchedPosts =
                     from pst in db.Posts
                     where pst.IsAttached == false
                     orderby pst.CreateDate descending
                     select pst;
 
                 // учитываем прикрипленные посты
-                var disattchedsPaged = disattcheds.Paged(page, count - attacheds.Count, ref totalCount);
-                var attachedsPages = attacheds.Count * totalCount / (count - attacheds.Count);
-                totalCount = totalCount + attachedsPages;
+                var disattchedPostsPaged = disattchedPosts.Paged(page, count - attachedPosts.Count, ref totalCount);
+                var attachedPostsPages = attachedPosts.Count * totalCount / (count - attachedPosts.Count);
+                totalCount = totalCount + attachedPostsPages;
 
-                var posts = attacheds;
-                posts.AddRange(disattchedsPaged);
+                var posts = attachedPosts;
+                posts.AddRange(disattchedPostsPaged);
 
                 return posts;
             }
@@ -129,11 +130,11 @@ namespace ITCommunity.Db.Tables {
         /// <param name="page">Страница которая нам нужна</param>
         /// <param name="count">Кол-во постов на страницу</param>
         /// <param name="categoryId">id категории</param>
-        /// <param name="postsCount">Общее количество постов категории</param>
+        /// <param name="totalCount">Общее количество постов категории</param>
         /// <returns>Список постов категории для данной страницы</returns>
         public static List<Post> GetPagedByCategory(int page, int count, int categoryId, ref int totalCount) {
             using (var db = Database.Connect()) {
-                var attacheds = (
+                var attachedPosts = (
                     from pst in db.Posts
                     from pCat in db.PostsCategories
                     where
@@ -144,7 +145,7 @@ namespace ITCommunity.Db.Tables {
                     select pst
                 ).ToList();
 
-                var disattcheds =
+                var disattchedPosts =
                     from pst in db.Posts
                     from pCat in db.PostsCategories
                     where
@@ -154,10 +155,10 @@ namespace ITCommunity.Db.Tables {
                     orderby pst.CreateDate descending
                     select pst;
 
-                var disattchedsPaged = disattcheds.Paged(page, count - attacheds.Count, ref totalCount);
+                var disattchedPostsPaged = disattchedPosts.Paged(page, count - attachedPosts.Count, ref totalCount);
 
-                var posts = attacheds;
-                posts.AddRange(disattchedsPaged);
+                var posts = attachedPosts;
+                posts.AddRange(disattchedPostsPaged);
 
                 return posts;
             }
@@ -166,13 +167,13 @@ namespace ITCommunity.Db.Tables {
         public static List<Post> GetPagedFavorite(int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
                 var posts =
-                    from post in db.Posts
-                    from favorite in db.Favorites
+                    from pst in db.Posts
+                    from fav in db.Favorites
                     where
-                        favorite.UserId == CurrentUser.User.Id &&
-                        favorite.PostId == post.Id
-                    orderby post.CreateDate descending
-                    select post;
+                        fav.UserId == CurrentUser.User.Id &&
+                        fav.PostId == pst.Id
+                    orderby pst.CreateDate descending
+                    select pst;
 
                 return posts.Paged(page, count, ref totalCount);
             }
@@ -189,10 +190,10 @@ namespace ITCommunity.Db.Tables {
         public static List<Post> GetPagedByUser(int authorId, int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
                 var posts =
-                    from post in db.Posts
-                    where post.AuthorId == authorId
-                    orderby post.CreateDate descending
-                    select post;
+                    from pst in db.Posts
+                    where pst.AuthorId == authorId
+                    orderby pst.CreateDate descending
+                    select pst;
 
                 return posts.Paged(page, count, ref totalCount);
             }
@@ -201,18 +202,18 @@ namespace ITCommunity.Db.Tables {
         public static List<Post> GetPagedPopular(int page, int count, ref int postsCount, int days) {
             using (var db = Database.Connect()) {
                 var posts =
-                    from post in db.Posts
-                    orderby post.ViewsCount descending
-                    select post;
+                    from pst in db.Posts
+                    orderby pst.ViewsCount descending
+                    select pst;
 
                 if (days > 0) {
                     var date = DateTime.Now.AddDays(-days);
 
                     posts =
-                        from post in db.Posts
-                        where post.CreateDate >= date
-                        orderby post.ViewsCount descending
-                        select post;
+                        from pst in db.Posts
+                        where pst.CreateDate >= date
+                        orderby pst.ViewsCount descending
+                        select pst;
                 }
 
                 return posts.Paged(page, count, ref postsCount);
@@ -224,10 +225,10 @@ namespace ITCommunity.Db.Tables {
                 var date = DateTime.Now.AddDays(-days);
 
                 var posts =
-                    from post in db.Posts
-                    where post.CreateDate >= date
-                    orderby post.ViewsCount descending
-                    select post;
+                    from pst in db.Posts
+                    where pst.CreateDate >= date
+                    orderby pst.ViewsCount descending
+                    select pst;
 
                 return posts.Take(count).ToList();
             }
@@ -243,18 +244,18 @@ namespace ITCommunity.Db.Tables {
         public static List<Post> GetPagedDiscussible(int page, int count, ref int totalCount, int days) {
             using (var db = Database.Connect()) {
                 var posts =
-                    from post in db.Posts
-                    orderby post.CommentsCount descending
-                    select post;
+                    from pst in db.Posts
+                    orderby pst.CommentsCount descending
+                    select pst;
 
                 if (days != 0) {
                     var date = DateTime.Now.AddDays(-days);
 
                     posts =
-                        from post in db.Posts
-                        where post.CreateDate >= date
-                        orderby post.CommentsCount descending
-                        select post;
+                        from pst in db.Posts
+                        where pst.CreateDate >= date
+                        orderby pst.CommentsCount descending
+                        select pst;
                 }
 
                 return posts.Paged(page, count, ref totalCount);
@@ -266,10 +267,10 @@ namespace ITCommunity.Db.Tables {
                 var date = DateTime.Now.AddDays(-days);
 
                 var posts =
-                    from post in db.Posts
-                    where post.CreateDate >= date
-                    orderby post.CommentsCount descending
-                    select post;
+                    from pst in db.Posts
+                    where pst.CreateDate >= date
+                    orderby pst.CommentsCount descending
+                    select pst;
 
                 return posts.Take(count).ToList();
             }
@@ -280,6 +281,59 @@ namespace ITCommunity.Db.Tables {
             int count = Config.GetInt("DiscussiblePostsCount");
 
             return AppCache.Get("DiscussiblePosts", () => GetTopDiscussible(count, days));
+        }
+
+        public static List<Post> GetPagedRated(int page, int count, ref int totalCount, int days) {
+            using (var db = Database.Connect()) {
+                var posts =
+                    from pst in db.Posts
+                    from rat in db.Ratings
+                    where
+                        rat.EntityType == Rating.EntityTypes.Post &
+                        rat.EntityId == pst.Id
+                    orderby
+                        rat.Value descending,
+                        pst.CreateDate descending
+                    select pst;
+
+                if (days != 0) {
+                    var date = DateTime.Now.AddDays(-days);
+
+                    posts =
+                        from pst in posts
+                        where pst.CreateDate >= date
+                        select pst;
+                }
+
+                return posts.Paged(page, count, ref totalCount);
+            }
+        }
+
+        public static List<Post> GetTopRated(int count, int days) {
+            using (var db = Database.Connect()) {
+                var date = DateTime.Now.AddDays(-days);
+
+                var posts =
+                    from pst in db.Posts
+                    from rat in db.Ratings
+                    where
+                        rat.EntityType == Rating.EntityTypes.Post &
+                        rat.EntityId == pst.Id &&
+                        pst.CreateDate >= date
+                    orderby
+                        rat.Value descending,
+                        pst.CreateDate descending
+                    select pst;
+
+                return posts.Take(count).ToList();
+            }
+        }
+
+        public static List<Post> GetTopRated() {
+            int days = Config.GetInt("RatedPostsDays");
+            int count = Config.GetInt("RatedPostsCount");
+
+            return AppCache.Get("RatedPosts", () => GetTopRated(count, days));
         }
     }
 }

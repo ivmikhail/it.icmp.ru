@@ -3,13 +3,12 @@
 using ITCommunity.Core;
 
 
-namespace ITCommunity.Db.Tables {
+namespace ITCommunity.DB.Tables {
 
     public static class Favorites {
 
         public static Favorite Add(Favorite favorite) {
             using (var db = Database.Connect()) {
-
                 db.Favorites.InsertOnSubmit(favorite);
                 db.SubmitChanges();
 
@@ -19,7 +18,6 @@ namespace ITCommunity.Db.Tables {
 
         public static void Delete(int postId, int userId) {
             using (var db = Database.Connect()) {
-
                 var favorite = (
                     from fav in db.Favorites
                     where 

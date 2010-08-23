@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 using ITCommunity.Core;
 
 

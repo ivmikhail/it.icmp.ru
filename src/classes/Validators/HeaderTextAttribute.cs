@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using ITCommunity.Core;
-using ITCommunity.Db;
+using ITCommunity.DB;
 
 
 namespace ITCommunity.Validators {

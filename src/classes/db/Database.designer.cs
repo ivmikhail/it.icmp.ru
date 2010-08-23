@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ITCommunity.Db
+namespace ITCommunity.DB
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
@@ -90,7 +90,7 @@ namespace ITCommunity.Db
     #endregion
 		
 		public Database() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["win7"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["Petch-Mobile"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -3422,7 +3422,7 @@ namespace ITCommunity.Db
 		
 		private int _EntityId;
 		
-		private int _EntityType;
+		private Rating.EntityTypes _EntityType;
 		
 		private int _UserId;
 		
@@ -3440,7 +3440,7 @@ namespace ITCommunity.Db
     partial void OnIdChanged();
     partial void OnEntityIdChanging(int value);
     partial void OnEntityIdChanged();
-    partial void OnEntityTypeChanging(int value);
+    partial void OnEntityTypeChanging(Rating.EntityTypes value);
     partial void OnEntityTypeChanged();
     partial void OnUserIdChanging(int value);
     partial void OnUserIdChanged();
@@ -3496,8 +3496,8 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntityType", DbType="Int NOT NULL")]
-		public int EntityType
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntityType", DbType="Int NOT NULL", CanBeNull=false)]
+		public Rating.EntityTypes EntityType
 		{
 			get
 			{
@@ -3645,7 +3645,7 @@ namespace ITCommunity.Db
 		
 		private int _EntityId;
 		
-		private int _EntityType;
+		private Rating.EntityTypes _EntityType;
 		
 		private int _Value;
 		
@@ -3657,7 +3657,7 @@ namespace ITCommunity.Db
     partial void OnIdChanged();
     partial void OnEntityIdChanging(int value);
     partial void OnEntityIdChanged();
-    partial void OnEntityTypeChanging(int value);
+    partial void OnEntityTypeChanging(Rating.EntityTypes value);
     partial void OnEntityTypeChanged();
     partial void OnValueChanging(int value);
     partial void OnValueChanged();
@@ -3708,8 +3708,8 @@ namespace ITCommunity.Db
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntityType", DbType="Int NOT NULL")]
-		public int EntityType
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntityType", DbType="Int NOT NULL", CanBeNull=false)]
+		public Rating.EntityTypes EntityType
 		{
 			get
 			{

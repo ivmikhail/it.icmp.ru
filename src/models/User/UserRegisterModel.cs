@@ -9,25 +9,24 @@ namespace ITCommunity.Models {
     [PropertiesMustMatch("Password", "ConfirmPassword", ErrorMessage = "Пароли не совпадают")]
     public class UserRegisterModel : CaptchaModel {
 
-        [UniqueNick]
-        [Required(ErrorMessage = "Введите Ваш ник")]
         [DisplayName("Ваш ник")]
+        [Required(ErrorMessage = "Введите Ваш ник")]
+        [UniqueNick]
         public string UserNick { get; set; }
 
-        [Required(ErrorMessage = "Введите e-mail")]
         [DisplayName("Email адресс")]
-        [DataType(DataType.EmailAddress)]
+        [Email]
+        [Required(ErrorMessage = "Введите e-mail")]
+        [UniqueEmail]
         public string Email { get; set; }
 
+        [DisplayName("Пароль")]
         [Required(ErrorMessage = "Введите пароль")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "Введите хотя бы 3 символа")]
-        [DisplayName("Пароль")]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Введите повтор пароля")]
         [DisplayName("Повтор паролья")]
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Введите повтор пароля")]
         public string ConfirmPassword { get; set; }
 
     }

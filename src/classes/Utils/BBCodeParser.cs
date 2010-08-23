@@ -79,7 +79,7 @@ namespace ITCommunity.Utils {
             _formatters.Add(new SearchReplaceFormatter("\r", ""));
 
             // убираем все whitespases внутри тегов ббкода
-            _formatters.Add(new RegexFormatter(@"\[\s*(.*?)\s*\]", "[$1]"));
+//            _formatters.Add(new RegexFormatter(@"\[\s*(.*?)\s*\]", "[$1]"));
 
             // убираем whitespases в таблице
             _formatters.Add(new RegexFormatter(@"\s*(\[/?tr.*?\])\s*", "$1"));
@@ -91,10 +91,10 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\s+(\[/list\])", "$1"));
 
             // убираем whitespases после открывающего и до закрывающего ббкода
-            _formatters.Add(new RegexFormatter(@"(\[[^/].*?\])\s*", "$1"));
-            _formatters.Add(new RegexFormatter(@"\s*(\[/.*?\])", "$1"));
+//            _formatters.Add(new RegexFormatter(@"(\[[^/].*?\])\s*", "$1"));
+//            _formatters.Add(new RegexFormatter(@"\s*(\[/.*?\])", "$1"));
 
-            _formatters.Add(new RegexFormatter("\n", "<br />"));
+            _formatters.Add(new RegexFormatter("\n\n", "<hr />"));
 
             _formatters.Add(new RegexFormatter(@"\[b\](.*?)\[/b\]", "<b>$1</b>"));
             _formatters.Add(new RegexFormatter(@"\[i\]((.|\n)*?)\[/i\]", "<i>$1</i>"));
@@ -109,12 +109,12 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[code\]((.|\n)*?)\[/code\]", "<pre><code>$1</code></pre>"));
             _formatters.Add(new RegexFormatter(@"\[code=(.*?)\]((.|\n)*?)\[/code\]", "<pre><code class=\"$1\">$2</code></pre>"));
 
-            _formatters.Add(new RegexFormatter(@"\[url\]www\.(.*?)\[/url\]", "<a class=\"bbcode-link\" href=\"http://www.$1\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url=""((.|\n)*?)""\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$3</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url=((.|\n)*?)\]((.|\n)*?)\[/url\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$3</a>"));
-            _formatters.Add(new RegexFormatter(@"\[link\]((.|\n)*?)\[/link\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[link=((.|\n)*?)\]((.|\n)*?)\[/link\]", "<a class=\"bbcode-link\" href=\"$1\" title=\"$1\">$3</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url\]www\.(.*?)\[/url\]", "<a href=\"http://www.$1\" title=\"$1\">$1</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$1</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url=""((.|\n)*?)""\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url=((.|\n)*?)\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
+            _formatters.Add(new RegexFormatter(@"\[link\]((.|\n)*?)\[/link\]", "<a href=\"$1\" title=\"$1\">$1</a>"));
+            _formatters.Add(new RegexFormatter(@"\[link=((.|\n)*?)\]((.|\n)*?)\[/link\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
 
             _formatters.Add(new RegexFormatter(@"\[popup=((.|\n)*?)\]((.|\n)*?)\[/popup\]", "<a href=\"javascript:popup('$1')\" >$3</a>"));
 
@@ -131,23 +131,23 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" alt=\"\" class=\"bbcode-img\" />"));
             _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img src=\"$3\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
             _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)px\]" + imgPattern + @"\[/img\]", "<img width=\"$1px\" height=\"$3px\" src=\"$5\" alt=\"\" class=\"bbcode-img\" />"));
-            //_formatters.Add(new RegexFormatter(@"\[img\]((.|\n)*?)\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
-            //_formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
-            //_formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+//          _formatters.Add(new RegexFormatter(@"\[img\]((.|\n)*?)\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
+//          _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
+//          _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
 
-            //_formatters.Add(new RegexFormatter(@"\[color=((.|\n)*?)\]((.|\n)*?)\[/color\]", "<span style=\"color=$1;\">$3</span>"));
+//          _formatters.Add(new RegexFormatter(@"\[color=((.|\n)*?)\]((.|\n)*?)\[/color\]", "<span style=\"color=$1;\">$3</span>"));
 
-            _formatters.Add(new RegexFormatter(@"\[hr\]", "<hr />"));
+//          _formatters.Add(new RegexFormatter(@"\[hr\]", "<hr />"));
 
             _formatters.Add(new RegexFormatter(@"\[email\]((.|\n)*?)\[/email\]", "<a href=\"mailto:$1\">$1</a>"));
 
             _formatters.Add(new RegexFormatter(@"\[size=((.|\n)*?)\]((.|\n)*?)\[/size\]", "<span style=\"font-size:$1\">$3</span>"));
-            //_formatters.Add(new RegexFormatter(@"\[font=((.|\n)*?)\]((.|\n)*?)\[/font\]", "<span style=\"font-family:$1;\">$3</span>"));
-            //_formatters.Add(new RegexFormatter(@"\[align=((.|\n)*?)\]((.|\n)*?)\[/align\]", "<span style=\"text-align:$1;\">$3</span>"));
+//          _formatters.Add(new RegexFormatter(@"\[font=((.|\n)*?)\]((.|\n)*?)\[/font\]", "<span style=\"font-family:$1;\">$3</span>"));
+//          _formatters.Add(new RegexFormatter(@"\[align=((.|\n)*?)\]((.|\n)*?)\[/align\]", "<span style=\"text-align:$1;\">$3</span>"));
             _formatters.Add(new RegexFormatter(@"\[float=((.|\n)*?)\]((.|\n)*?)\[/float\]", "<div style=\"float:$1;margin: 10px;\">$3</div>"));
 
 
-            string sListFormat = "<ol class=\"bbcode-list\" style=\"list-style:{0};\">$1</ol>";
+            string sListFormat = "<ol style=\"list-style-type:{0};\">$1</ol>";
 
             _formatters.Add(new RegexFormatter(@"\[\*\]\s*([^\[]*)", "<li>$1</li>"));
             _formatters.Add(new RegexFormatter(@"\[list\]((.|\n)*?)\[/list\]", "<ul class=\"bbcode-list\">$1</ul>"));
@@ -178,8 +178,8 @@ namespace ITCommunity.Utils {
             // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
             _formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]", abundaEvaluator));
 
-            _formatters.Add(new RegexFormatter(@"\[table\]((.|\n)*?)\[/table\]", "<table class='user-table' cellpadding='0' cellspacing='0' width='100%'>$1</table>"));
-            _formatters.Add(new RegexFormatter(@"\[table=([0-9]*%)\]((.|\n)*?)\[/table\]", "<table class='user-table' cellpadding='0' cellspacing='0' width='$1'>$2</table>"));
+            _formatters.Add(new RegexFormatter(@"\[table\]((.|\n)*?)\[/table\]", "<table cellpadding='0' cellspacing='0' width='100%'>$1</table>"));
+            _formatters.Add(new RegexFormatter(@"\[table=([0-9]*%)\]((.|\n)*?)\[/table\]", "<table cellpadding='0' cellspacing='0' width='$1'>$2</table>"));
             _formatters.Add(new RegexFormatter(@"\[tr\]((.|\n)*?)\[/tr\]", "<tr>$1</tr>"));
             _formatters.Add(new RegexFormatter(@"\[td\]((.|\n)*?)\[/td\]", "<td>$1</td>"));
             _formatters.Add(new RegexFormatter(@"\[td=([0-9]*)\]((.|\n)*?)\[/td\]", "<td colspan='$1'>$2</td>"));
@@ -187,7 +187,7 @@ namespace ITCommunity.Utils {
 
         private static string abundaEvaluator(Match match) {
             int videoId;
-            if (!Int32.TryParse(match.Groups[1].Value, out videoId)) {
+            if (Int32.TryParse(match.Groups[1].Value, out videoId) == false) {
                 return "";
             }
             string hash = Hash.CalculateMD5(match.Groups[1].Value).Substring(11, 20);

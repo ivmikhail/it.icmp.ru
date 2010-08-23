@@ -1,6 +1,6 @@
 
 
-namespace ITCommunity.Db {
+namespace ITCommunity.DB {
 
     public partial class Captcha {
 

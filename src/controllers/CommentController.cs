@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 
 using ITCommunity.Core;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 using ITCommunity.Models;
 
 
@@ -16,7 +16,7 @@ namespace ITCommunity.Controllers {
 
                 comment = Comments.Add(comment);
 
-                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
+                return Redirect("/pst/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
             model.NewCaptcha();
@@ -31,7 +31,7 @@ namespace ITCommunity.Controllers {
 
                 comment = Comments.Add(comment);
 
-                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
+                return Redirect("/pst/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
             return View("AddPage", model);
@@ -79,7 +79,7 @@ namespace ITCommunity.Controllers {
                 editedComment.Id = id.Value;
                 Comments.Update(editedComment);
 
-                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
+                return Redirect("/pst/view/" + comment.PostId + "#comment-" + comment.Id);
             }
 
             return View("EditPage", model);
@@ -93,7 +93,7 @@ namespace ITCommunity.Controllers {
 
             Comments.Delete(id.Value);
 
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect();
         }
     }
 }

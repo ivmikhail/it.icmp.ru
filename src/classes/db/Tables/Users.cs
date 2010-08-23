@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using ITCommunity.Core;
 
 
-namespace ITCommunity.Db.Tables {
+namespace ITCommunity.DB.Tables {
 
     public static class Users {
 
@@ -93,16 +93,16 @@ namespace ITCommunity.Db.Tables {
             using (var db = Database.Connect()) {
                 var users = (
                     from usr in db.Users
-                    let postsCount = (
-                        from pst in db.Posts
+                    let cnt = (
+                        from post in db.Posts
                         where
-                            pst.AuthorId == usr.Id &&
-                            pst.CreateDate >= date
-                        select pst
+                            post.AuthorId == usr.Id &&
+                            post.CreateDate >= date
+                        select post
                     ).Count()
-                    orderby postsCount descending
-                    select new { User = usr, PostsCount = postsCount }
-                    ).Take(count);
+                    orderby cnt descending
+                    select new { User = usr, PostsCount = cnt }
+                ).Take(count);
 
                 var result = new Dictionary<User, int>();
 
@@ -125,14 +125,14 @@ namespace ITCommunity.Db.Tables {
             using (var db = Database.Connect()) {
                 var users = (
                     from usr in db.Users
-                    let postsCount = (
-                        from pst in db.Posts
-                        where pst.AuthorId == usr.Id
-                        select pst
+                    let cnt = (
+                        from post in db.Posts
+                        where post.AuthorId == usr.Id
+                        select post
                     ).Count()
-                    orderby postsCount descending
-                    select new { User = usr, PostsCount = postsCount }
-                    ).Take(count);
+                    orderby cnt descending
+                    select new { User = usr, PostsCount = cnt }
+                ).Take(count);
 
                 var result = new Dictionary<User, int>();
 
@@ -156,16 +156,16 @@ namespace ITCommunity.Db.Tables {
             using (var db = Database.Connect()) {
                 var users = (
                     from usr in db.Users
-                    let commentsCount = (
+                    let cnt = (
                         from com in db.Comments
                         where
                             com.AuthorId == usr.Id &&
                             com.CreateDate >= date
                         select com
                     ).Count()
-                    orderby commentsCount descending
-                    select new { User = usr, CommentsCount = commentsCount }
-                    ).Take(count);
+                    orderby cnt descending
+                    select new { User = usr, CommentsCount = cnt }
+                ).Take(count);
 
                 var result = new Dictionary<User, int>();
 
@@ -188,13 +188,13 @@ namespace ITCommunity.Db.Tables {
             using (var db = Database.Connect()) {
                 var users = (
                       from usr in db.Users
-                      let commentsCount = (
+                      let cnt = (
                           from com in db.Comments
                           where com.AuthorId == usr.Id
                           select com
                       ).Count()
-                      orderby commentsCount descending
-                      select new { User = usr, CommentsCount = commentsCount }
+                      orderby cnt descending
+                      select new { User = usr, CommentsCount = cnt }
                     ).Take(count);
 
                 var result = new Dictionary<User, int>();
@@ -233,6 +233,18 @@ namespace ITCommunity.Db.Tables {
                     select usr;
 
                 return users.Paged(page, count, ref totalCount);
+            }
+        }
+
+        public static User GetByEmail(string email) {
+            using (var db = Database.Connect()) {
+                var user = (
+                    from usr in db.Users
+                    where usr.Email.ToLower() == email.ToLower()
+                    select usr
+                ).SingleOrDefault();
+
+                return user ?? User.Anonymous;
             }
         }
     }

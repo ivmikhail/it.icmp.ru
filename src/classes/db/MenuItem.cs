@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 
 
-namespace ITCommunity.Db {
+namespace ITCommunity.DB {
 
     public partial class MenuItem {
 

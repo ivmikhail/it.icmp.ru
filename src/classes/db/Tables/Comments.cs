@@ -4,14 +4,16 @@ using System.Linq;
 using ITCommunity.Core;
 
 
-namespace ITCommunity.Db.Tables {
+namespace ITCommunity.DB.Tables {
 
     public static class Comments {
+
+        public const string LAST_CACHE_KEY = "LastComments";
 
         public static List<Comment> GetLast() {
             var count = Config.GetInt("LastCommentsCount");
 
-            return AppCache.Get("LastComments", () => GetLast(count));
+            return AppCache.Get(LAST_CACHE_KEY, () => GetLast(count));
         }
 
         public static List<Comment> GetLast(int count) {
@@ -36,6 +38,8 @@ namespace ITCommunity.Db.Tables {
                 }
                 db.SubmitChanges();
 
+                AppCache.Remove(LAST_CACHE_KEY);
+
                 return comment;
             }
         }
@@ -50,6 +54,8 @@ namespace ITCommunity.Db.Tables {
 
                 comment.Text = editedComment.Text;
                 db.SubmitChanges();
+
+                AppCache.Remove(LAST_CACHE_KEY);
             }
         }
 
@@ -67,6 +73,8 @@ namespace ITCommunity.Db.Tables {
 
                 db.Comments.DeleteOnSubmit(comment);
                 db.SubmitChanges();
+
+                AppCache.Remove(LAST_CACHE_KEY);
             }
         }
 

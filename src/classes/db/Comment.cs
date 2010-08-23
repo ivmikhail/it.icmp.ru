@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 using System.Web;
 
 using ITCommunity.Core;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 using ITCommunity.Utils;
 
 
-namespace ITCommunity.Db {
+namespace ITCommunity.DB {
 
     public partial class Comment {
 
@@ -35,7 +35,7 @@ namespace ITCommunity.Db {
 
         public bool Editable {
             get {
-                if (!CurrentUser.IsAuth || CurrentUser.User.Id != AuthorId) {
+                if (CurrentUser.IsAuth == false || CurrentUser.User.Id != AuthorId) {
                     return false;
                 }
 

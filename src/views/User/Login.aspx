@@ -10,6 +10,8 @@
 
     <% using (Html.BeginForm()) { %>
 
+        <%= Html.ValidationSummary(true)%>
+
         <%= Html.LabelFor(m => m.UserNick) %>
         <%= Html.TextBoxFor(m => m.UserNick) %>
         <%= Html.ValidationMessageFor(m => m.UserNick) %>
@@ -29,10 +31,8 @@
 
 <asp:Content ID="Sidebar" ContentPlaceHolderID="SidebarContent" runat="server">
 
-    <%= Html.ValidationSummary(true, "Вы неправильно ввели ник или пароль, попробуйте еще") %>
-
     <h2>
-        Введите ник и пароль
+        Если у вас нет аккаунта, вы можете <% Html.RenderPartial("Link/User/Register"); %>
     </h2>
 
 </asp:Content>

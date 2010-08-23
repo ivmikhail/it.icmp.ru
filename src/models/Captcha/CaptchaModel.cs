@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Web.Mvc;
 
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
 using ITCommunity.Validators;
 
 
@@ -10,7 +11,7 @@ namespace ITCommunity.Models {
 
     public abstract class CaptchaModel {
 
-        private Db.Captcha captcha = new Db.Captcha();
+        private Captcha captcha = new Captcha();
 
         public int QuestionId {
             get { return captcha.Id; }

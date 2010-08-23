@@ -1,32 +1,29 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using ITCommunity.Core;
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
 
 
 namespace ITCommunity.Models {
 
     public class PostEditModel {
 
-        [Required(ErrorMessage = "Напишите заголовок поста")]
         [DisplayName("Заголовок поста")]
+        [Required(ErrorMessage = "Напишите заголовок поста")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Напишите краткое описание")]
         [DisplayName("Краткое описание")]
+        [Required(ErrorMessage = "Напишите краткое описание")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Напишите текст")]
         [DisplayName("Текст")]
+        [Required(ErrorMessage = "Напишите текст")]
         public string Text { get; set; }
 
         [DisplayName("Источник")]
         public string Source { get; set; }
 
-        [DisplayName("Закрепленный пост")]
         public bool IsAttached { get; set; }
 
         public PostEditModel() {
@@ -65,6 +62,5 @@ namespace ITCommunity.Models {
 
             return post;
         }
-
     }
 }

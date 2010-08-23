@@ -8,9 +8,9 @@ namespace ITCommunity.Models {
 
     public class UserNickModel {
 
-        [UserNick]
-        [Required(ErrorMessage = "Введите Ваш ник")]
         [DisplayName("Ваш ник")]
+        [Required(ErrorMessage = "Введите Ваш ник")]
+        [UserNick]
         public string UserNick { get; set; }
 
     }

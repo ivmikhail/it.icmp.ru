@@ -12,11 +12,15 @@
         <li>
             <% Html.RenderPartial("Link/Favorite/Posts"); %>
         </li>
+    <% } else { %>
+        <li>
+            <% Html.RenderPartial("Link/User/Login"); %>
+        </li>
+        <li>
+            <% Html.RenderPartial("Link/User/Register"); %>
+        </li>
+        <li>
+            <% Html.RenderPartial("Link/User/ForgotPassword"); %>
+        </li>
     <% } %>
-    <li>
-        <% Html.RenderPartial("Link/Post/DiscussibleList"); %>
-    </li>
-    <li>
-        <% Html.RenderPartial("Link/Post/PopularList"); %>
-    </li>
 </ul>

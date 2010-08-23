@@ -31,9 +31,11 @@
                         <li>
                             просмотров: <b class="info">~<%= post.ViewsCount %></b>
                         </li>
-                        <li>
-                            рейтинг: <b class="rating-none">0</b>
-                        </li>
+                        <% if (post.Rating.IsRated) { %>
+                            <li>
+                                <% Html.RenderPartial("../Rating/Rated", post.Rating); %>
+                            </li>
+                        <% } %>
                     </ul>
 
                     <ul class="left-list">

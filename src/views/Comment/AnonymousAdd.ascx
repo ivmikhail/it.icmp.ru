@@ -7,7 +7,7 @@
 
     <%= Html.HiddenFor(m => m.PostId) %>
 
-    <% Html.RenderPartial("ITCaptcha", Model); %>
+    <% Html.RenderPartial("../Captcha/Captcha", Model); %>
 
     <% Html.RenderPartial("EditorToolbar"); %>
 

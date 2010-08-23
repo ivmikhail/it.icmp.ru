@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 using ITCommunity.Core;
+using ITCommunity.DB;
 
 
 namespace ITCommunity.Models {
@@ -12,8 +13,8 @@ namespace ITCommunity.Models {
         [Required(ErrorMessage = "Введите текст комментария")]
         public string Text { get; set; }
 
-        public Db.Comment ToComment() {
-            var comment = new Db.Comment();
+        public Comment ToComment() {
+            var comment = new Comment();
 
             comment.PostId = PostId;
             comment.Text = Text;

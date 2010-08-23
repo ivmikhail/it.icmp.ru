@@ -8,7 +8,7 @@ using System.Web.Routing;
 using System.Web.Security;
 
 using ITCommunity.Core;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 
 
 namespace ITCommunity {
@@ -41,7 +41,7 @@ namespace ITCommunity {
             routes.MapRoute(
                 "UserList",
                 "user/list/{role}",
-                new { controller = "User", action = "List", role = "all" }
+                new { controller = "User", action = "List", role = "All" }
             );
 
             routes.MapRoute(
