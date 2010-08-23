@@ -2,8 +2,8 @@ using System;
 using System.Web;
 using System.Web.Security;
 
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
 
 
 namespace ITCommunity.Core {
@@ -89,7 +89,7 @@ namespace ITCommunity.Core {
             var user = Users.Get(nick);
             var hashedPass = HashPassword(password, nick);
 
-			if (!user.IsAnonymous && user.Password == hashedPass) {
+			if (user.IsAnonymous == false && user.Password == hashedPass) {
                 HttpContext.Current.Session[SESSION_NAME] = user;
 
 				var ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout);;

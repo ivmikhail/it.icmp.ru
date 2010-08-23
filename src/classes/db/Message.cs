@@ -3,7 +3,7 @@ using System.Web;
 using ITCommunity.Utils;
 
 
-namespace ITCommunity.Db {
+namespace ITCommunity.DB {
 
     public partial class Message {
 

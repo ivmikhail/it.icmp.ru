@@ -1,0 +1,98 @@
+/* стили ссылок */
+
+#content .main-link {
+	font-size: 1.375em;
+}
+
+#header .important-link,
+#content .important-link {
+    color: #eb5e5e;
+}
+#header .important-link:hover,
+#content .important-link:hover {
+    color: #e91111;
+}
+
+#sidebar .category-link,
+#content .category-link {
+    color: #2b91af;
+}
+#sidebar .category-link:hover,
+#content .category-link:hover {
+	color: #006f83;
+}
+
+#menu .user-link,
+#sidebar .user-link,
+#content .user-link {
+	color: #30a030;
+	font-style: italic;
+}
+#menu .user-link:hover,
+#sidebar .user-link:hover,
+#content .user-link:hover {
+	color: #006000;
+}
+
+#content .page-link {
+    border-bottom: 1px dotted;
+    text-decoration: none;
+}
+#content .page-link:hover {
+    border-bottom: none;
+}
+
+#footer .up-arrow,
+#header .down-arrow {
+    display: block;
+    float: left;
+    font-size: 6em;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    width: 4%;
+}
+#footer .up-arrow:hover,
+#header .down-arrow:hover {
+    color: #999999;
+}
+#footer .up-arrow {
+    color: #bbbbbb;
+}
+#header .down-arrow {
+    color: #d0d0d0;
+    margin-top: 0.7em;
+}
+
+#content .rating-negative {
+	color: #c03030;
+}
+#content .rating-positive {
+	color: #008000;
+}
+#content .rating-negative:hover {
+	color: #f06060;
+}
+#content .rating-positive:hover {
+	color: #30a030;
+}
+
+/* стили нужные для отображения выбора категорий при добавлении и редактировании поста */
+
+#content .select-categories li {
+    display: inline;
+    padding-right: 12px;
+    line-height: 1.5em;
+}
+#content .select-categories .attached-category {
+    color: #2b91af;
+}
+#content .select-categories .attached-category:hover {
+	color: #006f83;
+}
+#content .select-categories .disattached-category {
+    color: #999999;
+}
+#content .select-categories .disattached-category:hover {
+	color: #2b91af;
+}

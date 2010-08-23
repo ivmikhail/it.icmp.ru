@@ -9,9 +9,9 @@
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="block">
-        <h2>
+        <h1>
             <%= Model.TitleFormatted %>
-        </h2>
+        </h1>
 
         <div class="text">
             <%= Model.DescriptionFormatted %>
@@ -33,9 +33,15 @@
                 <li>
                     просмотров: <b class="info">~<%= Model.ViewsCount%></b>
                 </li>
-                <li>
-                    рейтинг: <b class="rating-none">0</b>
-                </li>
+                <% if (CurrentUser.IsAuth) { %>
+                    <li>
+                        <% if (Model.Rating.IsRated) { %>
+                            <% Html.RenderPartial("../Rating/Rated", Model.Rating); %>
+                        <% } else { %>
+                            <% Html.RenderPartial("../Rating/Rate", Model.Rating); %>
+                        <% } %>
+                    </li>
+                <% } %>
             </ul>
 
             <ul class="left-list">

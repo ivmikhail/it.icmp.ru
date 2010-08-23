@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 using ITCommunity.Core;
-using ITCommunity.Db;
+using ITCommunity.DB;
 using ITCommunity.Validators;
 
 
@@ -12,9 +12,9 @@ namespace ITCommunity.Models {
 
     public class HeaderAddModel {
 
-        [Required(ErrorMessage = "Введите текст хидера")]
-        [HeaderText]
         [DisplayName("Текст хидера")]
+        [HeaderText]
+        [Required(ErrorMessage = "Введите текст хидера")]
         public string Text { get; set; }
 
         public Header ToHeader() {

@@ -1,7 +1,7 @@
 using System;
 using System.Net.Mail;
 
-using ITCommunity.Db;
+using ITCommunity.DB;
 
 
 namespace ITCommunity.Core {

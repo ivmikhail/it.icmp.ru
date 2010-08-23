@@ -10,6 +10,8 @@
 
     <% using (Html.BeginForm()) { %>
 
+        <%= Html.ValidationSummary(true) %>
+
         <%= Html.LabelFor(m => m.UserNick) %>
         <%= Html.TextBoxFor(m => m.UserNick) %>
         <%= Html.ValidationMessageFor(m => m.UserNick) %>
@@ -21,8 +23,6 @@
 
 <asp:Content ID="SendSidebar" ContentPlaceHolderID="SidebarContent" runat="server">    
     
-    <%= Html.ValidationSummary(true, "Письмо не отправлено. Попробуйте еще раз. Если все равно не работает, обратитесь к администрации") %>
-
     <h2>
         Введите Ваш ник, ссылка для сброса пароля будет отправлена на ваш e-mail указанный при регистрации
     </h2>

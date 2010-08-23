@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<ITCommunity.Db.Comment>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<ITCommunity.DB.Comment>" %>
 
 
 <a  href="/post/view/<%= Model.PostId %>#comment-<%= Model.Id %>"

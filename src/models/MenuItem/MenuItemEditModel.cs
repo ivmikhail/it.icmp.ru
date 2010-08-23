@@ -1,28 +1,28 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
 
 
 namespace ITCommunity.Models {
 
     public class MenuItemEditModel {
 
-        [Required(ErrorMessage = "Введите ID родидельской ссылки")]
         [DisplayName("ID родительской ссылки")]
+        [Required(ErrorMessage = "Введите ID родидельской ссылки")]
         public int ParentId { get; set; }
 
-        [Required(ErrorMessage = "Введите название ссылки")]
         [DisplayName("Название ссылки")]
+        [Required(ErrorMessage = "Введите название ссылки")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Введите URL ссылки")]
         [DisplayName("URL ссылки")]
+        [Required(ErrorMessage = "Введите URL ссылки")]
         public string Url { get; set; }
 
-        [Required(ErrorMessage = "Введите порядок сортировки")]
         [DisplayName("Порядок сортировки")]
+        [Required(ErrorMessage = "Введите порядок сортировки")]
         public int Sort { get; set; }
 
         public MenuItemEditModel() {

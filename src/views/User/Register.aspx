@@ -10,6 +10,8 @@
 
     <% using (Html.BeginForm()) { %>
 
+        <%= Html.ValidationSummary(true) %>
+
         <%= Html.LabelFor(m => m.UserNick) %>
         <%= Html.TextBoxFor(m => m.UserNick) %>
         <%= Html.ValidationMessageFor(m => m.UserNick) %>
@@ -26,7 +28,7 @@
         <%= Html.PasswordFor(m => m.ConfirmPassword) %>
         <%= Html.ValidationMessageFor(m => m.ConfirmPassword) %>
                 
-        <% Html.RenderPartial("ITCaptcha", Model); %>
+        <% Html.RenderPartial("../Captcha/Captcha", Model); %>
 
         <input type="submit" value="зарегистрироваться" />
     <% } %>
@@ -34,10 +36,13 @@
 </asp:Content>
 
 <asp:Content ID="Sidebar" ContentPlaceHolderID="SidebarContent" runat="server">
+
     <h2>
         Заполните все поля для регистрации, пожалуйста
     </h2>
+
     <h2>
         Длина пароля должен быть не меньше двух символов
     </h2>
+
 </asp:Content>

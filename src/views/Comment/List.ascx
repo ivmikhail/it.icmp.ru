@@ -31,7 +31,7 @@
 
             <div class="clear"></div>
                 
-            <div class="comment-text">
+            <div class="text">
                 <%= comment.TextFormatted %> 
             </div>
         </li>

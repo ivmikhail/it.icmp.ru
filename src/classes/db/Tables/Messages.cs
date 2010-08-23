@@ -5,7 +5,7 @@ using System.Linq;
 using ITCommunity.Core;
 
 
-namespace ITCommunity.Db.Tables {
+namespace ITCommunity.DB.Tables {
 
     public static class Messages {
 
@@ -103,7 +103,6 @@ namespace ITCommunity.Db.Tables {
                 return messages.Paged(page, count, ref totalCount);
             }
         }
-
 
         public static void SetDeletedAllUnread(int userId) {
             using (var db = Database.Connect()) {

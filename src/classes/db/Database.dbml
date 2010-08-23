@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="itc" EntityNamespace="ITCommunity.Db" ContextNamespace="ITCommunity.Db" Class="Database" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=WIN7\SQLEXPRESS;Initial Catalog=itc;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="win7" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="itc" EntityNamespace="ITCommunity.DB" ContextNamespace="ITCommunity.DB" Class="Database" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=PETCH-MOBILE\SQLEXPRESS;Initial Catalog=itc-mvc;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Petch-Mobile" Provider="System.Data.SqlClient" />
   <Table Name="dbo.CaptchaAnswers" Member="CaptchaAnswers">
     <Type Name="CaptchaAnswer">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -156,7 +156,7 @@
     <Type Name="RatingLog">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="EntityId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="EntityType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntityType" Type="Rating.EntityTypes" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Value" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
@@ -167,7 +167,7 @@
     <Type Name="Rating">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="EntityId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="EntityType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntityType" Type="Rating.EntityTypes" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Value" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>

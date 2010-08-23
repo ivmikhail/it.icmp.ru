@@ -51,7 +51,7 @@ namespace ITCommunity.Modules {
             if (File.Exists(_commonsPath)) {
                 string[] lines = File.ReadAllLines(_commonsPath, Encoding.GetEncoding(1251));
                 foreach (var line in lines) {
-                    if (!line.StartsWith(";")) {
+                    if (line.StartsWith(";") == false) {
                         greetings.Add(line);
                     }
                 }
@@ -66,7 +66,7 @@ namespace ITCommunity.Modules {
             if (File.Exists(_personalsPath)) {
                 string[] lines = File.ReadAllLines(_personalsPath, Encoding.GetEncoding(1251));
                 foreach (var line in lines) {
-                    if (!line.StartsWith(";")) {
+                    if (line.StartsWith(";") == false) {
                         int spacePos = line.IndexOf(" ");
                         if (spacePos > 1) {
                             string nick = line.Substring(0, spacePos).ToLower();

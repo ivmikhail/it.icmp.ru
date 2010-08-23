@@ -14,13 +14,7 @@ namespace ITCommunity.Core {
         /// </summary>
         public static string SiteAddress {
             get {
-                if (HttpContext.Current.Request.Url.Host == "localhost") {
-                    var url = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Path);
-                    var siteAddr = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-                    return url.Substring(0, url.IndexOf("/", siteAddr.Length + 1));
-                } else {
-                    return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-                }
+                return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
             }
         }
 

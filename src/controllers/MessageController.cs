@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 
 using ITCommunity.Core;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 using ITCommunity.Models;
 
 

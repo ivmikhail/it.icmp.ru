@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
 
 
 namespace ITCommunity.Models {
@@ -13,14 +13,14 @@ namespace ITCommunity.Models {
             private set;
         }
 
-        protected override List<Post> GetList() {
-            return Posts.GetPagedByUser(User.Id, Page, PerPage, ref TotalCount);
-        }
-
         public UserPostsModel(User user, int? page) :
             base(SortBy.Date, page) {
             User = user;
             Load();
+        }
+
+        protected override List<Post> GetList() {
+            return Posts.GetPagedByUser(User.Id, Page, PerPage, ref TotalCount);
         }
     }
 }

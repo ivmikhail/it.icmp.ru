@@ -3,10 +3,10 @@ using System.Web;
 
 using ITCommunity.Core;
 using ITCommunity.Utils;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB.Tables;
 
 
-namespace ITCommunity.Db {
+namespace ITCommunity.DB {
 
     /// <summary>
     /// Пост хранящийся в БД
@@ -14,6 +14,8 @@ namespace ITCommunity.Db {
     public partial class Post {
 
         public List<Category> Categories { get; set; }
+
+        public Rating Rating { get; set; }
 
         public bool IsFavorite { get; private set; }
 
@@ -46,9 +48,12 @@ namespace ITCommunity.Db {
             
             // а вот тут уже другое, т.к. Categories - не сгенерированное свойство
             Categories = Tables.Categories.GetByPost(Id);
+
             if (CurrentUser.IsAuth) {
                 IsFavorite = Tables.Favorites.IsFavorite(Id);
             }
+
+            Rating = Ratings.Get(Id, Rating.EntityTypes.Post) ?? new Rating { EntityId = Id, EntityType = DB.Rating.EntityTypes.Post };
         }
     }
 }

@@ -2,8 +2,8 @@
 using System.Web.Mvc;
 
 using ITCommunity.Core;
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
 using ITCommunity.Models;
 
 
@@ -48,6 +48,27 @@ namespace ITCommunity.Controllers {
             return View(model);
         }
 
+        [Authorize]
+        public ActionResult Edit() {
+            var model = new UserEditModel();
+
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Edit(UserEditModel model) {
+            if (ModelState.IsValid) {
+                var user = model.ToUser();
+
+                Users.Update(user);
+
+                return View("Edited");
+            }
+
+            return View(model);
+        }
+
         [Authorize(Roles = "admin")]
         public ActionResult List(string role, int? page) {
             var model = new UserListModel(role, page);
@@ -75,7 +96,7 @@ namespace ITCommunity.Controllers {
             }
 
 
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect();
         }
 
         public ActionResult Logout() {
@@ -98,7 +119,7 @@ namespace ITCommunity.Controllers {
                         return Redirect("/");
                     }
                 } else {
-                    ModelState.AddModelError("LoginPassword", "Error");
+                    ModelState.AddModelError("", "Вы неправильно ввели ник или пароль, попробуйте еще");
                 }
             }
 
@@ -176,7 +197,7 @@ namespace ITCommunity.Controllers {
                 if (EmailSender.NewPasswordEmail(user, recovery)) {
                     return View("ForgotPasswordSent", model);
                 } else {
-                    ModelState.AddModelError("Error", "Can't send e-mail");
+                    ModelState.AddModelError("", "Письмо не отправлено. Попробуйте еще раз. Если все равно не работает, обратитесь к администрации");
                 }
             }
 

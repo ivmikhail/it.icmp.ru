@@ -77,36 +77,41 @@
     <Compile Include="Classes\Core\Logger.cs" />
     <Compile Include="Classes\Core\EmailSender.cs" />
     <Compile Include="Classes\Core\TimerTask.cs" />
-    <Compile Include="Classes\Db\Header.cs" />
-    <Compile Include="Classes\Db\Message.cs" />
-    <Compile Include="Classes\Db\Recovery.cs" />
-    <Compile Include="Classes\Db\Database.cs">
+    <Compile Include="Classes\DB\Rating.cs" />
+    <Compile Include="Classes\DB\Header.cs" />
+    <Compile Include="Classes\DB\Message.cs" />
+    <Compile Include="Classes\DB\Recovery.cs" />
+    <Compile Include="Classes\DB\Database.cs">
       <DependentUpon>Database.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Db\Database.designer.cs">
+    <Compile Include="Classes\DB\Database.designer.cs">
       <DependentUpon>Database.dbml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Classes\Db\Category.cs" />
-    <Compile Include="Classes\Db\Comment.cs" />
-    <Compile Include="Classes\Db\Captcha.cs" />
-    <Compile Include="Classes\Db\MenuItem.cs" />
-    <Compile Include="Classes\Db\Post.cs" />
-    <Compile Include="Classes\Db\Tables\Categories.cs" />
-    <Compile Include="Classes\Db\Tables\Comments.cs" />
-    <Compile Include="Classes\Db\Tables\Captchas.cs" />
-    <Compile Include="Classes\Db\Tables\Messages.cs" />
-    <Compile Include="Classes\Db\Tables\Favorites.cs" />
-    <Compile Include="Classes\Db\Tables\MenuItems.cs" />
-    <Compile Include="Classes\Db\Tables\Posts.cs" />
-    <Compile Include="Classes\Db\Tables\Users.cs" />
+    <Compile Include="Classes\DB\Category.cs" />
+    <Compile Include="Classes\DB\Comment.cs" />
+    <Compile Include="Classes\DB\Captcha.cs" />
+    <Compile Include="Classes\DB\MenuItem.cs" />
+    <Compile Include="Classes\DB\Post.cs" />
+    <Compile Include="Classes\DB\Tables\Categories.cs" />
+    <Compile Include="Classes\DB\Tables\Comments.cs" />
+    <Compile Include="Classes\DB\Tables\Captchas.cs" />
+    <Compile Include="Classes\DB\Tables\Ratings.cs" />
+    <Compile Include="Classes\DB\Tables\Messages.cs" />
+    <Compile Include="Classes\DB\Tables\Favorites.cs" />
+    <Compile Include="Classes\DB\Tables\MenuItems.cs" />
+    <Compile Include="Classes\DB\Tables\Posts.cs" />
+    <Compile Include="Classes\DB\Tables\Users.cs" />
     <Compile Include="Classes\Modules\Greeting.cs" />
     <Compile Include="Classes\Utils\BBCodeParser.cs" />
     <Compile Include="Classes\Core\ExtensionMethods.cs" />
     <Compile Include="Classes\Utils\Hash.cs" />
     <Compile Include="Classes\Validators\CaptchaAnswerAttribute.cs" />
     <Compile Include="Classes\Validators\AnotherUserNickAttribute.cs" />
+    <Compile Include="Classes\Validators\EmailAttribute.cs" />
+    <Compile Include="Classes\Validators\UniqueEmailAttribute.cs" />
+    <Compile Include="Classes\Validators\CurrentUserPasswordAttribute.cs" />
     <Compile Include="Classes\Validators\HeaderTextAttribute.cs" />
     <Compile Include="Classes\Validators\UserNickAttribute.cs" />
     <Compile Include="Classes\Validators\PropertiesMustMatchAttribute.cs" />
@@ -119,6 +124,7 @@
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\FavoriteController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -141,6 +147,7 @@
     <Compile Include="Models\Post\PostEditModel.cs" />
     <Compile Include="Models\Captcha\CaptchaModel.cs" />
     <Compile Include="Models\Post\PostEditCategoriesModel.cs" />
+    <Compile Include="Models\User\UserEditModel.cs" />
     <Compile Include="Models\User\UserListModel.cs" />
     <Compile Include="Models\User\UserCommentsModel.cs" />
     <Compile Include="Models\User\UserPostsModel.cs" />
@@ -149,9 +156,9 @@
     <Compile Include="Models\User\UserLoginModel.cs" />
     <Compile Include="Models\User\UserRegisterModel.cs" />
     <Compile Include="Classes\Validators\UniqueNickAttribute.cs" />
-    <Compile Include="Classes\Db\Tables\Headers.cs" />
-    <Compile Include="Classes\Db\Tables\Recoveries.cs" />
-    <Compile Include="Classes\Db\User.cs" />
+    <Compile Include="Classes\DB\Tables\Headers.cs" />
+    <Compile Include="Classes\DB\Tables\Recoveries.cs" />
+    <Compile Include="Classes\DB\User.cs" />
     <Compile Include="Models\PaginatorModel.cs" />
     <Compile Include="Models\Favorite\FavoritePostsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -159,6 +166,7 @@
   <ItemGroup>
     <Content Include="Content\css\bbcode-info.css" />
     <Content Include="Content\css\highlight-vs.css" />
+    <Content Include="Content\css\links.css" />
     <Content Include="Content\css\sidebar.css" />
     <Content Include="Content\css\pagination.css" />
     <Content Include="Content\css\footer.css" />
@@ -169,6 +177,7 @@
     <Content Include="Content\css\menu.css" />
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\tags.css" />
+    <Content Include="Content\css\validation.css" />
     <Content Include="Content\js\DeleteLink.js" />
     <Content Include="Content\js\EditorToolbar.js" />
     <Content Include="Content\js\highlight.pack.js" />
@@ -204,6 +213,9 @@
     <Content Include="Views\Post\Periods.ascx" />
     <Content Include="Views\Post\PopularList.aspx" />
     <Content Include="Views\Post\EditCategories.ascx" />
+    <Content Include="Views\Rating\Login.ascx" />
+    <Content Include="Views\Rating\Rated.ascx" />
+    <Content Include="Views\Rating\Rate.ascx" />
     <Content Include="Views\Shared\AccessDenied.aspx" />
     <Content Include="Views\Shared\Link\Captcha\Delete.ascx" />
     <Content Include="Views\Shared\Link\Captcha\Edit.ascx" />
@@ -235,8 +247,11 @@
     <Content Include="Views\Shared\Link\Post\List.ascx" />
     <Content Include="Views\Shared\Link\Post\Delete.ascx" />
     <Content Include="Views\Shared\Link\Post\Edit.ascx" />
+    <Content Include="Views\Shared\Link\Rating\Down.ascx" />
+    <Content Include="Views\Shared\Link\Rating\Up.ascx" />
     <Content Include="Views\Shared\Link\User\Comments.ascx" />
     <Content Include="Views\Shared\Link\Admin\Index.ascx" />
+    <Content Include="Views\Shared\Link\User\Edit.ascx" />
     <Content Include="Views\Shared\Link\User\List.ascx" />
     <Content Include="Views\Shared\Link\User\Posts.ascx" />
     <Content Include="Views\Shared\Link\Message\Send.ascx" />
@@ -262,6 +277,7 @@
     <Content Include="Views\Shared\Sidebar\Categories.ascx" />
     <Content Include="Views\Shared\Sidebar\ActivePosters.ascx" />
     <Content Include="Views\Shared\Sidebar\ActiveCommentators.ascx" />
+    <Content Include="Views\Shared\Sidebar\RatedPosts.ascx" />
     <Content Include="Views\Shared\Sidebar\TopCommentators.ascx" />
     <Content Include="Views\Shared\Sidebar\TopPosters.ascx" />
     <Content Include="Views\Shared\Sidebar\LastRegisteredUsers.ascx" />
@@ -288,11 +304,11 @@
     <Content Include="Views\Shared\Link\Post\More.ascx" />
     <Content Include="Views\Shared\Link\Post\Title.ascx" />
     <Content Include="Views\Shared\NotFound.aspx" />
-    <Content Include="Views\Shared\ITCaptcha.ascx" />
+    <Content Include="Views\Captcha\Captcha.ascx" />
     <Content Include="Views\Shared\Link\User\Profile.ascx" />
     <Content Include="Views\User\Comments.aspx" />
+    <Content Include="Views\User\Edit.aspx" />
     <Content Include="Views\User\List.aspx" />
-    <Content Include="Views\User\Menu.ascx" />
     <Content Include="Views\User\Posts.aspx" />
     <Content Include="Views\User\Profile.aspx" />
     <Content Include="Views\User\ForgotPasswordSent.aspx" />
@@ -306,6 +322,7 @@
     <Content Include="Views\Post\List.ascx" />
     <Content Include="Views\Shared\Header.ascx" />
     <Content Include="Views\Shared\Pagination.ascx" />
+    <Content Include="Views\User\Edited.aspx" />
     <Content Include="Views\User\Sidebar.ascx" />
     <Content Include="Views\User\UserMenu.ascx" />
     <Content Include="Web.config">
@@ -341,12 +358,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
-    <None Include="Classes\Db\Database.dbml.layout">
+    <None Include="Classes\DB\Database.dbml.layout">
       <DependentUpon>Database.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Classes\Db\Database.dbml">
+    <None Include="Classes\DB\Database.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>Database.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>

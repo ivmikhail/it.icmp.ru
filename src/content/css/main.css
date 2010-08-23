@@ -9,7 +9,7 @@
     margin-bottom: 0.4em;
 }
 
-/* совсем уникальные стили для вложенных айдишников, что есть не хорошо */
+/* СЃРѕРІСЃРµРј СѓРЅРёРєР°Р»СЊРЅС‹Рµ СЃС‚РёР»Рё РґР»СЏ РІР»РѕР¶РµРЅРЅС‹С… Р°Р№РґРёС€РЅРёРєРѕРІ, С‡С‚Рѕ РµСЃС‚СЊ РЅРµ С…РѕСЂРѕС€Рѕ */
 
 #content #cut {
     border: 1px solid #f0f0f0;
@@ -23,7 +23,7 @@
     padding-top: 1em;
 }
 
-/* базовые блоки и панели, так сказать "кирпичики" */
+/* Р±Р°Р·РѕРІС‹Рµ Р±Р»РѕРєРё Рё РїР°РЅРµР»Рё, С‚Р°Рє СЃРєР°Р·Р°С‚СЊ "РєРёСЂРїРёС‡РёРєРё" */
 
 .block {
 	padding: 1em 0;
@@ -37,10 +37,54 @@
     padding: 0.5em 0;
 }
 
+
 .text {
 	line-height: 1.5em;
 	padding-bottom: 1em;
+	overflow: auto;
 }
+.text hr {
+    border: none;
+}
+.text ul,
+.text ol {
+    list-style-position: outside;
+    padding: 0.3em 0 0.7em 2em;
+}
+.text ul {
+    padding-left: 1.5em;
+    list-style-type: disc;
+}
+.text ol {
+    list-style-type: decimal;
+}
+.text ol li,
+.text ul li {
+    padding: 0.2em 0;
+}
+.text blockquote,
+.text pre {
+	border-left: solid 2px #bbbbbb;
+	padding: 0.2em 0 0.2em 1em;
+	margin: 0.3em 0 0.3em 1em;
+}
+.text blockquote {
+	font-style: italic;
+	color: #666666;
+}
+.text pre {
+	overflow: auto;
+}
+.text table {
+	border-bottom: 1px solid #bbbbbb;
+	border-right: 1px solid #bbbbbb;
+}
+.text table td {
+	border-left: 1px solid #bbbbbb;
+	border-top: 1px solid #bbbbbb;
+	padding: 1px 5px;
+}
+
 
 .meta {
 	color: #999999;
@@ -81,125 +125,4 @@
     clear: both;
     content: "";
     display: block;
-}
-
-/* этакие стили сущностей */
-
-.rating-negative {
-	color: #c03030;
-}
-.rating-positive {
-	color: #008000;
-}
-
-/* стили ссылок */
-
-#content .main-link {
-	font-size: 1.375em;
-}
-
-#header .important-link,
-#content .important-link {
-    color: #eb5e5e;
-}
-#header .important-link:hover,
-#content .important-link:hover {
-    color: #e91111;
-}
-
-#sidebar .category-link,
-#content .category-link {
-    color: #2b91af;
-}
-#sidebar .category-link:hover,
-#content .category-link:hover {
-	color: #006f83;
-}
-
-#menu .user-link,
-#sidebar .user-link,
-#content .user-link {
-	color: #30a030;
-	font-style: italic;
-}
-#menu .user-link:hover,
-#sidebar .user-link:hover,
-#content .user-link:hover {
-	color: #006000;
-}
-
-#content .page-link {
-    border-bottom: 1px dotted;
-    text-decoration: none;
-}
-#content .page-link:hover {
-    border-bottom: none;
-}
-
-#footer .up-arrow,
-#header .down-arrow {
-    display: block;
-    float: left;
-    font-size: 6em;
-    position: absolute;
-    text-align: center;
-    text-decoration: none;
-    width: 4%;
-}
-#footer .up-arrow:hover,
-#header .down-arrow:hover {
-    color: #999999;
-}
-#footer .up-arrow {
-    color: #bbbbbb;
-}
-#header .down-arrow {
-    color: #d0d0d0;
-    margin-top: 0.7em;
-}
-
-/* стили сообщений валитаторов */
-
-#sidebar .validation-summary-errors,
-#content .validation-summary-errors {
-    color: #ff7777;
-    font-size: 1.5em;
-    padding: 24px 0 12px;
-}
-#sidebar .validation-summary-errors ul,
-#content .validation-summary-errors ul {
-    line-height: 1em;
-    padding: 0;
-}
-#sidebar .validation-summary-errors ul li,
-#content .validation-summary-errors ul li {
-    list-style-type: disc;
-    list-style-position: inside;
-    padding: 0.5em 0 0 0.5em;
-}
-
-#content .field-validation-error {
-    color: #ff7777;
-    display: block;
-    padding: 8px 0;
-}
-
-/* стили нужные для отображения выбора категорий при добавлении и редактировании поста */
-
-.select-categories li {
-    display: inline;
-    padding-right: 12px;
-    line-height: 1.5em;
-}
-.select-categories .attached-category {
-    color: #2b91af;
-}
-.select-categories .attached-category:hover {
-	color: #006f83;
-}
-.select-categories .disattached-category {
-    color: #999999;
-}
-.select-categories .disattached-category:hover {
-	color: #2b91af;
 }

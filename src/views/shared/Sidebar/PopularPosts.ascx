@@ -2,7 +2,7 @@
 
 
 <h2>
-    Популярные посты
+    <% Html.RenderPartial("Link/Post/PopularList"); %>
     <span class="period">
         <%= Config.Get("PopularPostsTimeText")%>
     </span>

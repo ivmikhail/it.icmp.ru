@@ -5,7 +5,7 @@ using System.Linq;
 using ITCommunity.Core;
 
 
-namespace ITCommunity.Db.Tables {
+namespace ITCommunity.DB.Tables {
 
     public static class Captchas {
 

@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
 
 using ITCommunity.Core;
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
 using ITCommunity.Models;
 
 
@@ -23,7 +23,7 @@ namespace ITCommunity.Controllers {
                 return NotFound();
             }
 
-            if (Db.Tables.Posts.Get(id.Value) == null) {
+            if (DB.Tables.Posts.Get(id.Value) == null) {
                 return NotFound();
             }
 
@@ -33,7 +33,7 @@ namespace ITCommunity.Controllers {
 
             Favorites.Add(favorite);
 
-            return RedirectToAction("posts", "favorite");
+            return RedirectToAction("posts", "fav");
         }
 
         [Authorize]
@@ -44,7 +44,7 @@ namespace ITCommunity.Controllers {
 
             Favorites.Delete(id.Value, CurrentUser.User.Id);
 
-            return RedirectToAction("posts", "favorite");
+            return RedirectToAction("posts", "fav");
         }
     }
 }

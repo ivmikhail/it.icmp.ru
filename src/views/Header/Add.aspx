@@ -12,11 +12,11 @@
     <% using (Html.BeginForm()) { %>
 
         <div class="meta">
-            Вы можете написать любой текст длиной <span class="info">до <%= ITCommunity.Db.Header.MaxLength%> символов</span>, который будет появляться наверху (в header) сайта. 
+            Вы можете написать любой текст длиной <span class="info">до <%= ITCommunity.DB.Header.MaxLength%> символов</span>, который будет появляться наверху (в header) сайта. 
             <br />
 		    Тексты появляются в случайном порядке.
             <br />
-		    Текст будет <span class="info">жить <%= ITCommunity.Db.Header.ShowingHours%> часов</span> после добавления.
+		    Текст будет <span class="info">жить <%= ITCommunity.DB.Header.ShowingHours%> часов</span> после добавления.
 		    <br />
 		    Запрещена любая реклама, нецензурщина и оскорбления. Несоответствующие требованиям тексты будут удаляться.
 		    <br />
@@ -24,7 +24,7 @@
         </div>
 
         <%= Html.LabelFor(m => m.Text) %>
-        <%= Html.TextBoxFor(m => m.Text, new { maxlength = ITCommunity.Db.Header.MaxLength })%>
+        <%= Html.TextBoxFor(m => m.Text, new { maxlength = ITCommunity.DB.Header.MaxLength })%>
         <%= Html.ValidationMessageFor(m => m.Text)%>
 
         <input type="submit" value="добавить" />                

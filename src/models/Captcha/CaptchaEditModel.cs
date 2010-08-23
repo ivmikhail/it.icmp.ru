@@ -2,20 +2,18 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using ITCommunity.Db;
-using ITCommunity.Db.Tables;
+using ITCommunity.DB;
+using ITCommunity.DB.Tables;
+
 
 namespace ITCommunity.Models {
 
     public class CaptchaEditModel {
 
-        public int Id {
-            get;
-            set;
-        }
+        public int Id { get; set; }
 
-        [Required(ErrorMessage = "Введите вопрос")]
         [DisplayName("Вопрос капчи")]
+        [Required(ErrorMessage = "Введите вопрос")]
         public string Question { get; set; }
 
         public List<CaptchaAnswer> Answers {
