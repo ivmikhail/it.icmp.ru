@@ -22,5 +22,4 @@
 <script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftAjax.js?v=0.1") %>"></script>
 <script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftMvcAjax.js?v=0.1") %>"></script>
 
-<script type="text/javascript" src="<%= Url.Content("~/content/js/EditorToolbar.js?v=0.1") %>"></script>
-<script type="text/javascript" src="<%= Url.Content("~/content/js/DeleteLink.js?v=0.1") %>"></script>
+<script type="text/javascript" src="<%= Url.Content("~/content/js/it-community.js?v=0.1") %>"></script>
