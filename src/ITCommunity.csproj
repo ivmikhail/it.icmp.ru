@@ -178,7 +178,7 @@
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\tags.css" />
     <Content Include="Content\css\validation.css" />
-    <Content Include="Content\js\DeleteLink.js" />
+    <Content Include="Content\js\it-community.js" />
     <Content Include="Content\js\EditorToolbar.js" />
     <Content Include="Content\js\highlight.pack.js" />
     <Content Include="Content\other\greetings.txt" />
