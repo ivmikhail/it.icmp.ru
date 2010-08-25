@@ -22,7 +22,7 @@ namespace ITCommunity.DB
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="itc")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="itc-mvc")]
 	public partial class Database : System.Data.Linq.DataContext
 	{
 		
@@ -66,9 +66,6 @@ namespace ITCommunity.DB
     partial void InsertPoll(Poll instance);
     partial void UpdatePoll(Poll instance);
     partial void DeletePoll(Poll instance);
-    partial void InsertPost(Post instance);
-    partial void UpdatePost(Post instance);
-    partial void DeletePost(Post instance);
     partial void InsertPostsCategory(PostsCategory instance);
     partial void UpdatePostsCategory(PostsCategory instance);
     partial void DeletePostsCategory(PostsCategory instance);
@@ -87,6 +84,9 @@ namespace ITCommunity.DB
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
+    partial void InsertPost(Post instance);
+    partial void UpdatePost(Post instance);
+    partial void DeletePost(Post instance);
     #endregion
 		
 		public Database() : 
@@ -215,14 +215,6 @@ namespace ITCommunity.DB
 			}
 		}
 		
-		public System.Data.Linq.Table<Post> Posts
-		{
-			get
-			{
-				return this.GetTable<Post>();
-			}
-		}
-		
 		public System.Data.Linq.Table<PostsCategory> PostsCategories
 		{
 			get
@@ -268,6 +260,14 @@ namespace ITCommunity.DB
 			get
 			{
 				return this.GetTable<User>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Post> Posts
+		{
+			get
+			{
+				return this.GetTable<Post>();
 			}
 		}
 	}
@@ -1217,9 +1217,9 @@ namespace ITCommunity.DB
 		
 		private System.DateTime _CreateDate;
 		
-		private EntityRef<Post> _Post;
-		
 		private EntityRef<User> _User;
+		
+		private EntityRef<Post> _Post;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1237,8 +1237,8 @@ namespace ITCommunity.DB
 		
 		public Favorite()
 		{
-			this._Post = default(EntityRef<Post>);
 			this._User = default(EntityRef<User>);
+			this._Post = default(EntityRef<Post>);
 			OnCreated();
 		}
 		
@@ -1330,40 +1330,6 @@ namespace ITCommunity.DB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Post_Favorite", Storage="_Post", ThisKey="PostId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public Post Post
-		{
-			get
-			{
-				return this._Post.Entity;
-			}
-			set
-			{
-				Post previousValue = this._Post.Entity;
-				if (((previousValue != value) 
-							|| (this._Post.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Post.Entity = null;
-						previousValue.Favorites.Remove(this);
-					}
-					this._Post.Entity = value;
-					if ((value != null))
-					{
-						value.Favorites.Add(this);
-						this._PostId = value.Id;
-					}
-					else
-					{
-						this._PostId = default(int);
-					}
-					this.SendPropertyChanged("Post");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Favorite", Storage="_User", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
 		public User User
 		{
@@ -1394,6 +1360,40 @@ namespace ITCommunity.DB
 						this._UserId = default(int);
 					}
 					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Post_Favorite", Storage="_Post", ThisKey="PostId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Post Post
+		{
+			get
+			{
+				return this._Post.Entity;
+			}
+			set
+			{
+				Post previousValue = this._Post.Entity;
+				if (((previousValue != value) 
+							|| (this._Post.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Post.Entity = null;
+						previousValue.Favorites.Remove(this);
+					}
+					this._Post.Entity = value;
+					if ((value != null))
+					{
+						value.Favorites.Add(this);
+						this._PostId = value.Id;
+					}
+					else
+					{
+						this._PostId = default(int);
+					}
+					this.SendPropertyChanged("Post");
 				}
 			}
 		}
@@ -2524,13 +2524,13 @@ namespace ITCommunity.DB
 		
 		private string _Topic;
 		
-		private byte _IsMultiselect;
+		private bool _IsMultiselect;
 		
 		private System.DateTime _CreateDate;
 		
 		private int _AuthorId;
 		
-		private byte _IsOpen;
+		private bool _IsOpen;
 		
 		private int _VotesCount;
 		
@@ -2548,13 +2548,13 @@ namespace ITCommunity.DB
     partial void OnIdChanged();
     partial void OnTopicChanging(string value);
     partial void OnTopicChanged();
-    partial void OnIsMultiselectChanging(byte value);
+    partial void OnIsMultiselectChanging(bool value);
     partial void OnIsMultiselectChanged();
     partial void OnCreateDateChanging(System.DateTime value);
     partial void OnCreateDateChanged();
     partial void OnAuthorIdChanging(int value);
     partial void OnAuthorIdChanged();
-    partial void OnIsOpenChanging(byte value);
+    partial void OnIsOpenChanging(bool value);
     partial void OnIsOpenChanged();
     partial void OnVotesCountChanging(int value);
     partial void OnVotesCountChanged();
@@ -2609,7 +2609,7 @@ namespace ITCommunity.DB
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsMultiselect", DbType="TinyInt NOT NULL")]
-		public byte IsMultiselect
+		public bool IsMultiselect
 		{
 			get
 			{
@@ -2673,7 +2673,7 @@ namespace ITCommunity.DB
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOpen", DbType="TinyInt NOT NULL")]
-		public byte IsOpen
+		public bool IsOpen
 		{
 			get
 			{
@@ -2739,7 +2739,7 @@ namespace ITCommunity.DB
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Poll", Storage="_User", ThisKey="AuthorId", OtherKey="Id", IsForeignKey=true)]
-		public User User
+		public User Author
 		{
 			get
 			{
@@ -2767,7 +2767,7 @@ namespace ITCommunity.DB
 					{
 						this._AuthorId = default(int);
 					}
-					this.SendPropertyChanged("User");
+					this.SendPropertyChanged("Author");
 				}
 			}
 		}
@@ -2814,409 +2814,6 @@ namespace ITCommunity.DB
 		{
 			this.SendPropertyChanging();
 			entity.Poll = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Posts")]
-	public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Title;
-		
-		private string _Description;
-		
-		private string _Text;
-		
-		private System.DateTime _CreateDate;
-		
-		private int _AuthorId;
-		
-		private bool _IsAttached;
-		
-		private int _ViewsCount;
-		
-		private string _Source;
-		
-		private int _CommentsCount;
-		
-		private EntitySet<Comment> _Comments;
-		
-		private EntitySet<Favorite> _Favorites;
-		
-		private EntitySet<PostsCategory> _PostsCategories;
-		
-		private EntityRef<User> _User;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnTitleChanging(string value);
-    partial void OnTitleChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnTextChanging(string value);
-    partial void OnTextChanged();
-    partial void OnCreateDateChanging(System.DateTime value);
-    partial void OnCreateDateChanged();
-    partial void OnAuthorIdChanging(int value);
-    partial void OnAuthorIdChanged();
-    partial void OnIsAttachedChanging(bool value);
-    partial void OnIsAttachedChanged();
-    partial void OnViewsCountChanging(int value);
-    partial void OnViewsCountChanged();
-    partial void OnSourceChanging(string value);
-    partial void OnSourceChanged();
-    partial void OnCommentsCountChanging(int value);
-    partial void OnCommentsCountChanged();
-    #endregion
-		
-		public Post()
-		{
-			this._Comments = new EntitySet<Comment>(new Action<Comment>(this.attach_Comments), new Action<Comment>(this.detach_Comments));
-			this._Favorites = new EntitySet<Favorite>(new Action<Favorite>(this.attach_Favorites), new Action<Favorite>(this.detach_Favorites));
-			this._PostsCategories = new EntitySet<PostsCategory>(new Action<PostsCategory>(this.attach_PostsCategories), new Action<PostsCategory>(this.detach_PostsCategories));
-			this._User = default(EntityRef<User>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
-		public string Title
-		{
-			get
-			{
-				return this._Title;
-			}
-			set
-			{
-				if ((this._Title != value))
-				{
-					this.OnTitleChanging(value);
-					this.SendPropertyChanging();
-					this._Title = value;
-					this.SendPropertyChanged("Title");
-					this.OnTitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Text
-		{
-			get
-			{
-				return this._Text;
-			}
-			set
-			{
-				if ((this._Text != value))
-				{
-					this.OnTextChanging(value);
-					this.SendPropertyChanging();
-					this._Text = value;
-					this.SendPropertyChanged("Text");
-					this.OnTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
-		public System.DateTime CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorId", DbType="Int NOT NULL")]
-		public int AuthorId
-		{
-			get
-			{
-				return this._AuthorId;
-			}
-			set
-			{
-				if ((this._AuthorId != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAuthorIdChanging(value);
-					this.SendPropertyChanging();
-					this._AuthorId = value;
-					this.SendPropertyChanged("AuthorId");
-					this.OnAuthorIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAttached", DbType="TinyInt NOT NULL")]
-		public bool IsAttached
-		{
-			get
-			{
-				return this._IsAttached;
-			}
-			set
-			{
-				if ((this._IsAttached != value))
-				{
-					this.OnIsAttachedChanging(value);
-					this.SendPropertyChanging();
-					this._IsAttached = value;
-					this.SendPropertyChanged("IsAttached");
-					this.OnIsAttachedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ViewsCount", DbType="Int NOT NULL")]
-		public int ViewsCount
-		{
-			get
-			{
-				return this._ViewsCount;
-			}
-			set
-			{
-				if ((this._ViewsCount != value))
-				{
-					this.OnViewsCountChanging(value);
-					this.SendPropertyChanging();
-					this._ViewsCount = value;
-					this.SendPropertyChanged("ViewsCount");
-					this.OnViewsCountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Source", DbType="NVarChar(1024) NOT NULL", CanBeNull=false)]
-		public string Source
-		{
-			get
-			{
-				return this._Source;
-			}
-			set
-			{
-				if ((this._Source != value))
-				{
-					this.OnSourceChanging(value);
-					this.SendPropertyChanging();
-					this._Source = value;
-					this.SendPropertyChanged("Source");
-					this.OnSourceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommentsCount", DbType="Int NOT NULL")]
-		public int CommentsCount
-		{
-			get
-			{
-				return this._CommentsCount;
-			}
-			set
-			{
-				if ((this._CommentsCount != value))
-				{
-					this.OnCommentsCountChanging(value);
-					this.SendPropertyChanging();
-					this._CommentsCount = value;
-					this.SendPropertyChanged("CommentsCount");
-					this.OnCommentsCountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Post_Comment", Storage="_Comments", ThisKey="Id", OtherKey="PostId")]
-		public EntitySet<Comment> Comments
-		{
-			get
-			{
-				return this._Comments;
-			}
-			set
-			{
-				this._Comments.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Post_Favorite", Storage="_Favorites", ThisKey="Id", OtherKey="PostId")]
-		public EntitySet<Favorite> Favorites
-		{
-			get
-			{
-				return this._Favorites;
-			}
-			set
-			{
-				this._Favorites.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Post_PostsCategory", Storage="_PostsCategories", ThisKey="Id", OtherKey="PostId")]
-		public EntitySet<PostsCategory> PostsCategories
-		{
-			get
-			{
-				return this._PostsCategories;
-			}
-			set
-			{
-				this._PostsCategories.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_User", ThisKey="AuthorId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public User Author
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.Posts.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.Posts.Add(this);
-						this._AuthorId = value.Id;
-					}
-					else
-					{
-						this._AuthorId = default(int);
-					}
-					this.SendPropertyChanged("Author");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Comments(Comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.Post = this;
-		}
-		
-		private void detach_Comments(Comment entity)
-		{
-			this.SendPropertyChanging();
-			entity.Post = null;
-		}
-		
-		private void attach_Favorites(Favorite entity)
-		{
-			this.SendPropertyChanging();
-			entity.Post = this;
-		}
-		
-		private void detach_Favorites(Favorite entity)
-		{
-			this.SendPropertyChanging();
-			entity.Post = null;
-		}
-		
-		private void attach_PostsCategories(PostsCategory entity)
-		{
-			this.SendPropertyChanging();
-			entity.Post = this;
-		}
-		
-		private void detach_PostsCategories(PostsCategory entity)
-		{
-			this.SendPropertyChanging();
-			entity.Post = null;
 		}
 	}
 	
@@ -4068,11 +3665,11 @@ namespace ITCommunity.DB
 		
 		private EntitySet<Poll> _Polls;
 		
-		private EntitySet<Post> _Posts;
-		
 		private EntitySet<RatingLog> _RatingLogs;
 		
 		private EntitySet<Recovery> _Recoveries;
+		
+		private EntitySet<Post> _Posts;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4107,9 +3704,9 @@ namespace ITCommunity.DB
 			this._Messages1 = new EntitySet<Message>(new Action<Message>(this.attach_Messages1), new Action<Message>(this.detach_Messages1));
 			this._Notes = new EntitySet<Note>(new Action<Note>(this.attach_Notes), new Action<Note>(this.detach_Notes));
 			this._Polls = new EntitySet<Poll>(new Action<Poll>(this.attach_Polls), new Action<Poll>(this.detach_Polls));
-			this._Posts = new EntitySet<Post>(new Action<Post>(this.attach_Posts), new Action<Post>(this.detach_Posts));
 			this._RatingLogs = new EntitySet<RatingLog>(new Action<RatingLog>(this.attach_RatingLogs), new Action<RatingLog>(this.detach_RatingLogs));
 			this._Recoveries = new EntitySet<Recovery>(new Action<Recovery>(this.attach_Recoveries), new Action<Recovery>(this.detach_Recoveries));
+			this._Posts = new EntitySet<Post>(new Action<Post>(this.attach_Posts), new Action<Post>(this.detach_Posts));
 			OnCreated();
 		}
 		
@@ -4384,19 +3981,6 @@ namespace ITCommunity.DB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_Posts", ThisKey="Id", OtherKey="AuthorId")]
-		public EntitySet<Post> Posts
-		{
-			get
-			{
-				return this._Posts;
-			}
-			set
-			{
-				this._Posts.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_RatingLog", Storage="_RatingLogs", ThisKey="Id", OtherKey="UserId")]
 		public EntitySet<RatingLog> RatingLogs
 		{
@@ -4420,6 +4004,19 @@ namespace ITCommunity.DB
 			set
 			{
 				this._Recoveries.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_Posts", ThisKey="Id", OtherKey="AuthorId")]
+		public EntitySet<Post> Posts
+		{
+			get
+			{
+				return this._Posts;
+			}
+			set
+			{
+				this._Posts.Assign(value);
 			}
 		}
 		
@@ -4518,22 +4115,10 @@ namespace ITCommunity.DB
 		private void attach_Polls(Poll entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_Polls(Poll entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
-		private void attach_Posts(Post entity)
-		{
-			this.SendPropertyChanging();
 			entity.Author = this;
 		}
 		
-		private void detach_Posts(Post entity)
+		private void detach_Polls(Poll entity)
 		{
 			this.SendPropertyChanging();
 			entity.Author = null;
@@ -4561,6 +4146,493 @@ namespace ITCommunity.DB
 		{
 			this.SendPropertyChanging();
 			entity.User = null;
+		}
+		
+		private void attach_Posts(Post entity)
+		{
+			this.SendPropertyChanging();
+			entity.Author = this;
+		}
+		
+		private void detach_Posts(Post entity)
+		{
+			this.SendPropertyChanging();
+			entity.Author = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Posts")]
+	public partial class Post : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Title;
+		
+		private string _Description;
+		
+		private string _Text;
+		
+		private System.DateTime _CreateDate;
+		
+		private int _AuthorId;
+		
+		private bool _IsAttached;
+		
+		private int _ViewsCount;
+		
+		private string _Source;
+		
+		private int _CommentsCount;
+		
+		private Post.EntityTypes? _EntityType;
+		
+		private int? _EntityId;
+		
+		private bool _IsCommentable;
+		
+		private EntitySet<Comment> _Comments;
+		
+		private EntitySet<Favorite> _Favorites;
+		
+		private EntitySet<PostsCategory> _PostsCategories;
+		
+		private EntityRef<User> _Author;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnAuthorIdChanging(int value);
+    partial void OnAuthorIdChanged();
+    partial void OnIsAttachedChanging(bool value);
+    partial void OnIsAttachedChanged();
+    partial void OnViewsCountChanging(int value);
+    partial void OnViewsCountChanged();
+    partial void OnSourceChanging(string value);
+    partial void OnSourceChanged();
+    partial void OnCommentsCountChanging(int value);
+    partial void OnCommentsCountChanged();
+    partial void OnEntityTypeChanging(Post.EntityTypes? value);
+    partial void OnEntityTypeChanged();
+    partial void OnEntityIdChanging(int? value);
+    partial void OnEntityIdChanged();
+    partial void OnIsCommentableChanging(bool value);
+    partial void OnIsCommentableChanged();
+    #endregion
+		
+		public Post()
+		{
+			this._Comments = new EntitySet<Comment>(new Action<Comment>(this.attach_Comments), new Action<Comment>(this.detach_Comments));
+			this._Favorites = new EntitySet<Favorite>(new Action<Favorite>(this.attach_Favorites), new Action<Favorite>(this.detach_Favorites));
+			this._PostsCategories = new EntitySet<PostsCategory>(new Action<PostsCategory>(this.attach_PostsCategories), new Action<PostsCategory>(this.detach_PostsCategories));
+			this._Author = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorId", DbType="Int NOT NULL")]
+		public int AuthorId
+		{
+			get
+			{
+				return this._AuthorId;
+			}
+			set
+			{
+				if ((this._AuthorId != value))
+				{
+					if (this._Author.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAuthorIdChanging(value);
+					this.SendPropertyChanging();
+					this._AuthorId = value;
+					this.SendPropertyChanged("AuthorId");
+					this.OnAuthorIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAttached", DbType="TinyInt NOT NULL")]
+		public bool IsAttached
+		{
+			get
+			{
+				return this._IsAttached;
+			}
+			set
+			{
+				if ((this._IsAttached != value))
+				{
+					this.OnIsAttachedChanging(value);
+					this.SendPropertyChanging();
+					this._IsAttached = value;
+					this.SendPropertyChanged("IsAttached");
+					this.OnIsAttachedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ViewsCount", DbType="Int NOT NULL")]
+		public int ViewsCount
+		{
+			get
+			{
+				return this._ViewsCount;
+			}
+			set
+			{
+				if ((this._ViewsCount != value))
+				{
+					this.OnViewsCountChanging(value);
+					this.SendPropertyChanging();
+					this._ViewsCount = value;
+					this.SendPropertyChanged("ViewsCount");
+					this.OnViewsCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Source", DbType="NVarChar(1024) NOT NULL", CanBeNull=false)]
+		public string Source
+		{
+			get
+			{
+				return this._Source;
+			}
+			set
+			{
+				if ((this._Source != value))
+				{
+					this.OnSourceChanging(value);
+					this.SendPropertyChanging();
+					this._Source = value;
+					this.SendPropertyChanged("Source");
+					this.OnSourceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommentsCount", DbType="Int NOT NULL")]
+		public int CommentsCount
+		{
+			get
+			{
+				return this._CommentsCount;
+			}
+			set
+			{
+				if ((this._CommentsCount != value))
+				{
+					this.OnCommentsCountChanging(value);
+					this.SendPropertyChanging();
+					this._CommentsCount = value;
+					this.SendPropertyChanged("CommentsCount");
+					this.OnCommentsCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntityType", DbType="Int", CanBeNull=true)]
+		public Post.EntityTypes? EntityType
+		{
+			get
+			{
+				return this._EntityType;
+			}
+			set
+			{
+				if ((this._EntityType != value))
+				{
+					this.OnEntityTypeChanging(value);
+					this.SendPropertyChanging();
+					this._EntityType = value;
+					this.SendPropertyChanged("EntityType");
+					this.OnEntityTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntityId", DbType="Int", CanBeNull=true)]
+		public int? EntityId
+		{
+			get
+			{
+				return this._EntityId;
+			}
+			set
+			{
+				if ((this._EntityId != value))
+				{
+					this.OnEntityIdChanging(value);
+					this.SendPropertyChanging();
+					this._EntityId = value;
+					this.SendPropertyChanged("EntityId");
+					this.OnEntityIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsCommentable", DbType="TinyInt NOT NULL")]
+		public bool IsCommentable
+		{
+			get
+			{
+				return this._IsCommentable;
+			}
+			set
+			{
+				if ((this._IsCommentable != value))
+				{
+					this.OnIsCommentableChanging(value);
+					this.SendPropertyChanging();
+					this._IsCommentable = value;
+					this.SendPropertyChanged("IsCommentable");
+					this.OnIsCommentableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Post_Comment", Storage="_Comments", ThisKey="Id", OtherKey="PostId")]
+		public EntitySet<Comment> Comments
+		{
+			get
+			{
+				return this._Comments;
+			}
+			set
+			{
+				this._Comments.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Post_Favorite", Storage="_Favorites", ThisKey="Id", OtherKey="PostId")]
+		public EntitySet<Favorite> Favorites
+		{
+			get
+			{
+				return this._Favorites;
+			}
+			set
+			{
+				this._Favorites.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Post_PostsCategory", Storage="_PostsCategories", ThisKey="Id", OtherKey="PostId")]
+		public EntitySet<PostsCategory> PostsCategories
+		{
+			get
+			{
+				return this._PostsCategories;
+			}
+			set
+			{
+				this._PostsCategories.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Post", Storage="_Author", ThisKey="AuthorId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public User Author
+		{
+			get
+			{
+				return this._Author.Entity;
+			}
+			set
+			{
+				User previousValue = this._Author.Entity;
+				if (((previousValue != value) 
+							|| (this._Author.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Author.Entity = null;
+						previousValue.Posts.Remove(this);
+					}
+					this._Author.Entity = value;
+					if ((value != null))
+					{
+						value.Posts.Add(this);
+						this._AuthorId = value.Id;
+					}
+					else
+					{
+						this._AuthorId = default(int);
+					}
+					this.SendPropertyChanged("Author");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Comments(Comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Post = this;
+		}
+		
+		private void detach_Comments(Comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Post = null;
+		}
+		
+		private void attach_Favorites(Favorite entity)
+		{
+			this.SendPropertyChanging();
+			entity.Post = this;
+		}
+		
+		private void detach_Favorites(Favorite entity)
+		{
+			this.SendPropertyChanging();
+			entity.Post = null;
+		}
+		
+		private void attach_PostsCategories(PostsCategory entity)
+		{
+			this.SendPropertyChanging();
+			entity.Post = this;
+		}
+		
+		private void detach_PostsCategories(PostsCategory entity)
+		{
+			this.SendPropertyChanging();
+			entity.Post = null;
 		}
 	}
 }

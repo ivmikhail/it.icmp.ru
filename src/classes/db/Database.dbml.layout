@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.25, 18.625" name="Database">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.25, 19.25" name="Database">
   <DataContextMoniker Name="/Database" />
   <nestedChildShapes>
     <classShape Id="bc2b129e-73a5-43e5-acd6-8cbc9decaa53" absoluteBounds="0.5, 2.375, 2, 1.5785953775048256">
@@ -74,12 +74,6 @@
         <elementListCompartment Id="b8d29296-cc81-4e52-a532-54d715cca0cb" absoluteBounds="0.51500000059604645, 9.71000000089407, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="36d5ccac-48c7-4030-8cf9-b2cb87c5c9da" absoluteBounds="5.375, 15.25, 2, 2.7324039712548256">
-      <DataClassMoniker Name="/Database/Post" />
-      <nestedChildShapes>
-        <elementListCompartment Id="1de796b6-f7f8-4d0b-afe7-16d046b940e1" absoluteBounds="5.3900000005960464, 15.71000000089407, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="7b431176-266f-46ed-8f83-6e6a51002858" absoluteBounds="1.375, 17, 2, 1.3862939458340406">
       <DataClassMoniker Name="/Database/PostsCategory" />
       <nestedChildShapes>
@@ -116,7 +110,7 @@
         <elementListCompartment Id="a8fbb2da-86a2-45db-9274-ff9909ffff66" absoluteBounds="5.2650000005960464, 8.83500000089407, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.5 : 1.69399251230061); (1.5 : 2.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.5 : 1.69399251230061); (1.5 : 2.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/Database/Captcha/Captcha_CaptchaAnswer" />
       <nodes>
         <classShapeMoniker Id="6c2bb30f-26b3-48ce-ba4e-038f7770c5bc" />
@@ -144,31 +138,10 @@
         <classShapeMoniker Id="29d8a3ae-70e3-4e41-8261-db20e88cf1bc" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.375 : 17.0537019856274); (9.375 : 17.0537019856274)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/Database/Post/Post_Comment" />
-      <nodes>
-        <classShapeMoniker Id="36d5ccac-48c7-4030-8cf9-b2cb87c5c9da" />
-        <classShapeMoniker Id="fd992e79-b028-4807-9309-2c8bf519027b" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(7.375 : 15.8310014573897); (8.625 : 15.8310014573897); (8.625 : 13.8285953775048)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/Database/Post/Post_Favorite" />
-      <nodes>
-        <classShapeMoniker Id="36d5ccac-48c7-4030-8cf9-b2cb87c5c9da" />
-        <classShapeMoniker Id="649f9525-ac43-4eb9-8c35-b6e6a0f61c67" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(2.375 : 16.136293945834); (2.375 : 17)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/Database/Category/Category_PostsCategory" />
       <nodes>
         <classShapeMoniker Id="3af0fc7f-e67f-4938-8318-9bb8dc40ead9" />
-        <classShapeMoniker Id="7b431176-266f-46ed-8f83-6e6a51002858" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(5.375 : 17.4912019856274); (3.375 : 17.4912019856274)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/Database/Post/Post_PostsCategory" />
-      <nodes>
-        <classShapeMoniker Id="36d5ccac-48c7-4030-8cf9-b2cb87c5c9da" />
         <classShapeMoniker Id="7b431176-266f-46ed-8f83-6e6a51002858" />
       </nodes>
     </associationConnector>
@@ -221,13 +194,6 @@
         <classShapeMoniker Id="5ea4a4a9-3dd3-4307-b0a7-14524b2d5048" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.31837443029263 : 10.9151025390625); (6.31837443029263 : 15.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/Database/User/User_Post" />
-      <nodes>
-        <classShapeMoniker Id="8d9659fb-b7da-47ad-87d9-ee099d1e81e2" />
-        <classShapeMoniker Id="36d5ccac-48c7-4030-8cf9-b2cb87c5c9da" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(7.25 : 8.65349196646219); (10.875 : 8.65349196646219); (10.875 : 6.71319824270904)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/Database/User/User_RatingLog" />
       <nodes>
@@ -240,6 +206,40 @@
       <nodes>
         <classShapeMoniker Id="8d9659fb-b7da-47ad-87d9-ee099d1e81e2" />
         <classShapeMoniker Id="1acc148a-8660-4e22-9c3b-f423d792b13f" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="fe402792-5255-40f0-a552-67f5e588b4ed" absoluteBounds="5.5, 15.75, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/Database/Post" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2b49a968-5475-4b99-b44c-bacc6a3da0d2" absoluteBounds="5.515, 16.21, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.5 : 17.1065991213545); (9.375 : 17.1065991213545)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/Database/Post/Post_Comment" />
+      <nodes>
+        <classShapeMoniker Id="fe402792-5255-40f0-a552-67f5e588b4ed" />
+        <classShapeMoniker Id="fd992e79-b028-4807-9309-2c8bf519027b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.5 : 16.2809308268229); (8.4999995 : 16.2809308268229); (8.4999995 : 13.8285953775048)]" fixedFrom="Caller" fixedTo="Algorithm">
+      <AssociationMoniker Name="/Database/Post/Post_Favorite" />
+      <nodes>
+        <classShapeMoniker Id="fe402792-5255-40f0-a552-67f5e588b4ed" />
+        <classShapeMoniker Id="649f9525-ac43-4eb9-8c35-b6e6a0f61c67" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 17.693146972917); (3.375 : 17.693146972917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/Database/Post/Post_PostsCategory" />
+      <nodes>
+        <classShapeMoniker Id="fe402792-5255-40f0-a552-67f5e588b4ed" />
+        <classShapeMoniker Id="7b431176-266f-46ed-8f83-6e6a51002858" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.58400068029263 : 10.9151025390625); (6.58400068029263 : 15.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/Database/User/User_Post" />
+      <nodes>
+        <classShapeMoniker Id="8d9659fb-b7da-47ad-87d9-ee099d1e81e2" />
+        <classShapeMoniker Id="fe402792-5255-40f0-a552-67f5e588b4ed" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

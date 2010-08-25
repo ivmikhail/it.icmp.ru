@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="itc" EntityNamespace="ITCommunity.DB" ContextNamespace="ITCommunity.DB" Class="Database" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="itc-mvc" EntityNamespace="ITCommunity.DB" ContextNamespace="ITCommunity.DB" Class="Database" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=PETCH-MOBILE\SQLEXPRESS;Initial Catalog=itc-mvc;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Petch-Mobile" Provider="System.Data.SqlClient" />
   <Table Name="dbo.CaptchaAnswers" Member="CaptchaAnswers">
     <Type Name="CaptchaAnswer">
@@ -53,8 +53,8 @@
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PostId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
-      <Association Name="Post_Favorite" Member="Post" ThisKey="PostId" OtherKey="Id" Type="Post" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="User_Favorite" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+      <Association Name="Post_Favorite" Member="Post" ThisKey="PostId" OtherKey="Id" Type="Post" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Headers" Member="Headers">
@@ -115,32 +115,14 @@
     <Type Name="Poll">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Topic" Type="System.String" DbType="NVarChar(120) NOT NULL" CanBeNull="false" />
-      <Column Name="IsMultiselect" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="IsMultiselect" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="AuthorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsOpen" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="IsOpen" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="VotesCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Poll_Vote" Member="Votes" ThisKey="Id" OtherKey="PollId" Type="Vote" />
       <Association Name="Poll_PollAnswer" Member="PollAnswers" ThisKey="Id" OtherKey="PollId" Type="PollAnswer" />
-      <Association Name="User_Poll" Member="User" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Posts" Member="Posts">
-    <Type Name="Post">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AuthorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsAttached" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="ViewsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Source" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
-      <Column Name="CommentsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Post_Comment" Member="Comments" ThisKey="Id" OtherKey="PostId" Type="Comment" />
-      <Association Name="Post_Favorite" Member="Favorites" ThisKey="Id" OtherKey="PostId" Type="Favorite" />
-      <Association Name="Post_PostsCategory" Member="PostsCategories" ThisKey="Id" OtherKey="PostId" Type="PostsCategory" />
-      <Association Name="User_Post" Member="Author" Storage="_User" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_Poll" Member="Author" Storage="_User" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.PostsCategories" Member="PostsCategories">
@@ -204,9 +186,30 @@
       <Association Name="User_Message1" Member="SentMessages" Storage="_Messages1" ThisKey="Id" OtherKey="SenderId" Type="Message" />
       <Association Name="User_Note" Member="Notes" ThisKey="Id" OtherKey="UserId" Type="Note" />
       <Association Name="User_Poll" Member="Polls" ThisKey="Id" OtherKey="AuthorId" Type="Poll" />
-      <Association Name="User_Post" Member="Posts" ThisKey="Id" OtherKey="AuthorId" Type="Post" />
       <Association Name="User_RatingLog" Member="RatingLogs" ThisKey="Id" OtherKey="UserId" Type="RatingLog" />
       <Association Name="User_Recovery" Member="Recoveries" ThisKey="Id" OtherKey="UserId" Type="Recovery" />
+      <Association Name="User_Post" Member="Posts" ThisKey="Id" OtherKey="AuthorId" Type="Post" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Posts" Member="Posts">
+    <Type Name="Post">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AuthorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsAttached" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ViewsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Source" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="CommentsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntityType" Type="Post.EntityTypes?" DbType="Int" CanBeNull="true" />
+      <Column Name="EntityId" Type="int?" DbType="Int" CanBeNull="true" />
+      <Column Name="IsCommentable" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="Post_Comment" Member="Comments" ThisKey="Id" OtherKey="PostId" Type="Comment" />
+      <Association Name="Post_Favorite" Member="Favorites" ThisKey="Id" OtherKey="PostId" Type="Favorite" />
+      <Association Name="Post_PostsCategory" Member="PostsCategories" ThisKey="Id" OtherKey="PostId" Type="PostsCategory" />
+      <Association Name="User_Post" Member="Author" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>
