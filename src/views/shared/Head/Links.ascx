@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
-
+<link rel="alternate"  type="application/rss+xml" href="<%= Url.Action("feed", "rss") %>" />    
 <link rel="shortcut icon" href="<%= Url.Content("~/favicon.ico?v=0.1") %>" type="image/vnd.microsoft.icon" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/reset.css?v=0.1") %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/tags.css?v=0.1") %>" />

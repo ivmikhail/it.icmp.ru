@@ -220,6 +220,20 @@ namespace ITCommunity.DB.Tables {
             }
         }
 
+        public static List<Post> GetLast(int count)
+        {
+            using (var db = Database.Connect())
+            {
+                var posts =
+                    from pst in db.Posts                    
+                    orderby pst.CreateDate descending
+                    select pst;
+
+                return posts.Take(count).ToList();
+            }
+        }
+
+
         public static List<Post> GetTopPopular(int count, int days) {
             using (var db = Database.Connect()) {
                 var date = DateTime.Now.AddDays(-days);

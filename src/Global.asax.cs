@@ -13,7 +13,7 @@ using ITCommunity.DB.Tables;
 
 namespace ITCommunity {
 
-    public class Global : HttpApplication {
+    public class Global : HttpApplication {        
 
         private List<TimerTask> _tasks;
 
@@ -78,6 +78,12 @@ namespace ITCommunity {
                 "OldPost",
                 "news.aspx",
                 new { controller = "Post", action = "View" }
+            );
+
+            routes.MapRoute(
+                "Rss",
+                "rss/{format}",
+                new { controller = "Rss", action = "Feed", format = "RSS"}
             );
 
             routes.MapRoute(
