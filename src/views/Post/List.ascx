@@ -10,7 +10,7 @@
     <ul>
         <% foreach (var post in Model.List) { %>
             <li class="block">
-                <% Html.RenderPartial("Description", post); %>
+                <% Html.RenderPartial("../Post/Description", post); %>
             </li>
         <% } %>
     </ul>
