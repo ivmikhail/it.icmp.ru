@@ -78,6 +78,7 @@
     <Compile Include="Classes\Core\Logger.cs" />
     <Compile Include="Classes\Core\EmailSender.cs" />
     <Compile Include="Classes\Core\TimerTask.cs" />
+    <Compile Include="Classes\DB\Poll.cs" />
     <Compile Include="Classes\DB\Rating.cs" />
     <Compile Include="Classes\DB\Header.cs" />
     <Compile Include="Classes\DB\Message.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Classes\DB\Tables\Categories.cs" />
     <Compile Include="Classes\DB\Tables\Comments.cs" />
     <Compile Include="Classes\DB\Tables\Captchas.cs" />
+    <Compile Include="Classes\DB\Tables\Polls.cs" />
     <Compile Include="Classes\DB\Tables\Ratings.cs" />
     <Compile Include="Classes\DB\Tables\Messages.cs" />
     <Compile Include="Classes\DB\Tables\Favorites.cs" />
@@ -209,6 +211,7 @@
     <Content Include="Views\Message\UnreadList.aspx" />
     <Content Include="Views\Message\Menu.ascx" />
     <Content Include="Views\Post\Add.aspx" />
+    <Content Include="Views\Post\Description.ascx" />
     <Content Include="Views\Post\EditForm.ascx" />
     <Content Include="Views\Post\DiscussibleList.aspx" />
     <Content Include="Views\Post\Periods.ascx" />
