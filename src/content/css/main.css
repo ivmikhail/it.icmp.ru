@@ -126,3 +126,7 @@
     content: "";
     display: block;
 }
+
+.blink {
+    text-decoration: blink;
+}

@@ -1,10 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
 
-<%= Html.ActionLink(
-    "админка",
-    "list",
-    "header",
-    null,
-    new { title = "Сделать что-то важное" }
-)%>
+<a  href="<%= Url.Action("list", "header") %>"
+    title = "Сделать что-то важное">
+    админка</a>
