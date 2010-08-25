@@ -41,6 +41,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -119,6 +120,7 @@
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Controllers\HeaderController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
