@@ -13,6 +13,11 @@ namespace ITCommunity.DB {
     /// </summary>
     public partial class Post {
 
+        public enum EntityTypes {
+            Post = 0,
+            Poll = 1
+        }
+
         public List<Category> Categories { get; set; }
 
         public Rating Rating { get; set; }
@@ -54,6 +59,10 @@ namespace ITCommunity.DB {
             }
 
             Rating = Ratings.Get(Id, Rating.EntityTypes.Post) ?? new Rating { EntityId = Id, EntityType = DB.Rating.EntityTypes.Post };
+
+            if (EntityType == null) {
+                EntityType = EntityTypes.Post;
+            }
         }
     }
 }
