@@ -14,7 +14,7 @@ namespace ITCommunity.Models {
         }
 
         protected override List<Message> GetMessages() {
-            return Messages.GetSent(CurrentUser.User.Id, Page, PerPage, ref TotalCount);
+            return Messages.GetPagedSent(CurrentUser.User.Id, Page, PerPage, ref TotalCount);
         }
     }
 }

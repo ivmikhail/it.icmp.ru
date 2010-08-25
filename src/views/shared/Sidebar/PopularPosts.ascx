@@ -3,9 +3,6 @@
 
 <h2>
     <% Html.RenderPartial("Link/Post/PopularList"); %>
-    <span class="period">
-        <%= Config.Get("PopularPostsTimeText")%>
-    </span>
 </h2>
 
 <ul>

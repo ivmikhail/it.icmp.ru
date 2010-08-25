@@ -18,7 +18,7 @@
         </li>
         <% if (CurrentUser.IsAuth) { %>
             <li>
-                <% Html.RenderPartial("Link/Message/CurrentUnreadList"); %>
+                <% Html.RenderPartial("Link/Message/CurrentReceivedList"); %>
             </li>
 <%--
             <li>

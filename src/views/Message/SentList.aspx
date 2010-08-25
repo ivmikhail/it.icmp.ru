@@ -7,7 +7,7 @@
     <% } else if (Model.TotalCount == 1) { %>
         Одно отправленное сообщение
     <% } else { %>
-        <%= Model.TotalCount %> отправленных сообщений
+        Отправленных сообщений: <%= Model.TotalCount %>
     <% } %>
 </asp:Content>
 
@@ -19,13 +19,13 @@
         <% } else if (Model.TotalCount == 1) { %>
             Одно отправленное сообщение
         <% } else { %>
-            <%= Model.TotalCount %> отправленных сообщений
+            Отправленных сообщений: <%= Model.TotalCount %>
+            <ul class="right-list meta">
+                <li>
+                    <% Html.RenderPartial("Link/Message/DeleteAll", "sent"); %>
+                </li>
+            </ul>
         <% } %>
-        <ul class="right-list meta">
-            <li>
-                <% Html.RenderPartial("Link/Message/DeleteAll", "sents"); %>
-            </li>
-        </ul>
     </h1>
 
     <% Html.RenderPartial("../Message/List", Model); %>

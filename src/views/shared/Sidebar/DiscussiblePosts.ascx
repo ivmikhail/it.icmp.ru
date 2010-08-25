@@ -3,9 +3,6 @@
 
 <h2>
     <% Html.RenderPartial("Link/Post/DiscussibleList"); %>
-    <span class="period">
-        <%= Config.Get("DiscussiblePostsTimeText")%>
-    </span>
 </h2>
 
 <ul>

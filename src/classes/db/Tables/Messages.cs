@@ -46,14 +46,13 @@ namespace ITCommunity.DB.Tables {
             }
         }
 
-        public static List<Message> GetUnread(int userId, int page, int count, ref int totalCount) {
+        public static List<Message> GetPagedReceived(int userId, int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
                     where 
                         msg.ReceiverId == userId &&
-                        msg.DeletedForReceiver == false &&
-                        msg.IsReceiverRead == false
+                        msg.DeletedForReceiver == false
                     orderby msg.CreateDate descending
                     select msg;
 
@@ -75,22 +74,7 @@ namespace ITCommunity.DB.Tables {
             }
         }
 
-        public static List<Message> GetRead(int userId, int page, int count, ref int totalCount) {
-            using (var db = Database.Connect()) {
-                var messages =
-                    from msg in db.Messages
-                    where
-                        msg.ReceiverId == userId &&
-                        msg.DeletedForReceiver == false &&
-                        msg.IsReceiverRead
-                    orderby msg.CreateDate descending
-                    select msg;
-
-                return messages.Paged(page, count, ref totalCount);
-            }
-        }
-
-        public static List<Message> GetSent(int userId, int page, int count, ref int totalCount) {
+        public static List<Message> GetPagedSent(int userId, int page, int count, ref int totalCount) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
@@ -104,14 +88,13 @@ namespace ITCommunity.DB.Tables {
             }
         }
 
-        public static void SetDeletedAllUnread(int userId) {
+        public static void SetDeletedAllReceived(int userId) {
             using (var db = Database.Connect()) {
                 var messages =
                     from msg in db.Messages
                     where
                         msg.ReceiverId == userId &&
-                        msg.DeletedForReceiver == false &&
-                        msg.IsReceiverRead == false
+                        msg.DeletedForReceiver == false
                     orderby msg.CreateDate descending
                     select msg;
 
@@ -136,25 +119,6 @@ namespace ITCommunity.DB.Tables {
 
                 foreach (var message in messages) {
                     message.IsReceiverRead = true;
-                }
-
-                db.SubmitChanges();
-            }
-        }
-
-        public static void SetDeletedAllRead(int userId) {
-            using (var db = Database.Connect()) {
-                var messages =
-                    from msg in db.Messages
-                    where
-                        msg.ReceiverId == userId &&
-                        msg.DeletedForReceiver == false &&
-                        msg.IsReceiverRead
-                    orderby msg.CreateDate descending
-                    select msg;
-
-                foreach (var message in messages) {
-                    message.DeletedForReceiver = true;
                 }
 
                 db.SubmitChanges();

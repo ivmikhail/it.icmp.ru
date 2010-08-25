@@ -3,11 +3,11 @@
 
 <asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">
     <% if (Model.TotalCount == 0) { %>
-        Нет прочитанных сообщений
+        Нет сообщений
     <% } else if (Model.TotalCount == 1) { %>
-        Одно прочитанное сообщение
+        Одно сообщение
     <% } else { %>
-        <%= Model.TotalCount %> прочитанных сообщений
+        Сообщений: <%= Model.TotalCount %> 
     <% } %>
 </asp:Content>
 
@@ -15,17 +15,17 @@
 
     <h1>
         <% if (Model.TotalCount == 0) { %>
-            Нет прочитанных сообщений
+            Нет сообщений
         <% } else if (Model.TotalCount == 1) { %>
-            Одно прочитанное сообщение
+            Одно сообщение
         <% } else { %>
-            <%= Model.TotalCount %> прочитанных сообщений
+            Сообщений: <%= Model.TotalCount %> 
+            <ul class="right-list meta">
+                <li>
+                    <% Html.RenderPartial("Link/Message/DeleteAll", "received"); %>
+                </li>
+            </ul>
         <% } %>
-        <ul class="right-list meta">
-            <li>
-                <% Html.RenderPartial("Link/Message/DeleteAll", "reads"); %>
-            </li>
-        </ul>
     </h1>
 
     <% Html.RenderPartial("../Message/List", Model); %>

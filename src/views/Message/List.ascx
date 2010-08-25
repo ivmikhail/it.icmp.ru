@@ -11,7 +11,7 @@
         <% foreach (var message in Model.List) { %>
             <li class="block">
 
-                <h2><%= message.TitleFormatted%></h2>
+                <h2 class="<% if (message.IsReceiverRead) { %>none-active<% } %>"><%= message.TitleFormatted%></h2>
 
                 <div class="text">
                     <%= message.TextFormatted%> 
@@ -33,13 +33,8 @@
                         <% Html.RenderPartial("Link/Message/Delete", message); %>
                     </li>
                     <% if (message.ReceiverId == CurrentUser.User.Id) { %>
-                        <% if (!message.IsReceiverRead) { %>
-                            <li>
-                                <% Html.RenderPartial("Link/Message/Read", message); %>
-                            </li>
-                        <% } %>
                         <li>
-                            <% Html.RenderPartial("Link/Message/Answer", message); %>
+                            <% Html.RenderPartial("Link/Message/Reply", message); %>
                         </li>
                     <% } %>
                 </ul>

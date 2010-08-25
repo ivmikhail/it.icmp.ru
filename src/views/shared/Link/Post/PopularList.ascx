@@ -6,5 +6,5 @@
     "popularlist",
     "post",
     new { period = "month" },
-    new { title = "Посмотреть популярные посты" }
+    new { title = "Посмотреть популярные посты" + Config.Get("PopularPostsTimeText") }
 )%>

@@ -13,7 +13,7 @@ namespace ITCommunity.Models {
     [PropertiesMustMatch("Password", "ConfirmPassword", ErrorMessage = "Пароли не совпадают")]
     public class UserEditModel {
 
-        [DisplayName("Email адресс")]
+        [DisplayName("e-mail адрес")]
         [Required(ErrorMessage = "Введите e-mail")]
         [UniqueEmail]
         public string Email { get; set; }
@@ -22,7 +22,7 @@ namespace ITCommunity.Models {
         [StringLength(255, MinimumLength = 3, ErrorMessage = "Введите хотя бы 3 символа")]
         public string Password { get; set; }
 
-        [DisplayName("Повтор паролья")]
+        [DisplayName("Повтор пароля")]
         public string ConfirmPassword { get; set; }
 
         [CurrentUserPassword]
