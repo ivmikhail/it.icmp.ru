@@ -3,8 +3,8 @@
 
 <%= Html.ActionLink(
     "ответить",
-    "send",
+    "reply",
     "message",
-    new { receiver = Model.Sender.Nick },
+    new { id = Model.Id },
     new { title = "Написать ответное сообщение", @class = "main-link" }
 )%>

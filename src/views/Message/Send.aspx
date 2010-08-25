@@ -9,7 +9,7 @@
 
     <h1>Отправка сообщения</h1>
 
-    <% using (Html.BeginForm()) { %>
+    <% using (Html.BeginForm("send", "message")) { %>
 
         <%= Html.LabelFor(m => m.Receiver) %>
         <%= Html.TextBoxFor(m => m.Receiver) %>
