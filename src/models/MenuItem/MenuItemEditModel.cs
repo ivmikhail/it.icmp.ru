@@ -3,15 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 
 namespace ITCommunity.Models {
 
     public class MenuItemEditModel {
 
-        [DisplayName("ID родительской ссылки")]
-        [Required(ErrorMessage = "Введите ID родидельской ссылки")]
-        public int ParentId { get; set; }
+        [DisplayName("Родительский пункт")]
+        public int? ParentId { get; set; }
 
         [DisplayName("Название ссылки")]
         [Required(ErrorMessage = "Введите название ссылки")]
@@ -43,12 +44,25 @@ namespace ITCommunity.Models {
         public MenuItem ToMenuItem() {
             var item = new MenuItem();
 
-            item.ParentId = ParentId;
+            item.ParentId = (ParentId == null) ? 0 : ParentId.Value;
             item.Name = Name;
             item.Url = Url;
             item.Sort = Sort;
 
             return item;
+        }
+
+        public static List<SelectListItem> ParentIds {
+            get {
+                var parentIds = new List<SelectListItem>();
+                foreach (var parent in MenuItems.GetRoot()) {
+                    parentIds.Add(new SelectListItem { 
+                        Text = parent.Name,
+                        Value = parent.Id.ToString() 
+                    });
+                }
+                return parentIds;
+            }
         }
     }
 }

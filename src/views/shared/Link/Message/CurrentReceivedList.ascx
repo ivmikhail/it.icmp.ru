@@ -1,13 +1,9 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
 
-<%= Html.ActionLink(
-    "сообщения",
-    "receivedlist",
-    "message",
-    null,
-    new { 
-        title = "Новых сообщений: " + CurrentUser.User.UnreadMessagesCount,
-        @class = (CurrentUser.User.UnreadMessagesCount == 0) ? "" : "important-link"
-    }
-)%>
+<a  href="<%= Url.Action("receivedlist", "message") %>"
+    title="Новых сообщений: <%= CurrentUser.User.UnreadMessagesCount %>"
+    <% if (CurrentUser.User.UnreadMessagesCount > 0) { %>
+        class="important-link"
+    <% } %>>
+    сообщения</a>

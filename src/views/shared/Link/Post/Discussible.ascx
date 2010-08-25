@@ -1,10 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Post>" %>
 
 
-<%= Html.ActionLink(
-    Model.TitleFormatted,
-    "view",
-    "post",
-    new { id = Model.Id },
-    new { title = Model.CommentsCount + " комментариев", @class = "sidebar-link" }
-)%>
+<a  href="<%= Url.Action("view", "post", new { id = Model.Id }) %>"
+    title="<%= Model.CommentsCount %> комментариев"
+    >
+    <%= Model.TitleFormatted %></a>

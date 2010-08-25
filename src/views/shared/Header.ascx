@@ -19,6 +19,11 @@
         <% if (CurrentUser.IsAuth) { %>
             <li>
                 <% Html.RenderPartial("Link/Message/CurrentReceivedList"); %>
+                <% if (CurrentUser.User.UnreadMessagesCount > 0) { %>
+                    <span class="blink important-link">
+                        (<%= CurrentUser.User.UnreadMessagesCount %>)
+                    </span>
+                <% } %>
             </li>
 <%--
             <li>

@@ -1,6 +1,6 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<ITCommunity.DB.Comment>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<Comment>" %>
 
 
-<a  href="/post/view/<%= Model.PostId %>#comment-<%= Model.Id %>"
+<a  href="<%= Url.Action("view", "post", new { id = Model.PostId })%>#comment-<%= Model.Id %>"
     title="<%= Model.TimePassed() %>"
     class="sidebar-link"><%= Model.ShortText %></a>

@@ -1,10 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Captcha>" %>
 
 
-<%= Html.ActionLink(
-    "удалить",
-    "delete",
-    "captcha",
-    new { id = Model.Id },
-    new { title = "Удалить капчу", @class = "delete-link" }
-)%>
+<a  href="<%= Url.Action("delete", "captcha", new { id = Model.Id }) %>"
+    title = "Удалить капчу"
+    class = "delete-link">
+    удалить</a>

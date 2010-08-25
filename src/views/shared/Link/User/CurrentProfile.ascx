@@ -6,5 +6,5 @@
     "profile",
     "user",
     null,
-    new { title = "Мое" }
+    new { title = "Мой профиль" }
 )%>
