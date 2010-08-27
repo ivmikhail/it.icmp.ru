@@ -15,10 +15,12 @@ namespace ITCommunity.Models {
         [StringLength(255, MinimumLength = 3, ErrorMessage = "Введите хотя бы 3 символа")]
         public string Password { get; set; }
 
-        [DisplayName("Повтор паролья")]
+        [DisplayName("Повтор пароля")]
         [Required(ErrorMessage = "Введите повтор пароля")]
         public string ConfirmPassword { get; set; }
 
+        public UserNewPasswordModel() : base() {
+        }
         public UserNewPasswordModel(Recovery recovery) {
             UserNick = recovery.User.Nick;
         }
