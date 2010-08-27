@@ -87,6 +87,12 @@ namespace ITCommunity {
             );
 
             routes.MapRoute(
+                "Browse",
+                "browse",
+                new { controller = "Browse", action = "View", directory="Files/"}
+            );
+
+            routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
                 new { controller = "BaseController", action = "NotFound", id = 0 }

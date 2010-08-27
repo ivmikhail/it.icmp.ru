@@ -25,6 +25,9 @@
                     </span>
                 <% } %>
             </li>
+            <li>
+                <% Html.RenderPartial("Link/Browse/Files"); %>
+            </li>
 <%--
             <li>
                 <% Html.RenderPartial("Link/User/Settings"); %>

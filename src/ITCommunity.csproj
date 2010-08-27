@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Core\AppCache.cs" />
+    <Compile Include="Classes\Core\BrowseItem.cs" />
     <Compile Include="Classes\Core\Config.cs" />
     <Compile Include="Classes\Core\CurrentUser.cs" />
     <Compile Include="Classes\Core\Logger.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\BrowseController.cs" />
     <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Controllers\HeaderController.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Browse\BrowseModel.cs" />
     <Compile Include="Models\Captcha\CaptchaEditModel.cs" />
     <Compile Include="Models\Captcha\CaptchaListModel.cs" />
     <Compile Include="Models\Category\CategoryEditModel.cs" />
@@ -181,12 +184,20 @@
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\tags.css" />
     <Content Include="Content\css\validation.css" />
+    <Content Include="Content\img\browser\any.ico" />
+    <Content Include="Content\img\browser\exe.ico" />
+    <Content Include="Content\img\browser\folderclosed.gif" />
+    <Content Include="Content\img\browser\up.ico" />
+    <Content Include="Content\img\design\rss.png" />
+    <Content Include="Content\img\design\atom.png" />
     <Content Include="Content\js\it-community.js" />
     <Content Include="Content\js\highlight.pack.js" />
     <Content Include="Content\other\greetings.txt" />
     <Content Include="Content\other\greetings_personal.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Browse\Menu.ascx" />
+    <Content Include="Views\Browse\View.aspx" />
     <Content Include="Views\Captcha\EditAnswers.ascx" />
     <Content Include="Views\Captcha\Edit.aspx" />
     <Content Include="Views\Captcha\List.aspx" />
@@ -219,6 +230,10 @@
     <Content Include="Views\Rating\Rated.ascx" />
     <Content Include="Views\Rating\Rate.ascx" />
     <Content Include="Views\Shared\AccessDenied.aspx" />
+    <Content Include="Views\Shared\Link\Browse\Dir.ascx" />
+    <Content Include="Views\Shared\Link\Browse\File.ascx" />
+    <Content Include="Views\Shared\Link\Browse\Pathes.ascx" />
+    <Content Include="Views\Shared\Link\Browse\RootDir.ascx" />
     <Content Include="Views\Shared\Link\Captcha\Delete.ascx" />
     <Content Include="Views\Shared\Link\Captcha\Edit.ascx" />
     <Content Include="Views\Shared\Link\Captcha\List.ascx" />
@@ -237,12 +252,15 @@
     <Content Include="Views\Shared\Link\MenuItem\Edit.ascx" />
     <Content Include="Views\Shared\Link\MenuItem\List.ascx" />
     <Content Include="Views\Shared\Link\MenuItem\Url.ascx" />
+    <Content Include="Views\Shared\Link\Browse\Files.ascx" />
     <Content Include="Views\Shared\Link\Message\Reply.ascx" />
     <Content Include="Views\Shared\Link\Message\DeleteAll.ascx" />
     <Content Include="Views\Shared\Link\Message\Delete.ascx" />
     <Content Include="Views\Shared\Link\Message\ReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\CurrentReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\SentList.ascx" />
+    <Content Include="Views\Shared\Link\Post\Atom.ascx" />
+    <Content Include="Views\Shared\Link\Post\Rss.ascx" />
     <Content Include="Views\Shared\Link\Post\List.ascx" />
     <Content Include="Views\Shared\Link\Post\Delete.ascx" />
     <Content Include="Views\Shared\Link\Post\Edit.ascx" />
@@ -353,7 +371,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -386,7 +403,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>53169</DevelopmentServerPort>
+          <DevelopmentServerPort>56690</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/ITCommunity</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
