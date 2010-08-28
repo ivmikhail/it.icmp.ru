@@ -20,8 +20,11 @@ namespace ITCommunity.DB {
 
         public DateTime EndDate {
             get {
-                var post = Posts.Get(PostId);
+                if (ActiveDays == null) {
+                    return DateTime.MaxValue;
+                }
 
+                var post = Posts.Get(PostId);
                 return post.CreateDate.AddDays(ActiveDays.Value);
             }
         }
