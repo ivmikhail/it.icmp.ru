@@ -33,7 +33,7 @@ namespace ITCommunity.Controllers {
 
             Favorites.Add(favorite);
 
-            return RedirectToAction("posts", "fav");
+            return RedirectToAction("posts");
         }
 
         [Authorize]
@@ -44,7 +44,7 @@ namespace ITCommunity.Controllers {
 
             Favorites.Delete(id.Value, CurrentUser.User.Id);
 
-            return RedirectToAction("posts", "fav");
+            return RedirectToAction("posts");
         }
     }
 }

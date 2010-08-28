@@ -44,7 +44,7 @@ namespace ITCommunity.Models {
 
         public int PagesCount {
             get {
-                return TotalCount / PerPage;
+                return (TotalCount - 1) / PerPage + 1;
             }
         }
 

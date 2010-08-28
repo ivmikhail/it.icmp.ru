@@ -12,6 +12,9 @@
         <%= Html.CheckBoxFor(m => m.IsAttached)%> прикрепленный пост?
     </label>
 <% } %>
+<label>
+    <%= Html.CheckBoxFor(m => m.IsCommentable, new { @checked = "checked" })%> разрешить комментарии?
+</label>
 
 <%= Html.LabelFor(m => m.Description)%>
 <% Html.RenderPartial("EditorToolbar"); %>

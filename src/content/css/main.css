@@ -41,7 +41,6 @@
 .text {
 	line-height: 1.5em;
 	padding-bottom: 1em;
-	overflow: auto;
 }
 .text hr {
     border: none;
@@ -84,6 +83,9 @@
 	border-top: 1px solid #bbbbbb;
 	padding: 1px 5px;
 }
+.text .center {
+    text-align: center;
+}
 
 
 .meta {
@@ -99,15 +101,19 @@
 	color: #999999;
 }
 
+.text .left-list,
 .left-list {
     clear: left;
     float: left;
     line-height: 2em;
+    padding: 0;
     text-align: left;
 }
+.text .left-list li,
 .left-list li {
     display: inline;
     margin-right: 12px;
+    padding: 0;
 }
 
 .right-list {

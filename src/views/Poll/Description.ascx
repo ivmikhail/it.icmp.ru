@@ -4,7 +4,7 @@
     <% Html.RenderPartial("Link/Post/Title", Model); %>
 </h2>
 <div class="text">
-    <%= Model.DescriptionFormatted %>
+    <% Html.RenderPartial("../Poll/Answers", Model.Entity); %>
 </div>
 
 <div class="meta">
@@ -29,11 +29,15 @@
     </ul>
 
     <ul class="left-list">
-        <% foreach (var category in Model.Categories) { %>
-            <li>
-                <% Html.RenderPartial("Link/Category/Posts", category); %>
-            </li>
-        <% } %>
+        <li>
+            <% Html.RenderPartial("../Poll/IsOpen", Model.Entity); %>
+        </li>
+        <li>
+            <% Html.RenderPartial("../Poll/EndDate", Model.Entity); %>
+        </li>
+        <li>
+            <% Html.RenderPartial("../Poll/VotesCount", Model.Entity); %>
+        </li>
     </ul>
 
     <ul class="right-list">

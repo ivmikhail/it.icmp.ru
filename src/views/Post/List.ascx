@@ -10,7 +10,11 @@
     <ul>
         <% foreach (var post in Model.List) { %>
             <li class="block">
-                <% Html.RenderPartial("../Post/Description", post); %>
+                <% if (post.EntityType == Post.EntityTypes.Poll) { %>
+                    <% Html.RenderPartial("../Poll/Description", post); %>
+                <% } else { %>
+                    <% Html.RenderPartial("../Post/Description", post); %>
+                <% } %>
             </li>
         <% } %>
     </ul>

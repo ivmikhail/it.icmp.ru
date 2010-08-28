@@ -1,6 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Drawing;
+using System.IO;
+using System.Web.Mvc;
+using System.Web.UI.DataVisualization.Charting;
+using System.Web.UI.WebControls;
 
 using ITCommunity.Core;
+using ITCommunity.DB;
 using ITCommunity.DB.Tables;
 using ITCommunity.Models;
 
@@ -20,10 +25,52 @@ namespace ITCommunity.Controllers {
                 if (CurrentUser.User.Id != post.AuthorId) {
                     Posts.IncViews(post);
                 }
+                if (post.EntityType == Post.EntityTypes.Poll) {
+                    return View("../Poll/View", post);
+                }
                 return View(post);
             }
 
             return NotFound();
+        }
+
+        public ActionResult PollChart(int? id, bool? isThumbs) {
+            var poll = Polls.Get(id.Value);
+            if (poll == null) {
+                return NotFound();
+            }
+
+            var chart = new Chart();
+            chart.BackColor = Color.Transparent;
+            chart.Width = Unit.Pixel(400);
+            chart.Height = Unit.Pixel(400);
+
+            var votes = new Series("Votes");
+            votes.ChartArea = "VotesArea";
+            votes.ChartType = SeriesChartType.Pie;
+            votes.Font = new Font("Verdana", 8.25f, FontStyle.Regular);
+
+            foreach (var answer in poll.PollAnswers) {
+                if (answer.Votes.Count > 0) {
+                    votes.Points.Add(new DataPoint {
+                        AxisLabel = answer.Text,
+                        YValues = new double[] { answer.Votes.Count }
+                    });
+                }
+            }
+
+            chart.Series.Add(votes);
+
+            ChartArea area = new ChartArea("VotesArea");
+            area.BackColor = Color.Transparent;
+            chart.ChartAreas.Add(area);
+
+            using (var ms = new MemoryStream()) {
+                chart.SaveImage(ms, ChartImageFormat.Png);
+                ms.Seek(0, SeekOrigin.Begin);
+
+                return File(ms.ToArray(), "image/png");
+            }
         }
 
         public ActionResult List(int? page) {
@@ -67,10 +114,58 @@ namespace ITCommunity.Controllers {
                     Users.Update(user);
                 }
 
-                return RedirectToAction("view", "post", new { id = post.Id });
+                return RedirectToAction("view", new { id = post.Id });
             }
 
             return View(model);
+        }
+
+        [Authorize]
+        public ActionResult AddPoll() {
+            return View("../Poll/Add");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddPoll(PostEditPollModel model) {
+            if (ModelState.IsValid) {
+                var poll = model.ToPoll();
+
+                poll = Polls.Add(poll);
+                model.EntityId = poll.Id;
+                model.EntityType = Post.EntityTypes.Poll;
+
+                return Add(model);
+            }
+
+            return View("../Poll/Add", model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult VotePoll(int? id, int? postId, int[] answers) {
+            if (id == null && postId == null) {
+                return NotFound();
+            }
+
+            if (answers != null) {
+                var poll = Polls.Get(id.Value);
+
+                foreach (var answer in answers) {
+                    var vote = new Vote {
+                        AnswerId = answer,
+                        UserId = CurrentUser.User.Id
+                    };
+
+                    Polls.AddVote(vote);
+
+                    if (poll.IsMultiselect == false) {
+                        break;
+                    }
+                }
+            }
+
+            return RedirectToAction("view", new { id = postId.Value });
         }
 
         [Authorize]
@@ -109,7 +204,7 @@ namespace ITCommunity.Controllers {
 
                 Posts.Update(editedPost);
 
-                return RedirectToAction("view", "post", new { id = post.Id });
+                return RedirectToAction("view", new { id = post.Id });
             }
 
             return View(model);
@@ -133,6 +228,11 @@ namespace ITCommunity.Controllers {
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id) {
             if (id == 0) {
+                return NotFound();
+            }
+
+            var post = Posts.Get(id.Value);
+            if (post == null) {
                 return NotFound();
             }
 

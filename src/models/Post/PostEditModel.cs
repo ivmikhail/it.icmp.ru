@@ -26,6 +26,12 @@ namespace ITCommunity.Models {
 
         public bool IsAttached { get; set; }
 
+        public bool IsCommentable { get; set; }
+
+        public Post.EntityTypes? EntityType { get; set; }
+
+        public int? EntityId { get; set; }
+
         public PostEditModel() {
         }
 
@@ -35,6 +41,9 @@ namespace ITCommunity.Models {
             Text = post.Text;
             Source = post.Source;
             IsAttached = post.IsAttached;
+            IsCommentable = post.IsCommentable;
+            EntityType = post.EntityType;
+            EntityId = post.EntityId;
 
             foreach (var category in post.Categories) {
                 PostEditCategoriesModel.Current.Clear();
@@ -42,7 +51,7 @@ namespace ITCommunity.Models {
             }
         }
 
-        public Post ToPost() {
+        public virtual Post ToPost() {
             var post = new Post();
 
             post.Title = Title;
@@ -50,7 +59,10 @@ namespace ITCommunity.Models {
             post.Text = Text;
             post.Source = Source ?? "";
             post.IsAttached = CurrentUser.IsAdmin && IsAttached;
+            post.IsCommentable = IsCommentable;
             post.AuthorId = CurrentUser.User.Id;
+            post.EntityType = EntityType;
+            post.EntityId = EntityId;
 
             foreach (var isAttached in PostEditCategoriesModel.Current.IsAttached) {
                 if (isAttached.Value) {

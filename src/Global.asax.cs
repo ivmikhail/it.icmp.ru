@@ -19,7 +19,7 @@ namespace ITCommunity {
 
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            
             routes.MapRoute(
                 "IndexPage",
                 "",
@@ -75,6 +75,12 @@ namespace ITCommunity {
             );
 
             routes.MapRoute(
+                "PostPoll",
+                "post/poll{id}.png",
+                new { controller = "Post", action = "PollChart", id = 0 }
+            );
+
+            routes.MapRoute(
                 "OldPost",
                 "news.aspx",
                 new { controller = "Post", action = "View" }
@@ -117,9 +123,10 @@ namespace ITCommunity {
         }
 
         protected void Application_Error(object sender, EventArgs e) {
-            var ex = Server.GetLastError().GetBaseException() as HttpException;
+            var ex = Server.GetLastError().GetBaseException();
+            var httpEx = ex as HttpException;
 
-            if (ex != null && ex.GetHttpCode() == 404) {
+            if (httpEx != null && httpEx.GetHttpCode() == 404) {
                 //ignore 404 error
             } else {
                 Logger.Log.Error("Произошла непредвиденная ошибка: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + Request.Url, ex);
