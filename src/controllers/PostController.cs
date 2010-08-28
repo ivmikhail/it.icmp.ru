@@ -69,7 +69,7 @@ namespace ITCommunity.Controllers {
                 chart.SaveImage(ms, ChartImageFormat.Png);
                 ms.Seek(0, SeekOrigin.Begin);
 
-                return File(ms.ToArray(), "image/png");
+                return File(ms.ToArray(), "image/png", "poll" + id.Value.ToString() + ".png");
             }
         }
 

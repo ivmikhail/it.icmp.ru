@@ -76,7 +76,7 @@ namespace ITCommunity {
 
             routes.MapRoute(
                 "PostPoll",
-                "post/poll{id}.png",
+                "post/poll{id}",
                 new { controller = "Post", action = "PollChart", id = 0 }
             );
 
