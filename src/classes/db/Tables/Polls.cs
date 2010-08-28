@@ -35,7 +35,6 @@ namespace ITCommunity.DB.Tables {
                     select pll
                 ).SingleOrDefault();
 
-                poll.Topic = editedPoll.Topic;
                 poll.IsMultiselect = editedPoll.IsMultiselect;
                 poll.IsOpen = editedPoll.IsOpen;
                 poll.PollAnswers = editedPoll.PollAnswers;
@@ -52,24 +51,30 @@ namespace ITCommunity.DB.Tables {
                     select pll
                 ).SingleOrDefault();
 
-                if (poll != null) {
-                    poll.Votes.Load();
-                }
-
                 return poll;
             }
         }
 
-        public static void DeleteAnswer(int id) {
+        public static Vote AddVote(Vote vote) {
             using (var db = Database.Connect()) {
-                var answer = (
-                    from ans in db.PollAnswers
-                    where ans.Id == id
-                    select ans
-                ).SingleOrDefault();
-
-                db.PollAnswers.DeleteOnSubmit(answer);
+                db.Votes.InsertOnSubmit(vote);
                 db.SubmitChanges();
+
+                vote.PollAnswer.Poll.VotesCount++;
+                db.SubmitChanges();
+
+                return vote;
+            }
+        }
+
+        public static bool IsUserVoted(int userId) {
+            using (var db = Database.Connect()) {
+                var vote =
+                    from vot in db.Votes
+                    where vot.UserId == userId
+                    select vot;
+
+                return vote.Any();
             }
         }
     }

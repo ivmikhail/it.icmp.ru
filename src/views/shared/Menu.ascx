@@ -7,6 +7,9 @@
             <% Html.RenderPartial("Link/Post/Add"); %>
         </li>
         <li>
+            <% Html.RenderPartial("Link/Post/AddPoll"); %>
+        </li>
+        <li>
             <% Html.RenderPartial("Link/Header/Add"); %>
         </li>
         <li>

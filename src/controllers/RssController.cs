@@ -63,7 +63,7 @@ namespace ITCommunity.Controllers {
                 SyndicationItem item = new SyndicationItem(
                     post.Title == "" ? "null" : post.Title,
                     post.Description == "" ? post.TextFormatted : post.DescriptionFormatted,
-                    new Uri(site_domain + "/post/view/" + post.Id), 
+                    new Uri(site_domain + "/poll/view/" + post.Id), 
                     post.Id.ToString(),
                     post.CreateDate.ToUniversalTime());
                 items.Add(item);

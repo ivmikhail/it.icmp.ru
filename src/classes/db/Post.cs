@@ -18,11 +18,13 @@ namespace ITCommunity.DB {
             Poll = 1
         }
 
+        public object Entity { get; set; }
+
         public List<Category> Categories { get; set; }
 
         public Rating Rating { get; set; }
 
-        public bool IsFavorite { get; private set; }
+        public bool IsFavorite { get; set; }
 
         /// <summary>
         /// Полностью форматированное в безопасный хтмл описание
@@ -50,7 +52,7 @@ namespace ITCommunity.DB {
             // количество просмотров. Поэтому не использую это:
             // Author = Users.Get(AuthorId); 
             var loadAuthor = Author;
-            
+
             // а вот тут уже другое, т.к. Categories - не сгенерированное свойство
             Categories = Tables.Categories.GetByPost(Id);
 
@@ -62,7 +64,18 @@ namespace ITCommunity.DB {
 
             if (EntityType == null) {
                 EntityType = EntityTypes.Post;
+            } else {
+                Entity = GetEntity();
             }
+        }
+
+        private object GetEntity() {
+            if (EntityType == EntityTypes.Poll) {
+                var poll = Polls.Get(EntityId.Value);
+                poll.PostId = Id;
+                return poll;
+            }
+            return null;
         }
     }
 }

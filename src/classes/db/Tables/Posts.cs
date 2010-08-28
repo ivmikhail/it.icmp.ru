@@ -28,11 +28,17 @@ namespace ITCommunity.DB.Tables {
                     select pst
                 ).SingleOrDefault();
 
-                post.Author.PostsCount--;
-                db.SubmitChanges();
+                if (post != null) {
+                    if (post.EntityType == Post.EntityTypes.Poll) {
+                        Polls.Delete(post.EntityId.Value);
+                    }
 
-                db.Posts.DeleteOnSubmit(post);
-                db.SubmitChanges();
+                    post.Author.PostsCount--;
+                    db.SubmitChanges();
+
+                    db.Posts.DeleteOnSubmit(post);
+                    db.SubmitChanges();
+                }
             }
         }
 

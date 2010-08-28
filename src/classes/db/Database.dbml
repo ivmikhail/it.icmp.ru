@@ -9,18 +9,6 @@
       <Association Name="Captcha_CaptchaAnswer" Member="Captcha" ThisKey="CaptchaId" OtherKey="Id" Type="Captcha" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Votes" Member="Votes">
-    <Type Name="Vote">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PollId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="AnswerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
-      <Association Name="PollAnswer_Vote" Member="PollAnswer" ThisKey="AnswerId" OtherKey="Id" Type="PollAnswer" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-      <Association Name="Poll_Vote" Member="Poll" ThisKey="PollId" OtherKey="Id" Type="Poll" IsForeignKey="true" />
-      <Association Name="User_Vote" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Captchas" Member="Captchas">
     <Type Name="Captcha">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -102,29 +90,6 @@
       <Association Name="User_Note" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.PollAnswers" Member="PollAnswers">
-    <Type Name="PollAnswer">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
-      <Column Name="PollId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="PollAnswer_Vote" Member="Votes" ThisKey="Id" OtherKey="AnswerId" Type="Vote" />
-      <Association Name="Poll_PollAnswer" Member="Poll" ThisKey="PollId" OtherKey="Id" Type="Poll" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Polls" Member="Polls">
-    <Type Name="Poll">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Topic" Type="System.String" DbType="NVarChar(120) NOT NULL" CanBeNull="false" />
-      <Column Name="IsMultiselect" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AuthorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsOpen" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="VotesCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Poll_Vote" Member="Votes" ThisKey="Id" OtherKey="PollId" Type="Vote" />
-      <Association Name="Poll_PollAnswer" Member="PollAnswers" ThisKey="Id" OtherKey="PollId" Type="PollAnswer" />
-      <Association Name="User_Poll" Member="Author" Storage="_User" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.PostsCategories" Member="PostsCategories">
     <Type Name="PostsCategory">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -179,16 +144,15 @@
       <Column Name="HeadersCounter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PostsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CommentsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="User_Vote" Member="Votes" ThisKey="Id" OtherKey="UserId" Type="Vote" />
       <Association Name="User_Favorite" Member="Favorites" ThisKey="Id" OtherKey="UserId" Type="Favorite" />
       <Association Name="User_Header" Member="Headers" ThisKey="Id" OtherKey="UserId" Type="Header" />
       <Association Name="User_Message" Member="ReceivedMessages" Storage="_Messages" ThisKey="Id" OtherKey="ReceiverId" Type="Message" />
       <Association Name="User_Message1" Member="SentMessages" Storage="_Messages1" ThisKey="Id" OtherKey="SenderId" Type="Message" />
       <Association Name="User_Note" Member="Notes" ThisKey="Id" OtherKey="UserId" Type="Note" />
-      <Association Name="User_Poll" Member="Polls" ThisKey="Id" OtherKey="AuthorId" Type="Poll" />
       <Association Name="User_RatingLog" Member="RatingLogs" ThisKey="Id" OtherKey="UserId" Type="RatingLog" />
       <Association Name="User_Recovery" Member="Recoveries" ThisKey="Id" OtherKey="UserId" Type="Recovery" />
       <Association Name="User_Post" Member="Posts" ThisKey="Id" OtherKey="AuthorId" Type="Post" />
+      <Association Name="User_Vote" Member="Votes" ThisKey="Id" OtherKey="UserId" Type="Vote" />
     </Type>
   </Table>
   <Table Name="dbo.Posts" Member="Posts">
@@ -210,6 +174,35 @@
       <Association Name="Post_Favorite" Member="Favorites" ThisKey="Id" OtherKey="PostId" Type="Favorite" />
       <Association Name="Post_PostsCategory" Member="PostsCategories" ThisKey="Id" OtherKey="PostId" Type="PostsCategory" />
       <Association Name="User_Post" Member="Author" ThisKey="AuthorId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Votes" Member="Votes">
+    <Type Name="Vote">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AnswerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="User_Vote" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+      <Association Name="PollAnswer_Vote" Member="PollAnswer" ThisKey="AnswerId" OtherKey="Id" Type="PollAnswer" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Polls" Member="Polls">
+    <Type Name="Poll">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IsMultiselect" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="IsOpen" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="VotesCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ActiveDays" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Poll_PollAnswer" Member="PollAnswers" ThisKey="Id" OtherKey="PollId" Type="PollAnswer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PollAnswers" Member="PollAnswers">
+    <Type Name="PollAnswer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="PollId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PollAnswer_Vote" Member="Votes" ThisKey="Id" OtherKey="AnswerId" Type="Vote" />
+      <Association Name="Poll_PollAnswer" Member="Poll" ThisKey="PollId" OtherKey="Id" Type="Poll" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>

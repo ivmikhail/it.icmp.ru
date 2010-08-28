@@ -14,9 +14,11 @@
         </h1>
 
         <div class="text">
-            <%= Model.DescriptionFormatted %>
+            <% Html.RenderPartial("../Poll/Answers", Model.Entity); %>
+            
             <hr id="cut" />
-            <%= Model.TextFormatted %>
+
+            <% Html.RenderPartial("../Poll/Result", Model.Entity); %>
         </div>
 
         <div class="meta">
@@ -31,7 +33,7 @@
 
             <ul class="right-list">
                 <li>
-                    просмотров: <b class="info">~<%= Model.ViewsCount%></b>
+                    просмотров: <b class="info">~<%= Model.ViewsCount %></b>
                 </li>
                 <% if (CurrentUser.IsAuth) { %>
                     <li>
@@ -45,22 +47,21 @@
             </ul>
 
             <ul class="left-list">
-                <% foreach (var category in Model.Categories) { %>
-                    <li>
-                        <% Html.RenderPartial("Link/Category/Posts", category); %>
-                    </li>
-                <% } %>
+                <li>
+                    <% Html.RenderPartial("../Poll/IsOpen", Model.Entity); %>
+                </li>
+                <li>
+                    <% Html.RenderPartial("../Poll/EndDate", Model.Entity); %>
+                </li>
+                <li>
+                    <% Html.RenderPartial("../Poll/VotesCount", Model.Entity); %>
+                </li>
             </ul>
 
             <ul class="right-list">
                 <% if (CurrentUser.IsAdmin) { %>
                     <li>
                         <% Html.RenderPartial("Link/Post/Delete", Model); %>
-                    </li>
-                <% } %>
-                <% if (CurrentUser.IsAdmin || CurrentUser.User.Id == Model.AuthorId) { %>
-                    <li>
-                        <% Html.RenderPartial("Link/Post/Edit", Model); %>
                     </li>
                 <% } %>
                 <% if (CurrentUser.IsAuth) { %>
@@ -73,11 +74,6 @@
                             <% Html.RenderPartial("Link/Favorite/Add", Model); %>
                         </li>
                     <% } %>
-                <% } %>
-                <% if (!string.IsNullOrEmpty(Model.Source)) { %>
-                    <li>
-                        <% Html.RenderPartial("Link/Post/Source", Model); %>
-                    </li>
                 <% } %>
             </ul>
 

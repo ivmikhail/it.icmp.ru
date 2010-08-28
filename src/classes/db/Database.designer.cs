@@ -33,9 +33,6 @@ namespace ITCommunity.DB
     partial void InsertCaptchaAnswer(CaptchaAnswer instance);
     partial void UpdateCaptchaAnswer(CaptchaAnswer instance);
     partial void DeleteCaptchaAnswer(CaptchaAnswer instance);
-    partial void InsertVote(Vote instance);
-    partial void UpdateVote(Vote instance);
-    partial void DeleteVote(Vote instance);
     partial void InsertCaptcha(Captcha instance);
     partial void UpdateCaptcha(Captcha instance);
     partial void DeleteCaptcha(Captcha instance);
@@ -60,12 +57,6 @@ namespace ITCommunity.DB
     partial void InsertNote(Note instance);
     partial void UpdateNote(Note instance);
     partial void DeleteNote(Note instance);
-    partial void InsertPollAnswer(PollAnswer instance);
-    partial void UpdatePollAnswer(PollAnswer instance);
-    partial void DeletePollAnswer(PollAnswer instance);
-    partial void InsertPoll(Poll instance);
-    partial void UpdatePoll(Poll instance);
-    partial void DeletePoll(Poll instance);
     partial void InsertPostsCategory(PostsCategory instance);
     partial void UpdatePostsCategory(PostsCategory instance);
     partial void DeletePostsCategory(PostsCategory instance);
@@ -87,6 +78,15 @@ namespace ITCommunity.DB
     partial void InsertPost(Post instance);
     partial void UpdatePost(Post instance);
     partial void DeletePost(Post instance);
+    partial void InsertVote(Vote instance);
+    partial void UpdateVote(Vote instance);
+    partial void DeleteVote(Vote instance);
+    partial void InsertPoll(Poll instance);
+    partial void UpdatePoll(Poll instance);
+    partial void DeletePoll(Poll instance);
+    partial void InsertPollAnswer(PollAnswer instance);
+    partial void UpdatePollAnswer(PollAnswer instance);
+    partial void DeletePollAnswer(PollAnswer instance);
     #endregion
 		
 		public Database() : 
@@ -124,14 +124,6 @@ namespace ITCommunity.DB
 			get
 			{
 				return this.GetTable<CaptchaAnswer>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Vote> Votes
-		{
-			get
-			{
-				return this.GetTable<Vote>();
 			}
 		}
 		
@@ -199,22 +191,6 @@ namespace ITCommunity.DB
 			}
 		}
 		
-		public System.Data.Linq.Table<PollAnswer> PollAnswers
-		{
-			get
-			{
-				return this.GetTable<PollAnswer>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Poll> Polls
-		{
-			get
-			{
-				return this.GetTable<Poll>();
-			}
-		}
-		
 		public System.Data.Linq.Table<PostsCategory> PostsCategories
 		{
 			get
@@ -268,6 +244,30 @@ namespace ITCommunity.DB
 			get
 			{
 				return this.GetTable<Post>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Vote> Votes
+		{
+			get
+			{
+				return this.GetTable<Vote>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Poll> Polls
+		{
+			get
+			{
+				return this.GetTable<Poll>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PollAnswer> PollAnswers
+		{
+			get
+			{
+				return this.GetTable<PollAnswer>();
 			}
 		}
 	}
@@ -422,287 +422,6 @@ namespace ITCommunity.DB
 						this._CaptchaId = default(int);
 					}
 					this.SendPropertyChanged("Captcha");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Votes")]
-	public partial class Vote : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private int _UserId;
-		
-		private int _PollId;
-		
-		private int _AnswerId;
-		
-		private System.DateTime _CreateDate;
-		
-		private EntityRef<PollAnswer> _PollAnswer;
-		
-		private EntityRef<Poll> _Poll;
-		
-		private EntityRef<User> _User;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnUserIdChanging(int value);
-    partial void OnUserIdChanged();
-    partial void OnPollIdChanging(int value);
-    partial void OnPollIdChanged();
-    partial void OnAnswerIdChanging(int value);
-    partial void OnAnswerIdChanged();
-    partial void OnCreateDateChanging(System.DateTime value);
-    partial void OnCreateDateChanged();
-    #endregion
-		
-		public Vote()
-		{
-			this._PollAnswer = default(EntityRef<PollAnswer>);
-			this._Poll = default(EntityRef<Poll>);
-			this._User = default(EntityRef<User>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
-		public int UserId
-		{
-			get
-			{
-				return this._UserId;
-			}
-			set
-			{
-				if ((this._UserId != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIdChanging(value);
-					this.SendPropertyChanging();
-					this._UserId = value;
-					this.SendPropertyChanged("UserId");
-					this.OnUserIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PollId", DbType="Int NOT NULL")]
-		public int PollId
-		{
-			get
-			{
-				return this._PollId;
-			}
-			set
-			{
-				if ((this._PollId != value))
-				{
-					if (this._Poll.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPollIdChanging(value);
-					this.SendPropertyChanging();
-					this._PollId = value;
-					this.SendPropertyChanged("PollId");
-					this.OnPollIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerId", DbType="Int NOT NULL")]
-		public int AnswerId
-		{
-			get
-			{
-				return this._AnswerId;
-			}
-			set
-			{
-				if ((this._AnswerId != value))
-				{
-					if (this._PollAnswer.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAnswerIdChanging(value);
-					this.SendPropertyChanging();
-					this._AnswerId = value;
-					this.SendPropertyChanged("AnswerId");
-					this.OnAnswerIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
-		public System.DateTime CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PollAnswer_Vote", Storage="_PollAnswer", ThisKey="AnswerId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public PollAnswer PollAnswer
-		{
-			get
-			{
-				return this._PollAnswer.Entity;
-			}
-			set
-			{
-				PollAnswer previousValue = this._PollAnswer.Entity;
-				if (((previousValue != value) 
-							|| (this._PollAnswer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PollAnswer.Entity = null;
-						previousValue.Votes.Remove(this);
-					}
-					this._PollAnswer.Entity = value;
-					if ((value != null))
-					{
-						value.Votes.Add(this);
-						this._AnswerId = value.Id;
-					}
-					else
-					{
-						this._AnswerId = default(int);
-					}
-					this.SendPropertyChanged("PollAnswer");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Poll_Vote", Storage="_Poll", ThisKey="PollId", OtherKey="Id", IsForeignKey=true)]
-		public Poll Poll
-		{
-			get
-			{
-				return this._Poll.Entity;
-			}
-			set
-			{
-				Poll previousValue = this._Poll.Entity;
-				if (((previousValue != value) 
-							|| (this._Poll.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Poll.Entity = null;
-						previousValue.Votes.Remove(this);
-					}
-					this._Poll.Entity = value;
-					if ((value != null))
-					{
-						value.Votes.Add(this);
-						this._PollId = value.Id;
-					}
-					else
-					{
-						this._PollId = default(int);
-					}
-					this.SendPropertyChanged("Poll");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Vote", Storage="_User", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.Votes.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.Votes.Add(this);
-						this._UserId = value.Id;
-					}
-					else
-					{
-						this._UserId = default(int);
-					}
-					this.SendPropertyChanged("User");
 				}
 			}
 		}
@@ -2335,488 +2054,6 @@ namespace ITCommunity.DB
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PollAnswers")]
-	public partial class PollAnswer : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Text;
-		
-		private int _PollId;
-		
-		private EntitySet<Vote> _Votes;
-		
-		private EntityRef<Poll> _Poll;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnTextChanging(string value);
-    partial void OnTextChanged();
-    partial void OnPollIdChanging(int value);
-    partial void OnPollIdChanged();
-    #endregion
-		
-		public PollAnswer()
-		{
-			this._Votes = new EntitySet<Vote>(new Action<Vote>(this.attach_Votes), new Action<Vote>(this.detach_Votes));
-			this._Poll = default(EntityRef<Poll>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
-		public string Text
-		{
-			get
-			{
-				return this._Text;
-			}
-			set
-			{
-				if ((this._Text != value))
-				{
-					this.OnTextChanging(value);
-					this.SendPropertyChanging();
-					this._Text = value;
-					this.SendPropertyChanged("Text");
-					this.OnTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PollId", DbType="Int NOT NULL")]
-		public int PollId
-		{
-			get
-			{
-				return this._PollId;
-			}
-			set
-			{
-				if ((this._PollId != value))
-				{
-					if (this._Poll.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPollIdChanging(value);
-					this.SendPropertyChanging();
-					this._PollId = value;
-					this.SendPropertyChanged("PollId");
-					this.OnPollIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PollAnswer_Vote", Storage="_Votes", ThisKey="Id", OtherKey="AnswerId")]
-		public EntitySet<Vote> Votes
-		{
-			get
-			{
-				return this._Votes;
-			}
-			set
-			{
-				this._Votes.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Poll_PollAnswer", Storage="_Poll", ThisKey="PollId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public Poll Poll
-		{
-			get
-			{
-				return this._Poll.Entity;
-			}
-			set
-			{
-				Poll previousValue = this._Poll.Entity;
-				if (((previousValue != value) 
-							|| (this._Poll.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Poll.Entity = null;
-						previousValue.PollAnswers.Remove(this);
-					}
-					this._Poll.Entity = value;
-					if ((value != null))
-					{
-						value.PollAnswers.Add(this);
-						this._PollId = value.Id;
-					}
-					else
-					{
-						this._PollId = default(int);
-					}
-					this.SendPropertyChanged("Poll");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Votes(Vote entity)
-		{
-			this.SendPropertyChanging();
-			entity.PollAnswer = this;
-		}
-		
-		private void detach_Votes(Vote entity)
-		{
-			this.SendPropertyChanging();
-			entity.PollAnswer = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Polls")]
-	public partial class Poll : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Topic;
-		
-		private bool _IsMultiselect;
-		
-		private System.DateTime _CreateDate;
-		
-		private int _AuthorId;
-		
-		private bool _IsOpen;
-		
-		private int _VotesCount;
-		
-		private EntitySet<Vote> _Votes;
-		
-		private EntitySet<PollAnswer> _PollAnswers;
-		
-		private EntityRef<User> _User;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnTopicChanging(string value);
-    partial void OnTopicChanged();
-    partial void OnIsMultiselectChanging(bool value);
-    partial void OnIsMultiselectChanged();
-    partial void OnCreateDateChanging(System.DateTime value);
-    partial void OnCreateDateChanged();
-    partial void OnAuthorIdChanging(int value);
-    partial void OnAuthorIdChanged();
-    partial void OnIsOpenChanging(bool value);
-    partial void OnIsOpenChanged();
-    partial void OnVotesCountChanging(int value);
-    partial void OnVotesCountChanged();
-    #endregion
-		
-		public Poll()
-		{
-			this._Votes = new EntitySet<Vote>(new Action<Vote>(this.attach_Votes), new Action<Vote>(this.detach_Votes));
-			this._PollAnswers = new EntitySet<PollAnswer>(new Action<PollAnswer>(this.attach_PollAnswers), new Action<PollAnswer>(this.detach_PollAnswers));
-			this._User = default(EntityRef<User>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Topic", DbType="NVarChar(120) NOT NULL", CanBeNull=false)]
-		public string Topic
-		{
-			get
-			{
-				return this._Topic;
-			}
-			set
-			{
-				if ((this._Topic != value))
-				{
-					this.OnTopicChanging(value);
-					this.SendPropertyChanging();
-					this._Topic = value;
-					this.SendPropertyChanged("Topic");
-					this.OnTopicChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsMultiselect", DbType="TinyInt NOT NULL")]
-		public bool IsMultiselect
-		{
-			get
-			{
-				return this._IsMultiselect;
-			}
-			set
-			{
-				if ((this._IsMultiselect != value))
-				{
-					this.OnIsMultiselectChanging(value);
-					this.SendPropertyChanging();
-					this._IsMultiselect = value;
-					this.SendPropertyChanged("IsMultiselect");
-					this.OnIsMultiselectChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
-		public System.DateTime CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorId", DbType="Int NOT NULL")]
-		public int AuthorId
-		{
-			get
-			{
-				return this._AuthorId;
-			}
-			set
-			{
-				if ((this._AuthorId != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAuthorIdChanging(value);
-					this.SendPropertyChanging();
-					this._AuthorId = value;
-					this.SendPropertyChanged("AuthorId");
-					this.OnAuthorIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOpen", DbType="TinyInt NOT NULL")]
-		public bool IsOpen
-		{
-			get
-			{
-				return this._IsOpen;
-			}
-			set
-			{
-				if ((this._IsOpen != value))
-				{
-					this.OnIsOpenChanging(value);
-					this.SendPropertyChanging();
-					this._IsOpen = value;
-					this.SendPropertyChanged("IsOpen");
-					this.OnIsOpenChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VotesCount", DbType="Int NOT NULL")]
-		public int VotesCount
-		{
-			get
-			{
-				return this._VotesCount;
-			}
-			set
-			{
-				if ((this._VotesCount != value))
-				{
-					this.OnVotesCountChanging(value);
-					this.SendPropertyChanging();
-					this._VotesCount = value;
-					this.SendPropertyChanged("VotesCount");
-					this.OnVotesCountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Poll_Vote", Storage="_Votes", ThisKey="Id", OtherKey="PollId")]
-		public EntitySet<Vote> Votes
-		{
-			get
-			{
-				return this._Votes;
-			}
-			set
-			{
-				this._Votes.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Poll_PollAnswer", Storage="_PollAnswers", ThisKey="Id", OtherKey="PollId")]
-		public EntitySet<PollAnswer> PollAnswers
-		{
-			get
-			{
-				return this._PollAnswers;
-			}
-			set
-			{
-				this._PollAnswers.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Poll", Storage="_User", ThisKey="AuthorId", OtherKey="Id", IsForeignKey=true)]
-		public User Author
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.Polls.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.Polls.Add(this);
-						this._AuthorId = value.Id;
-					}
-					else
-					{
-						this._AuthorId = default(int);
-					}
-					this.SendPropertyChanged("Author");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Votes(Vote entity)
-		{
-			this.SendPropertyChanging();
-			entity.Poll = this;
-		}
-		
-		private void detach_Votes(Vote entity)
-		{
-			this.SendPropertyChanging();
-			entity.Poll = null;
-		}
-		
-		private void attach_PollAnswers(PollAnswer entity)
-		{
-			this.SendPropertyChanging();
-			entity.Poll = this;
-		}
-		
-		private void detach_PollAnswers(PollAnswer entity)
-		{
-			this.SendPropertyChanging();
-			entity.Poll = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PostsCategories")]
 	public partial class PostsCategory : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3651,8 +2888,6 @@ namespace ITCommunity.DB
 		
 		private int _CommentsCount;
 		
-		private EntitySet<Vote> _Votes;
-		
 		private EntitySet<Favorite> _Favorites;
 		
 		private EntitySet<Header> _Headers;
@@ -3663,13 +2898,13 @@ namespace ITCommunity.DB
 		
 		private EntitySet<Note> _Notes;
 		
-		private EntitySet<Poll> _Polls;
-		
 		private EntitySet<RatingLog> _RatingLogs;
 		
 		private EntitySet<Recovery> _Recoveries;
 		
 		private EntitySet<Post> _Posts;
+		
+		private EntitySet<Vote> _Votes;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3697,16 +2932,15 @@ namespace ITCommunity.DB
 		
 		public User()
 		{
-			this._Votes = new EntitySet<Vote>(new Action<Vote>(this.attach_Votes), new Action<Vote>(this.detach_Votes));
 			this._Favorites = new EntitySet<Favorite>(new Action<Favorite>(this.attach_Favorites), new Action<Favorite>(this.detach_Favorites));
 			this._Headers = new EntitySet<Header>(new Action<Header>(this.attach_Headers), new Action<Header>(this.detach_Headers));
 			this._Messages = new EntitySet<Message>(new Action<Message>(this.attach_Messages), new Action<Message>(this.detach_Messages));
 			this._Messages1 = new EntitySet<Message>(new Action<Message>(this.attach_Messages1), new Action<Message>(this.detach_Messages1));
 			this._Notes = new EntitySet<Note>(new Action<Note>(this.attach_Notes), new Action<Note>(this.detach_Notes));
-			this._Polls = new EntitySet<Poll>(new Action<Poll>(this.attach_Polls), new Action<Poll>(this.detach_Polls));
 			this._RatingLogs = new EntitySet<RatingLog>(new Action<RatingLog>(this.attach_RatingLogs), new Action<RatingLog>(this.detach_RatingLogs));
 			this._Recoveries = new EntitySet<Recovery>(new Action<Recovery>(this.attach_Recoveries), new Action<Recovery>(this.detach_Recoveries));
 			this._Posts = new EntitySet<Post>(new Action<Post>(this.attach_Posts), new Action<Post>(this.detach_Posts));
+			this._Votes = new EntitySet<Vote>(new Action<Vote>(this.attach_Votes), new Action<Vote>(this.detach_Votes));
 			OnCreated();
 		}
 		
@@ -3890,19 +3124,6 @@ namespace ITCommunity.DB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Vote", Storage="_Votes", ThisKey="Id", OtherKey="UserId")]
-		public EntitySet<Vote> Votes
-		{
-			get
-			{
-				return this._Votes;
-			}
-			set
-			{
-				this._Votes.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Favorite", Storage="_Favorites", ThisKey="Id", OtherKey="UserId")]
 		public EntitySet<Favorite> Favorites
 		{
@@ -3968,19 +3189,6 @@ namespace ITCommunity.DB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Poll", Storage="_Polls", ThisKey="Id", OtherKey="AuthorId")]
-		public EntitySet<Poll> Polls
-		{
-			get
-			{
-				return this._Polls;
-			}
-			set
-			{
-				this._Polls.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_RatingLog", Storage="_RatingLogs", ThisKey="Id", OtherKey="UserId")]
 		public EntitySet<RatingLog> RatingLogs
 		{
@@ -4020,6 +3228,19 @@ namespace ITCommunity.DB
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Vote", Storage="_Votes", ThisKey="Id", OtherKey="UserId")]
+		public EntitySet<Vote> Votes
+		{
+			get
+			{
+				return this._Votes;
+			}
+			set
+			{
+				this._Votes.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4038,18 +3259,6 @@ namespace ITCommunity.DB
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Votes(Vote entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_Votes(Vote entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
 		}
 		
 		private void attach_Favorites(Favorite entity)
@@ -4112,18 +3321,6 @@ namespace ITCommunity.DB
 			entity.User = null;
 		}
 		
-		private void attach_Polls(Poll entity)
-		{
-			this.SendPropertyChanging();
-			entity.Author = this;
-		}
-		
-		private void detach_Polls(Poll entity)
-		{
-			this.SendPropertyChanging();
-			entity.Author = null;
-		}
-		
 		private void attach_RatingLogs(RatingLog entity)
 		{
 			this.SendPropertyChanging();
@@ -4158,6 +3355,18 @@ namespace ITCommunity.DB
 		{
 			this.SendPropertyChanging();
 			entity.Author = null;
+		}
+		
+		private void attach_Votes(Vote entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Votes(Vote entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
 		}
 	}
 	
@@ -4633,6 +3842,587 @@ namespace ITCommunity.DB
 		{
 			this.SendPropertyChanging();
 			entity.Post = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Votes")]
+	public partial class Vote : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _UserId;
+		
+		private int _AnswerId;
+		
+		private System.DateTime _CreateDate;
+		
+		private EntityRef<User> _User;
+		
+		private EntityRef<PollAnswer> _PollAnswer;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnUserIdChanging(int value);
+    partial void OnUserIdChanged();
+    partial void OnAnswerIdChanging(int value);
+    partial void OnAnswerIdChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    #endregion
+		
+		public Vote()
+		{
+			this._User = default(EntityRef<User>);
+			this._PollAnswer = default(EntityRef<PollAnswer>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserId", DbType="Int NOT NULL")]
+		public int UserId
+		{
+			get
+			{
+				return this._UserId;
+			}
+			set
+			{
+				if ((this._UserId != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUserIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserId = value;
+					this.SendPropertyChanged("UserId");
+					this.OnUserIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerId", DbType="Int NOT NULL")]
+		public int AnswerId
+		{
+			get
+			{
+				return this._AnswerId;
+			}
+			set
+			{
+				if ((this._AnswerId != value))
+				{
+					if (this._PollAnswer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAnswerIdChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerId = value;
+					this.SendPropertyChanged("AnswerId");
+					this.OnAnswerIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL", IsDbGenerated=true)]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Vote", Storage="_User", ThisKey="UserId", OtherKey="Id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Votes.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Votes.Add(this);
+						this._UserId = value.Id;
+					}
+					else
+					{
+						this._UserId = default(int);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PollAnswer_Vote", Storage="_PollAnswer", ThisKey="AnswerId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public PollAnswer PollAnswer
+		{
+			get
+			{
+				return this._PollAnswer.Entity;
+			}
+			set
+			{
+				PollAnswer previousValue = this._PollAnswer.Entity;
+				if (((previousValue != value) 
+							|| (this._PollAnswer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PollAnswer.Entity = null;
+						previousValue.Votes.Remove(this);
+					}
+					this._PollAnswer.Entity = value;
+					if ((value != null))
+					{
+						value.Votes.Add(this);
+						this._AnswerId = value.Id;
+					}
+					else
+					{
+						this._AnswerId = default(int);
+					}
+					this.SendPropertyChanged("PollAnswer");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Polls")]
+	public partial class Poll : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private bool _IsMultiselect;
+		
+		private bool _IsOpen;
+		
+		private int _VotesCount;
+		
+		private System.Nullable<int> _ActiveDays;
+		
+		private EntitySet<PollAnswer> _PollAnswers;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnIsMultiselectChanging(bool value);
+    partial void OnIsMultiselectChanged();
+    partial void OnIsOpenChanging(bool value);
+    partial void OnIsOpenChanged();
+    partial void OnVotesCountChanging(int value);
+    partial void OnVotesCountChanged();
+    partial void OnActiveDaysChanging(System.Nullable<int> value);
+    partial void OnActiveDaysChanged();
+    #endregion
+		
+		public Poll()
+		{
+			this._PollAnswers = new EntitySet<PollAnswer>(new Action<PollAnswer>(this.attach_PollAnswers), new Action<PollAnswer>(this.detach_PollAnswers));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsMultiselect", DbType="TinyInt NOT NULL")]
+		public bool IsMultiselect
+		{
+			get
+			{
+				return this._IsMultiselect;
+			}
+			set
+			{
+				if ((this._IsMultiselect != value))
+				{
+					this.OnIsMultiselectChanging(value);
+					this.SendPropertyChanging();
+					this._IsMultiselect = value;
+					this.SendPropertyChanged("IsMultiselect");
+					this.OnIsMultiselectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOpen", DbType="TinyInt NOT NULL")]
+		public bool IsOpen
+		{
+			get
+			{
+				return this._IsOpen;
+			}
+			set
+			{
+				if ((this._IsOpen != value))
+				{
+					this.OnIsOpenChanging(value);
+					this.SendPropertyChanging();
+					this._IsOpen = value;
+					this.SendPropertyChanged("IsOpen");
+					this.OnIsOpenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VotesCount", DbType="Int NOT NULL")]
+		public int VotesCount
+		{
+			get
+			{
+				return this._VotesCount;
+			}
+			set
+			{
+				if ((this._VotesCount != value))
+				{
+					this.OnVotesCountChanging(value);
+					this.SendPropertyChanging();
+					this._VotesCount = value;
+					this.SendPropertyChanged("VotesCount");
+					this.OnVotesCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActiveDays", DbType="Int")]
+		public System.Nullable<int> ActiveDays
+		{
+			get
+			{
+				return this._ActiveDays;
+			}
+			set
+			{
+				if ((this._ActiveDays != value))
+				{
+					this.OnActiveDaysChanging(value);
+					this.SendPropertyChanging();
+					this._ActiveDays = value;
+					this.SendPropertyChanged("ActiveDays");
+					this.OnActiveDaysChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Poll_PollAnswer", Storage="_PollAnswers", ThisKey="Id", OtherKey="PollId")]
+		public EntitySet<PollAnswer> PollAnswers
+		{
+			get
+			{
+				return this._PollAnswers;
+			}
+			set
+			{
+				this._PollAnswers.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_PollAnswers(PollAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.Poll = this;
+		}
+		
+		private void detach_PollAnswers(PollAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.Poll = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PollAnswers")]
+	public partial class PollAnswer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Text;
+		
+		private int _PollId;
+		
+		private EntitySet<Vote> _Votes;
+		
+		private EntityRef<Poll> _Poll;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    partial void OnPollIdChanging(int value);
+    partial void OnPollIdChanged();
+    #endregion
+		
+		public PollAnswer()
+		{
+			this._Votes = new EntitySet<Vote>(new Action<Vote>(this.attach_Votes), new Action<Vote>(this.detach_Votes));
+			this._Poll = default(EntityRef<Poll>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PollId", DbType="Int NOT NULL")]
+		public int PollId
+		{
+			get
+			{
+				return this._PollId;
+			}
+			set
+			{
+				if ((this._PollId != value))
+				{
+					if (this._Poll.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPollIdChanging(value);
+					this.SendPropertyChanging();
+					this._PollId = value;
+					this.SendPropertyChanged("PollId");
+					this.OnPollIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PollAnswer_Vote", Storage="_Votes", ThisKey="Id", OtherKey="AnswerId")]
+		public EntitySet<Vote> Votes
+		{
+			get
+			{
+				return this._Votes;
+			}
+			set
+			{
+				this._Votes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Poll_PollAnswer", Storage="_Poll", ThisKey="PollId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Poll Poll
+		{
+			get
+			{
+				return this._Poll.Entity;
+			}
+			set
+			{
+				Poll previousValue = this._Poll.Entity;
+				if (((previousValue != value) 
+							|| (this._Poll.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Poll.Entity = null;
+						previousValue.PollAnswers.Remove(this);
+					}
+					this._Poll.Entity = value;
+					if ((value != null))
+					{
+						value.PollAnswers.Add(this);
+						this._PollId = value.Id;
+					}
+					else
+					{
+						this._PollId = default(int);
+					}
+					this.SendPropertyChanged("Poll");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Votes(Vote entity)
+		{
+			this.SendPropertyChanging();
+			entity.PollAnswer = this;
+		}
+		
+		private void detach_Votes(Vote entity)
+		{
+			this.SendPropertyChanging();
+			entity.PollAnswer = null;
 		}
 	}
 }
