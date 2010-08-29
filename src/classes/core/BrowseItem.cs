@@ -244,7 +244,7 @@ namespace ITCommunity.Core
         private static string GetLinkForFile(string path)
         {
             string link = path.Replace(_filesFolder, "");
-            return Uri.EscapeDataString(Config.Get("FilesLink") + "/" + link.Replace("\\", "/"));
+            return Config.Get("FilesLink") + Uri.EscapeDataString(link.Replace("\\", "/"));
         }
 
         private static string GetHumanSize(long p)

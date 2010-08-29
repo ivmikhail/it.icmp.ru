@@ -5,6 +5,6 @@
     "файлы",
     "view",
     "browse",
-    new { directory = "/Files/" },
+    new { },
     new { title = "Файлы" }
 )%>
