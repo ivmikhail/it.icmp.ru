@@ -14,7 +14,7 @@ namespace ITCommunity.Models {
 
         public PostEditCategoriesModel() {
             IsAttached = new Dictionary<int, bool>();
-            foreach (var category in Categories.GetAll()) {
+            foreach (var category in Categories.All) {
                 IsAttached.Add(category.Id, false);
             }
         }

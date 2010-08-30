@@ -12,6 +12,6 @@
     new AjaxOptions { UpdateTargetId = Model.HtmlId },
     new { 
         title = "Нравиться",
-        @class = "page-link main-link rating-positive"
+        @class = "page-link rating-positive"
     }
 )%>

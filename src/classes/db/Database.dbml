@@ -191,7 +191,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IsMultiselect" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="IsOpen" Type="System.Boolean" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="VotesCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VotesCount" Member="VotedUsersCount" Storage="_VotesCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ActiveDays" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Poll_PollAnswer" Member="PollAnswers" ThisKey="Id" OtherKey="PollId" Type="PollAnswer" />
     </Type>

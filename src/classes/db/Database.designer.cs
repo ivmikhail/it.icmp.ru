@@ -4089,8 +4089,8 @@ namespace ITCommunity.DB
     partial void OnIsMultiselectChanged();
     partial void OnIsOpenChanging(bool value);
     partial void OnIsOpenChanged();
-    partial void OnVotesCountChanging(int value);
-    partial void OnVotesCountChanged();
+    partial void OnVotedUsersCountChanging(int value);
+    partial void OnVotedUsersCountChanged();
     partial void OnActiveDaysChanging(System.Nullable<int> value);
     partial void OnActiveDaysChanged();
     #endregion
@@ -4161,8 +4161,8 @@ namespace ITCommunity.DB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VotesCount", DbType="Int NOT NULL")]
-		public int VotesCount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="VotesCount", Storage="_VotesCount", DbType="Int NOT NULL")]
+		public int VotedUsersCount
 		{
 			get
 			{
@@ -4172,11 +4172,11 @@ namespace ITCommunity.DB
 			{
 				if ((this._VotesCount != value))
 				{
-					this.OnVotesCountChanging(value);
+					this.OnVotedUsersCountChanging(value);
 					this.SendPropertyChanging();
 					this._VotesCount = value;
-					this.SendPropertyChanged("VotesCount");
-					this.OnVotesCountChanged();
+					this.SendPropertyChanged("VotedUsersCount");
+					this.OnVotedUsersCountChanged();
 				}
 			}
 		}

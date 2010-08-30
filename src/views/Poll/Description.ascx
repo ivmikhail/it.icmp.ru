@@ -19,7 +19,13 @@
 
     <ul class="right-list">
         <li>
-            просмотров: <b class="info">~<%= Model.ViewsCount %></b>
+            <% Html.RenderPartial("../Poll/EndDate", Model.Entity); %>
+        </li>
+        <li>
+            <% Html.RenderPartial("../Poll/IsOpen", Model.Entity); %>
+        </li>
+        <li>
+            <% Html.RenderPartial("../Poll/VotedUsersCount", Model.Entity); %>
         </li>
         <% if (Model.Rating.IsRated) { %>
             <li>
@@ -29,15 +35,11 @@
     </ul>
 
     <ul class="left-list">
-        <li>
-            <% Html.RenderPartial("../Poll/IsOpen", Model.Entity); %>
-        </li>
-        <li>
-            <% Html.RenderPartial("../Poll/EndDate", Model.Entity); %>
-        </li>
-        <li>
-            <% Html.RenderPartial("../Poll/VotesCount", Model.Entity); %>
-        </li>
+        <% foreach (var category in Model.Categories) { %>
+            <li>
+                <% Html.RenderPartial("Link/Category/Posts", category); %>
+            </li>
+        <% } %>
     </ul>
 
     <ul class="right-list">
