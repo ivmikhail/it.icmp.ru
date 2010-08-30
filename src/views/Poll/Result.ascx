@@ -6,7 +6,7 @@
     </h2>
 <% } else { %>
     <div class="center">
-        <img src="<%= Url.Action("pollchart", "post", new { Model.Id })%>" alt="poll<%= Model.Id %>" />
+        <img src="<%= Url.Action("pollchart", "post", new { id = Model.Id })%>" alt="poll<%= Model.Id %>" />
     </div>
 
     <% if (Model.IsOpen) { %>

@@ -3,19 +3,25 @@
 
 <% if (Model.IsVoted || Model.IsActive == false) { %>
 
-    <ul>
-        <% foreach (var answer in Model.PollAnswers) { %>
-            <li>
-                <%= answer.Text %>
-                <span class="meta">
-                    голосов:
-                    <span class="info">
-                        <%= answer.Votes.Count %>
-                    </span>
+<ul class="float-left">
+    <% foreach (var answer in Model.PollAnswers) { %>
+        <li>
+            <%= answer.Text %>
+            <span class="meta">
+                голосов:
+                <span class="info">
+                    <%= answer.Votes.Count %>
                 </span>
-            </li>
-        <% } %>
-    </ul>
+            </span>
+        </li>
+    <% } %>
+</ul>
+<%-- 
+<div class="float-right">
+    <img src="<%= Url.Action("pollchart", "post", new { id = Model.Id, isThumb = "true" })%>" alt="poll<%= Model.Id %>" />
+</div>
+--%>
+<div class="clear"></div>
 
 <% } else { %>
 

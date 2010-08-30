@@ -8,6 +8,7 @@ using ITCommunity.Core;
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
 using ITCommunity.Models;
+using System;
 
 
 namespace ITCommunity.Controllers {
@@ -34,16 +35,29 @@ namespace ITCommunity.Controllers {
             return NotFound();
         }
 
-        public ActionResult PollChart(int? id, bool? isThumbs) {
+        public ActionResult PollChart(int? id, bool? isThumb) {
             var poll = Polls.Get(id.Value);
             if (poll == null) {
                 return NotFound();
             }
 
+            int maxLength = 10;
+            int maxThumbLength = 7;
+            int width = 400;
+            int height = 400;
+            int thumbWidth = 200;
+            int thumbHeight = 200;
+
             var chart = new Chart();
             chart.BackColor = Color.Transparent;
-            chart.Width = Unit.Pixel(400);
-            chart.Height = Unit.Pixel(400);
+            if (isThumb != null && isThumb.Value) {
+                maxLength = maxThumbLength;
+                chart.Width = Unit.Pixel(thumbWidth);
+                chart.Height = Unit.Pixel(thumbHeight);
+            } else {
+                chart.Width = Unit.Pixel(width);
+                chart.Height = Unit.Pixel(height);
+            }
 
             var votes = new Series("Votes");
             votes.ChartArea = "VotesArea";
@@ -52,8 +66,9 @@ namespace ITCommunity.Controllers {
 
             foreach (var answer in poll.PollAnswers) {
                 if (answer.Votes.Count > 0) {
+                    var asnwerLabel = (answer.Text.Length > maxLength + 3) ? answer.Text.Substring(0, maxLength) + "..." : answer.Text;
                     votes.Points.Add(new DataPoint {
-                        AxisLabel = answer.Text,
+                        AxisLabel = asnwerLabel,
                         YValues = new double[] { answer.Votes.Count }
                     });
                 }

@@ -67,11 +67,15 @@ namespace ITCommunity.DB.Tables {
             }
         }
 
-        public static bool IsUserVoted(int userId) {
+        public static bool IsUserVoted(int id, int userId) {
             using (var db = Database.Connect()) {
                 var vote =
+                    from ans in db.PollAnswers
                     from vot in db.Votes
-                    where vot.UserId == userId
+                    where 
+                        vot.UserId == userId &&
+                        ans.PollId == id &&
+                        vot.AnswerId == ans.Id
                     select vot;
 
                 return vote.Any();
