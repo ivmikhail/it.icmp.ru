@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Poll>" %>
 
-<% if (Model.VotesCount == 0) { %>
+<% if (Model.VotedUsersCount == 0) { %>
     <h2 class="none-active">
         Голосов пока нет
     </h2>

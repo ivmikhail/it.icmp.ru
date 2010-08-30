@@ -2,7 +2,7 @@
 
 
 <ul class="select-categories">
-    <% foreach (var category in Categories.GetAll()) { %>
+    <% foreach (var category in Categories.All) { %>
         <li>
             <%= Ajax.ActionLink(
                 category.Name,

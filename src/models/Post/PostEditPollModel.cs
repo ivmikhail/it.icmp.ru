@@ -5,6 +5,7 @@ using ITCommunity.DB;
 using System;
 using ITCommunity.Utils;
 using System.Web;
+using ITCommunity.Core;
 
 
 namespace ITCommunity.Models {
@@ -31,7 +32,6 @@ namespace ITCommunity.Models {
             base() {
             Title = "empty";
             Description = "empty";
-            Text = "empty";
         }
 
         public PostEditPollModel(Post post) :
@@ -68,8 +68,13 @@ namespace ITCommunity.Models {
         }
 
         public override Post ToPost() {
+            if (Poll.Category != null) {
+                PostEditCategoriesModel.Current.IsAttached[Poll.Category.Id] = true;
+            }
+
             var post = base.ToPost();
             post.Title = Topic;
+
             return post;
         }
     }

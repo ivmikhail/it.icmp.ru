@@ -8,7 +8,6 @@ using ITCommunity.Core;
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
 using ITCommunity.Models;
-using System;
 
 
 namespace ITCommunity.Controllers {
@@ -43,13 +42,14 @@ namespace ITCommunity.Controllers {
 
             int maxLength = 10;
             int maxThumbLength = 7;
-            int width = 400;
+            int width = 800;
             int height = 400;
-            int thumbWidth = 200;
+            int thumbWidth = 400;
             int thumbHeight = 200;
 
             var chart = new Chart();
-            chart.BackColor = Color.Transparent;
+            chart.BackColor = Color.White;
+
             if (isThumb != null && isThumb.Value) {
                 maxLength = maxThumbLength;
                 chart.Width = Unit.Pixel(thumbWidth);
@@ -60,24 +60,28 @@ namespace ITCommunity.Controllers {
             }
 
             var votes = new Series("Votes");
+
             votes.ChartArea = "VotesArea";
             votes.ChartType = SeriesChartType.Pie;
             votes.Font = new Font("Verdana", 8.25f, FontStyle.Regular);
 
             foreach (var answer in poll.PollAnswers) {
                 if (answer.Votes.Count > 0) {
-                    var asnwerLabel = (answer.Text.Length > maxLength + 3) ? answer.Text.Substring(0, maxLength) + "..." : answer.Text;
                     votes.Points.Add(new DataPoint {
-                        AxisLabel = asnwerLabel,
+                        IsValueShownAsLabel = true,
+                        LegendText = answer.Text,
                         YValues = new double[] { answer.Votes.Count }
                     });
                 }
             }
+            chart.Legends.Add(new Legend { 
+                IsTextAutoFit = true
+            });
 
             chart.Series.Add(votes);
 
             ChartArea area = new ChartArea("VotesArea");
-            area.BackColor = Color.Transparent;
+            area.BackColor = Color.White;
             chart.ChartAreas.Add(area);
 
             using (var ms = new MemoryStream()) {
@@ -112,6 +116,7 @@ namespace ITCommunity.Controllers {
 
         [Authorize]
         public ActionResult Add() {
+            PostEditCategoriesModel.Current.Clear();
             return View();
         }
 
@@ -137,6 +142,10 @@ namespace ITCommunity.Controllers {
 
         [Authorize]
         public ActionResult AddPoll() {
+            PostEditCategoriesModel.Current.Clear();
+            if (Poll.Category != null) {
+                PostEditCategoriesModel.Current.IsAttached[Poll.Category.Id] = true;
+            }
             return View("../Poll/Add");
         }
 

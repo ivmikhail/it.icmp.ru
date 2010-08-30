@@ -57,11 +57,24 @@ namespace ITCommunity.DB.Tables {
 
         public static Vote AddVote(Vote vote) {
             using (var db = Database.Connect()) {
+                // нужно проверить, не голосовал ли юзер
+                // актуально для опроса с несколько выбираемыми ответами
+                var isVoted = (
+                    from vot in db.Votes
+                    where
+                        vot.UserId == vote.UserId &&
+                        vot.AnswerId == vote.AnswerId
+                    select vot
+                ).Any();
+
+                // этот ответ не будет учитываться
                 db.Votes.InsertOnSubmit(vote);
                 db.SubmitChanges();
 
-                vote.PollAnswer.Poll.VotesCount++;
-                db.SubmitChanges();
+                if (isVoted == false) {
+                    vote.PollAnswer.Poll.VotedUsersCount++;
+                    db.SubmitChanges();
+                }
 
                 return vote;
             }

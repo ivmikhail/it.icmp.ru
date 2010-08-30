@@ -1,15 +1,13 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Poll>" %>
 
 
-заканчивается:
-<span class="info">
-    <% if (Model.ActiveDays == null) { %>
-        никогда
+<% if (Model.ActiveDays != null) { %>
+    <% if (Model.IsActive) { %>
+        закончится:
     <% } else { %>
-        <% if (Model.IsActive) { %>
-            <%= Model.EndDate.ToString("dd MMMM yyyy, HH:mm")%>
-        <% } else { %>
-            уже закончился
-        <% } %>
+        закончился:
     <% } %>
-</span>
+    <span class="info">
+        <%= Model.EndDate.ToString("dd MMMM yyyy, HH:mm")%>
+    </span>
+<% } %>

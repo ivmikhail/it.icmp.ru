@@ -214,14 +214,14 @@
         <elementListCompartment Id="33ad19d7-5463-4d6c-a068-d365448021b0" absoluteBounds="0.51500000000000012, 12.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.5 : 12.8806469726563); (3.25 : 12.8806469726563)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.5 : 12.8806469726563); (3.25 : 12.8806469726563)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/Database/PollAnswer/PollAnswer_Vote" />
       <nodes>
         <classShapeMoniker Id="e9fd00de-fc94-4bb0-ba0a-602fdf116d9a" />
         <classShapeMoniker Id="0bed65e3-57f9-4ac8-b63c-3de29d2663b8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.5625 : 11.2708968098958); (1.5625 : 12.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.5625 : 11.2708968098958); (1.5625 : 12.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/Database/Poll/Poll_PollAnswer" />
       <nodes>
         <classShapeMoniker Id="86629b15-9177-4a06-9308-1b2662929f3e" />

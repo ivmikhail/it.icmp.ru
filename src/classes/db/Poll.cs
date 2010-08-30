@@ -8,6 +8,13 @@ namespace ITCommunity.DB {
 
     public partial class Poll {
 
+        public static Category Category {
+            get { 
+                var categoryId = Config.GetInt("PollCategoryId");
+                return Categories.Get(categoryId);
+            }
+        }
+
         public bool IsVoted { get; set; }
 
         public bool IsActive {

@@ -18,7 +18,6 @@ namespace ITCommunity.Models {
         public string Description { get; set; }
 
         [DisplayName("Текст")]
-        [Required(ErrorMessage = "Напишите текст")]
         public string Text { get; set; }
 
         [DisplayName("Источник")]
@@ -38,7 +37,6 @@ namespace ITCommunity.Models {
         public PostEditModel(Post post) {
             Title = post.Title;
             Description = post.Description;
-            Text = post.Text;
             Source = post.Source;
             IsAttached = post.IsAttached;
             IsCommentable = post.IsCommentable;
@@ -56,7 +54,7 @@ namespace ITCommunity.Models {
 
             post.Title = Title;
             post.Description = Description;
-            post.Text = Text;
+            post.Text = Text ?? "";
             post.Source = Source ?? "";
             post.IsAttached = CurrentUser.IsAdmin && IsAttached;
             post.IsCommentable = IsCommentable;

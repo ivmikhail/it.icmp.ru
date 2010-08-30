@@ -33,5 +33,21 @@
 
 <%= Html.LabelFor(m => m.Answers) %>
 <span class="meta">один вариант на одной строке</span>
-<%= Html.TextAreaFor(m => m.Answers)%>
-<%= Html.ValidationMessageFor(m => m.Answers)%>
+<%= Html.TextAreaFor(m => m.Answers) %>
+<%= Html.ValidationMessageFor(m => m.Answers) %>
+
+<%= Html.LabelFor(m => m.Text)%>
+<% Html.RenderPartial("EditorToolbar"); %>
+<%= Html.TextAreaFor(m => m.Text, new { @class = "large" })%>
+<%= Html.ValidationMessageFor(m => m.Text)%>
+
+<label>Категории</label>
+<div class="meta">
+    выберите в какие категории будет входить опрос.
+    <% if (Poll.Category != null) { %>
+        <span class="info">Категория "<%= Poll.Category.Name %>" будет выбрана в любом случае</span>
+    <% } %>
+</div>
+<div id="select-categories">
+    <% Html.RenderPartial("EditCategories", PostEditCategoriesModel.Current); %>    
+</div>
