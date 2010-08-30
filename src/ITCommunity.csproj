@@ -269,7 +269,7 @@
     <Content Include="Views\Shared\Link\Message\ReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\CurrentReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\SentList.ascx" />
-    <Content Include="Views\Shared\Link\Post\AddPoll.ascx" />
+    <Content Include="Views\Shared\Link\Poll\Add.ascx" />
     <Content Include="Views\Shared\Link\Post\Atom.ascx" />
     <Content Include="Views\Shared\Link\Post\Rss.ascx" />
     <Content Include="Views\Shared\Link\Post\List.ascx" />

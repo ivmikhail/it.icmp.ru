@@ -2,9 +2,9 @@
 
 
 <%= Html.ActionLink(
-    "написать опрос",
+    "добавить опрос",
     "addpoll",
     "post",
     null,
-    new { title = "Написать опрос" }
+    new { title = "Добавить опрос" }
 )%>

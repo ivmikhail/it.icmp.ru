@@ -76,8 +76,8 @@ namespace ITCommunity {
 
             routes.MapRoute(
                 "PostPoll",
-                "post/poll{id}",
-                new { controller = "Post", action = "PollChart", id = 0 }
+                "post/poll{id}/{isThumb}",
+                new { controller = "Post", action = "PollChart", id = 0, isThumb = "false" }
             );
 
             routes.MapRoute(

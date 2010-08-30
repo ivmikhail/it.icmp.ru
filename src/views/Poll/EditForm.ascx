@@ -32,5 +32,6 @@
 <%= Html.ValidationMessageFor(m => m.ActiveDays)%>
 
 <%= Html.LabelFor(m => m.Answers) %>
+<span class="meta">один вариант на одной строке</span>
 <%= Html.TextAreaFor(m => m.Answers)%>
 <%= Html.ValidationMessageFor(m => m.Answers)%>

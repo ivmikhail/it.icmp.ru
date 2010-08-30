@@ -36,7 +36,7 @@ namespace ITCommunity.DB {
                 answer.Votes.Load();
             }
 
-            IsVoted = Polls.IsUserVoted(CurrentUser.User.Id);
+            IsVoted = Polls.IsUserVoted(Id, CurrentUser.User.Id);
         }
     }
 }
