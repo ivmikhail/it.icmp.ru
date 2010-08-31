@@ -39,10 +39,6 @@ namespace ITCommunity.DB {
         partial void OnLoaded() {
             PollAnswers.Load();
 
-            foreach (var answer in PollAnswers) {
-                answer.Votes.Load();
-            }
-
             IsVoted = Polls.IsUserVoted(Id, CurrentUser.User.Id);
         }
     }
