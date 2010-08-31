@@ -59,8 +59,7 @@ namespace ITCommunity.Models {
             var answers = Answers.Split('\n');
             foreach (var answer in answers) {
                 if (String.IsNullOrWhiteSpace(answer) == false) {
-                    var answerText = HttpUtility.HtmlEncode(answer.Trim());
-                    poll.PollAnswers.Add(new PollAnswer { Text = answerText });
+                    poll.PollAnswers.Add(new PollAnswer { Text = answer.Trim() });
                 }
             }
 

@@ -18,7 +18,7 @@
                 <% } else { %>
                     <input type="radio" name="answers" value="<%= answer.Id %>" />
                 <% } %>
-                <%= answer.Text %>
+                <%= answer.TextFormatted %>
             </label>
         <% } %>
 

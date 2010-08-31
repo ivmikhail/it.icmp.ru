@@ -79,6 +79,7 @@
     <Compile Include="Classes\Core\Logger.cs" />
     <Compile Include="Classes\Core\EmailSender.cs" />
     <Compile Include="Classes\Core\TimerTask.cs" />
+    <Compile Include="Classes\DB\PollAnswer.cs" />
     <Compile Include="Classes\DB\Poll.cs" />
     <Compile Include="Classes\DB\Rating.cs" />
     <Compile Include="Classes\DB\Header.cs" />
