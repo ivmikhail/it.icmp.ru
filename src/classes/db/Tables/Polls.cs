@@ -35,9 +35,7 @@ namespace ITCommunity.DB.Tables {
                     select pll
                 ).SingleOrDefault();
 
-                poll.IsMultiselect = editedPoll.IsMultiselect;
-                poll.IsOpen = editedPoll.IsOpen;
-                poll.PollAnswers = editedPoll.PollAnswers;
+                poll.ActiveDays = editedPoll.ActiveDays;
 
                 db.SubmitChanges();
             }

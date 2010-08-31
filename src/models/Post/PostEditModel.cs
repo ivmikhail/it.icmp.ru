@@ -37,14 +37,15 @@ namespace ITCommunity.Models {
         public PostEditModel(Post post) {
             Title = post.Title;
             Description = post.Description;
+            Text = post.Text;
             Source = post.Source;
             IsAttached = post.IsAttached;
             IsCommentable = post.IsCommentable;
             EntityType = post.EntityType;
             EntityId = post.EntityId;
 
+            PostEditCategoriesModel.Current.Clear();
             foreach (var category in post.Categories) {
-                PostEditCategoriesModel.Current.Clear();
                 PostEditCategoriesModel.Current.IsAttached[category.Id] = true;
             }
         }
@@ -67,7 +68,6 @@ namespace ITCommunity.Models {
                     post.PostsCategories.Add(new PostsCategory { CategoryId = isAttached.Key });
                 }
             }
-
             PostEditCategoriesModel.Current.Clear();
 
             return post;

@@ -3,25 +3,7 @@
 
 <% if (Model.IsVoted || Model.IsActive == false) { %>
 
-<ul class="float-left">
-    <% foreach (var answer in Model.PollAnswers) { %>
-        <li>
-            <%= answer.Text %>
-            <span class="meta">
-                голосов:
-                <span class="info">
-                    <%= answer.Votes.Count %>
-                </span>
-            </span>
-        </li>
-    <% } %>
-</ul>
-<%-- 
-<div class="float-right">
     <img src="<%= Url.Action("pollchart", "post", new { id = Model.Id, isThumb = "true" })%>" alt="poll<%= Model.Id %>" />
-</div>
---%>
-<div class="clear"></div>
 
 <% } else { %>
 

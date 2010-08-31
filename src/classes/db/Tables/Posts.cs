@@ -55,6 +55,7 @@ namespace ITCommunity.DB.Tables {
                 post.Text = editedPost.Text;
                 post.Title = editedPost.Title;
                 post.IsAttached = editedPost.IsAttached;
+                post.IsCommentable = editedPost.IsCommentable;
                 post.PostsCategories = editedPost.PostsCategories;
 
                 db.SubmitChanges();
@@ -226,12 +227,10 @@ namespace ITCommunity.DB.Tables {
             }
         }
 
-        public static List<Post> GetLast(int count)
-        {
-            using (var db = Database.Connect())
-            {
+        public static List<Post> GetLast(int count) {
+            using (var db = Database.Connect()) {
                 var posts =
-                    from pst in db.Posts                    
+                    from pst in db.Posts
                     orderby pst.CreateDate descending
                     select pst;
 

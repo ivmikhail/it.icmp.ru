@@ -5,6 +5,6 @@
     "войти",
     "login",
     "user",
-    null,
+    new { returnUrl = Request.Url.AbsolutePath },
     new { title = "Приветствуем!" }
 )%>
