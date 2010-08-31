@@ -40,18 +40,15 @@ namespace ITCommunity.Controllers {
                 return NotFound();
             }
 
-            int maxLength = 10;
-            int maxThumbLength = 7;
             int width = 800;
             int height = 400;
-            int thumbWidth = 400;
-            int thumbHeight = 200;
+            int thumbWidth = 600;
+            int thumbHeight = 250;
 
             var chart = new Chart();
             chart.BackColor = Color.White;
 
             if (isThumb != null && isThumb.Value) {
-                maxLength = maxThumbLength;
                 chart.Width = Unit.Pixel(thumbWidth);
                 chart.Height = Unit.Pixel(thumbHeight);
             } else {
@@ -64,24 +61,29 @@ namespace ITCommunity.Controllers {
             votes.ChartArea = "VotesArea";
             votes.ChartType = SeriesChartType.Pie;
             votes.Font = new Font("Verdana", 8.25f, FontStyle.Regular);
+            votes.CustomProperties = "PieStartAngle=270";
 
             foreach (var answer in poll.PollAnswers) {
                 if (answer.Votes.Count > 0) {
                     votes.Points.Add(new DataPoint {
-                        IsValueShownAsLabel = true,
-                        LegendText = answer.Text,
+                        Label = "#PERCENT",
+                        LegendText = "#PERCENT " + answer.Text,
                         YValues = new double[] { answer.Votes.Count }
                     });
                 }
             }
             chart.Legends.Add(new Legend { 
-                IsTextAutoFit = true
+                IsTextAutoFit = true,
+                IsEquallySpacedItems = true,
+                AutoFitMinFontSize = 8,
+                Docking = Docking.Right
             });
 
             chart.Series.Add(votes);
 
             ChartArea area = new ChartArea("VotesArea");
             area.BackColor = Color.White;
+            area.Position = new ElementPosition(0, 0, 50, 100);
             chart.ChartAreas.Add(area);
 
             using (var ms = new MemoryStream()) {
@@ -232,6 +234,47 @@ namespace ITCommunity.Controllers {
             }
 
             return View(model);
+        }
+
+        [Authorize]
+        public ActionResult EditPoll(int? id) {
+            if (id == 0) {
+                return NotFound();
+            }
+
+            var post = Posts.Get(id.Value);
+
+            if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
+                return AccessDenied();
+            }
+
+            var model = new PostEditPollModel(post);
+
+            return View("../Poll/Edit", model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditPoll(int? id, PostEditPollModel model) {
+            if (id == 0) {
+                return NotFound();
+            }
+
+            var post = Posts.Get(id.Value);
+
+            if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
+                return AccessDenied();
+            }
+
+            if (ModelState.IsValid) {
+                var poll = model.ToPoll();
+                poll.Id = post.EntityId.Value;
+                Polls.Update(poll);
+
+                return Edit(id, model);
+            }
+
+            return View("../Poll/Edit", model);
         }
 
         [Authorize]

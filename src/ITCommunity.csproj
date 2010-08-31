@@ -221,10 +221,10 @@
     <Content Include="Views\Message\List.ascx" />
     <Content Include="Views\Message\Menu.ascx" />
     <Content Include="Views\Poll\Answers.ascx" />
+    <Content Include="Views\Poll\Edit.aspx" />
     <Content Include="Views\Poll\EndDate.ascx" />
     <Content Include="Views\Poll\IsOpen.ascx" />
     <Content Include="Views\Poll\Description.ascx" />
-    <Content Include="Views\Poll\Result.ascx" />
     <Content Include="Views\Poll\VotedUsersCount.ascx" />
     <Content Include="Views\Post\Add.aspx" />
     <Content Include="Views\Poll\Add.aspx" />
@@ -270,6 +270,7 @@
     <Content Include="Views\Shared\Link\Message\CurrentReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\SentList.ascx" />
     <Content Include="Views\Shared\Link\Poll\Add.ascx" />
+    <Content Include="Views\Shared\Link\Poll\Edit.ascx" />
     <Content Include="Views\Shared\Link\Post\Atom.ascx" />
     <Content Include="Views\Shared\Link\Post\Rss.ascx" />
     <Content Include="Views\Shared\Link\Post\List.ascx" />

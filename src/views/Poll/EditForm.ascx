@@ -12,6 +12,7 @@
         <%= Html.CheckBoxFor(m => m.IsAttached)%> прикрепленный опрос?
     </label>
 <% } %>
+
 <label>
     <%= Html.CheckBoxFor(m => m.IsCommentable, new { @checked = "checked" })%> разрешить комментарии?
 </label>

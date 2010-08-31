@@ -113,8 +113,8 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[url\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$1</a>"));
             _formatters.Add(new RegexFormatter(@"\[url=""((.|\n)*?)""\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
             _formatters.Add(new RegexFormatter(@"\[url=((.|\n)*?)\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
-            _formatters.Add(new RegexFormatter(@"\[link\]((.|\n)*?)\[/link\]", "<a href=\"$1\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[link=((.|\n)*?)\]((.|\n)*?)\[/link\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
+//            _formatters.Add(new RegexFormatter(@"\[link\]((.|\n)*?)\[/link\]", "<a href=\"$1\" title=\"$1\">$1</a>"));
+//            _formatters.Add(new RegexFormatter(@"\[link=((.|\n)*?)\]((.|\n)*?)\[/link\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
 
             _formatters.Add(new RegexFormatter(@"\[popup=((.|\n)*?)\]((.|\n)*?)\[/popup\]", "<a href=\"javascript:popup('$1')\" >$3</a>"));
 

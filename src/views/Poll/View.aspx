@@ -18,8 +18,6 @@
             
             <hr id="cut" />
 
-            <% Html.RenderPartial("../Poll/Result", Model.Entity); %>
-
             <%= Model.TextFormatted %>
         </div>
 
@@ -66,6 +64,11 @@
                 <% if (CurrentUser.IsAdmin) { %>
                     <li>
                         <% Html.RenderPartial("Link/Post/Delete", Model); %>
+                    </li>
+                <% } %>
+                <% if (CurrentUser.IsAdmin || CurrentUser.User.Id == Model.AuthorId) { %>
+                    <li>
+                        <% Html.RenderPartial("Link/Poll/Edit", Model); %>
                     </li>
                 <% } %>
                 <% if (CurrentUser.IsAuth) { %>
