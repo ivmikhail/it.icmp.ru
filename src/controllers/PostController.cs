@@ -156,8 +156,8 @@ namespace ITCommunity.Controllers {
         public ActionResult AddPoll(PostEditPollModel model) {
             if (ModelState.IsValid) {
                 var poll = model.ToPoll();
-
                 poll = Polls.Add(poll);
+
                 model.EntityId = poll.Id;
                 model.EntityType = Post.EntityTypes.Poll;
 

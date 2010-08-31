@@ -78,111 +78,90 @@ namespace ITCommunity.Utils {
 
             _formatters.Add(new SearchReplaceFormatter("\r", ""));
 
-            // убираем все whitespases внутри тегов ббкода
-//            _formatters.Add(new RegexFormatter(@"\[\s*(.*?)\s*\]", "[$1]"));
+            // <hr /> вместо <br />
+            _formatters.Add(new RegexFormatter("\n\n", "\n<hr />\n"));
 
-            // убираем whitespases в таблице
-            _formatters.Add(new RegexFormatter(@"\s*(\[/?tr.*?\])\s*", "$1"));
-            _formatters.Add(new RegexFormatter(@"\s*(\[/?td.*?\])\s*", "$1"));
+            // модификаторы текста
+            _formatters.Add(new RegexFormatter(@"\[b\](.*?)\[/b\]", "<b>$1</b>"));
+            _formatters.Add(new RegexFormatter(@"\[i\](.*?)\[/i\]", "<i>$1</i>"));
+            _formatters.Add(new RegexFormatter(@"\[u\](.*?)\[/u\]", "<u>$1</u>"));
+            _formatters.Add(new RegexFormatter(@"\[s\](.*?)\[/s\]", "<strike>$1</strike>"));
+            _formatters.Add(new RegexFormatter(@"\[size=(\d*?)px\](.*?)\[/size\]", "<span style=\"font-size:$1px\">$2</span>"));
 
-            // убираем whitespases в списке
+            // расположение
+            _formatters.Add(new RegexFormatter(@"\[left\]((.|\n)*?)\[/left]", "<div class=\"float-left\">$1</div>"));
+            _formatters.Add(new RegexFormatter(@"\[right\]((.|\n)*?)\[/right]", "<div class=\"float-right\">$1</div>"));
+            _formatters.Add(new RegexFormatter(@"\[center\]((.|\n)*?)\[/center]", "<div class=\"center\">$1</div><div class=\"clear\"></div>"));
+
+            // цитата и код
+            _formatters.Add(new RegexFormatter(@"\[quote\]((.|\n)*?)\[/quote]", "<blockquote>$1</blockquote>"));
+            _formatters.Add(new RegexFormatter(@"\[code\](?:\s*)((.|\n)*?)\[/code\]", "<pre><code>$1</code></pre>"));
+            _formatters.Add(new RegexFormatter(@"\[code=(\w*)\](?:\s*)((.|\n)*?)\[/code\]", "<pre><code class=\"$1\">$2</code></pre>"));
+
+            // мега регексп, который решает какие урлы конвертировать в ссылки
+            // через 10 тысяч лет наши потомки найдут этот код и смогут прочесть
+            // в этих иероглифах историю всего человечества =)
+            _formatters.Add(new RegexFormatter(@"(^?[^""\]=])(?:http://)(.*?)([,;\.\!]?[\s$])", "$1<a href=\"http://$2\" title=\"$2\">$2</a>$3"));
+            // ссылка
+            _formatters.Add(new RegexFormatter(@"\[url\](?:http://)?(.*?)\[/url\]", "<a href=\"http://$1\" title=\"$1\">$1</a>"));
+            _formatters.Add(new RegexFormatter(@"\[url=(?:http://)?(.*?)\](.*?)\[/url\]", "<a href=\"http://$1\" title=\"$1\">$2</a>"));
+            _formatters.Add(new RegexFormatter(@"\[email\](.*?)\[/email\]", "<a href=\"mailto:$1\">$1</a>"));
+            // попап
+            _formatters.Add(new RegexFormatter(@"\[popup=(.*?)\](.*?)\[/popup\]", "<a href=\"$1\" >$2</a>"));
+
+            // рисунок http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
+            var trustedSites = Config.Get("TrustdedSites").Replace(" ", "").Replace(',', '|');
+            var imgPattern = @"((?:postimages|http://(?:" + trustedSites + @"))/.*?)";
+            _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" alt=\"$1\" />"));
+            _formatters.Add(new RegexFormatter(@"\[img=(\d*)x(\d*)px\]" + imgPattern + @"\[/img\]", "<img width=\"$1px\" height=\"$2px\" src=\"$3\" alt=\"$3\" />"));
+
+            // убираем whitespaces в списке
             _formatters.Add(new RegexFormatter(@"(\[list.*?\])\s+", "$1"));
             _formatters.Add(new RegexFormatter(@"\s*(\[\*\])\s*", "$1"));
             _formatters.Add(new RegexFormatter(@"\s+(\[/list\])", "$1"));
-
-            // убираем whitespases после открывающего и до закрывающего ббкода
-//            _formatters.Add(new RegexFormatter(@"(\[[^/].*?\])\s*", "$1"));
-//            _formatters.Add(new RegexFormatter(@"\s*(\[/.*?\])", "$1"));
-
-            _formatters.Add(new RegexFormatter("\n\n", "<hr />"));
-
-            _formatters.Add(new RegexFormatter(@"\[b\](.*?)\[/b\]", "<b>$1</b>"));
-            _formatters.Add(new RegexFormatter(@"\[i\]((.|\n)*?)\[/i\]", "<i>$1</i>"));
-            _formatters.Add(new RegexFormatter(@"\[u\]((.|\n)*?)\[/u\]", "<u>$1</u>"));
-            _formatters.Add(new RegexFormatter(@"\[s\]((.|\n)*?)\[/s\]", "<strike>$1</strike>"));
-
-            _formatters.Add(new RegexFormatter(@"\[left\]((.|\n)*?)\[/left]", "<div style=\"text-align:left\">$1</div>"));
-            _formatters.Add(new RegexFormatter(@"\[center\]((.|\n)*?)\[/center]", "<div style=\"text-align:center\">$1</div>"));
-            _formatters.Add(new RegexFormatter(@"\[right\]((.|\n)*?)\[/right]", "<div style=\"text-align:right\">$1</div>"));
-
-            _formatters.Add(new RegexFormatter(@"\[quote\]((.|\n)*?)\[/quote]", "<blockquote>$1</blockquote>"));
-            _formatters.Add(new RegexFormatter(@"\[code\]((.|\n)*?)\[/code\]", "<pre><code>$1</code></pre>"));
-            _formatters.Add(new RegexFormatter(@"\[code=(.*?)\]((.|\n)*?)\[/code\]", "<pre><code class=\"$1\">$2</code></pre>"));
-
-            _formatters.Add(new RegexFormatter(@"\[url\]www\.(.*?)\[/url\]", "<a href=\"http://www.$1\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url=""((.|\n)*?)""\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url=((.|\n)*?)\]((.|\n)*?)\[/url\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
-//            _formatters.Add(new RegexFormatter(@"\[link\]((.|\n)*?)\[/link\]", "<a href=\"$1\" title=\"$1\">$1</a>"));
-//            _formatters.Add(new RegexFormatter(@"\[link=((.|\n)*?)\]((.|\n)*?)\[/link\]", "<a href=\"$1\" title=\"$1\">$3</a>"));
-
-            _formatters.Add(new RegexFormatter(@"\[popup=((.|\n)*?)\]((.|\n)*?)\[/popup\]", "<a href=\"javascript:popup('$1')\" >$3</a>"));
-
-
-            // http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
-
-            String[] trustedSites = Config.Get("TrustdedSites").Split(',');
-            String imgPattern = @"((?:postimages|http://(?:";
-            foreach (String site in trustedSites) {
-                imgPattern += Regex.Escape(site.Trim()) + "|";
-            }
-            imgPattern = imgPattern.Substring(0, imgPattern.Length - 1);
-            imgPattern += "))/[^ \"'\\[]*?)";
-            _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" alt=\"\" class=\"bbcode-img\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]" + imgPattern + @"\[/img\]", "<img src=\"$3\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)px\]" + imgPattern + @"\[/img\]", "<img width=\"$1px\" height=\"$3px\" src=\"$5\" alt=\"\" class=\"bbcode-img\" />"));
-//          _formatters.Add(new RegexFormatter(@"\[img\]((.|\n)*?)\[/img\]", "<img src=\"$1\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
-//          _formatters.Add(new RegexFormatter(@"\[img align=((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img src=\"$3\" border=\"0\" align=\"$1\" alt=\"\" class=\"bbcode-img align-$1\" />"));
-//          _formatters.Add(new RegexFormatter(@"\[img=((.|\n)*?)x((.|\n)*?)\]((.|\n)*?)\[/img\]", "<img width=\"$1\" height=\"$3\" src=\"$5\" border=\"0\" alt=\"\" class=\"bbcode-img\" />"));
-
-//          _formatters.Add(new RegexFormatter(@"\[color=((.|\n)*?)\]((.|\n)*?)\[/color\]", "<span style=\"color=$1;\">$3</span>"));
-
-//          _formatters.Add(new RegexFormatter(@"\[hr\]", "<hr />"));
-
-            _formatters.Add(new RegexFormatter(@"\[email\]((.|\n)*?)\[/email\]", "<a href=\"mailto:$1\">$1</a>"));
-
-            _formatters.Add(new RegexFormatter(@"\[size=((.|\n)*?)\]((.|\n)*?)\[/size\]", "<span style=\"font-size:$1\">$3</span>"));
-//          _formatters.Add(new RegexFormatter(@"\[font=((.|\n)*?)\]((.|\n)*?)\[/font\]", "<span style=\"font-family:$1;\">$3</span>"));
-//          _formatters.Add(new RegexFormatter(@"\[align=((.|\n)*?)\]((.|\n)*?)\[/align\]", "<span style=\"text-align:$1;\">$3</span>"));
-            _formatters.Add(new RegexFormatter(@"\[float=((.|\n)*?)\]((.|\n)*?)\[/float\]", "<div style=\"float:$1;margin: 10px;\">$3</div>"));
-
-
+            // список
             string sListFormat = "<ol style=\"list-style-type:{0};\">$1</ol>";
-
-            _formatters.Add(new RegexFormatter(@"\[\*\]\s*([^\[]*)", "<li>$1</li>"));
-            _formatters.Add(new RegexFormatter(@"\[list\]((.|\n)*?)\[/list\]", "<ul class=\"bbcode-list\">$1</ul>"));
+            _formatters.Add(new RegexFormatter(@"\[\*\]([^\[]*)", "<li>$1</li>"));
+            _formatters.Add(new RegexFormatter(@"\[list\]((.|\n)*?)\[/list\]", "<ul>$1</ul>"));
             _formatters.Add(new RegexFormatter(@"\[list=1\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "decimal"), false));
             _formatters.Add(new RegexFormatter(@"\[list=i\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "lower-roman"), false));
             _formatters.Add(new RegexFormatter(@"\[list=I\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "upper-roman"), false));
             _formatters.Add(new RegexFormatter(@"\[list=a\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "lower-alpha"), false));
             _formatters.Add(new RegexFormatter(@"\[list=A\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "upper-alpha"), false));
 
-            // play.ykt.ru
-            _formatters.Add(new RegexFormatter(@"\[video]http://play\.ykt\.ru/video/(\d+)/.+?\s*\[/video]",
-                @"<object data='http://play.ykt.ru/player.swf' width='640' height='480' type='application/x-shockwave-flash'>
-					<param name='allowscriptaccess' value='always' />
-					<param name='allowfullscreen' value='true' />
-					<param name='flashvars' value='width=640&amp;height=480&amp;file=http://play.ykt.ru/flvideo/$1.flv&amp;image=http://play.ykt.ru/thumb/$1.jpg&amp;displayheight=480&amp;link=http://play.ykt.ru/video/$1&amp;searchbar=false&amp;linkfromdisplay=true' />
-					<param name='pluginspage' value='http://www.macromedia.com/go/getflashplayer' />
-				</object>", true));
-            // tv.ykt.ru 
-
-            // 
-
-            // http://tv.ykt.ru/media/videos/SPECREPORT_2_APR_01_sd.mp4
-            _formatters.Add(new RegexFormatter(@"\[video]\s*http://tv\.ykt\.ru/media/videos/(.+?)\.(.+?)\s*\[/video]",
-                @"<embed width='540' height='350' flashvars='provider=http&amp;file=/media/videos/$1.$2&amp;image=/media/thumbnails/full/$1.jpg&amp;playerready=playerReadyCallback&amp;stretching=fill' 
-                menu='false' allowfullscreen='true' allowscriptaccess='always' quality='high' bgcolor='#ffffff' name='mpl' id='mpl' 
-                style='' src='http://tv.ykt.ru/media/player.swf' type='application/x-shockwave-flash'>
-                ", true));
-            // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
-            _formatters.Add(new RegexFuncFormatter(@"\[video]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video]", abundaEvaluator));
-
-            _formatters.Add(new RegexFormatter(@"\[table\]((.|\n)*?)\[/table\]", "<table cellpadding='0' cellspacing='0' width='100%'>$1</table>"));
-            _formatters.Add(new RegexFormatter(@"\[table=([0-9]*%)\]((.|\n)*?)\[/table\]", "<table cellpadding='0' cellspacing='0' width='$1'>$2</table>"));
+            // убираем whitespaces в таблице
+            _formatters.Add(new RegexFormatter(@"\s*(\[/?tr.*?\])\s*", "$1"));
+            _formatters.Add(new RegexFormatter(@"\s*(\[/?td.*?\])\s*", "$1"));
+            // таблица
+            _formatters.Add(new RegexFormatter(@"\[table\]((.|\n)*?)\[/table\]", "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">$1</table>"));
+            _formatters.Add(new RegexFormatter(@"\[table=(\d*%)\]((.|\n)*?)\[/table\]", "<table cellpadding=\"0\" cellspacing=\"0\" width=\"$1\">$2</table>"));
             _formatters.Add(new RegexFormatter(@"\[tr\]((.|\n)*?)\[/tr\]", "<tr>$1</tr>"));
             _formatters.Add(new RegexFormatter(@"\[td\]((.|\n)*?)\[/td\]", "<td>$1</td>"));
-            _formatters.Add(new RegexFormatter(@"\[td=([0-9]*)\]((.|\n)*?)\[/td\]", "<td colspan='$1'>$2</td>"));
+            _formatters.Add(new RegexFormatter(@"\[td=(\d*)\]((.|\n)*?)\[/td\]", "<td colspan=\"$1\">$2</td>"));
+
+            // убираем whitespaces в video
+            _formatters.Add(new RegexFormatter(@"\[video\]\s*(.*?)\s*\[/video\]", "[video]$1[/video]"));
+            // play.ykt.ru
+            _formatters.Add(new RegexFormatter(@"\[video\]http://play\.ykt\.ru/video/(\d+)/.+?\[/video\]", @"
+<object data=""http://play.ykt.ru/player.swf"" width=""640"" height=""480"" type=""application/x-shockwave-flash"">
+	<param name=""allowscriptaccess"" value=""always"" />
+	<param name=""allowfullscreen"" value=""true"" />
+	<param name=""flashvars"" value=""width=640&amp;height=480&amp;file=http://play.ykt.ru/flvideo/$1.flv&amp;image=http://play.ykt.ru/thumb/$1.jpg&amp;displayheight=480&amp;link=http://play.ykt.ru/video/$1&amp;searchbar=false&amp;linkfromdisplay=true"" />
+	<param name=""pluginspage"" value=""http://www.macromedia.com/go/getflashplayer"" />
+</object>
+", true));
+            // tv.ykt.ru http://tv.ykt.ru/media/videos/SPECREPORT_2_APR_01_sd.mp4
+            _formatters.Add(new RegexFormatter(@"\[video\]http://tv\.ykt\.ru/media/videos/(.+?)\.(.+?)\[/video\]", @"
+<embed
+    width=""540"" height=""350""
+    quality=""high"" bgcolor=""#ffffff""
+    menu=""false"" allowfullscreen=""true"" allowscriptaccess=""always""
+    flashvars=""provider=http&amp;file=/media/videos/$1.$2&amp;image=/media/thumbnails/full/$1.jpg&amp;playerready=playerReadyCallback&amp;stretching=fill"" 
+    src=""http://tv.ykt.ru/media/player.swf"" type=""application/x-shockwave-flash"" />
+", true));
+            // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
+            _formatters.Add(new RegexFuncFormatter(@"\[video\]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video\]", abundaEvaluator));
+
         }
 
         private static string abundaEvaluator(Match match) {
@@ -191,12 +170,14 @@ namespace ITCommunity.Utils {
                 return "";
             }
             string hash = Hash.CalculateMD5(match.Groups[1].Value).Substring(11, 20);
-            return "<embed width='452' height='361' quality='high' "
-                + "bgcolor='#000000' name='main' id='main' allowfullscreen='true' "
-                + "allowscriptaccess='always' src='http://tube.abunda.ru/player/vPlayer.swf"
-                + "?f=http://tube.abunda.ru/player/vConfig_embed.php?vkey="
-                + hash + "' "
-                + "type='application/x-shockwave-flash' />";
+            return @"
+<embed
+    width=""452"" height=""361""
+    quality=""high"" bgcolor=""#000000""
+    allowfullscreen=""true"" allowscriptaccess=""always""
+    src=""http://tube.abunda.ru/player/vPlayer.swf?f=http://tube.abunda.ru/player/vConfig_embed.php?vkey=" + hash + @"""
+    type=""application/x-shockwave-flash"" />
+";
         }
 
         #endregion
