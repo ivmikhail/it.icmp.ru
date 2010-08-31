@@ -30,14 +30,14 @@ namespace ITCommunity.DB {
         /// Полностью форматированное в безопасный хтмл описание
         /// </summary>
         public string DescriptionFormatted {
-            get { return BBCodeParser.Format(HttpUtility.HtmlEncode(Description)); }
+            get { return BBCodeParser.Format(HttpUtility.HtmlEncode(Description.Trim())); }
         }
 
         /// <summary>
         /// Полностью форматированный в безопасный хтмл текст
         /// </summary>
         public string TextFormatted {
-            get { return BBCodeParser.Format(HttpUtility.HtmlEncode(Text)); }
+            get { return BBCodeParser.Format(HttpUtility.HtmlEncode(Text.Trim())); }
         }
 
         /// <summary>

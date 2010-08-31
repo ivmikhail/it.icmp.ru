@@ -73,6 +73,7 @@
 }
 .text pre {
 	overflow: auto;
+	color: #000000;
 }
 .text table {
 	border-bottom: 1px solid #bbbbbb;
