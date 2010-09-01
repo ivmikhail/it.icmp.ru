@@ -89,7 +89,8 @@ namespace ITCommunity.Core {
             var user = Users.Get(nick);
             var hashedPass = HashPassword(password, nick);
 
-			if (user.IsAnonymous == false && user.Password == hashedPass) {
+            if (user.IsAnonymous == false && user.Password == hashedPass)
+            {
                 HttpContext.Current.Session[SESSION_NAME] = user;
 
 				var ticketExpiration = DateTime.Now.AddMinutes(HttpContext.Current.Session.Timeout);;

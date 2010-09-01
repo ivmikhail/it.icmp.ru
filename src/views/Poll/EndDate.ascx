@@ -8,6 +8,6 @@
         закончился:
     <% } %>
     <span class="info">
-        <%= Model.EndDate.ToString("dd MMMM yyyy, HH:mm")%>
+        <%= Html.Date(Model.EndDate) %>
     </span>
 <% } %>

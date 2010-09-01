@@ -20,11 +20,6 @@
     <div class="clear"></div>
 </div>
 
-<div class="links">                     
-    <% Html.RenderPartial("Link/Post/Rss"); %>               
-    <% Html.RenderPartial("Link/Post/Atom"); %>               
-</div>
-
 <div class="footer-bottom">
 
     <ul class="counters">

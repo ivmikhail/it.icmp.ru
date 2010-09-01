@@ -13,13 +13,13 @@ using ITCommunity.DB.Tables;
 
 namespace ITCommunity {
 
-    public class Global : HttpApplication {        
+    public class Global : HttpApplication {
 
         private List<TimerTask> _tasks;
 
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
+
             routes.MapRoute(
                 "IndexPage",
                 "",
@@ -89,13 +89,13 @@ namespace ITCommunity {
             routes.MapRoute(
                 "Rss",
                 "rss/{format}",
-                new { controller = "Rss", action = "Feed", format = "RSS"}
+                new { controller = "Rss", action = "Feed", format = "RSS" }
             );
 
             routes.MapRoute(
-                "Browse",
-                "browse",
-                new { controller = "Browse", action = "View", directory="Files/"}
+                "Browser",
+                "browser/{*link}",
+                new { controller = "Browser", action = "Files", link = BrowseItem.DefaultDir }
             );
 
             routes.MapRoute(

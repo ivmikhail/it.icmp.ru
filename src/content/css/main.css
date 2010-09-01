@@ -145,3 +145,7 @@
 .blink {
     text-decoration: blink;
 }
+
+.middle {
+    vertical-align: middle;
+}

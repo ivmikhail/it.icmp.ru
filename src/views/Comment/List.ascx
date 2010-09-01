@@ -9,7 +9,7 @@
                     <% Html.RenderPartial("Link/User/Profile", comment.Author); %>
                 </li>
                 <li class="info meta">
-                    <%= comment.CreateDate.ToString("dd MMMM yyyy, HH:mm") %>
+                    <%= Html.Date(comment.CreateDate) %>
                 </li>
             </ul>
                 
