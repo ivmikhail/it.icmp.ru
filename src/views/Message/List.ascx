@@ -19,7 +19,7 @@
 
                 <ul class="left-list meta">
                     <li class="info">
-                        <%= message.CreateDate.ToString("dd MMMM yyyy, HH:mm")%>
+                        <%= Html.Date(message.CreateDate) %>
                     </li>
                     <li>
                         <% Html.RenderPartial("Link/User/Profile", message.Sender); %>

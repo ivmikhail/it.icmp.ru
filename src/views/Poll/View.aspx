@@ -24,7 +24,7 @@
         <div class="meta">
             <ul class="left-list">
                 <li class="info">
-                    <%= Model.CreateDate.ToString("dd MMMM yyyy, HH:mm") %>
+                    <%= Html.Date(Model.CreateDate) %>
                 </li>
                 <li>
                     <% Html.RenderPartial("Link/User/Profile", Model.Author); %>

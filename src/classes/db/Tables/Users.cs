@@ -242,7 +242,7 @@ namespace ITCommunity.DB.Tables {
                     from usr in db.Users
                     where usr.Email.ToLower() == email.ToLower()
                     select usr
-                ).SingleOrDefault();
+                ).FirstOrDefault();
 
                 return user ?? User.Anonymous;
             }

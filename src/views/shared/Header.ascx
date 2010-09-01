@@ -14,6 +14,9 @@
 
     <ul class="left-list">
         <li>
+            <% Html.RenderPartial("Link/Post/Rss"); %>               
+        </li>
+        <li>
             <% Html.RenderPartial("Link/Post/List"); %>
         </li>
         <% if (CurrentUser.IsAuth) { %>
@@ -26,7 +29,7 @@
                 <% } %>
             </li>
             <li>
-                <% Html.RenderPartial("Link/Browse/Files"); %>
+                <% Html.RenderPartial("Link/Browser/Files"); %>
             </li>
 <%--
             <li>

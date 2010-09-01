@@ -29,7 +29,7 @@
                         <% Html.RenderPartial("Link/User/Profile", header.User); %>
                     </li>
                     <li>
-                        добавил <span class="info"><%= header.CreateDate.ToString("dd MMMM yyyy, HH:mm") %></span>
+                        добавил <span class="info"><%= Html.Date(header.CreateDate) %></span>
                     </li>
                     <li>
                         <% if (header.EndDate > DateTime.Now) { %>
@@ -37,7 +37,7 @@
                         <% } else { %>
                             показывался
                         <% } %>
-                        до <span class="info"><%= header.EndDate.Value.ToString("dd MMMM yyyy, HH:mm") %></span>
+                        до <span class="info"><%= Html.Date(header.EndDate.Value) %></span>
                     </li>
                 </ul>
                 <ul class="right-list meta">

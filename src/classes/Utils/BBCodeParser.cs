@@ -78,9 +78,6 @@ namespace ITCommunity.Utils {
 
             _formatters.Add(new SearchReplaceFormatter("\r", ""));
 
-            // <hr /> вместо <br />
-            _formatters.Add(new RegexFormatter("\n\n", "\n<hr />\n"));
-
             // модификаторы текста
             _formatters.Add(new RegexFormatter(@"\[b\](.*?)\[/b\]", "<b>$1</b>"));
             _formatters.Add(new RegexFormatter(@"\[i\](.*?)\[/i\]", "<i>$1</i>"));
@@ -106,14 +103,13 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[url\](?:http://)?(.*?)\[/url\]", "<a href=\"http://$1\" title=\"$1\">$1</a>"));
             _formatters.Add(new RegexFormatter(@"\[url=(?:http://)?(.*?)\](.*?)\[/url\]", "<a href=\"http://$1\" title=\"$1\">$2</a>"));
             _formatters.Add(new RegexFormatter(@"\[email\](.*?)\[/email\]", "<a href=\"mailto:$1\">$1</a>"));
-            // попап
-            _formatters.Add(new RegexFormatter(@"\[popup=(.*?)\](.*?)\[/popup\]", "<a href=\"$1\" >$2</a>"));
 
             // рисунок http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
             var trustedSites = Config.Get("TrustdedSites").Replace(" ", "").Replace(',', '|');
             var imgPattern = @"((?:postimages|http://(?:" + trustedSites + @"))/.*?)";
             _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" alt=\"$1\" />"));
             _formatters.Add(new RegexFormatter(@"\[img=(\d*)x(\d*)px\]" + imgPattern + @"\[/img\]", "<img width=\"$1px\" height=\"$2px\" src=\"$3\" alt=\"$3\" />"));
+            _formatters.Add(new RegexFormatter(@"\[img=" + imgPattern + @"\]" + imgPattern + @"\[/img\]", "<a href=\"$1\" title=\"$1\" class=\"full-img\"><img src=\"$2\" alt=\"$2\" /></a>"));
 
             // убираем whitespaces в списке
             _formatters.Add(new RegexFormatter(@"(\[list.*?\])\s+", "$1"));
@@ -162,6 +158,8 @@ namespace ITCommunity.Utils {
             // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
             _formatters.Add(new RegexFuncFormatter(@"\[video\]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video\]", abundaEvaluator));
 
+            // <hr /> вместо <br />
+            _formatters.Add(new RegexFormatter("\n\n", "\n<hr />\n"));
         }
 
         private static string abundaEvaluator(Match match) {

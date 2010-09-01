@@ -3,6 +3,7 @@
 using ITCommunity.Core;
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
+using System;
 
 
 namespace ITCommunity.Controllers {
@@ -24,6 +25,11 @@ namespace ITCommunity.Controllers {
 
             if (CurrentUser.IsAuth == false) {
                 return PartialView("Login");
+            }
+
+            var passedDays = Config.GetDouble("PostRatingRegistrationPassedDays");
+            if (CurrentUser.User.CreateDate.AddDays(passedDays) < DateTime.Now) {
+                return PartialView("RecentRegistration");
             }
 
             var value = Rating.GetValue(log.EntityType);
