@@ -137,7 +137,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Browser\BrowseModel.cs" />
     <Compile Include="Models\Captcha\CaptchaEditModel.cs" />
     <Compile Include="Models\Captcha\CaptchaListModel.cs" />
     <Compile Include="Models\Category\CategoryEditModel.cs" />
