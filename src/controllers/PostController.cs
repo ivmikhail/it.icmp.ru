@@ -164,13 +164,13 @@ namespace ITCommunity.Controllers {
 
         [Authorize]
         [HttpPost]
-        public ActionResult VotePoll(int? id, int[] answers) {
+        public ActionResult VotePoll(int? id, int? postId, int[] answers) {
             var post = Posts.Get(id.Value);
             if (post == null) {
                 return NotFound();
             }
 
-            var poll = (Poll)post.Entity;
+            var poll = Polls.Get(id.Value);
             if (poll == null) {
                 return NotFound();
             }
@@ -181,16 +181,18 @@ namespace ITCommunity.Controllers {
             }
 
             if (answers != null) {
-                foreach (var answer in answers) {
-                    var vote = new Vote {
-                        AnswerId = answer,
-                        UserId = CurrentUser.User.Id
-                    };
+                foreach (var answerId in answers) {
+                    if (poll.ContainsAnswer(answerId)) {
 
-                    Polls.AddVote(vote);
+                        var vote = new Vote {
+                            AnswerId = answerId,
+                            UserId = CurrentUser.User.Id
+                        };
 
-                    if (poll.IsMultiselect == false) {
-                        break;
+                        Polls.AddVote(vote);
+                    } else {
+                        Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
+                        return Forbidden();
                     }
                 }
             }
@@ -200,29 +202,26 @@ namespace ITCommunity.Controllers {
 
         [Authorize]
         public ActionResult Edit(int? id) {
-            if (id == 0) {
+            var post = Posts.Get(id.Value);
+            if (post == null) {
                 return NotFound();
             }
-
-            var post = Posts.Get(id.Value);
 
             if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
                 return Forbidden();
             }
 
             var model = new PostEditModel(post);
-
             return View(model);
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult Edit(int? id, PostEditModel model) {
-            if (id == 0) {
+            var post = Posts.Get(id.Value);
+            if (post == null) {
                 return NotFound();
             }
-
-            var post = Posts.Get(id.Value);
 
             if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
                 return Forbidden();
@@ -242,11 +241,10 @@ namespace ITCommunity.Controllers {
 
         [Authorize]
         public ActionResult EditPoll(int? id) {
-            if (id == 0) {
+            var post = Posts.Get(id.Value);
+            if (post == null) {
                 return NotFound();
             }
-
-            var post = Posts.Get(id.Value);
 
             if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
                 return Forbidden();
@@ -260,11 +258,10 @@ namespace ITCommunity.Controllers {
         [Authorize]
         [HttpPost]
         public ActionResult EditPoll(int? id, PostEditPollModel model) {
-            if (id == 0) {
+            var post = Posts.Get(id.Value);
+            if (post == null) {
                 return NotFound();
             }
-
-            var post = Posts.Get(id.Value);
 
             if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
                 return Forbidden();
@@ -298,10 +295,6 @@ namespace ITCommunity.Controllers {
 
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id) {
-            if (id == 0) {
-                return NotFound();
-            }
-
             var post = Posts.Get(id.Value);
             if (post == null) {
                 return NotFound();
