@@ -20,7 +20,7 @@ namespace ITCommunity.Controllers {
 
         private ActionResult Log(RatingLog log, bool isGoodRate) {
             if (Request.IsAjaxRequest() == false) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             if (CurrentUser.IsAuth == false) {

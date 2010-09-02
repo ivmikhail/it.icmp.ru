@@ -50,7 +50,7 @@ namespace ITCommunity.Controllers {
             }
 
             if (!comment.Editable) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             return View("EditPage", new CommentEditModel(comment));
@@ -70,7 +70,7 @@ namespace ITCommunity.Controllers {
             }
 
             if (!comment.Editable) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             if (ModelState.IsValid) {

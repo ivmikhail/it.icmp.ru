@@ -47,7 +47,7 @@ namespace ITCommunity {
             routes.MapRoute(
                 "User",
                 "user/{action}/{nick}",
-                new { controller = "User", action = "Profile" }
+                new { controller = "User", action = "NoFound" }
             );
 
             routes.MapRoute(
@@ -88,8 +88,8 @@ namespace ITCommunity {
 
             routes.MapRoute(
                 "Rss",
-                "rss/{format}",
-                new { controller = "Rss", action = "Feed", format = "RSS" }
+                "rss",
+                new { controller = "Rss", action = "Feed" }
             );
 
             routes.MapRoute(
@@ -99,11 +99,25 @@ namespace ITCommunity {
             );
 
             routes.MapRoute(
+                "NotFound",
+                "notfound",
+                new { controller = "Base", action = "NotFound" }
+            );
+
+            routes.MapRoute(
+                "Forbidden",
+                "forbidden",
+                new { controller = "Base", action = "Forbidden" }
+            );
+
+            routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new { controller = "BaseController", action = "NotFound", id = 0 }
+                new { controller = "Base", action = "NotFound", id = 0 }
             );
         }
+
+
 
         protected void Application_Start(object sender, EventArgs e) {
             AreaRegistration.RegisterAllAreas();

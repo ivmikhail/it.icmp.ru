@@ -1,15 +1,15 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="ViewPage<dynamic>" %>
 
 <asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">
-	Страница не найдена (ошибка 404)
+	Нет доступа  (ошибка 403)
 </asp:Content>
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h1>Упс, ничего не найдено</h1>
+    <h1>У Вас нет доступа к этой странице</h1>
 
     <div class="text">
-        Помему-то этой страницы нет =(
+        Такое впечатление, что Вы хотите что-то сломать...
     </div>
 
 </asp:Content>

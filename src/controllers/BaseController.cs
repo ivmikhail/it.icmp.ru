@@ -1,7 +1,9 @@
 ﻿using System.Web.Mvc;
 
+using ITCommunity.Core;
 
-namespace ITCommunity.Core {
+
+namespace ITCommunity.Controllers {
 
     #region NotFoundResult
 
@@ -15,19 +17,26 @@ namespace ITCommunity.Core {
         public override void ExecuteResult(ControllerContext context) {
             base.ExecuteResult(context);
             context.HttpContext.Response.StatusCode = 404;
-            Logger.Log.Info("Страница не найдена: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + context.HttpContext.Request.Url);
+
+            var url = context.HttpContext.Request.Url.ToString();
+            
+            if (context.HttpContext.Request.Params["aspxerrorpath"] != null) {
+                url = Config.SiteAddress + context.HttpContext.Request.Params["aspxerrorpath"];
+            }
+
+            Logger.Log.Info("Страница не найдена: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + url);
         }
     }
 
     #endregion
 
-    #region AccessDeniedResult
+    #region ForbiddenResult
 
-    public class AccessDeniedResult : ViewResult {
+    public class ForbiddenResult : ViewResult {
 
-        public AccessDeniedResult()
+        public ForbiddenResult()
             : base() {
-            this.ViewName = "AccessDenied";
+            this.ViewName = "Forbidden";
         }
 
         public override void ExecuteResult(ControllerContext context) {
@@ -46,8 +55,8 @@ namespace ITCommunity.Core {
             return new NotFoundResult();
         }
 
-        public AccessDeniedResult AccessDenied() {
-            return new AccessDeniedResult();
+        public ForbiddenResult Forbidden() {
+            return new ForbiddenResult();
         }
 
         /// <summary>
