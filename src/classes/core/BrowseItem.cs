@@ -96,9 +96,9 @@ namespace ITCommunity.Core {
 
             try {
                 path = Uri.UnescapeDataString(path);
-            } catch (UriFormatException e) {
+            } catch (UriFormatException ex) {
                 path = DefaultDir;
-                Logger.Log.Error("Кажется нас пытаются хакнуть", e);
+                Logger.Log.Error("Кажется нас пытаются хакнуть" + Logger.GetUserInfo(), ex);
             }
 
             var fullPath = BasePath + path;
@@ -108,7 +108,7 @@ namespace ITCommunity.Core {
                 return null;
             }
             if (fullPath.StartsWith(BasePath, StringComparison.CurrentCultureIgnoreCase) == false) {
-                Logger.Log.Info("Пытаются зайти сюда: " + fullPath);
+                Logger.Log.Error("Пытаются зайти сюда: " + fullPath + Logger.GetUserInfo());
                 return null;
             }
 

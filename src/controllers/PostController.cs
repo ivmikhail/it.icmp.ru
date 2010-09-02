@@ -15,23 +15,18 @@ namespace ITCommunity.Controllers {
     public class PostController : BaseController {
 
         public ActionResult View(int? id) {
-            if (id == 0) {
+            var post = Posts.Get(id.Value);
+            if (post == null) {
                 return NotFound();
             }
 
-            var post = Posts.Get(id.Value);
-
-            if (post != null) {
-                if (CurrentUser.User.Id != post.AuthorId) {
-                    Posts.IncViews(post);
-                }
-                if (post.EntityType == Post.EntityTypes.Poll) {
-                    return View("../Poll/View", post);
-                }
-                return View(post);
+            if (CurrentUser.User.Id != post.AuthorId) {
+                Posts.IncViews(post);
             }
-
-            return NotFound();
+            if (post.EntityType == Post.EntityTypes.Poll) {
+                return View("../Poll/View", post);
+            }
+            return View(post);
         }
 
         public ActionResult PollChart(int? id, bool? isThumb) {
@@ -169,14 +164,23 @@ namespace ITCommunity.Controllers {
 
         [Authorize]
         [HttpPost]
-        public ActionResult VotePoll(int? id, int? postId, int[] answers) {
-            if (id == null && postId == null) {
+        public ActionResult VotePoll(int? id, int[] answers) {
+            var post = Posts.Get(id.Value);
+            if (post == null) {
                 return NotFound();
             }
 
-            if (answers != null) {
-                var poll = Polls.Get(id.Value);
+            var poll = (Poll)post.Entity;
+            if (poll == null) {
+                return NotFound();
+            }
 
+            if (poll.IsMultiselect == false && answers.Length > 1) {
+                Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
+                return Forbidden();
+            }
+
+            if (answers != null) {
                 foreach (var answer in answers) {
                     var vote = new Vote {
                         AnswerId = answer,
@@ -191,7 +195,7 @@ namespace ITCommunity.Controllers {
                 }
             }
 
-            return RedirectToAction("view", new { id = postId.Value });
+            return RedirectToAction("view", new { id = id.Value });
         }
 
         [Authorize]
