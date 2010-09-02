@@ -24,7 +24,7 @@ namespace ITCommunity.Controllers {
                 url = Config.SiteAddress + context.HttpContext.Request.Params["aspxerrorpath"];
             }
 
-            Logger.Log.Info("Страница не найдена: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + url);
+            Logger.Log.Warn("Страница не найдена" + Logger.GetUserInfo());
         }
     }
 
@@ -42,7 +42,7 @@ namespace ITCommunity.Controllers {
         public override void ExecuteResult(ControllerContext context) {
             base.ExecuteResult(context);
             context.HttpContext.Response.StatusCode = 403;
-            Logger.Log.Info("Попытка взлома: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + context.HttpContext.Request.Url);
+            Logger.Log.Error("Попытка взлома" + Logger.GetUserInfo(), context.HttpContext.Error);
         }
     }
 

@@ -34,11 +34,11 @@ namespace ITCommunity.Core {
 
                 client.Send(message);
 
-                Logger.Log.Info("Успешно запрошен email для смены пароля для пользователя " + user.Nick + " с адреса " + CurrentUser.Ip);
+                Logger.Log.Warn("Успешно отправлено сообщение на email пользователя для смены пароля" + Logger.GetUserInfo());
 
                 return true;
             } catch (Exception ex) {
-                Logger.Log.Error("Невозможно отправить email для восстановления пароля, запрошена смена пароля для пользователя " + CurrentUser.User.Nick + " с адреса " + CurrentUser.Ip, ex);
+                Logger.Log.Error("Невозможно отправить email для восстановления пароля, запрошена смена пароля для пользователя " + user.Nick + Logger.GetUserInfo(), ex);
             }
 
             return false;

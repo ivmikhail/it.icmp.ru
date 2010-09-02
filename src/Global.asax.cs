@@ -143,7 +143,7 @@ namespace ITCommunity {
             if (httpEx != null && httpEx.GetHttpCode() == 404) {
                 //ignore 404 error
             } else {
-                Logger.Log.Error("Произошла непредвиденная ошибка: пользователь - " + CurrentUser.User.Nick + "(" + CurrentUser.Ip + "), запрошенный URL - " + Request.Url, ex);
+                Logger.Log.Error("Произошла непредвиденная ошибка" + Logger.GetUserInfo(), ex);
             }
         }
 
