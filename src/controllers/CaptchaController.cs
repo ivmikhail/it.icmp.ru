@@ -77,7 +77,7 @@ namespace ITCommunity.Controllers {
         [HttpPost]
         public ActionResult AddAnswer(CaptchaAnswer answer) {
             if (Request.IsAjaxRequest() == false) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             if (answer.Text != null) {
@@ -94,7 +94,7 @@ namespace ITCommunity.Controllers {
         [Authorize(Roles = "admin")]
         public ActionResult DeleteAnswer(int? id) {
             if (Request.IsAjaxRequest() == false) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             var captchaId =  Captchas.GetIdByAnswer(id.Value);

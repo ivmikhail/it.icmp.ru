@@ -203,7 +203,7 @@ namespace ITCommunity.Controllers {
             var post = Posts.Get(id.Value);
 
             if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             var model = new PostEditModel(post);
@@ -221,7 +221,7 @@ namespace ITCommunity.Controllers {
             var post = Posts.Get(id.Value);
 
             if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             if (ModelState.IsValid) {
@@ -245,7 +245,7 @@ namespace ITCommunity.Controllers {
             var post = Posts.Get(id.Value);
 
             if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             var model = new PostEditPollModel(post);
@@ -263,7 +263,7 @@ namespace ITCommunity.Controllers {
             var post = Posts.Get(id.Value);
 
             if (CurrentUser.IsAdmin == false && post.AuthorId != CurrentUser.User.Id) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             if (ModelState.IsValid) {
@@ -280,7 +280,7 @@ namespace ITCommunity.Controllers {
         [Authorize]
         public ActionResult ToggleCategory(int? categoryId) {
             if (!Request.IsAjaxRequest()) {
-                return AccessDenied();
+                return Forbidden();
             }
 
             if (categoryId == null) {

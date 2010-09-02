@@ -121,7 +121,7 @@
     <Compile Include="Classes\Validators\HeaderTextAttribute.cs" />
     <Compile Include="Classes\Validators\UserNickAttribute.cs" />
     <Compile Include="Classes\Validators\PropertiesMustMatchAttribute.cs" />
-    <Compile Include="Classes\Core\BaseController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
@@ -196,7 +196,8 @@
     <Content Include="Content\js\highlight.pack.js" />
     <Content Include="Content\other\greetings.txt" />
     <Content Include="Content\other\greetings_personal.txt" />
-    <Content Include="favicon.ico" />
+    <Content Include="Error.htm" />
+    <Content Include="Favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Views\Browser\Menu.ascx" />
     <Content Include="Views\Browser\Files.aspx" />
@@ -241,7 +242,7 @@
     <Content Include="Views\Rating\Login.ascx" />
     <Content Include="Views\Rating\Rated.ascx" />
     <Content Include="Views\Rating\Rate.ascx" />
-    <Content Include="Views\Shared\AccessDenied.aspx" />
+    <Content Include="Views\Shared\Forbidden.aspx" />
     <Content Include="Views\Shared\Link\Browser\Dir.ascx" />
     <Content Include="Views\Shared\Link\Browser\File.ascx" />
     <Content Include="Views\Shared\Link\Browser\Parent.ascx" />
@@ -369,7 +370,6 @@
     <Content Include="Content\js\MicrosoftMvcAjax.debug.js" />
     <Content Include="Content\js\MicrosoftMvcValidation.js" />
     <Content Include="Content\js\MicrosoftMvcValidation.debug.js" />
-    <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\Site.master" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
