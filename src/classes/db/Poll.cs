@@ -36,6 +36,15 @@ namespace ITCommunity.DB {
             }
         }
 
+        public bool ContainsAnswer(int answerId) {
+            foreach (var answer in PollAnswers) {
+                if (answer.Id == answerId) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         partial void OnLoaded() {
             PollAnswers.Load();
 
