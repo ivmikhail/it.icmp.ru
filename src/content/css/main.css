@@ -87,13 +87,13 @@
 .text .center {
     text-align: center;
 }
-.text .float-left {
+.text .left {
     float: left;
-    margin-right: 20px;
+    margin-right: 15px;
 }
-.text .float-right {
+.text .right {
     float: right;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 
