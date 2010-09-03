@@ -9,7 +9,7 @@
 
     <% using (Html.BeginForm("VotePoll", "Post", new { id = Model.Id })) { %>
 
-        <%= Html.Hidden("PostId", Model.PostId) %>
+        <%= Html.Hidden("postId", Model.PostId) %>
 
         <% foreach (var answer in Model.PollAnswers) { %>
             <label>
