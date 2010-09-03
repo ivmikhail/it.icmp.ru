@@ -165,17 +165,19 @@ namespace ITCommunity.Controllers {
         [Authorize]
         [HttpPost]
         public ActionResult VotePoll(int? id, int? postId, int[] answers) {
-            var post = Posts.Get(id.Value);
+            if (postId == null) {
+                return NotFound();
+            }
+            var post = Posts.Get(postId.Value);
             if (post == null) {
                 return NotFound();
             }
-
             var poll = Polls.Get(id.Value);
             if (poll == null) {
                 return NotFound();
             }
 
-            if (poll.IsMultiselect == false && answers.Length > 1) {
+            if (post.EntityId != poll.Id || (poll.IsMultiselect == false && answers.Length > 1)) {
                 Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
                 return Forbidden();
             }
@@ -197,7 +199,7 @@ namespace ITCommunity.Controllers {
                 }
             }
 
-            return RedirectToAction("view", new { id = id.Value });
+            return RedirectToAction("view", new { id = postId.Value });
         }
 
         [Authorize]

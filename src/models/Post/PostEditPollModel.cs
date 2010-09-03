@@ -73,6 +73,7 @@ namespace ITCommunity.Models {
 
             var post = base.ToPost();
             post.Title = Topic;
+            post.Description = "";
 
             return post;
         }
