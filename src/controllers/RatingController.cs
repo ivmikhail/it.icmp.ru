@@ -28,7 +28,7 @@ namespace ITCommunity.Controllers {
             }
 
             var passedDays = Config.GetDouble("PostRatingRegistrationPassedDays");
-            if (CurrentUser.User.CreateDate.AddDays(passedDays) < DateTime.Now) {
+            if (CurrentUser.User.CreateDate.AddDays(passedDays) > DateTime.Now) {
                 return PartialView("RecentRegistration");
             }
 

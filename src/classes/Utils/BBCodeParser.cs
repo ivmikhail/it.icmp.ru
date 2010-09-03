@@ -9,10 +9,57 @@ namespace ITCommunity.Utils {
 
     public class BBCodeParser {
 
+        #region Constants
+
+        const string URL = @"(?:http://)?(?<url>(?:www\.)?(?<site>\w[\w-\.]*\.\w{2,10})(?:/.*?)?)";
+
+        const string PLAY_YKT_RU_VIDEO = @"
+<object data=""http://play.ykt.ru/player.swf"" width=""640"" height=""480"" type=""application/x-shockwave-flash"">
+	<param name=""allowscriptaccess"" value=""always"" />
+	<param name=""allowfullscreen"" value=""true"" />
+	<param name=""flashvars"" value=""width=640&amp;height=480&amp;file=http://play.ykt.ru/flvideo/$1.flv&amp;image=http://play.ykt.ru/thumb/$1.jpg&amp;displayheight=480&amp;link=http://play.ykt.ru/video/$1&amp;searchbar=false&amp;linkfromdisplay=true"" />
+	<param name=""pluginspage"" value=""http://www.macromedia.com/go/getflashplayer"" />
+</object>
+";
+
+        const string TV_YKT_RU_VIDEO = @"
+<embed
+    width=""540"" height=""350""
+    quality=""high"" bgcolor=""#ffffff""
+    menu=""false"" allowfullscreen=""true"" allowscriptaccess=""always""
+    flashvars=""provider=http&amp;file=/media/videos/$1.$2&amp;image=/media/thumbnails/full/$1.jpg&amp;playerready=playerReadyCallback&amp;stretching=fill"" 
+    src=""http://tv.ykt.ru/media/player.swf"" type=""application/x-shockwave-flash"" />
+";
+
+        const string ABUNDA_VIDEO_FORMAT = @"
+<embed
+    width=""452"" height=""361""
+    quality=""high"" bgcolor=""#000000""
+    allowfullscreen=""true"" allowscriptaccess=""always""
+    src=""http://tube.abunda.ru/player/vPlayer.swf?f=http://tube.abunda.ru/player/vConfig_embed.php?vkey={0}""
+    type=""application/x-shockwave-flash"" />
+";
+
+        #endregion
+
         #region Helper Classes
 
         interface IHtmlFormatter {
             string Format(string data);
+        }
+
+        protected class ReplaceFormatter : IHtmlFormatter {
+            private string _pattern;
+            private string _replace;
+
+            public ReplaceFormatter(string pattern, string replace) {
+                _pattern = pattern;
+                _replace = replace;
+            }
+
+            public string Format(string data) {
+                return data.Replace(_pattern, _replace);
+            }
         }
 
         protected class RegexFormatter : IHtmlFormatter {
@@ -39,20 +86,6 @@ namespace ITCommunity.Utils {
             }
         }
 
-        protected class SearchReplaceFormatter : IHtmlFormatter {
-            private string _pattern;
-            private string _replace;
-
-            public SearchReplaceFormatter(string pattern, string replace) {
-                _pattern = pattern;
-                _replace = replace;
-            }
-
-            public string Format(string data) {
-                return data.Replace(_pattern, _replace);
-            }
-        }
-
         protected class RegexFuncFormatter : IHtmlFormatter {
             private Regex _regex;
             MatchEvaluator _function;
@@ -67,6 +100,70 @@ namespace ITCommunity.Utils {
             }
         }
 
+        protected class TagFormatter : IHtmlFormatter {
+
+            private const string _defaultBBText = "(.|\n)*?";
+            private const string _defaultHtmlText = "${text}";
+            private const string _patternFormat = @"\[{0}{1}\]\s*(?<text>{2})\s*\[/{0}\]";
+            private const string _replaceFormat = "<{0}{1}>{2}</{0}>";
+
+            private string _replace;
+            private Regex _regex;
+
+            /// <summary>
+            /// Тупо заменяет bbcode на html
+            /// </summary>
+            /// <param name="htmlTag"></param>
+            public TagFormatter(string htmlTag) :
+                this(htmlTag, htmlTag) {
+            }
+
+            public TagFormatter(string htmlTag, string bbTag) :
+                this(htmlTag, bbTag, null) {
+            }
+
+            public TagFormatter(string htmlTag, string bbTag, string htmlAttrs) :
+                this(htmlTag, bbTag, htmlAttrs, null) {
+            }
+
+            public TagFormatter(string htmlTag, string bbTag, string htmlAttrs, string bbAttr) :
+                this(htmlTag, bbTag, htmlAttrs, bbAttr, _defaultHtmlText, _defaultBBText) {
+            }
+
+            /// <summary>
+            /// Класс для преобразования bbcode тега в html тег.
+            /// В htmlAttrs и htmlText можно использовать regex группу ${text}.
+            /// htmlText по-умолчанию равен ${text}
+            /// </summary>
+            /// <param name="htmlTag">название html тега заменяющий bbcode тег (без треугольных скобок)</param>
+            /// <param name="bbTag">название bbcode тега (без квадратных скобок)</param>
+            /// <param name="htmlAttrs">паттерн для атрибутов html тега (по-умолчанию null)</param>
+            /// <param name="bbAttr">regex паттерн для атрибута bbcode тега, да-да только 1 атрибут (по-умолчанию null)</param>
+            /// <param name="htmlText">паттерн внутреннего текста html тега (по-умолчанию ${text})</param>
+            /// <param name="bbText">regex паттерн внутреннего текста bbcode тега (по-умолчанию (.|\n)*?)</param>
+            public TagFormatter(string htmlTag, string bbTag, string htmlAttrs, string bbAttr, string htmlText, string bbText) {
+                string pattern;
+
+                if (bbAttr == null) {
+                    pattern = string.Format(_patternFormat, bbTag, "", bbText);
+                } else {
+                    pattern = string.Format(_patternFormat, bbTag, "=" + bbAttr, bbText);
+                }
+
+                if (htmlAttrs == null) {
+                    _replace = string.Format(_replaceFormat, htmlTag, "", htmlText);
+                } else {
+                    _replace = string.Format(_replaceFormat, htmlTag, " " + htmlAttrs, htmlText);
+                }
+
+                _regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            }
+
+            public string Format(string data) {
+                return _regex.Replace(data, _replace);
+            }
+        }
+
         #endregion
 
         #region BBCode
@@ -76,41 +173,39 @@ namespace ITCommunity.Utils {
         static BBCodeParser() {
             _formatters = new List<IHtmlFormatter>();
 
-            _formatters.Add(new SearchReplaceFormatter("\r", ""));
+            _formatters.Add(new ReplaceFormatter("\r", ""));
 
             // модификаторы текста
-            _formatters.Add(new RegexFormatter(@"\[b\](.*?)\[/b\]", "<b>$1</b>"));
-            _formatters.Add(new RegexFormatter(@"\[i\](.*?)\[/i\]", "<i>$1</i>"));
-            _formatters.Add(new RegexFormatter(@"\[u\](.*?)\[/u\]", "<u>$1</u>"));
-            _formatters.Add(new RegexFormatter(@"\[s\](.*?)\[/s\]", "<strike>$1</strike>"));
-            _formatters.Add(new RegexFormatter(@"\[size=(\d*?)px\](.*?)\[/size\]", "<span style=\"font-size:$1px\">$2</span>"));
+            _formatters.Add(new TagFormatter("b"));
+            _formatters.Add(new TagFormatter("i"));
+            _formatters.Add(new TagFormatter("u"));
+            _formatters.Add(new TagFormatter("strike", "s"));
+            _formatters.Add(new TagFormatter("span", "size", "style=\"font-size:$1px\"", @"(\d*?)px"));
 
             // расположение
-            _formatters.Add(new RegexFormatter(@"\[left\]((.|\n)*?)\[/left]", "<div class=\"float-left\">$1</div>"));
-            _formatters.Add(new RegexFormatter(@"\[right\]((.|\n)*?)\[/right]", "<div class=\"float-right\">$1</div>"));
-            _formatters.Add(new RegexFormatter(@"\[center\]((.|\n)*?)\[/center]", "<div class=\"center\">$1</div><div class=\"clear\"></div>"));
+            _formatters.Add(new TagFormatter("div", "left", "class=\"left\""));
+            _formatters.Add(new TagFormatter("div", "right", "class=\"right\""));
+            _formatters.Add(new TagFormatter("div", "center", "class=\"center\""));
 
             // цитата и код
-            _formatters.Add(new RegexFormatter(@"\[quote\]((.|\n)*?)\[/quote]", "<blockquote>$1</blockquote>"));
-            _formatters.Add(new RegexFormatter(@"\[code\](?:\s*)((.|\n)*?)\[/code\]", "<pre><code>$1</code></pre>"));
-            _formatters.Add(new RegexFormatter(@"\[code=(\w*)\](?:\s*)((.|\n)*?)\[/code\]", "<pre><code class=\"$1\">$2</code></pre>"));
+            _formatters.Add(new TagFormatter("blockquote", "quote"));
+            _formatters.Add(new TagFormatter("code"));
+            _formatters.Add(new TagFormatter("code", "code", "class=\"$1\"", @"(\w*?)"));
+            // знаю, что это глюк
+            _formatters.Add(new RegexFormatter("<code(.*?)>((.|\n)*?)</code>", "<pre><code$1>$2</code></pre>"));
 
-            // мега регексп, который решает какие урлы конвертировать в ссылки
-            // через 10 тысяч лет наши потомки найдут этот код и смогут прочесть
-            // в этих иероглифах историю всего человечества =)
-            _formatters.Add(new RegexFormatter(@"(^?[^""\]=])(?:http://)(.*?)([,;\.\!]?[\s$])", "$1<a href=\"http://$2\" title=\"$2\">$2</a>$3"));
             // ссылка
-            _formatters.Add(new RegexFormatter(@"\[url\](?:http://)?(.*?)\[/url\]", "<a href=\"http://$1\" title=\"$1\">$1</a>"));
-            _formatters.Add(new RegexFormatter(@"\[url=(?:http://)?(.*?)\](.*?)\[/url\]", "<a href=\"http://$1\" title=\"$1\">$2</a>"));
-            _formatters.Add(new RegexFormatter(@"\[email\](.*?)\[/email\]", "<a href=\"mailto:$1\">$1</a>"));
+            _formatters.Add(new TagFormatter("a", "url", "href=\"http://${url}\" title=\"http://${url}\"", null, "${site}", URL));
+            _formatters.Add(new TagFormatter("a", "url", "href=\"http://${url}\" title=\"http://${url}\"", URL));
+            _formatters.Add(new TagFormatter("a", "email", "href=\"mailto:${text}\" title=\"Написать письмо\""));
 
             // рисунок http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
             var trustedSites = Config.Get("TrustdedSites").Replace(" ", "").Replace(',', '|');
-            var imgPattern = @"((?:postimages|http://(?:" + trustedSites + @"))/.*?)";
-            _formatters.Add(new RegexFormatter(@"\[img\]" + imgPattern + @"\[/img\]", "<img src=\"$1\" alt=\"$1\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img=(\d*)x(\d*)px\]" + imgPattern + @"\[/img\]", "<img width=\"$1px\" height=\"$2px\" src=\"$3\" alt=\"$3\" />"));
-            _formatters.Add(new RegexFormatter(@"\[img=" + imgPattern + @"\]" + imgPattern + @"\[/img\]", "<a href=\"$1\" title=\"$1\" class=\"full-img\"><img src=\"$2\" alt=\"$2\" /></a>"));
-
+            var imgUrl = @"(http://(?:www\.)?(?:" + trustedSites + @")/.*?)";
+            _formatters.Add(new TagFormatter("img", "img", "src=\"${text}\" alt=\"${text}\"", null, "", imgUrl));
+            _formatters.Add(new TagFormatter("img", "img", "src=\"${text}\" alt=\"${text}\" width=\"$1px\" height=\"$2px\"", @"(\d*)x(\d*)px", "", imgUrl));
+            _formatters.Add(new RegexFormatter(@"\[img=" + imgUrl + @"\]\s*" + imgUrl + @"\s*\[/img\]", "<a href=\"$1\"><img src=\"$2\" alt=\"$2\" /></a>"));
+            
             // убираем whitespaces в списке
             _formatters.Add(new RegexFormatter(@"(\[list.*?\])\s+", "$1"));
             _formatters.Add(new RegexFormatter(@"\s*(\[\*\])\s*", "$1"));
@@ -125,41 +220,29 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[list=a\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "lower-alpha"), false));
             _formatters.Add(new RegexFormatter(@"\[list=A\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "upper-alpha"), false));
 
-            // убираем whitespaces в таблице
-            _formatters.Add(new RegexFormatter(@"\s*(\[/?tr.*?\])\s*", "$1"));
-            _formatters.Add(new RegexFormatter(@"\s*(\[/?td.*?\])\s*", "$1"));
             // таблица
-            _formatters.Add(new RegexFormatter(@"\[table\]((.|\n)*?)\[/table\]", "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">$1</table>"));
-            _formatters.Add(new RegexFormatter(@"\[table=(\d*%)\]((.|\n)*?)\[/table\]", "<table cellpadding=\"0\" cellspacing=\"0\" width=\"$1\">$2</table>"));
-            _formatters.Add(new RegexFormatter(@"\[tr\]((.|\n)*?)\[/tr\]", "<tr>$1</tr>"));
-            _formatters.Add(new RegexFormatter(@"\[td\]((.|\n)*?)\[/td\]", "<td>$1</td>"));
-            _formatters.Add(new RegexFormatter(@"\[td=(\d*)\]((.|\n)*?)\[/td\]", "<td colspan=\"$1\">$2</td>"));
-
+            _formatters.Add(new TagFormatter("table", "table", "cellpadding=\"0\" cellspacing=\"0\" width=\"100%\""));
+            _formatters.Add(new TagFormatter("table", "table", "cellpadding=\"0\" cellspacing=\"0\" width=\"$1%\"", @"(\d*%)"));
+            _formatters.Add(new TagFormatter("tr"));
+            _formatters.Add(new TagFormatter("td"));
+            _formatters.Add(new TagFormatter("td", "td", "colspan=\"$1\"", @"(\d*)"));
+            
             // убираем whitespaces в video
             _formatters.Add(new RegexFormatter(@"\[video\]\s*(.*?)\s*\[/video\]", "[video]$1[/video]"));
             // play.ykt.ru
-            _formatters.Add(new RegexFormatter(@"\[video\]http://play\.ykt\.ru/video/(\d+)/.+?\[/video\]", @"
-<object data=""http://play.ykt.ru/player.swf"" width=""640"" height=""480"" type=""application/x-shockwave-flash"">
-	<param name=""allowscriptaccess"" value=""always"" />
-	<param name=""allowfullscreen"" value=""true"" />
-	<param name=""flashvars"" value=""width=640&amp;height=480&amp;file=http://play.ykt.ru/flvideo/$1.flv&amp;image=http://play.ykt.ru/thumb/$1.jpg&amp;displayheight=480&amp;link=http://play.ykt.ru/video/$1&amp;searchbar=false&amp;linkfromdisplay=true"" />
-	<param name=""pluginspage"" value=""http://www.macromedia.com/go/getflashplayer"" />
-</object>
-", true));
+            _formatters.Add(new RegexFormatter(@"\[video\]http://play\.ykt\.ru/video/(\d+)/.+?\[/video\]", PLAY_YKT_RU_VIDEO, true));
             // tv.ykt.ru http://tv.ykt.ru/media/videos/SPECREPORT_2_APR_01_sd.mp4
-            _formatters.Add(new RegexFormatter(@"\[video\]http://tv\.ykt\.ru/media/videos/(.+?)\.(.+?)\[/video\]", @"
-<embed
-    width=""540"" height=""350""
-    quality=""high"" bgcolor=""#ffffff""
-    menu=""false"" allowfullscreen=""true"" allowscriptaccess=""always""
-    flashvars=""provider=http&amp;file=/media/videos/$1.$2&amp;image=/media/thumbnails/full/$1.jpg&amp;playerready=playerReadyCallback&amp;stretching=fill"" 
-    src=""http://tv.ykt.ru/media/player.swf"" type=""application/x-shockwave-flash"" />
-", true));
+            _formatters.Add(new RegexFormatter(@"\[video\]http://tv\.ykt\.ru/media/videos/(.+?)\.(.+?)\[/video\]", TV_YKT_RU_VIDEO, true));
             // Для Abunda надо высчитывать хеш MD5, к счастью дураки соль не использовали.
             _formatters.Add(new RegexFuncFormatter(@"\[video\]http://tube\.abunda\.ru/video/(\d+)/.+?\[/video\]", abundaEvaluator));
 
+            // мега регексп, который решает какие урлы конвертировать в ссылки
+            // через 10 тысяч лет наши потомки найдут этот код и смогут прочесть
+            // в этих иероглифах всю историю человечества =)
+            _formatters.Add(new RegexFormatter(@"(^|[^""\]=])(?:http://)(?<url>(?:www\.)?(?<site>\w[\w-\.]*\.\w{2,10})(?:/.*?)?)([,;\.\!]?\s|$)", "$1<a href=\"http://${url}\" title=\"http://${url}\">${site}</a>$2"));
+
             // <hr /> вместо <br />
-            _formatters.Add(new RegexFormatter("\n\n", "\n<hr />\n"));
+            _formatters.Add(new ReplaceFormatter("\n\n", "\n<hr />\n"));
         }
 
         private static string abundaEvaluator(Match match) {
@@ -168,14 +251,7 @@ namespace ITCommunity.Utils {
                 return "";
             }
             string hash = Hash.CalculateMD5(match.Groups[1].Value).Substring(11, 20);
-            return @"
-<embed
-    width=""452"" height=""361""
-    quality=""high"" bgcolor=""#000000""
-    allowfullscreen=""true"" allowscriptaccess=""always""
-    src=""http://tube.abunda.ru/player/vPlayer.swf?f=http://tube.abunda.ru/player/vConfig_embed.php?vkey=" + hash + @"""
-    type=""application/x-shockwave-flash"" />
-";
+            return string.Format(ABUNDA_VIDEO_FORMAT, hash);
         }
 
         #endregion
@@ -186,6 +262,8 @@ namespace ITCommunity.Utils {
             if (data == null) {
                 return "";
             }
+
+            data = data.Trim();
 
             foreach (IHtmlFormatter formatter in _formatters) {
                 data = formatter.Format(data);
