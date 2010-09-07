@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-
-using ITCommunity.DB.Tables;
 using System.Text.RegularExpressions;
 
 

@@ -75,7 +75,8 @@ input[type=checkbox] {
 
 select,
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=file] {
     padding: 1px 0.5%;
     width: 99%;
 }

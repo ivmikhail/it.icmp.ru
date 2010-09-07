@@ -63,12 +63,12 @@
             <ul class="right-list">
                 <% if (CurrentUser.IsAdmin) { %>
                     <li>
-                        <% Html.RenderPartial("Link/Post/Delete", Model); %>
+                        <% Html.RenderPartial("Link/Poll/Delete", Model.Entity); %>
                     </li>
                 <% } %>
-                <% if (CurrentUser.IsAdmin || CurrentUser.User.Id == Model.AuthorId) { %>
+                <% if (Model.Editable) { %>
                     <li>
-                        <% Html.RenderPartial("Link/Poll/Edit", Model); %>
+                        <% Html.RenderPartial("Link/Poll/Edit", Model.Entity); %>
                     </li>
                 <% } %>
                 <% if (CurrentUser.IsAuth) { %>

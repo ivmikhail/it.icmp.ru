@@ -22,8 +22,10 @@ namespace ITCommunity.DB.Tables {
                     select pll
                 ).SingleOrDefault();
 
-                db.Polls.DeleteOnSubmit(poll);
-                db.SubmitChanges();
+                if (poll != null) {
+                    db.Polls.DeleteOnSubmit(poll);
+                    db.SubmitChanges();
+                }
             }
         }
 
@@ -33,7 +35,7 @@ namespace ITCommunity.DB.Tables {
                     from pll in db.Polls
                     where pll.Id == editedPoll.Id
                     select pll
-                ).SingleOrDefault();
+                ).Single();
 
                 poll.ActiveDays = editedPoll.ActiveDays;
 

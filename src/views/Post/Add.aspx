@@ -16,5 +16,9 @@
         <input type="submit" value="добавить" />
 
     <% } %>
-
+    <%--
+    <div id="PictureUpload">
+        <% Html.RenderPartial("../Picture/Upload"); %>
+    </div>
+    --%>
 </asp:Content>

@@ -3,13 +3,13 @@
 
 <% if (Model.IsVoted || Model.IsActive == false) { %>
 
-    <img src="<%= Url.Action("pollchart", "post", new { id = Model.Id, isThumb = "true" })%>" alt="poll<%= Model.Id %>" />
+    <img src="<%= Url.Action("chart", "poll", new { id = Model.Id, isThumb = "true" })%>" alt="poll<%= Model.Id %>" />
 
 <% } else { %>
 
     <% using (Html.BeginForm("VotePoll", "Post", new { id = Model.Id })) { %>
 
-        <%= Html.Hidden("postId", Model.PostId) %>
+        <%= Html.Hidden("postId", Model.Post.Id) %>
 
         <% foreach (var answer in Model.PollAnswers) { %>
             <label>

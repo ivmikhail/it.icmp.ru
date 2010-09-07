@@ -10,7 +10,7 @@ using ITCommunity.Core;
 
 namespace ITCommunity.Models {
 
-    public class PostEditPollModel : PostEditModel {
+    public class PollEditModel : PostEditModel {
 
         [DisplayName("Вопрос")]
         [Required(ErrorMessage = "Напишите вопрос")]
@@ -28,13 +28,13 @@ namespace ITCommunity.Models {
 
         public bool IsOpen { get; set; }
 
-        public PostEditPollModel() :
+        public PollEditModel() :
             base() {
             Title = "empty";
             Description = "empty";
         }
 
-        public PostEditPollModel(Post post) :
+        public PollEditModel(Post post) :
             base(post) {
             var poll = (Poll)post.Entity;
 

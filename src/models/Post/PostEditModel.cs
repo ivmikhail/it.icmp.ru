@@ -60,7 +60,7 @@ namespace ITCommunity.Models {
             post.IsAttached = CurrentUser.IsAdmin && IsAttached;
             post.IsCommentable = IsCommentable;
             post.AuthorId = CurrentUser.User.Id;
-            post.EntityType = EntityType;
+            post.EntityType = EntityType ?? Post.EntityTypes.Post;
             post.EntityId = EntityId;
 
             foreach (var isAttached in PostEditCategoriesModel.Current.IsAttached) {

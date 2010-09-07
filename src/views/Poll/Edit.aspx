@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="ViewPage<PostEditPollModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="ViewPage<PollEditModel>" %>
 
 
 <asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">
@@ -14,8 +14,19 @@
         <%= Html.HiddenFor(m => m.Topic) %>
         <%= Html.HiddenFor(m => m.Answers) %>
 
+        <h2>
+            <%= Html.LabelFor(m => m.Topic)%>
+            <div class="meta">
+                нельзя редактировать
+            </div>
+            <%= Model.Topic%>
+        </h2>
 
-        <h2><%= Model.Topic%></h2>
+        <%= Html.LabelFor(m => m.Answers)%>
+        <div class="meta">
+            нельзя редактировать
+        </div>
+        <pre><%= Model.Answers%></pre>
 
         <% if (CurrentUser.IsAdmin) { %>
             <label>
@@ -47,7 +58,7 @@
             <% } %>
         </div>
         <div id="select-categories">
-            <% Html.RenderPartial("EditCategories", PostEditCategoriesModel.Current); %>    
+            <% Html.RenderPartial("../Post/EditCategories", PostEditCategoriesModel.Current); %>    
         </div>
 
         <input type="submit" value="сохранить опрос" />
