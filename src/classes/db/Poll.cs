@@ -9,7 +9,7 @@ namespace ITCommunity.DB {
     public partial class Poll {
 
         public static Category Category {
-            get { 
+            get {
                 var categoryId = Config.GetInt("PollCategoryId");
                 return Categories.Get(categoryId);
             }
@@ -18,12 +18,8 @@ namespace ITCommunity.DB {
         public bool IsVoted { get; set; }
 
         public bool IsActive {
-            get {
-                return EndDate > DateTime.Now;
-            }
+            get { return EndDate > DateTime.Now; }
         }
-
-        public int PostId { get; set; }
 
         public DateTime EndDate {
             get {
@@ -31,9 +27,13 @@ namespace ITCommunity.DB {
                     return DateTime.MaxValue;
                 }
 
-                var post = Posts.Get(PostId);
+                var post = Posts.GetByEntity(Id);
                 return post.CreateDate.AddDays(ActiveDays.Value);
             }
+        }
+
+        public Post Post {
+            get { return Posts.GetByEntity(Id); }
         }
 
         public bool ContainsAnswer(int answerId) {

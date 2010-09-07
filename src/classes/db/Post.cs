@@ -47,6 +47,10 @@ namespace ITCommunity.DB {
             get { return HttpUtility.HtmlEncode(Title); }
         }
 
+        public bool Editable {
+            get { return CurrentUser.IsAdmin || AuthorId == CurrentUser.User.Id; }
+        }
+
         partial void OnLoaded() {
             // будет думать что Author измененился и поэтому не сможет увеличить 
             // количество просмотров. Поэтому не использую это:
@@ -62,7 +66,7 @@ namespace ITCommunity.DB {
 
             Rating = Ratings.Get(Id, Rating.EntityTypes.Post) ?? new Rating { EntityId = Id, EntityType = DB.Rating.EntityTypes.Post };
 
-            if (EntityType == null) {
+            if (EntityId == null) {
                 EntityType = EntityTypes.Post;
             } else {
                 Entity = GetEntity();
@@ -71,9 +75,7 @@ namespace ITCommunity.DB {
 
         private object GetEntity() {
             if (EntityType == EntityTypes.Poll) {
-                var poll = Polls.Get(EntityId.Value);
-                poll.PostId = Id;
-                return poll;
+                return Polls.Get(EntityId.Value);
             }
             return null;
         }

@@ -78,6 +78,7 @@
     <Compile Include="Classes\Core\CurrentUser.cs" />
     <Compile Include="Classes\Core\Logger.cs" />
     <Compile Include="Classes\Core\EmailSender.cs" />
+    <Compile Include="Classes\Core\Picture.cs" />
     <Compile Include="Classes\Core\TimerTask.cs" />
     <Compile Include="Classes\DB\PollAnswer.cs" />
     <Compile Include="Classes\DB\Poll.cs" />
@@ -126,6 +127,8 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
+    <Compile Include="Controllers\PictureController.cs" />
+    <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Controllers\HeaderController.cs" />
@@ -149,7 +152,7 @@
     <Compile Include="Models\Message\MessageSentListModel.cs" />
     <Compile Include="Models\Message\MessageSendModel.cs" />
     <Compile Include="Models\Message\MessageListModel.cs" />
-    <Compile Include="Models\Post\PostEditPollModel.cs" />
+    <Compile Include="Models\Poll\PollEditModel.cs" />
     <Compile Include="Models\Post\PostListModel.cs" />
     <Compile Include="Models\Category\CategoryPostsModels.cs" />
     <Compile Include="Models\Post\PostEditModel.cs" />
@@ -222,6 +225,7 @@
     <Content Include="Views\Message\ReceivedList.aspx" />
     <Content Include="Views\Message\List.ascx" />
     <Content Include="Views\Message\Menu.ascx" />
+    <Content Include="Views\Picture\Upload.ascx" />
     <Content Include="Views\Poll\Answers.ascx" />
     <Content Include="Views\Poll\Edit.aspx" />
     <Content Include="Views\Poll\EndDate.ascx" />
@@ -231,7 +235,6 @@
     <Content Include="Views\Post\Add.aspx" />
     <Content Include="Views\Poll\Add.aspx" />
     <Content Include="Views\Poll\View.aspx" />
-    <Content Include="Views\Poll\EditForm.ascx" />
     <Content Include="Views\Post\Description.ascx" />
     <Content Include="Views\Post\EditForm.ascx" />
     <Content Include="Views\Post\DiscussibleList.aspx" />
@@ -272,6 +275,7 @@
     <Content Include="Views\Shared\Link\Message\CurrentReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\SentList.ascx" />
     <Content Include="Views\Shared\Link\Poll\Add.ascx" />
+    <Content Include="Views\Shared\Link\Poll\Delete.ascx" />
     <Content Include="Views\Shared\Link\Poll\Edit.ascx" />
     <Content Include="Views\Shared\Link\Post\Rss.ascx" />
     <Content Include="Views\Shared\Link\Post\List.ascx" />

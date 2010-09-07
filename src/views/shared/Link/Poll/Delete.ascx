@@ -2,9 +2,9 @@
 
 
 <%= Html.ActionLink(
-    "редактировать",
-    "edit",
+    "удалить",
+    "delete",
     "poll",
     new { id = Model.Id },
-    new { title = "Редактировать опрос" }
+    new { title = "Удалить опрос", @class = "delete-link" }
 )%>

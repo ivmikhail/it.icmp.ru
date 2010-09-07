@@ -4,6 +4,7 @@ using System.Linq;
 
 using ITCommunity.Core;
 
+
 namespace ITCommunity.DB.Tables {
 
     public static class Posts {
@@ -29,11 +30,8 @@ namespace ITCommunity.DB.Tables {
                 ).SingleOrDefault();
 
                 if (post != null) {
-                    if (post.EntityType == Post.EntityTypes.Poll) {
-                        Polls.Delete(post.EntityId.Value);
-                    }
-
                     post.Author.PostsCount--;
+                    post.Author.HeadersCounter--;
                     db.SubmitChanges();
 
                     db.Posts.DeleteOnSubmit(post);
@@ -353,6 +351,18 @@ namespace ITCommunity.DB.Tables {
             int count = Config.GetInt("RatedPostsCount");
 
             return AppCache.Get("RatedPosts", () => GetTopRated(count, days));
+        }
+
+        public static Post GetByEntity(int entityId) {
+            using (var db = Database.Connect()) {
+                var post = (
+                    from pst in db.Posts
+                    where pst.EntityId == entityId
+                    select pst
+                ).FirstOrDefault();
+
+                return post;
+            }
         }
     }
 }
