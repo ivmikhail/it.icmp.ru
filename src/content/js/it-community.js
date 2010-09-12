@@ -14,14 +14,15 @@
     hljs.initHighlightingOnLoad();
 
     // Вставка загруженного изображения
-    $('.add-picture-bbcode').click(function () {
+    $('.pictures-thumbs a').click(function () {
         var textarea = $(this.title);
 
         var thumbUrl = this.href;
         var fullUrl = thumbUrl.replace('thumb', 'full');
         var text = textarea.attr('value');
+        var align = $(this).attr('class');
 
-        textarea.attr('value', text + '[img=' + fullUrl + ']' + thumbUrl + '[/img]');
+        textarea.attr('value', text + '[' + align + '][img=' + fullUrl + ']' + thumbUrl + '[/img][/' + align + ']');
 
         return false;
     });

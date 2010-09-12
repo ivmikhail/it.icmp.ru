@@ -16,7 +16,7 @@ namespace ITCommunity.Controllers {
                 return false;
             }
 
-            if (ModelState.IsValidField("Picture")) {
+            if (ModelState.IsValidField("Picture") && model.Picture != null) {
                 Picture.Upload(model.Picture, basePath);
             }
 

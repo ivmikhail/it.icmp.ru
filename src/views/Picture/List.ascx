@@ -5,10 +5,37 @@
 
 <ul class="pictures-thumbs">
     <% foreach (var picture in Picture.GetList(Model)) { %>
-        <li>
+        <li class="light-block">
             <img src="<%= picture.ThumbUrl %>" alt="<%= picture.Name %>" />
-            <a href="<%= picture.ThumbUrl %>" title="#Description" class="add-picture-bbcode">вставить в описание</a>
-            <a href="<%= picture.ThumbUrl %>" title="#Text" class="add-picture-bbcode">вставить в текст</a>
+            <ul class="right-list meta">
+                <li class="info">
+                    вставить в описание:
+                </li>
+                <li>
+                    <a href="<%= picture.ThumbUrl %>" title="#Description" class="left">слева</a>
+                </li>
+                <li>
+                    <a href="<%= picture.ThumbUrl %>" title="#Description" class="center">по центру</a>
+                </li>
+                <li>
+                    <a href="<%= picture.ThumbUrl %>" title="#Description" class="right">справа</a>
+                </li>
+            </ul>
+            <ul class="right-list meta">
+                <li class="info">
+                    вставить в текст:
+                </li>
+                <li>
+                    <a href="<%= picture.ThumbUrl %>" title="#Text" class="left">слева</a>
+                </li>
+                <li>
+                    <a href="<%= picture.ThumbUrl %>" title="#Text" class="center">по центру</a>
+                </li>
+                <li>
+                    <a href="<%= picture.ThumbUrl %>" title="#Text" class="right">справа</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
         </li>
     <% } %>
 </ul>

@@ -9,12 +9,12 @@
 
     <h1>Добавление поста</h1>
  
-    <form action="<%= Url.Action("add", "post") %>" enctype="multipart/form-data" method="post">
+    <% using (Html.BeginForm("add", "post", null, FormMethod.Post, new { enctype = "multipart/form-data" })) { %>           
        
         <% Html.RenderPartial("EditForm", Model); %>
     
         <input type="submit" value="добавить" />
 
-    </form>
+    <% } %>
 
 </asp:Content>
