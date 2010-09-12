@@ -278,7 +278,6 @@
     <Content Include="Views\Shared\Link\Message\ReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\CurrentReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\SentList.ascx" />
-    <Content Include="Views\Shared\Link\Picture\Delete.ascx" />
     <Content Include="Views\Shared\Link\Poll\Add.ascx" />
     <Content Include="Views\Shared\Link\Poll\Delete.ascx" />
     <Content Include="Views\Shared\Link\Poll\Edit.ascx" />
