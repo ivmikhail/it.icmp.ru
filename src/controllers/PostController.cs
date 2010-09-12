@@ -78,7 +78,7 @@ namespace ITCommunity.Controllers {
                 post.Text = Picture.ReplaceUrls(Post.DefaultPicturesPath, post.PicturesPath, post.Text);
                 Posts.Update(post, false);
 
-                Picture.Delete(Post.DefaultPicturesPath);
+                Picture.Clear(Post.DefaultPicturesPath);
 
                 return RedirectToAction("view", new { id = post.Id });
             }
@@ -114,6 +114,7 @@ namespace ITCommunity.Controllers {
             }
 
             if (Upload(model, post.PicturesPath)) {
+                model.Path = post.PicturesPath;
                 return View(model);
             }
 
@@ -121,6 +122,8 @@ namespace ITCommunity.Controllers {
                 var editedPost = model.ToPost();
                 editedPost.Id = post.Id;
                 Posts.Update(editedPost);
+
+                Picture.DeleteUnused(editedPost.PicturesPath, editedPost.Description + editedPost.Text);
 
                 return RedirectToAction("view", "post", new { id = post.Id });
             }

@@ -13,6 +13,7 @@
 
 #content #cut {
     border: 1px solid #f0f0f0;
+    clear: both;
 }
 
 #content #comments {
@@ -89,20 +90,15 @@
 }
 .text .left {
     float: left;
-    margin-right: 15px;
+    margin-right: 1.5em;
 }
 .text .right {
     float: right;
-    margin-left: 15px;
+    margin-left: 1.5em;
 }
 
 .pictures-thumbs img {
-    display: block;
-    margin: 5px auto;
-}
-.pictures-thumbs li {
-    padding: 10px;
-    text-align: center;
+    float: left;
 }
 
 .meta {

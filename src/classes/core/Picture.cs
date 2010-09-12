@@ -51,20 +51,25 @@ namespace ITCommunity.Core {
             Name = name;
         }
 
-        public static void Delete(string basePath) {
+        public static void Clear(string basePath) {
             var pictures = GetList(basePath);
 
             foreach (var picture in pictures) {
-                if (File.Exists(picture.FullPath)) {
-                    File.Delete(picture.FullPath);
-                }
-                if (File.Exists(picture.ThumbPath)) {
-                    File.Delete(picture.ThumbPath);
-                }
+                picture.Delete();
             }
 
             Directory.Delete(GetThumbDir(basePath));
             Directory.Delete(GetFullDir(basePath));
+        }
+
+        public static void DeleteUnused(string basePath, string data) {
+            var pictures = GetList(basePath);
+
+            foreach (var picture in pictures) {
+                if (data.Contains(picture.FullUrl) == false && data.Contains(picture.ThumbUrl) == false) {
+                    picture.Delete();
+                }
+            }
         }
 
         public static List<Picture> GetList(string basePath) {
@@ -160,6 +165,15 @@ namespace ITCommunity.Core {
 
         private static string GetFullDir(string basePath) {
             return HttpContext.Current.Request.MapPath(HttpContext.Current.Request.ApplicationPath + basePath + "/full");
+        }
+
+        private void Delete() {
+            if (File.Exists(FullPath)) {
+                File.Delete(FullPath);
+            }
+            if (File.Exists(ThumbPath)) {
+                File.Delete(ThumbPath);
+            }
         }
 
         private void Move(string dstPath) {

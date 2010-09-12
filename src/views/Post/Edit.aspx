@@ -9,7 +9,7 @@
 
     <h1>Редактирование поста</h1>
  
-    <% using (Html.BeginForm()) { %>           
+    <% using (Html.BeginForm("edit", "post", null, FormMethod.Post, new { enctype = "multipart/form-data" })) { %>           
        
         <% Html.RenderPartial("EditForm", Model); %>
     

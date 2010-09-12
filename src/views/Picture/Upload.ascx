@@ -2,6 +2,7 @@
 
 
 <% Html.RenderPartial("../Picture/List", Model.Path); %>
+<%= Html.HiddenFor(m => m.Path) %>
 
 <%= Html.LabelFor(m => m.Picture) %>
 <input type="file" id="Picture" name="Picture" />
