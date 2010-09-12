@@ -40,7 +40,7 @@ namespace ITCommunity.DB.Tables {
             }
         }
 
-        public static void Update(Post editedPost) {
+        public static void Update(Post editedPost, bool doUpdateCategories) {
             using (var db = Database.Connect()) {
                 var post = (
                     from pst in db.Posts
@@ -54,10 +54,16 @@ namespace ITCommunity.DB.Tables {
                 post.Title = editedPost.Title;
                 post.IsAttached = editedPost.IsAttached;
                 post.IsCommentable = editedPost.IsCommentable;
-                post.PostsCategories = editedPost.PostsCategories;
+                if (doUpdateCategories) {
+                    post.PostsCategories = editedPost.PostsCategories;
+                }
 
                 db.SubmitChanges();
             }
+        }
+
+        public static void Update(Post editedPost) {
+            Update(editedPost, true);
         }
 
         public static void IncViews(Post targetPost) {

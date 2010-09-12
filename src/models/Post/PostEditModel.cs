@@ -7,7 +7,7 @@ using ITCommunity.DB;
 
 namespace ITCommunity.Models {
 
-    public class PostEditModel {
+    public class PostEditModel : PictureUploadModel {
 
         [DisplayName("Заголовок поста")]
         [Required(ErrorMessage = "Напишите заголовок поста")]
@@ -32,6 +32,8 @@ namespace ITCommunity.Models {
         public int? EntityId { get; set; }
 
         public PostEditModel() {
+            Path = Post.DefaultPicturesPath;
+            IsCommentable = true;
         }
 
         public PostEditModel(Post post) {
@@ -43,6 +45,7 @@ namespace ITCommunity.Models {
             IsCommentable = post.IsCommentable;
             EntityType = post.EntityType;
             EntityId = post.EntityId;
+            Path = post.PicturesPath;
 
             PostEditCategoriesModel.Current.Clear();
             foreach (var category in post.Categories) {

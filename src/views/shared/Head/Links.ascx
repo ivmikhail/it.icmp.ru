@@ -18,8 +18,8 @@
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/ie7-fix.css?v=0.1") %>" /><![endif]-->
 
 <script type="text/javascript" src="<%= Url.Content("~/content/js/highlight.pack.js?v=0.1") %>"></script>
-<script type="text/javascript" src="<%= Url.Content("~/content/js/jquery-1.3.2-vsdoc.js?v=0.1") %>"></script>
-<script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftAjax.js?v=0.1") %>"></script>
-<script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftMvcAjax.js?v=0.1") %>"></script>
+<script type="text/javascript" src="<%= Url.Content("~/content/js/jquery-1.3.2.js?v=0.1") %>"></script>
+<script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftAjax.debug.js?v=0.1") %>"></script>
+<script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftMvcAjax.debug.js?v=0.1") %>"></script>
 
 <script type="text/javascript" src="<%= Url.Content("~/content/js/it-community.js?v=0.1") %>"></script>

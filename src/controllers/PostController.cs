@@ -12,7 +12,7 @@ using ITCommunity.Models;
 
 namespace ITCommunity.Controllers {
 
-    public class PostController : BaseController {
+    public class PostController : PictureController {
 
         public ActionResult View(int? id) {
             var post = Posts.Get(id.Value);
@@ -52,12 +52,17 @@ namespace ITCommunity.Controllers {
         [Authorize]
         public ActionResult Add() {
             PostEditCategoriesModel.Current.Clear();
-            return View();
+            var model = new PostEditModel();
+            return View(model);
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult Add(PostEditModel model) {
+            if (Upload(model, Post.DefaultPicturesPath)) {
+                return View(model);
+            }
+
             if (ModelState.IsValid) {
                 var post = model.ToPost();
 
@@ -69,10 +74,16 @@ namespace ITCommunity.Controllers {
                     Users.Update(user);
                 }
 
+                post.Description = Picture.ReplaceUrls(Post.DefaultPicturesPath, post.PicturesPath, post.Description);
+                post.Text = Picture.ReplaceUrls(Post.DefaultPicturesPath, post.PicturesPath, post.Text);
+                Posts.Update(post, false);
+
+                Picture.Delete(Post.DefaultPicturesPath);
+
                 return RedirectToAction("view", new { id = post.Id });
             }
 
-            return View();
+            return View(model);
         }
 
         [Authorize]
@@ -100,6 +111,10 @@ namespace ITCommunity.Controllers {
 
             if (post.Editable == false) {
                 return Forbidden();
+            }
+
+            if (Upload(model, post.PicturesPath)) {
+                return View(model);
             }
 
             if (ModelState.IsValid) {

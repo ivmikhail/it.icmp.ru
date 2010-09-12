@@ -1,14 +1,14 @@
 using System;
-using System.Web;
-using System.Drawing;
-using System.IO;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
-using ITCommunity.Core;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Web;
 
-namespace ITCommunity {
-    // страх божий
+
+namespace ITCommunity.Core {
+
     public class Picture {
 
         public static int MaxThumbWidth {
@@ -19,44 +19,63 @@ namespace ITCommunity {
             get { return Config.GetInt("MaxThumbHeight"); }
         }
 
+        public static int MaxSize {
+            get { return Config.GetInt("PictureMaxSize"); }
+        }
+
+        public static string AllowedTypes {
+            get { return Config.Get("PictureContentTypes"); }
+        }
+
         public string Name { get; set; }
         public string BasePath { get; set; }
 
         public string ThumbUrl {
-            get { return BasePath + "/thumb/" + Name; }
+            get { return Config.SiteAddress + BasePath + "/thumb/" + Name; }
         }
 
         public string FullUrl {
-            get { return BasePath + "/full/" + Name; }
+            get { return Config.SiteAddress + BasePath + "/full/" + Name; }
         }
 
         public string ThumbPath {
-            get { return ThumbDir(BasePath) + "/" + Name; }
+            get { return GetThumbDir(BasePath) + "/" + Name; }
         }
 
         public string FullPath {
-            get { return FullDir(BasePath) + "/" + Name; }
+            get { return GetFullDir(BasePath) + "/" + Name; }
         }
 
-        public Picture(string basePath, string name) {
+        private Picture(string basePath, string name) {
             BasePath = basePath;
             Name = name;
         }
 
-        public void Delete() {
-            File.Delete(FullPath);
-            File.Delete(ThumbPath);
+        public static void Delete(string basePath) {
+            var pictures = GetList(basePath);
+
+            foreach (var picture in pictures) {
+                if (File.Exists(picture.FullPath)) {
+                    File.Delete(picture.FullPath);
+                }
+                if (File.Exists(picture.ThumbPath)) {
+                    File.Delete(picture.ThumbPath);
+                }
+            }
+
+            Directory.Delete(GetThumbDir(basePath));
+            Directory.Delete(GetFullDir(basePath));
         }
 
         public static List<Picture> GetList(string basePath) {
             var pictures = new List<Picture>();
-            var directory = FullDir(basePath);
+            var directory = GetFullDir(basePath);
 
             if (Directory.Exists(directory)) {
                 var files = Directory.GetFiles(directory);
                 foreach (string file in files) {
                     var info = new FileInfo(file);
-                    pictures.Add(new Picture(info.Name, basePath));
+                    pictures.Add(new Picture(basePath, info.Name));
                 }
             }
 
@@ -67,7 +86,7 @@ namespace ITCommunity {
             var extension = Path.GetExtension(image.FileName).ToLower();
             var name = new Random().Next(0, 999999).ToString() + extension;
 
-            var picture = new Picture(name, basePath);
+            var picture = new Picture(basePath, name);
 
             CreateDirectories(basePath);
 
@@ -79,10 +98,12 @@ namespace ITCommunity {
 
             if (width > MaxThumbWidth) {
                 height = height * MaxThumbWidth / width;
+                width = MaxThumbWidth;
             }
 
             if (height > MaxThumbHeight) {
                 width = width * MaxThumbHeight / height;
+                height = MaxThumbHeight;
             }
 
             var thumbBitmap = new Bitmap(width, height);
@@ -105,26 +126,17 @@ namespace ITCommunity {
             return picture;
         }
 
-        public static void Move(string srcPath, string dstPath) {
-            var src = HttpContext.Current.Request.MapPath(srcPath);
-            var dst = HttpContext.Current.Request.MapPath(dstPath);
-
-            if (Directory.Exists(src)) {
-                Directory.Move(src, dst);
-            }
-        }
-
         public static string ReplaceUrls(string srcPath, string dstPath, string data) {
             var pictures = GetList(srcPath);
 
             foreach (Picture picture in pictures) {
                 if (data.Contains(picture.FullUrl) || data.Contains(picture.ThumbUrl)) {
-                    var newPicture = new Picture(picture.Name, dstPath);
+                    var newPicture = new Picture(dstPath, picture.Name);
 
                     data = data.Replace(picture.FullUrl, newPicture.FullUrl);
                     data = data.Replace(picture.ThumbUrl, newPicture.ThumbUrl);
-                } else {
-                    picture.Delete();
+
+                    picture.Move(newPicture.BasePath);
                 }
             }
 
@@ -132,11 +144,8 @@ namespace ITCommunity {
         }
 
         private static void CreateDirectories(string basePath) {
-            var dir = HttpContext.Current.Request.MapPath(basePath);
-
-            CreateDirectory(dir);
-            CreateDirectory(ThumbDir(basePath));
-            CreateDirectory(FullDir(basePath));
+            CreateDirectory(GetThumbDir(basePath));
+            CreateDirectory(GetFullDir(basePath));
         }
 
         private static void CreateDirectory(string path) {
@@ -145,13 +154,28 @@ namespace ITCommunity {
             }
         }
 
-        private static string ThumbDir(string basePath) {
-            return HttpContext.Current.Request.MapPath(basePath + "/thumb"); 
+        private static string GetThumbDir(string basePath) {
+            return HttpContext.Current.Request.MapPath(HttpContext.Current.Request.ApplicationPath + basePath + "/thumb");
         }
 
-        private static string FullDir(string basePath) {
-            return HttpContext.Current.Request.MapPath(basePath + "/full"); 
+        private static string GetFullDir(string basePath) {
+            return HttpContext.Current.Request.MapPath(HttpContext.Current.Request.ApplicationPath + basePath + "/full");
         }
 
+        private void Move(string dstPath) {
+            var dst = HttpContext.Current.Request.MapPath(HttpContext.Current.Request.ApplicationPath + dstPath);
+            var newPicture = new Picture(dstPath, Name);
+
+            if (Directory.Exists(dst) == false) {
+                CreateDirectories(dstPath);
+            }
+
+            if (File.Exists(FullPath)) {
+                File.Move(FullPath, newPicture.FullPath);
+            }
+            if (File.Exists(ThumbPath)) {
+                File.Move(ThumbPath, newPicture.ThumbPath);
+            }
+        }
     }
 }

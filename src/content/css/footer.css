@@ -8,6 +8,7 @@
 
 #footer a {
     color: #787878;
+    white-space: pre-line;
 }
 #footer a:hover {
     color: #333333;

@@ -13,7 +13,7 @@
     </label>
 <% } %>
 <label>
-    <%= Html.CheckBoxFor(m => m.IsCommentable, new { @checked = "checked" })%> разрешить комментарии?
+    <%= Html.CheckBoxFor(m => m.IsCommentable)%> разрешить комментарии?
 </label>
 
 <%= Html.LabelFor(m => m.Description)%>
@@ -25,6 +25,8 @@
 <% Html.RenderPartial("EditorToolbar"); %>
 <%= Html.TextAreaFor(m => m.Text, new { @class = "large" })%>
 <%= Html.ValidationMessageFor(m => m.Text)%>
+
+<% Html.RenderPartial("../Picture/Upload", Model); %>
 
 <label>Категории</label>
 <div class="meta">выберите в какие категории будет входить пост</div>
