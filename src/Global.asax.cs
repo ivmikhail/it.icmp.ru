@@ -99,6 +99,12 @@ namespace ITCommunity {
             );
 
             routes.MapRoute(
+                "Picture",
+                "picture/upload/{*basePath}",
+                new { controller = "Picture", action = "Upload", basePath = "pictures" }
+            );
+
+            routes.MapRoute(
                 "NotFound",
                 "notfound",
                 new { controller = "Base", action = "NotFound" }

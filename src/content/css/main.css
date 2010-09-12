@@ -96,6 +96,14 @@
     margin-left: 15px;
 }
 
+.pictures-thumbs img {
+    display: block;
+    margin: 5px auto;
+}
+.pictures-thumbs li {
+    padding: 10px;
+    text-align: center;
+}
 
 .meta {
 	color: #999999;

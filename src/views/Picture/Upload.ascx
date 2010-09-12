@@ -1,14 +1,10 @@
-﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<PictureUploadModel>" %>
 
 
-<% using (Ajax.BeginForm("upload", "picture", null, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "PictureUpload" }, new { enctype = "multipart/form-data" })) { %>
+<% Html.RenderPartial("../Picture/List", Model.Path); %>
 
-    <label for="picture">Выберите рисунок для загрузки</label>
+<%= Html.LabelFor(m => m.Picture) %>
+<input type="file" id="Picture" name="Picture" />
+<%= Html.ValidationMessageFor(m => m.Picture) %>
 
-    <input type="file" id="picture" name="picture" />
-
-    <%= Html.ValidationSummary() %>
-
-    <input type="submit" value="загрузить" />
-
-<% } %> 
+<input type="submit" name="UploadPicture" value="загрузить" />

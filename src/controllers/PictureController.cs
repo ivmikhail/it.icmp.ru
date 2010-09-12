@@ -11,57 +11,16 @@ namespace ITCommunity.Controllers {
 
     public class PictureController : BaseController {
 
-        private const string MaxSizeError = "Загружаемый рисунок слишком большой, максимальный размер файла {0}";
-        private const string TypeError = "Не верный формат рисунка, вот список поддерживаемых форматов: {0}";
-        private const string RequiredError = "Выберите рисунок";
-
-        public static int MaxSize {
-            get { return Config.GetInt("PictureMaxSize"); }
-        }
-
-        public static string Types {
-            get { return Config.Get("PictureContentTypes"); }
-        }
-
-        public bool IsValidSize(int size) {
-            return size <= MaxSize;
-        }
-
-        public bool IsValidType(string contentType) {
-            var typesArray = Types.Replace(" ", "").Split(',');
-
-            foreach (var type in typesArray) {
-                if (contentType.Equals(type)) {
-                    return true;
-                }
+        public bool Upload(PictureUploadModel model, string basePath) {
+            if (Request["UploadPicture"] == null) {
+                return false;
             }
 
-            return false;
-        }
-
-        [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase picture) {
-            bool isValid = true;
-            if (picture == null) {
-                isValid = false;
-                ModelState.AddModelError("", RequiredError);
+            if (ModelState.IsValidField("Picture")) {
+                Picture.Upload(model.Picture, basePath);
             }
 
-            if (isValid && IsValidSize(picture.ContentLength) == false) {
-                isValid = false;
-                ModelState.AddModelError("", string.Format(MaxSizeError, MaxSize));
-            }
-
-            if (isValid && IsValidType(picture.ContentType) == false) {
-                isValid = false;
-                ModelState.AddModelError("", string.Format(TypeError, Types));
-            }
-
-            if (isValid) {
-                Picture.Upload(picture, Config.Get("PicturePostsFolder"));
-            }
-
-            return PartialView();
+            return true;
         }
     }
 }

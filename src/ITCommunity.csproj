@@ -116,6 +116,8 @@
     <Compile Include="Classes\Utils\Hash.cs" />
     <Compile Include="Classes\Validators\CaptchaAnswerAttribute.cs" />
     <Compile Include="Classes\Validators\AnotherUserNickAttribute.cs" />
+    <Compile Include="Classes\Validators\PictureAllowedTypesAttribute.cs" />
+    <Compile Include="Classes\Validators\PictureMaxSizeAttribute.cs" />
     <Compile Include="Classes\Validators\EmailAttribute.cs" />
     <Compile Include="Classes\Validators\UniqueEmailAttribute.cs" />
     <Compile Include="Classes\Validators\CurrentUserPasswordAttribute.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="Models\Message\MessageSentListModel.cs" />
     <Compile Include="Models\Message\MessageSendModel.cs" />
     <Compile Include="Models\Message\MessageListModel.cs" />
+    <Compile Include="Models\Picture\PictureUploadModel.cs" />
     <Compile Include="Models\Poll\PollEditModel.cs" />
     <Compile Include="Models\Post\PostListModel.cs" />
     <Compile Include="Models\Category\CategoryPostsModels.cs" />
@@ -225,6 +228,7 @@
     <Content Include="Views\Message\ReceivedList.aspx" />
     <Content Include="Views\Message\List.ascx" />
     <Content Include="Views\Message\Menu.ascx" />
+    <Content Include="Views\Picture\List.ascx" />
     <Content Include="Views\Picture\Upload.ascx" />
     <Content Include="Views\Poll\Answers.ascx" />
     <Content Include="Views\Poll\Edit.aspx" />
@@ -274,6 +278,7 @@
     <Content Include="Views\Shared\Link\Message\ReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\CurrentReceivedList.ascx" />
     <Content Include="Views\Shared\Link\Message\SentList.ascx" />
+    <Content Include="Views\Shared\Link\Picture\Delete.ascx" />
     <Content Include="Views\Shared\Link\Poll\Add.ascx" />
     <Content Include="Views\Shared\Link\Poll\Delete.ascx" />
     <Content Include="Views\Shared\Link\Poll\Edit.ascx" />

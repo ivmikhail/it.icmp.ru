@@ -18,6 +18,10 @@ namespace ITCommunity.DB {
             Poll = 1
         }
 
+        public static string DefaultPicturesPath {
+            get { return Config.Get("PostPicturesFolder") + "/" + CurrentUser.User.Id + "/-1"; }
+        }
+
         public object Entity { get; set; }
 
         public List<Category> Categories { get; set; }
@@ -49,6 +53,10 @@ namespace ITCommunity.DB {
 
         public bool Editable {
             get { return CurrentUser.IsAdmin || AuthorId == CurrentUser.User.Id; }
+        }
+
+        public string PicturesPath {
+            get { return Config.Get("PostPicturesFolder") + "/" + CurrentUser.User.Id + "/" + Id; }
         }
 
         partial void OnLoaded() {

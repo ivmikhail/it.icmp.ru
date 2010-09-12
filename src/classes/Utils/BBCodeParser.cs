@@ -201,11 +201,11 @@ namespace ITCommunity.Utils {
 
             // рисунок http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
             var trustedSites = Config.Get("TrustdedSites").Replace(" ", "").Replace(',', '|');
-            var imgUrl = @"(http://(?:www\.)?(?:" + trustedSites + @")/.*?)";
+            var imgUrl = @"((?:http://(?:www\.)?(?:" + trustedSites + @")|" + Config.SiteAddress + ")/.*?)";
             _formatters.Add(new TagFormatter("img", "img", "src=\"${text}\" alt=\"${text}\"", null, "", imgUrl));
             _formatters.Add(new TagFormatter("img", "img", "src=\"${text}\" alt=\"${text}\" width=\"$1px\" height=\"$2px\"", @"(\d*)x(\d*)px", "", imgUrl));
             _formatters.Add(new RegexFormatter(@"\[img=" + imgUrl + @"\]\s*" + imgUrl + @"\s*\[/img\]", "<a href=\"$1\"><img src=\"$2\" alt=\"$2\" /></a>"));
-            
+
             // убираем whitespaces в списке
             _formatters.Add(new RegexFormatter(@"(\[list.*?\])\s+", "$1"));
             _formatters.Add(new RegexFormatter(@"\s*(\[\*\])\s*", "$1"));
@@ -226,7 +226,7 @@ namespace ITCommunity.Utils {
             _formatters.Add(new TagFormatter("tr"));
             _formatters.Add(new TagFormatter("td"));
             _formatters.Add(new TagFormatter("td", "td", "colspan=\"$1\"", @"(\d*)"));
-            
+
             // убираем whitespaces в video
             _formatters.Add(new RegexFormatter(@"\[video\]\s*(.*?)\s*\[/video\]", "[video]$1[/video]"));
             // play.ykt.ru
