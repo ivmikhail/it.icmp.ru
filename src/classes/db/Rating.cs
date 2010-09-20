@@ -13,9 +13,7 @@ namespace ITCommunity.DB {
         }
 
         public string HtmlId {
-            get {
-                return EntityType.ToString() + EntityId.ToString() + "Rating";
-            }
+            get { return EntityType.ToString() + EntityId.ToString() + "Rating"; }
         }
 
         public string Sign {

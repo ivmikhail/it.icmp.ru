@@ -6,7 +6,8 @@
 
 #content h1 {
     border-bottom: 4px solid #f0f0f0;
-    margin-bottom: 0.4em;
+    margin-bottom: 0.5em;
+    padding: 0.4em 0;
 }
 
 /* совсем уникальные стили для вложенных айдишников, что есть не хорошо */
@@ -27,9 +28,12 @@
 /* базовые блоки и панели, так сказать "кирпичики" */
 
 .block {
-	padding: 1em 0;
+	padding-bottom: 1em;
 	border-bottom: 2px solid #f0f0f0;
 	margin-bottom: 1em;
+}
+.block h2 {
+    padding-top: 0.5em;
 }
 
 .light-block {

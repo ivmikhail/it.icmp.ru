@@ -51,6 +51,10 @@ namespace ITCommunity.Core {
             Name = name;
         }
 
+        /// <summary>
+        /// Удаляет все рисунки
+        /// </summary>
+        /// <param name="basePath"></param>
         public static void Clear(string basePath) {
             var pictures = GetList(basePath);
 
@@ -62,6 +66,11 @@ namespace ITCommunity.Core {
             Directory.Delete(GetFullDir(basePath));
         }
 
+        /// <summary>
+        /// Удаляет не используемые рисунки в data
+        /// </summary>
+        /// <param name="basePath"></param>
+        /// <param name="data"></param>
         public static void DeleteUnused(string basePath, string data) {
             var pictures = GetList(basePath);
 

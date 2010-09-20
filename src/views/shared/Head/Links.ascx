@@ -1,7 +1,10 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
-<link rel="alternate"  type="application/rss+xml" href="<%= Url.Action("feed", "rss") %>" />    
+
+<link rel="alternate"  type="application/rss+xml" href="<%= Url.Action("feed", "rss") %>" />
+    
 <link rel="shortcut icon" href="<%= Url.Content("~/favicon.ico?v=0.1") %>" type="image/vnd.microsoft.icon" />
+
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/reset.css?v=0.1") %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/tags.css?v=0.1") %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/main.css?v=0.1") %>" />
@@ -14,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/bbcode-info.css?v=0.1") %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/sidebar.css?v=0.1") %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/highlight-vs.css?v=0.1") %>" />
+
 <!--[if IE 6]><link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/ie6-fix.css?v=0.1") %>" /><![endif]-->
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/ie7-fix.css?v=0.1") %>" /><![endif]-->
 

@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Post>" %>
 
+
 <h2>
     <% Html.RenderPartial("Link/Post/Title", Model); %>
 </h2>

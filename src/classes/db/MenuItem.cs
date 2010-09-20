@@ -7,10 +7,8 @@ namespace ITCommunity.DB {
 
     public partial class MenuItem {
 
-        public List<MenuItem> Childs {
-            get {
-                return MenuItems.GetChilds(Id);
-            }
+        public List<MenuItem> Children {
+            get { return MenuItems.GetChildren(Id); }
         }
     }
 }

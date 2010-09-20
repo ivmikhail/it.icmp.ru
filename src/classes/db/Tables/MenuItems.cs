@@ -84,7 +84,7 @@ namespace ITCommunity.DB.Tables {
             return items.ToList();
         }
 
-        public static List<MenuItem> GetChilds(int parentId) {
+        public static List<MenuItem> GetChildren(int parentId) {
             var childs =
                 from itm in All
                 where itm.ParentId == parentId

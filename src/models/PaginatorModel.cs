@@ -13,15 +13,11 @@ namespace ITCommunity.Models {
         public int PagesCountOnPage { get; set; }
 
         public bool IsStart {
-            get {
-                return Page < PagesCountOnPage;
-            }
+            get { return Page < PagesCountOnPage; }
         }
 
         public bool IsEnd {
-            get {
-                return (Page - 1) / (PagesCountOnPage - 1) == PagesCount / (PagesCountOnPage - 1  );
-            }
+            get { return (Page - 1) / (PagesCountOnPage - 1) == PagesCount / (PagesCountOnPage - 1); }
         }
 
         public int StartPage {
@@ -43,9 +39,7 @@ namespace ITCommunity.Models {
         }
 
         public int PagesCount {
-            get {
-                return (TotalCount - 1) / PerPage + 1;
-            }
+            get { return (TotalCount - 1) / PerPage + 1; }
         }
 
         public PaginatedModel(int? page) {

@@ -98,3 +98,13 @@ textarea {
 textarea.large {
     height: 30em;
 }
+
+noscript div {
+    background: #ffffff;
+    border-bottom: 5px solid #cccccc;
+    color: #444444;
+    font-size: 2em;
+    line-height: 1.5em;
+    padding: 0.5em;
+    text-align: center;
+}
