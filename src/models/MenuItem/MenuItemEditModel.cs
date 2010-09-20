@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
-using System.Collections.Generic;
-using System.Web.Mvc;
 
 
 namespace ITCommunity.Models {

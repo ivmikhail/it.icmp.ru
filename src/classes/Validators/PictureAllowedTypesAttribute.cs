@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 using ITCommunity.Core;
-using ITCommunity.DB;
-using System.Web;
 
 
 namespace ITCommunity.Validators {

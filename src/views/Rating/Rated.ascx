@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Rating>" %>
 
-рейтинг:
 
+рейтинг:
 <b class="rating-<%= Model.Sign %>">
     <%= Model.Value %>
 </b>

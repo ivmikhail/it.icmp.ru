@@ -197,7 +197,6 @@
     <Content Include="Content\img\browser\folder.gif" />
     <Content Include="Content\img\browser\up.ico" />
     <Content Include="Content\img\design\rss.png" />
-    <Content Include="Content\img\design\atom.png" />
     <Content Include="Content\js\it-community.js" />
     <Content Include="Content\js\highlight.pack.js" />
     <Content Include="Content\other\greetings.txt" />

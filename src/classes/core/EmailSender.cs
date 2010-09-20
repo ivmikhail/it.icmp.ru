@@ -22,7 +22,7 @@ namespace ITCommunity.Core {
                     "Вы запросили сброс пароля с сайта " + Config.SiteAddress + "\n," +
                     "сделать это можно перейдя по ссылке:\n" +
                     Config.SiteAddress + "/user/newpassword?guid=" + recovery.Guid.ToString() + "\n" +
-                    "Ссылка активна в течении 3-4 дней." +
+                    "Ссылка активна в течении 3-4 дней." + "\n" +
                     "______" +
                     "С уважением, робот находящийся в рабстве у держателей сайта" + Config.SiteAddress;
 

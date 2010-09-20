@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="ViewPage<dynamic>" %>
 
+
 <asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">
 	Нет доступа  (ошибка 403)
 </asp:Content>

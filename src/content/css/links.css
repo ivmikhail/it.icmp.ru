@@ -42,26 +42,23 @@
     border-bottom: none;
 }
 
-#footer .up-arrow,
-#header .down-arrow {
-    display: block;
-    float: left;
+#up-arrow,
+#down-arrow {
+    color: #f0f0f0;
     font-size: 6em;
     position: absolute;
-    text-align: center;
+    left: 61.5%;
+    text-align: right;
     text-decoration: none;
-    width: 4%;
 }
-#footer .up-arrow:hover,
-#header .down-arrow:hover {
-    color: #999999;
+#up-arrow:hover,
+#down-arrow:hover {
+    color: #cccccc;
 }
-#footer .up-arrow {
-    color: #bbbbbb;
+#up-arrow {
+    margin-top: -1.4em;
 }
-#header .down-arrow {
-    color: #d0d0d0;
-    margin-top: 0.7em;
+#down-arrow {
 }
 
 #content .rating-negative {

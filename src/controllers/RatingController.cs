@@ -1,9 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 using ITCommunity.Core;
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
-using System;
 
 
 namespace ITCommunity.Controllers {

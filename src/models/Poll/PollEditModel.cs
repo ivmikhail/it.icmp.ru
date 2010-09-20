@@ -1,11 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using ITCommunity.DB;
-using System;
-using ITCommunity.Utils;
-using System.Web;
-using ITCommunity.Core;
 
 
 namespace ITCommunity.Models {

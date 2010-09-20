@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
+
 <div class="bbcode-info meta">
     можно использовать <a class="tags-info-link" href="#" title="Узнать как можно форматировать текст">bbcode-теги</a>
 

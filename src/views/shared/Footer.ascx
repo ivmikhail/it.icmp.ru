@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
 
-<a href="#header" class="up-arrow" title="Посмотреть что наверху">&uarr;</a>
-
 <div class="bottom-menu">
 
     <% foreach (var item in MenuItems.GetRoot()) { %>
