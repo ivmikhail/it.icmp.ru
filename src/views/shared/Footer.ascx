@@ -7,7 +7,7 @@
         <dl>
             <dt><%= item.Name %></dt>
 
-            <% foreach (var child in item.Childs) { %>
+            <% foreach (var child in item.Children) { %>
                 <dd>
                     <% Html.RenderPartial("Link/MenuItem/Url", child); %>
                 </dd>
