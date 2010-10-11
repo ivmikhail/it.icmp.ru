@@ -344,6 +344,7 @@
     <Content Include="Views\Captcha\Captcha.ascx" />
     <Content Include="Views\Shared\Link\User\Profile.ascx" />
     <Content Include="Views\User\Comments.aspx" />
+    <Content Include="Views\User\Whoami.aspx" />
     <Content Include="Views\User\Edit.aspx" />
     <Content Include="Views\User\List.aspx" />
     <Content Include="Views\User\Posts.aspx" />
