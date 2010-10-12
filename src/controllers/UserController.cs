@@ -5,6 +5,8 @@ using ITCommunity.Core;
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
 using ITCommunity.Models;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 
 namespace ITCommunity.Controllers {
@@ -212,6 +214,37 @@ namespace ITCommunity.Controllers {
             }
 
             return null;
+        }
+
+        public ActionResult Whoami() {            
+
+            var needValues = new List<string>();
+
+			needValues.AddRange(new string[] {
+				"REMOTE_ADDR",
+				"REMOTE_HOST",
+
+				"HTTP_USER_AGENT",
+				"HTTP_ACCEPT",
+				"HTTP_ACCEPT_CHARSET",
+				"HTTP_ACCEPT_ENCODING",
+				"HTTP_ACCEPT_LANGUAGE",
+				"HTTP_REFERER",
+				"HTTP_TE",
+				"HTTP_X_FORWARDED_FOR",
+				"HTTP_UA_CPU",
+				"HTTP_VIA"
+			});
+
+            
+            List<KeyValuePair<string, string>> headers = new List<KeyValuePair<string, string>>();
+			NameValueCollection serverVars = Request.ServerVariables;
+            foreach(string key in needValues) {
+                headers.Add(new KeyValuePair<string, string>(key, serverVars.Get(key)));
+            }
+
+            ViewData["headers"] = headers;
+            return View("Whoami");
         }
     }
 }
