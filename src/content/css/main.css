@@ -1,6 +1,9 @@
 #content {
+    background: #ffffff;
     float: left;
+    max-width: 800px;
     padding: 16px 4%;
+    position: relative;
 	width: 57%;
 }
 
