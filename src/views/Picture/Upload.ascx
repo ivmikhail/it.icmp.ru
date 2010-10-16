@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<PictureUploadModel>" %>
 
 
-<% Html.RenderPartial("../Picture/List", Model.Path); %>
+<% Html.RenderPartial("../Picture/List", Model); %>
 <%= Html.HiddenFor(m => m.Path) %>
 
 <%= Html.LabelFor(m => m.Picture) %>

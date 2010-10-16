@@ -14,7 +14,7 @@ namespace ITCommunity.Models {
         [UniqueNick]
         public string UserNick { get; set; }
 
-        [DisplayName("Email адресс")]
+        [DisplayName("Email адрес")]
         [Email]
         [Required(ErrorMessage = "Введите e-mail")]
         [UniqueEmail]
@@ -25,7 +25,7 @@ namespace ITCommunity.Models {
         [StringLength(255, MinimumLength = 3, ErrorMessage = "Введите хотя бы 3 символа")]
         public string Password { get; set; }
 
-        [DisplayName("Повтор паролья")]
+        [DisplayName("Повтор пароля")]
         [Required(ErrorMessage = "Введите повтор пароля")]
         public string ConfirmPassword { get; set; }
 

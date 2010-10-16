@@ -9,8 +9,9 @@ using ITCommunity.Models;
 
 namespace ITCommunity.Controllers {
 
-    public class PictureController : BaseController {
+    public abstract class BasePictureController : BaseController {
 
+        [Authorize]
         public bool Upload(PictureUploadModel model, string basePath) {
             if (Request["UploadPicture"] == null) {
                 return false;

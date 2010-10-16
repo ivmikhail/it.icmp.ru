@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,6 +30,8 @@ namespace ITCommunity.Models {
             base() {
             Title = "empty";
             Description = "empty";
+            Editors = new Dictionary<string, string>();
+            Editors.Add("Text", "текст");
         }
 
         public PollEditModel(Post post) :

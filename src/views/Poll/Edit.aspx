@@ -9,7 +9,7 @@
 
     <h1>Редактирование опроса</h1>
  
-    <% using (Html.BeginForm()) { %>
+    <% using (Html.BeginForm("edit", "poll", null, FormMethod.Post, new { enctype = "multipart/form-data" })) { %>
 
         <%= Html.HiddenFor(m => m.Topic) %>
         <%= Html.HiddenFor(m => m.Answers) %>
@@ -50,6 +50,8 @@
         <%= Html.TextAreaFor(m => m.Text, new { @class = "large" })%>
         <%= Html.ValidationMessageFor(m => m.Text)%>
 
+        <% Html.RenderPartial("../Picture/Upload", Model); %>
+  
         <label>Категории</label>
         <div class="meta">
             выберите в какие категории будет входить опрос.

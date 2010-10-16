@@ -62,8 +62,12 @@ namespace ITCommunity.Core {
                 picture.Delete();
             }
 
-            Directory.Delete(GetThumbDir(basePath));
-            Directory.Delete(GetFullDir(basePath));
+            if (Directory.Exists(GetThumbDir(basePath))) {
+                Directory.Delete(GetThumbDir(basePath));
+            }
+            if (Directory.Exists(GetFullDir(basePath))) {
+                Directory.Delete(GetFullDir(basePath));
+            }
         }
 
         /// <summary>

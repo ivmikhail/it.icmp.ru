@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using ITCommunity.Core;
@@ -34,9 +35,13 @@ namespace ITCommunity.Models {
         public PostEditModel() {
             Path = Post.DefaultPicturesPath;
             IsCommentable = true;
+            Editors = new Dictionary<string, string>();
+            Editors.Add("Description", "описание");
+            Editors.Add("Text", "текст");
         }
 
-        public PostEditModel(Post post) {
+        public PostEditModel(Post post) :
+            this() {
             Title = post.Title;
             Description = post.Description;
             Text = post.Text;
