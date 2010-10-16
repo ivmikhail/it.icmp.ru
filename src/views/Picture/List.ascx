@@ -9,19 +9,19 @@
         <li class="light-block">
             <img src="<%= picture.ThumbUrl %>" alt="<%= picture.Name %>" />
 
-            <% foreach (var editor in Model.Editors) { %>
+            <% foreach (var textarea in Model.PictureTextareas) { %>
                 <ul class="right-list meta">
                     <li class="info">
-                        вставить в <%= editor.Value %>:
+                        вставить в <%= textarea.Value%>:
                     </li>
                     <li>
-                        <a href="<%= picture.ThumbUrl %>" title="#<%= editor.Key %>" class="left">слева</a>
+                        <a href="<%= picture.ThumbUrl %>" title="#<%= textarea.Key %>" class="left">слева</a>
                     </li>
                     <li>
-                        <a href="<%= picture.ThumbUrl %>" title="#<%= editor.Key %>" class="center">по центру</a>
+                        <a href="<%= picture.ThumbUrl %>" title="#<%= textarea.Key %>" class="center">по центру</a>
                     </li>
                     <li>
-                        <a href="<%= picture.ThumbUrl %>" title="#<%= editor.Key %>" class="right">справа</a>
+                        <a href="<%= picture.ThumbUrl %>" title="#<%= textarea.Key %>" class="right">справа</a>
                     </li>
                 </ul>
             <% } %>

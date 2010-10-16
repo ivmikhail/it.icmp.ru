@@ -17,7 +17,7 @@ namespace ITCommunity.Models {
 
         public string Path { get; set; }
 
-        public Dictionary<string, string> Editors { get; set; }
+        public Dictionary<string, string> PictureTextareas { get; set; }
 
     }
 }

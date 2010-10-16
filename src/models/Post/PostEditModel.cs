@@ -35,9 +35,9 @@ namespace ITCommunity.Models {
         public PostEditModel() {
             Path = Post.DefaultPicturesPath;
             IsCommentable = true;
-            Editors = new Dictionary<string, string>();
-            Editors.Add("Description", "описание");
-            Editors.Add("Text", "текст");
+            PictureTextareas = new Dictionary<string, string>();
+            PictureTextareas.Add("Description", "описание");
+            PictureTextareas.Add("Text", "текст");
         }
 
         public PostEditModel(Post post) :

@@ -30,8 +30,8 @@ namespace ITCommunity.Models {
             base() {
             Title = "empty";
             Description = "empty";
-            Editors = new Dictionary<string, string>();
-            Editors.Add("Text", "текст");
+            PictureTextareas = new Dictionary<string, string>();
+            PictureTextareas.Add("Text", "текст");
         }
 
         public PollEditModel(Post post) :

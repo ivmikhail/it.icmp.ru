@@ -1,11 +1,10 @@
 /* стили сайдбара */
 
 #sidebar {
-    background: #f0f0f0;
     color: #999999;
-    float: right;
+    float: left;
     padding: 16px 4%;
-    width: 27%;    
+    width: 27%;
 }
 
 #sidebar h2 {
