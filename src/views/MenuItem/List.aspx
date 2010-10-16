@@ -31,6 +31,10 @@
             <%= Html.LabelFor(m => m.Sort) %>
             <%= Html.TextBoxFor(m => m.Sort)%>
             <%= Html.ValidationMessageFor(m => m.Sort)%>
+            
+            <label>
+            <%= Html.CheckBoxFor(m => m.IsTargetBlank)%> открывать в новом окне?
+            </label>
 
             <input type="submit" value="сохранить" />
 
@@ -68,7 +72,7 @@
                     <div class="clear"></div>
 
                     <ul>
-                        <% foreach (var child in rootItem.Childs) { %>
+                        <% foreach (var child in rootItem.Children) { %>
                             <li>
                                 <ul class="left-list">
                                     <li>

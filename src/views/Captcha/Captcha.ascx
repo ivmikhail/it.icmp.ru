@@ -6,7 +6,7 @@
 
 <label for="AnswerId">
     <%= Model.Question %>
-    <div class="meta">проверка на айтишность</div>
+    <div class="meta">Проверка на айтишность</div>
 </label>
 
 <%= Html.DropDownListFor(m => m.AnswerId, Model.Answers, "Выберите ответ") %>
