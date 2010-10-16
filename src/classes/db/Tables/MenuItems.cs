@@ -51,6 +51,7 @@ namespace ITCommunity.DB.Tables {
                 menuItem.Name = editedMenuItem.Name;
                 menuItem.Url = editedMenuItem.Url;
                 menuItem.Sort = editedMenuItem.Sort;
+                menuItem.IsTargetBlank = editedMenuItem.IsTargetBlank;
 
                 db.SubmitChanges();
 

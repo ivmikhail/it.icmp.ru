@@ -2,7 +2,7 @@
 
 
 <%= Html.ActionLink(
-    "забанденные",
+    "забаненные",
     "list",
     "user",
     new { role = "banned" },

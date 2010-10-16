@@ -25,11 +25,13 @@ namespace ITCommunity.Models {
         [DisplayName("Порядок сортировки")]
         [Required(ErrorMessage = "Введите порядок сортировки")]
         public int Sort { get; set; }
+        public bool IsTargetBlank { get; set; }
 
         public MenuItemEditModel() {
             ParentId = 0;
             Url = "none";
             Sort = 0;
+            IsTargetBlank = true;
         }
 
         public MenuItemEditModel(int id) {
@@ -39,6 +41,7 @@ namespace ITCommunity.Models {
             Name = item.Name;
             Url = item.Url;
             Sort = item.Sort;
+            IsTargetBlank = item.IsTargetBlank;
         }
 
         public MenuItem ToMenuItem() {
@@ -48,6 +51,7 @@ namespace ITCommunity.Models {
             item.Name = Name;
             item.Url = Url;
             item.Sort = Sort;
+            item.IsTargetBlank = IsTargetBlank;
 
             return item;
         }

@@ -16,8 +16,9 @@
         <%= Html.TextBoxFor(m => m.UserNick) %>
         <%= Html.ValidationMessageFor(m => m.UserNick) %>
 
-        <%= Html.LabelFor(m => m.Email) %>
-        <%= Html.TextBoxFor(m => m.Email) %>
+        <%= Html.LabelFor(m => m.Email) %>        
+        <div class="meta">Нигде не публикуется. Нужна на случай, если вы забудете пароль</div>
+        <%= Html.TextBoxFor(m => m.Email) %>        
         <%= Html.ValidationMessageFor(m => m.Email) %>
                 
         <%= Html.LabelFor(m => m.Password) %>
@@ -36,13 +37,23 @@
 </asp:Content>
 
 <asp:Content ID="Sidebar" ContentPlaceHolderID="SidebarContent" runat="server">
+<div class="text">
+    <h3>
+        Зарегистрировашись, вы получаете
+    </h3>
+    <ul class="list">
+        <li>Доступ к различным файлам</li>
+        <li>Доступ к видео/аудио материалам</li>
+        <li>Вы можете опубликовать свою новость или опрос</li>
+        <li>Доступ к различного рода сервисам</li>
+    </ul>
 
-    <h2>
-        Заполните все поля для регистрации, пожалуйста
-    </h2>
-
-    <h2>
-        Длина пароля должен быть не меньше двух символов
-    </h2>
-
+    <h3>
+        Для регистрации нужно
+    </h3>
+    <ul class="list">
+        <li>Заполнить все поля слева</li>
+        <li>Длина пароля должна состоять минимум из 2-х символов</li>
+    </ul>
+</div>
 </asp:Content>

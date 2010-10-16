@@ -1353,7 +1353,7 @@ namespace ITCommunity.DB
 		
 		private string _Name;
 		
-		private byte _IsTargetBlank;
+		private bool _IsTargetBlank;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1369,7 +1369,7 @@ namespace ITCommunity.DB
     partial void OnSortChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnIsTargetBlankChanging(byte value);
+    partial void OnIsTargetBlankChanging(bool value);
     partial void OnIsTargetBlankChanged();
     #endregion
 		
@@ -1479,7 +1479,7 @@ namespace ITCommunity.DB
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsTargetBlank", DbType="TinyInt NOT NULL")]
-		public byte IsTargetBlank
+		public bool IsTargetBlank
 		{
 			get
 			{
