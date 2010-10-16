@@ -12,7 +12,7 @@ using ITCommunity.Models;
 
 namespace ITCommunity.Controllers {
 
-    public class PollController : BaseController {
+    public class PollController : BasePostController {
 
         [Authorize]
         [HttpPost]
@@ -48,7 +48,7 @@ namespace ITCommunity.Controllers {
             if (post == null) {
                 return Redirect();
             } else {
-                return RedirectToAction("view", new { id = post.Id });
+                return RedirectToAction("view", "post", new { id = post.Id });
             }
         }
 
@@ -118,12 +118,17 @@ namespace ITCommunity.Controllers {
             if (Poll.Category != null) {
                 PostEditCategoriesModel.Current.IsAttached[Poll.Category.Id] = true;
             }
-            return View("Add");
+            var model = new PollEditModel();
+            return View(model);
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult Add(PollEditModel model) {
+            if (Upload(model, Post.DefaultPicturesPath)) {
+                return View(model);
+            }
+
             if (ModelState.IsValid) {
                 var poll = model.ToPoll();
                 poll = Polls.Add(poll);
@@ -131,7 +136,7 @@ namespace ITCommunity.Controllers {
                 model.EntityId = poll.Id;
                 model.EntityType = Post.EntityTypes.Poll;
 
-                return new PostController().Add(model);
+                return base.BaseAdd(model);
             }
 
             return View(model);
@@ -178,19 +183,19 @@ namespace ITCommunity.Controllers {
                 editedPoll.Id = id.Value;
                 Polls.Update(editedPoll);
 
-                return new PostController().Edit(post.Id, model);
+                return base.BaseEdit(post.Id, model);
             }
 
             return View("Edit", model);
         }
 
         [Authorize(Roles = "admin")]
-        public ActionResult Delete(int? id) {
+        public override ActionResult Delete(int? id) {
             Polls.Delete(id.Value);
 
             var post = Posts.GetByEntity(id.Value);
 
-            return new PostController().Delete(post.Id);
+            return base.Delete(post.Id);
         }
     }
 }

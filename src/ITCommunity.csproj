@@ -129,14 +129,15 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
-    <Compile Include="Controllers\PictureController.cs" />
+    <Compile Include="Controllers\BasePictureController.cs" />
     <Compile Include="Controllers\PollController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Controllers\HeaderController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\FavoriteController.cs" />
-    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\BasePostController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">

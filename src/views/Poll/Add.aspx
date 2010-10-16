@@ -9,7 +9,7 @@
 
     <h1>Добавление опроса</h1>
  
-    <% using (Html.BeginForm()) { %>
+    <% using (Html.BeginForm("add", "poll", null, FormMethod.Post, new { enctype = "multipart/form-data" })) { %>
        
         <h2>
             <%= Html.LabelFor(m => m.Topic) %>
@@ -51,9 +51,11 @@
         <% Html.RenderPartial("EditorToolbar"); %>
         <%= Html.TextAreaFor(m => m.Text, new { @class = "large" })%>
         <%= Html.ValidationMessageFor(m => m.Text)%>
-
+  
+        <% Html.RenderPartial("../Picture/Upload", Model); %>
+  
         <label>Категории</label>
-        <div class="meta">
+            <div class="meta">
             выберите в какие категории будет входить опрос.
             <% if (Poll.Category != null) { %>
                 <span class="info">Категория "<%= Poll.Category.Name %>" будет выбрана в любом случае</span>

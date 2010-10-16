@@ -7,7 +7,7 @@
 
 <% } else { %>
 
-    <% using (Html.BeginForm("VotePoll", "Post", new { id = Model.Id })) { %>
+    <% using (Html.BeginForm("vote", "poll", new { id = Model.Id })) { %>
 
         <%= Html.Hidden("postId", Model.Post.Id) %>
 
