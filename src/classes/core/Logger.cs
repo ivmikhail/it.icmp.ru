@@ -2,6 +2,8 @@ using log4net;
 using log4net.Config;
 using System.Web;
 using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 
 namespace ITCommunity.Core {
@@ -15,10 +17,17 @@ namespace ITCommunity.Core {
         }
         
         public static string GetUserInfo() {
-            return "\nДанные пользователя:" +
-                "\n   NICK: " + CurrentUser.User.Nick +
-                "\n   IP:   " + CurrentUser.Ip +
-                "\n   URL:  " + HttpContext.Current.Request.Url.ToString();
+            string request = "";
+            NameValueCollection httpHeaders = CurrentUser.HttpHeaders;
+            foreach(string header in httpHeaders.AllKeys) {
+                request += Environment.NewLine + "   " + header + ": " + httpHeaders[header];
+            }
+
+            return Environment.NewLine + "Данные пользователя:" +
+                Environment.NewLine + "   NICK: " + CurrentUser.User.Nick +
+                Environment.NewLine + "   IP:   " + CurrentUser.Ip +
+                Environment.NewLine + "   URL:  " + HttpContext.Current.Request.Url.ToString() +
+                Environment.NewLine + "Данные реквеста:" + request;
         }
 
         private static ILog GetInstance() {

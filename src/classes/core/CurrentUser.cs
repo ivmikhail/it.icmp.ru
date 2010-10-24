@@ -1,6 +1,8 @@
 using System;
 using System.Web;
 using System.Web.Security;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
@@ -14,6 +16,21 @@ namespace ITCommunity.Core {
     public static class CurrentUser {
 
         public const string SESSION_NAME = "CurrentUser";
+        private static readonly string[] HTTP_HEADERS = {
+				"REMOTE_ADDR",
+				"REMOTE_HOST",
+
+				"HTTP_USER_AGENT",
+				"HTTP_ACCEPT",
+				"HTTP_ACCEPT_CHARSET",
+				"HTTP_ACCEPT_ENCODING",
+				"HTTP_ACCEPT_LANGUAGE",
+				"HTTP_REFERER",
+				"HTTP_TE",
+				"HTTP_X_FORWARDED_FOR",
+				"HTTP_UA_CPU",
+				"HTTP_VIA"
+		};
 
         public static bool IsAuth {
             get { return HttpContext.Current.User.Identity.IsAuthenticated; }
@@ -30,6 +47,17 @@ namespace ITCommunity.Core {
             get {
                 var serverVars = HttpContext.Current.Request.ServerVariables;
                 return serverVars["HTTP_X_FORWARDED_FOR"] ?? serverVars["REMOTE_ADDR"];
+            }
+        }
+
+        public static NameValueCollection HttpHeaders {
+            get {
+                NameValueCollection httpHeaders = new NameValueCollection(); 
+                NameValueCollection serverVars = HttpContext.Current.Request.ServerVariables;
+                foreach (string key in HTTP_HEADERS) {
+                    httpHeaders.Add(key, serverVars[key]);
+                }
+                return httpHeaders;
             }
         }
 
