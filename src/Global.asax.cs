@@ -19,6 +19,12 @@ namespace ITCommunity {
 
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            
+            routes.MapRoute(
+                "Rfc",
+                "rfc",
+                new { controller = "Rfc", action = "search", query = "" }
+            );
 
             routes.MapRoute(
                 "IndexPage",
@@ -89,6 +95,12 @@ namespace ITCommunity {
             routes.MapRoute(
                 "Rss",
                 "rss",
+                new { controller = "Rss", action = "Feed" }
+            );
+            
+            routes.MapRoute(
+                "OldRss",
+                "rss.aspx",
                 new { controller = "Rss", action = "Feed" }
             );
 

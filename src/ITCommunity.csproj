@@ -99,7 +99,9 @@
     <Compile Include="Classes\DB\Captcha.cs" />
     <Compile Include="Classes\DB\MenuItem.cs" />
     <Compile Include="Classes\DB\Post.cs" />
+    <Compile Include="Classes\DB\Rfc.cs" />
     <Compile Include="Classes\DB\Tables\Categories.cs" />
+    <Compile Include="Classes\DB\Tables\Rfcs.cs" />
     <Compile Include="Classes\DB\Tables\Comments.cs" />
     <Compile Include="Classes\DB\Tables\Captchas.cs" />
     <Compile Include="Classes\DB\Tables\Polls.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Controllers\BasePictureController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\RfcController.cs" />
     <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Controllers\HeaderController.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="Models\Post\PostEditModel.cs" />
     <Compile Include="Models\Captcha\CaptchaModel.cs" />
     <Compile Include="Models\Post\PostEditCategoriesModel.cs" />
+    <Compile Include="Models\Rfc\RfcListModel.cs" />
     <Compile Include="Models\User\UserEditModel.cs" />
     <Compile Include="Models\User\UserListModel.cs" />
     <Compile Include="Models\User\UserCommentsModel.cs" />
@@ -249,6 +253,7 @@
     <Content Include="Views\Rating\Login.ascx" />
     <Content Include="Views\Rating\Rated.ascx" />
     <Content Include="Views\Rating\Rate.ascx" />
+    <Content Include="Views\Rfc\List.aspx" />
     <Content Include="Views\Shared\Forbidden.aspx" />
     <Content Include="Views\Shared\Link\Browser\Dir.ascx" />
     <Content Include="Views\Shared\Link\Browser\File.ascx" />
@@ -287,6 +292,7 @@
     <Content Include="Views\Shared\Link\Post\Edit.ascx" />
     <Content Include="Views\Shared\Link\Rating\Down.ascx" />
     <Content Include="Views\Shared\Link\Rating\Up.ascx" />
+    <Content Include="Views\Shared\Link\Rfc\View.ascx" />
     <Content Include="Views\Shared\Link\User\Comments.ascx" />
     <Content Include="Views\Shared\Link\Admin\Index.ascx" />
     <Content Include="Views\Shared\Link\User\Edit.ascx" />
