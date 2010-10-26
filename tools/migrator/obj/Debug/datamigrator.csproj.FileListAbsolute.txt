@@ -1,0 +1,5 @@
+c:\Users\wchk\Documents\projects\itcommunity\mvc\tools\migrator\bin\Debug\datamigrator.exe
+c:\Users\wchk\Documents\projects\itcommunity\mvc\tools\migrator\bin\Debug\datamigrator.pdb
+c:\Users\wchk\Documents\projects\itcommunity\mvc\tools\migrator\obj\Debug\ResolveAssemblyReference.cache
+c:\Users\wchk\Documents\projects\itcommunity\mvc\tools\migrator\obj\Debug\datamigrator.exe
+c:\Users\wchk\Documents\projects\itcommunity\mvc\tools\migrator\obj\Debug\datamigrator.pdb
