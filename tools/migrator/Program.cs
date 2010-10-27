@@ -22,21 +22,21 @@ namespace datamigrator
         
         static void Main(string[] args)
         {
-            //string sourceConnString = "Data Source=127.0.0.1;Initial Catalog=IT;Persist Security Info=True;User ID=IT;Password=nhfv,kth;persist security info=False;Connection Timeout=30;";
-            //string targetConnString = "Data Source=localhost;Initial Catalog=it2;Persist Security Info=True;User ID=it2;Password=dctbltngjgkfye;persist security info=False;Connection Timeout=30;";
 
-            string sourceConnString = "Data Source=localhost;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
-            string targetConnString = "Data Source=localhost;Initial Catalog=itcommunity;Persist Security Info=True;User ID=wchk;Password=1234;persist security info=False;Connection Timeout=30;";
+            string sourceConnString = "Data Source=WCHK-DESKTOP\\SQLEXPRESS;Initial Catalog=itc;Persist Security Info=True;User ID=wchk;Password=1234;Connection Timeout=30;";
+            string targetConnString = "Data Source=WCHK-DESKTOP\\SQLEXPRESS;Initial Catalog=itc-mvc;Persist Security Info=True;User ID=wchk;Password=1234;Connection Timeout=30;";
+            
 
             targetConn = OpenConnection(targetConnString);
             sourceConn = OpenConnection(sourceConnString);
 
             WriteToLog("INFO    Ready, steady, GO!!!1");
 
-            string[] targetTables = { "Categories", "PostsCategories", "Users", "PostsCategories", "Comments", "Favorites", "Notes" }; // RatingLogs, Ratings
+            string[] targetTables = { "Categories", "PostsCategories", "Messages", "Comments", "Favorites", "Notes", "RatingLogs", "Ratings", "Posts", "Users" }; 
             CleanTargetTables(targetTables);
 
             MoveUsers();
+            MoveMessages();
             MoveCategories();
             MovePosts();
             MovePostCatsLinks();
@@ -52,8 +52,12 @@ namespace datamigrator
         {
             string result = text;
 
-            //result = Regex.Replace(result, "<b>(.*?)</b>", "[b]$1[/b]", RegexOptions.Singleline | RegexOptions.IgnoreCase);
-            //result = Regex.Replace(result, "<i>(.*?)</i>", "[i]$1[/i]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
+
+            result = Regex.Replace(result, "\\[popup=(.*?)\\]\\[img\\](.*?)\\[/img\\]\\[/popup\\]", "[img=$1]$2[/img]", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "\\[float=left\\](.*?)\\[/float\\]", "[left]$1[/left]", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "\\[float=right\\](.*?)\\[/float\\]", "[right]$1[/right]", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, "\\[hr\\]", "", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+             //result = Regex.Replace(result, "<i>(.*?)</i>", "[i]$1[/i]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
             //result = Regex.Replace(result, "<s>(.*?)</s>", "[s]$1[/s]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
             //result = Regex.Replace(result, "<u>(.*?)</u>", "[u]$1[/u]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
             //result = Regex.Replace(result, "<pre>(.*?)</pre>", "[code]$1[/code]", RegexOptions.Singleline|RegexOptions.IgnoreCase);
@@ -85,9 +89,6 @@ namespace datamigrator
                     SqlCommand cmd = new SqlCommand(
                     "SET IDENTITY_INSERT Notes on;insert into Notes(Id,Title,Text,CreateDate,UserId) values(@id,@title,@text,@cdate,@user_id)", targetConn);
 
-                    string label = HttpUtility.HtmlEncode(sourceTable.Rows[i]["label"].ToString());
-                    string body = HttpUtility.HtmlEncode(sourceTable.Rows[i]["body"].ToString());
-
                     SqlParameter id = cmd.Parameters.Add("@id", SqlDbType.Int);
                     id.Value = Convert.ToInt32(sourceTable.Rows[i]["id"].ToString());
 
@@ -109,6 +110,56 @@ namespace datamigrator
             ResetIdentitySeed("Notes");
             WriteToLog("INFO    data migrating 'notes -> Notes' end");
         }
+
+
+        private static void MoveMessages() {
+
+            WriteToLog("INFO    data migrating 'messages -> Messages' start...");
+
+            DataTable sourceTable = GetSourceTable("messages");
+
+            for (int i = 0; i < sourceTable.Rows.Count; i++) {
+                SqlCommand cmd = new SqlCommand(
+                "SET IDENTITY_INSERT Notes on;insert into Messages(Id,ReceiverId,SenderId,Title,Text,DeletedForReceiver,DeletedForSender,CreateDate,IsReceiverRead) values(@id,@receiverId,@senderId,@title,@text,@rec_del,@sen_del,@cdate,@read)", targetConn);
+
+
+                SqlParameter id = cmd.Parameters.Add("@id", SqlDbType.Int);
+                id.Value = Convert.ToInt32(sourceTable.Rows[i]["id"].ToString());
+                
+                SqlParameter r_id = cmd.Parameters.Add("@receiverId", SqlDbType.Int);
+                r_id.Value = Convert.ToInt32(sourceTable.Rows[i]["receiver_id"].ToString());
+
+                SqlParameter s_id = cmd.Parameters.Add("@senderId", SqlDbType.Int);
+                s_id.Value = Convert.ToInt32(sourceTable.Rows[i]["sender_id"].ToString());
+
+
+                SqlParameter title = cmd.Parameters.Add("@title", SqlDbType.NVarChar);
+                title.Value = sourceTable.Rows[i]["title"].ToString();
+
+                SqlParameter text = cmd.Parameters.Add("@text", SqlDbType.NVarChar);
+                text.Value = sourceTable.Rows[i]["text"].ToString();
+
+
+                SqlParameter r_del = cmd.Parameters.Add("@rec_del", SqlDbType.Int);
+                r_del.Value = Convert.ToInt32(sourceTable.Rows[i]["receiver_del"].ToString());
+
+                SqlParameter s_del = cmd.Parameters.Add("@sen_del", SqlDbType.Int);
+                s_del.Value = Convert.ToInt32(sourceTable.Rows[i]["sender_del"].ToString());
+
+
+                SqlParameter cdate = cmd.Parameters.Add("@cdate", SqlDbType.DateTime);
+                cdate.Value = Convert.ToDateTime(sourceTable.Rows[i]["cdate"].ToString());
+
+                SqlParameter read = cmd.Parameters.Add("@read", SqlDbType.Int);
+                read.Value = Convert.ToInt32(sourceTable.Rows[i]["read"].ToString());
+
+                cmd.ExecuteNonQuery();
+            }
+            ExecuteQuery("SET IDENTITY_INSERT Messages off", targetConn);
+            ResetIdentitySeed("Messages");
+            WriteToLog("INFO    data migrating 'messages -> Messages' end");
+        }
+
 
         private static void MoveCategories()
         {
@@ -140,7 +191,8 @@ namespace datamigrator
             DataTable sourceTable = GetSourceTable("post_cat");
             for (int i = 0; i < sourceTable.Rows.Count; i++) {
                 ExecuteQuery(@"SET IDENTITY_INSERT PostsCategories on; 
-                               insert into PostsCategories(PostId, CategoryID) values("
+                               insert into PostsCategories(Id, PostId, CategoryID) values("
+                               + sourceTable.Rows[i]["id"] + ","
                                + sourceTable.Rows[i]["post_id"] + "," +
                                sourceTable.Rows[i]["cat_id"] + ")", targetConn);
             }
@@ -167,7 +219,7 @@ namespace datamigrator
 
 
             WriteToLog("INFO    data migrating 'rating_logs -> RatingLogs' start...");
-            DataTable sourceTable2 = GetSourceTable("post_cat");
+            DataTable sourceTable2 = GetSourceTable("rating_logs");
             for (int i = 0; i < sourceTable2.Rows.Count; i++) {
                 ExecuteQuery(@"SET IDENTITY_INSERT RatingLogs on; 
                                insert into RatingLogs(Id, EntityId,EntityType,UserId,Value,CreateDate) values("
@@ -231,11 +283,11 @@ namespace datamigrator
                         + sourceTable.Rows[i]["id"] + "," +
                         "'" + sourceTable.Rows[i]["nick"] + "'," +
                         "'" + sourceTable.Rows[i]["pass"] + "'," +
-                        "CONVERT(datetime, '" + sourceTable.Rows[i]["cdate"].ToString() + "', 104)," + 
-                        sourceTable.Rows[i]["role"] +
-                        "'" + sourceTable.Rows[i]["email"] + "')" +
-                        sourceTable.Rows[i]["header_text_counter"] +
-                        sourceTable.Rows[i]["posts_count"] + 
+                        "CONVERT(datetime, '" + sourceTable.Rows[i]["cdate"].ToString() + "', 104),"
+                        + "'" + sourceTable.Rows[i]["role"] + "'," 
+                        + "'" + sourceTable.Rows[i]["email"] + "'," +
+                        sourceTable.Rows[i]["header_text_counter"] + "," +
+                        sourceTable.Rows[i]["posts_count"] + "," +
                         sourceTable.Rows[i]["comments_count"] + ")", targetConn);
             }
 
@@ -288,7 +340,7 @@ namespace datamigrator
                     comm_count.Value = Convert.ToInt32(sourceTable.Rows[i]["comments_count"].ToString());
 
                     SqlParameter isComm = cmd.Parameters.Add("@isComm", SqlDbType.Int);
-                    comm_count.Value = 1;
+                    isComm.Value = 1;
 
                     cmd.ExecuteNonQuery();
             }
