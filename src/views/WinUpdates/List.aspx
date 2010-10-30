@@ -36,7 +36,7 @@
             </li>
         <% } %> 
         <% foreach (var update in Model.List) { %>
-            <li>
+            <li class="block">
                 <% Html.RenderPartial("Link/WinUpdates/View", update); %>
                 <p class="info"><%= Html.Encode(update.Description) %></p>
             </li>

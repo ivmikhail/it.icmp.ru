@@ -33,7 +33,7 @@ namespace ITCommunity {
             );
             routes.MapRoute(
                 "WinUpdatesDownload",
-                "winupdates/file/{filename}",
+                "winupdates/file",
                 new { controller = "WinUpdates", action = "file" }
             );
 

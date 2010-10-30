@@ -24,7 +24,7 @@
             </li>
         <% } %> 
         <% foreach (var rfc in Model.List) { %>
-            <li>
+            <li class="block">
                 <% Html.RenderPartial("Link/Rfc/View", rfc); %>
                 <p class="info"><%= Html.Encode(rfc.Title) %></p>
             </li>
