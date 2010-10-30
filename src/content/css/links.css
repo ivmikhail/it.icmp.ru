@@ -45,7 +45,7 @@
 #up-arrow,
 #down-arrow {
     color: #f0f0f0;
-    font-size: 6em;
+    font-size: 5em;
     position: absolute;
     left: 94%;
     text-align: right;
@@ -56,9 +56,10 @@
     color: #cccccc;
 }
 #up-arrow {
-    margin-top: -1.4em;
+    margin-top: -1.2em;
 }
 #down-arrow {
+    margin-top: -0.1em;
 }
 
 #content .rating-negative {

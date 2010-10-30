@@ -1,6 +1,7 @@
 /* стили сайдбара */
 
 #sidebar {
+    background: #f0f0f0;
     color: #999999;
     float: left;
     padding: 16px 4%;
