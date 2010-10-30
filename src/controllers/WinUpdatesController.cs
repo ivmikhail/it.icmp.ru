@@ -16,9 +16,10 @@ namespace ITCommunity.Controllers
             return View("List", model);
         }
 
-        public ActionResult File(string filename = "") {
+        public ActionResult File(string name = "") {
+            string filename = Server.UrlDecode(name);
             WsusFile file = null;
-            if (filename != "") {
+            if (name != "") {
                 file = Wsus.get(filename);
             }
             if (file != null) {
