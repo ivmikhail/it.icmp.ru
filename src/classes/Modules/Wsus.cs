@@ -20,20 +20,11 @@ namespace ITCommunity.Modules {
         private DateTime _modifiedDate;
         private string   _digest;
 
-        public string Name {
-            get;
-            private set;
-        }
+        public string Name { get; set; }
 
-        public string Description {
-            get;
-            private set;
-        }
+        public string Description { get;set; }
 
-        public string ModifiedDate {
-            get;
-            private set;
-        }
+        public string ModifiedDate { get; set; }
         
         public string RealPath {
             get {
