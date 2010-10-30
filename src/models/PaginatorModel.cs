@@ -47,5 +47,8 @@ namespace ITCommunity.Models {
             PerPage = 10;
             PagesCountOnPage = 11;
         }
+        public PaginatedModel(int? page, int totalCount) : this(page) {
+            this.TotalCount = totalCount;
+        }
     }
 }

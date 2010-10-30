@@ -21,7 +21,7 @@ namespace ITCommunity.DB
                 } else {
                     num = Number;
                 }
-                return "/" + Config.Get("RfcFolder") + "/rfc" + num + ".txt";
+                return "/" + Config.RfcFolder + "/rfc" + num + ".txt";
             }
         }
     }

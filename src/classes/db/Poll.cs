@@ -10,7 +10,7 @@ namespace ITCommunity.DB {
 
         public static Category Category {
             get {
-                var categoryId = Config.GetInt("PollCategoryId");
+                int categoryId = Config.PollCategoryId;
                 return Categories.Get(categoryId);
             }
         }

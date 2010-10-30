@@ -13,7 +13,6 @@ namespace ITCommunity.Modules {
 
     public class WsusFile {
 
-        private static readonly string WSUS_DIR_KEY = "WsusContentPath";
 
         public string   Name { get; set; }
         public string   Description { get;set; }
@@ -22,7 +21,7 @@ namespace ITCommunity.Modules {
         
         public string RealPath {
             get {
-                return Config.Get(WSUS_DIR_KEY) + Digest.Substring(Digest.Length - 2, 2) + @"\" + Digest + Path.GetExtension(Name);
+                return Config.WsusContentPath + Digest.Substring(Digest.Length - 2, 2) + @"\" + Digest + Path.GetExtension(Name);
             }
         }
         
@@ -38,8 +37,6 @@ namespace ITCommunity.Modules {
     }
 
     public class Wsus {
-
-        private static readonly string WSUS_CONN_KEY = "WsusConnectionString";
 
         public static WsusFile get(string filename) {
             List<WsusFile> files = search(filename, "", "");
@@ -68,7 +65,7 @@ namespace ITCommunity.Modules {
                            
                            where R.IsLatestRevision = 1 and F.IsEula = 0 and F.filename like @beginWith ";
 
-            SqlConnection conn = new SqlConnection(Config.Get(WSUS_CONN_KEY));
+            SqlConnection conn = new SqlConnection(Config.WsusConnectionString);
             try {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();

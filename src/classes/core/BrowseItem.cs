@@ -14,15 +14,15 @@ namespace ITCommunity.Core {
         private const string DESCRIPTION_FILENAME = "descript.ion";
 
         public static string DefaultDir {
-            get { return Config.Get("BrowserDefaultDirectory"); }
+            get { return Config.BrowserDefaultDirectory; }
         }
 
         public static string BasePath {
-            get { return Config.Get("BrowserBasePath").Trim('\\') + '\\'; }
+            get { return Config.BrowserBasePath.Trim('\\') + '\\'; }
         }
 
         public static string BaseUrl {
-            get { return Config.Get("BrowserBaseUrl").Trim('/') + '/'; }
+            get { return Config.BrowserBaseUrl.Trim('/') + '/'; }
         }
 
         public static List<BrowseItem> Root {

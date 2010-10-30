@@ -46,7 +46,7 @@ namespace ITCommunity.Models {
         public PostListModel(SortBy sortBy, int? page) :
             base(page) {
             Sorting = sortBy;
-            PerPage = Config.GetInt("PostsPerPage");
+            PerPage = Config.PostsPerPage;
             PeriodDays = Periods.All;
         }
 

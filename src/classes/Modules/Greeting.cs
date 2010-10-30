@@ -21,8 +21,8 @@ namespace ITCommunity.Modules {
         static Greeting() {
             var appPath = HttpContext.Current.Request.MapPath(HttpContext.Current.Request.ApplicationPath);
 
-            _commonsPath = appPath + Config.Get("GreetingPath");
-            _personalsPath = appPath + Config.Get("PersonalGreetingPath");
+            _commonsPath = appPath + Config.GreetingPath;
+            _personalsPath = appPath + Config.PersonalGreetingPath;
         }
 
         public static string Get() {

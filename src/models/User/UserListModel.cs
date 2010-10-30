@@ -19,7 +19,7 @@ namespace ITCommunity.Models {
 
         public UserListModel(string role, int? page)
             : base(page) {
-            PerPage = Config.GetInt("UsersPerPage");
+            PerPage = Config.UsersPerPage;
             _showRole = role;
             List = GetUsers();
         }

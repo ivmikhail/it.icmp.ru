@@ -35,7 +35,7 @@ namespace ITCommunity.Controllers {
             var siteUrl = new Uri(Config.SiteAddress);
             var feed = new SyndicationFeed(siteTitle, siteDescription, siteUrl);
 
-            var posts = Posts.GetLast(Config.GetInt("RssPostsCount"));
+            var posts = Posts.GetLast(Config.RssPostsCount);
             var items = new List<SyndicationItem>();
             foreach (Post post in posts) {
                 var url = Config.SiteAddress + Url.Action("view", "post", new { id = post.Id });

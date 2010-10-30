@@ -258,8 +258,8 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static List<Post> GetTopPopular() {
-            int days = Config.GetInt("PopularPostsDays");
-            int count = Config.GetInt("PopularPostsCount");
+            int days = Config.PopularPostsDays;
+            int count = Config.PopularPostsCount;
 
             return AppCache.Get("PopularPosts", () => GetTopPopular(count, days));
         }
@@ -300,8 +300,8 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static List<Post> GetTopDiscussible() {
-            int days = Config.GetInt("DiscussiblePostsDays");
-            int count = Config.GetInt("DiscussiblePostsCount");
+            int days = Config.DiscussiblePostsDays;
+            int count = Config.DiscussiblePostsCount;
 
             return AppCache.Get("DiscussiblePosts", () => GetTopDiscussible(count, days));
         }
@@ -353,8 +353,8 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static List<Post> GetTopRated() {
-            int days = Config.GetInt("RatedPostsDays");
-            int count = Config.GetInt("RatedPostsCount");
+            int days = Config.RatedPostsDays;
+            int count = Config.RatedPostsCount;
 
             return AppCache.Get("RatedPosts", () => GetTopRated(count, days));
         }

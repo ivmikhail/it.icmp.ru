@@ -12,19 +12,19 @@ namespace ITCommunity.Core {
     public class Picture {
 
         public static int MaxThumbWidth {
-            get { return Config.GetInt("MaxThumbWidth"); }
+            get { return Config.MaxThumbWidth; }
         }
 
         public static int MaxThumbHeight {
-            get { return Config.GetInt("MaxThumbHeight"); }
+            get { return Config.MaxThumbHeight; }
         }
 
         public static int MaxSize {
-            get { return Config.GetInt("PictureMaxSize"); }
+            get { return Config.PictureMaxSize; }
         }
 
         public static string AllowedTypes {
-            get { return Config.Get("PictureContentTypes"); }
+            get { return Config.PictureContentTypes; }
         }
 
         public string Name { get; set; }
