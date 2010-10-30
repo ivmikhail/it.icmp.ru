@@ -4,7 +4,7 @@
 <h2>
     Активные постеры
     <span class="period">
-        <%= Config.Get("ActivePostersTimeText") %>
+        <%= Config.ActivePostersTimeText %>
     </span>
 </h2>
 

@@ -25,11 +25,11 @@ namespace ITCommunity.DB {
                 var safelyText = HttpUtility.HtmlEncode(Text);
                 safelyText = Regex.Replace(safelyText, "\\[(.*?)\\](.*?)\\[\\/(.*?)\\]", "$2", RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
-                if (safelyText.Length < Config.GetInt("LastCommentsSize")) {
+                if (safelyText.Length < Config.LastCommentsSize) {
                     return safelyText;
                 }
 
-                return safelyText.Substring(0, Config.GetInt("LastCommentsSize")) + "...";
+                return safelyText.Substring(0, Config.LastCommentsSize) + "...";
             }
         }
 

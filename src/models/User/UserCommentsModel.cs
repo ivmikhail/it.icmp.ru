@@ -28,7 +28,7 @@ namespace ITCommunity.Models {
         public UserCommentsModel(User user, int? page)
             : base(page) {
             User = user;
-            PerPage = Config.GetInt("UserCommentsPerPage");
+            PerPage = Config.UserCommentsPerPage;
             Load();
         }
 

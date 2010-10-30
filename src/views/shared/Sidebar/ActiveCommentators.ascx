@@ -4,7 +4,7 @@
 <h2>
     Активные комментаторы
     <span class="period">
-        <%= Config.Get("ActiveCommentatorsTimeText")%>
+        <%= Config.ActiveCommentatorsTimeText%>
     </span>
 </h2>
 

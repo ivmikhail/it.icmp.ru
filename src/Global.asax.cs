@@ -9,6 +9,7 @@ using System.Web.Security;
 
 using ITCommunity.Core;
 using ITCommunity.DB.Tables;
+using ITCommunity.IndexerLib;
 
 
 namespace ITCommunity {
@@ -19,7 +20,13 @@ namespace ITCommunity {
 
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
+
+            routes.MapRoute(
+                "Search",
+                "search",
+                new { controller = "Search", action = "search", query = "" , page = 1}
+            );
+
             routes.MapRoute(
                 "Rfc",
                 "rfc",
@@ -158,6 +165,8 @@ namespace ITCommunity {
 
             var recoveriesPurgeTimer = Config.GetDouble("RecoveriesPurgeTimerMinutes");
             _tasks.Add(new TimerTask(recoveriesPurgeTimer, Recoveries.Purge));
+        
+            Indexer.Init(Config.ConnectionString, Config.IndexerPath);
         }
 
         protected void Application_End(object sender, EventArgs e) {

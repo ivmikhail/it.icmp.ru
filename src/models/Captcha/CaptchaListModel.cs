@@ -16,7 +16,7 @@ namespace ITCommunity.Models {
 
         public CaptchaListModel(int? page)
             : base(page) {
-            PerPage = Config.GetInt("CaptchasPerPage");
+            PerPage = Config.CaptchasPerPage;
             List = GetCaptchas();
         }
 

@@ -6,5 +6,5 @@
     "discussiblelist",
     "post",
     new { period = "month" },
-    new { title = "Посмотреть обсуждаемые посты " + Config.Get("DiscussiblePostsTimeText") }
+    new { title = "Посмотреть обсуждаемые посты " + Config.DiscussiblePostsTimeText }
 )%>

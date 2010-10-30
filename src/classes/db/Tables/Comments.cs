@@ -11,7 +11,7 @@ namespace ITCommunity.DB.Tables {
         public const string LAST_CACHE_KEY = "LastComments";
 
         public static List<Comment> GetLast() {
-            var count = Config.GetInt("LastCommentsCount");
+            int count = Config.LastCommentsCount;
 
             return AppCache.Get(LAST_CACHE_KEY, () => GetLast(count));
         }

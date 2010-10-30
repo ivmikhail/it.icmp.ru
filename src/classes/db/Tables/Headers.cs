@@ -84,7 +84,7 @@ namespace ITCommunity.DB.Tables {
         public static Header GetRandom() {
             if (Actual.Count == 0) {
                 var header = new Header();
-                header.Text = string.Format(Config.Get("HeaderDefaultFormat"), CurrentUser.User.Nick);
+                header.Text = string.Format(Config.HeaderDefaultFormat, CurrentUser.User.Nick);
                 return header;
             }
 

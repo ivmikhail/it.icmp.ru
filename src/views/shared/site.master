@@ -23,7 +23,7 @@
             <% Html.RenderPartial("Menu"); %>
         </asp:ContentPlaceHolder>
 
-        <% using (Html.BeginForm("search", "post", FormMethod.Get, new { @class = "search-form" } )) { %>
+        <% using (Html.BeginForm("search", "search", FormMethod.Get, new { @class = "search-form" } )) { %>
             <div>
                 <input type="text" name="q" />
                 <input type="submit" value="поиск" />

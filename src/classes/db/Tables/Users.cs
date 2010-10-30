@@ -82,7 +82,7 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static List<User> GetLastRegistered() {
-            var count = Config.GetInt("LastRegisteredUsersCount");
+            var count = Config.LastRegisteredUsersCount;
 
             return AppCache.Get("LastRegisteredUsers", () => GetLastRegistered(count));
         }
@@ -115,8 +115,8 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static Dictionary<User, int> GetActivePosters() {
-            var count = Config.GetInt("ActivePostersCount");
-            var days = Config.GetInt("ActivePostersDays");
+            int count = Config.ActivePostersCount;
+            int days = Config.ActivePostersDays;
 
             return AppCache.Get("ActivePosters", () => GetActivePosters(count, days));
         }
@@ -145,7 +145,7 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static Dictionary<User, int> GetTopPosters() {
-            var count = Config.GetInt("TopPostersCount");
+            int count = Config.TopPostersCount;
 
             return AppCache.Get("TopPosters", () => GetTopPosters(count));
         }
@@ -178,8 +178,8 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static Dictionary<User, int> GetActiveCommentators() {
-            var count = Config.GetInt("ActiveCommentatorsCount");
-            var days = Config.GetInt("ActiveCommentatorsDays");
+            int count = Config.ActiveCommentatorsCount;
+            int days = Config.ActiveCommentatorsDays;
 
             return AppCache.Get("ActiveCommentators", () => GetActiveCommentators(count, days));
         }
@@ -208,7 +208,7 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static Dictionary<User, int> GetTopCommentators() {
-            var count = Config.GetInt("TopCommentatorsCount");
+            var count = Config.TopCommentatorsCount;
 
             return AppCache.Get("TopCommentators", () => GetTopCommentators(count));
         }

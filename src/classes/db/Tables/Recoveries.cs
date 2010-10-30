@@ -53,7 +53,7 @@ namespace ITCommunity.DB.Tables {
 
         public static void Purge() {
             using (var db = Database.Connect()) {
-                var days = Config.GetInt("RecoveryPurgeDays");
+                var days = Config.RecoveryPurgeDays;
                 var date = DateTime.Now.AddDays(-days);
 
                 var recoveries =

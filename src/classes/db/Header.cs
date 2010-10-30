@@ -6,15 +6,15 @@ namespace ITCommunity.DB {
     public partial class Header {
 
         public static int MaxLength {
-            get { return Config.GetInt("HeaderMaxLength"); }
+            get { return Config.HeaderMaxLength; }
         }
 
         public static int ShowingHours {
-            get { return Config.GetInt("HeaderShowingHours"); }
+            get { return Config.HeaderShowingHours; }
         }
 
         public static int RequiredPostsCount {
-            get { return Config.GetInt("HeaderRequiredPostsCount"); }
+            get { return Config.HeaderRequiredPostsCount; }
         }
 
         partial void OnLoaded() {

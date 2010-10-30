@@ -4,7 +4,7 @@
 <h2>
     Рейтинговые
     <span class="period">
-        <%= Config.Get("RatedPostsTimeText")%>
+        <%= Config.RatedPostsTimeText%>
     </span>
 </h2>
 

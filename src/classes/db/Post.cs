@@ -19,7 +19,7 @@ namespace ITCommunity.DB {
         }
 
         public static string DefaultPicturesPath {
-            get { return Config.Get("PostPicturesFolder") + "/" + CurrentUser.User.Id + "/-1"; }
+            get { return Config.PostPicturesFolder + "/" + CurrentUser.User.Id + "/-1"; }
         }
 
         public object Entity { get; set; }
@@ -56,7 +56,7 @@ namespace ITCommunity.DB {
         }
 
         public string PicturesPath {
-            get { return Config.Get("PostPicturesFolder") + "/" + CurrentUser.User.Id + "/" + Id; }
+            get { return Config.PostPicturesFolder + "/" + CurrentUser.User.Id + "/" + Id; }
         }
 
         partial void OnLoaded() {
