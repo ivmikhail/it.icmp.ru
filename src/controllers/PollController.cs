@@ -60,7 +60,7 @@ namespace ITCommunity.Controllers {
 
             int width = 800;
             int height = 400;
-            int thumbWidth = 600;
+            int thumbWidth = 500;
             int thumbHeight = 250;
 
             var chart = new Chart();

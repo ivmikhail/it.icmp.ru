@@ -7,6 +7,7 @@ html {
 
 body {
     background: #f0f0f0;
+    min-width: 840px;
     max-width: 1000px;
     margin: 0 auto;
 }
