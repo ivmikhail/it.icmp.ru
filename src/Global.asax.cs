@@ -23,7 +23,18 @@ namespace ITCommunity {
             routes.MapRoute(
                 "Rfc",
                 "rfc",
-                new { controller = "Rfc", action = "search", query = "" }
+                new { controller = "Rfc", action = "search" }
+            );
+
+            routes.MapRoute(
+                "WinUpdates",
+                "winupdates",
+                new { controller = "WinUpdates", action = "search" }
+            );
+            routes.MapRoute(
+                "WinUpdatesDownload",
+                "winupdates/file/{filename}",
+                new { controller = "WinUpdates", action = "file" }
             );
 
             routes.MapRoute(

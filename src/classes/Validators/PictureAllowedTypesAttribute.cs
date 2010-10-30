@@ -12,8 +12,6 @@ namespace ITCommunity.Validators {
 
         private const string _defaultErrorMessage = "Не верный формат рисунка, вот список поддерживаемых форматов: {0}";
 
-        private int _size;
-
         public override string FormatErrorMessage(string name) {
             return String.Format(_defaultErrorMessage, Picture.AllowedTypes);
         }

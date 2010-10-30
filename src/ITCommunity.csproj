@@ -113,6 +113,7 @@
     <Compile Include="Classes\DB\Tables\Users.cs" />
     <Compile Include="Classes\Modules\Greeting.cs" />
     <Compile Include="Classes\Modules\RssLoader.cs" />
+    <Compile Include="Classes\Modules\Wsus.cs" />
     <Compile Include="Classes\Utils\BBCodeParser.cs" />
     <Compile Include="Classes\Core\ExtensionMethods.cs" />
     <Compile Include="Classes\Utils\HtmlExtension.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
     <Compile Include="Controllers\BasePictureController.cs" />
+    <Compile Include="Controllers\WinUpdatesController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\RfcController.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="Classes\DB\User.cs" />
     <Compile Include="Models\PaginatorModel.cs" />
     <Compile Include="Models\Favorite\FavoritePostsModel.cs" />
+    <Compile Include="Models\WinUpdates\WinUpdatesListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +321,7 @@
     <Content Include="Views\Shared\Link\User\ForgotPassword.ascx" />
     <Content Include="Views\Shared\Link\User\Login.ascx" />
     <Content Include="Views\Shared\Link\User\Register.ascx" />
+    <Content Include="Views\Shared\Link\WinUpdates\View.ascx" />
     <Content Include="Views\Shared\Menu.ascx" />
     <Content Include="Views\Favorite\Posts.aspx" />
     <Content Include="Views\Shared\Link\Comment\Edit.ascx" />
@@ -375,6 +379,7 @@
     <Content Include="Views\User\Edited.aspx" />
     <Content Include="Views\User\Sidebar.ascx" />
     <Content Include="Views\User\UserMenu.ascx" />
+    <Content Include="Views\WinUpdates\List.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

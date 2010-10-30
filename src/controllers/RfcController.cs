@@ -14,6 +14,5 @@ namespace ITCommunity.Controllers
             var model = new RfcListModel(q);
             return View("List", model);
         }
-
     }
 }
