@@ -44,9 +44,8 @@ namespace ITCommunity.Models {
         }
 
         public WinUpdatesListModel(string start, string q1, string q2) {
-            List<WsusFile> result = null;
             if (start != string.Empty) {
-                result = Wsus.search(start, q1, q2);  
+                List = Wsus.search(start, q1, q2);  
             }
             Start = start;
             Q1 = q1;
