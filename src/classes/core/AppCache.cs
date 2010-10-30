@@ -27,7 +27,7 @@ namespace ITCommunity.Core {
         /// <param name="key">Идентификатор</param>
         /// <param name="dataLoader">Функция загрузки данных для хранения в кеше</param>
         /// <returns>Обьект из кеша</returns>
-        public static T Get<T>(string key, Func<T> dataLoader) where T : class {
+        public static T Get<T>(string key, Func<T> dataLoader) {
             object obj;
             lock (@lock) {
                 if ((obj = Get(key)) == null) {

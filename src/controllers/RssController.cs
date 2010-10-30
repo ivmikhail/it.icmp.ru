@@ -7,6 +7,8 @@ using System.Xml;
 using ITCommunity.Core;
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
+using ITCommunity.Modules;
+using System.Web.Mvc.Html;
 
 
 namespace ITCommunity.Controllers {
@@ -45,12 +47,21 @@ namespace ITCommunity.Controllers {
                     post.Id.ToString(),
                     post.CreateDate.ToUniversalTime()
                 );
+
                 items.Add(item);
             }
 
             feed.Items = items;
 
             return new RssActionResult() { Feed = feed };
+        }
+
+        public ActionResult Load() {
+            var uri = "http://localhost:56910/rss";
+
+            var items = RssLoader.Load(uri);
+
+            return View(items);
         }
     }
 }

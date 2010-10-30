@@ -112,6 +112,7 @@
     <Compile Include="Classes\DB\Tables\Posts.cs" />
     <Compile Include="Classes\DB\Tables\Users.cs" />
     <Compile Include="Classes\Modules\Greeting.cs" />
+    <Compile Include="Classes\Modules\RssLoader.cs" />
     <Compile Include="Classes\Utils\BBCodeParser.cs" />
     <Compile Include="Classes\Core\ExtensionMethods.cs" />
     <Compile Include="Classes\Utils\HtmlExtension.cs" />
@@ -254,6 +255,9 @@
     <Content Include="Views\Rating\Rated.ascx" />
     <Content Include="Views\Rating\Rate.ascx" />
     <Content Include="Views\Rfc\List.aspx" />
+    <Content Include="Views\Rss\Description.ascx" />
+    <Content Include="Views\Rss\List.ascx" />
+    <Content Include="Views\Rss\Load.aspx" />
     <Content Include="Views\Shared\Forbidden.aspx" />
     <Content Include="Views\Shared\Link\Browser\Dir.ascx" />
     <Content Include="Views\Shared\Link\Browser\File.ascx" />
@@ -293,6 +297,7 @@
     <Content Include="Views\Shared\Link\Rating\Down.ascx" />
     <Content Include="Views\Shared\Link\Rating\Up.ascx" />
     <Content Include="Views\Shared\Link\Rfc\View.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Title.ascx" />
     <Content Include="Views\Shared\Link\User\Comments.ascx" />
     <Content Include="Views\Shared\Link\Admin\Index.ascx" />
     <Content Include="Views\Shared\Link\User\Edit.ascx" />

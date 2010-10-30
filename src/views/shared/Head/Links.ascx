@@ -3,9 +3,10 @@
 
 <link rel="alternate"  type="application/rss+xml" href="<%= Url.Action("feed", "rss") %>" />
     
-<link rel="shortcut icon" href="<%= Url.Content("~/favicon.ico?v=0.1") %>" type="image/vnd.microsoft.icon" />
+<% var v = "0.3"; %>
 
-<% var v = "0.2"; %>
+<link rel="shortcut icon" href="<%= Url.Content("~/favicon.ico?v=" + v) %>" type="image/vnd.microsoft.icon" />
+
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/reset.css?v=" + v) %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/tags.css?v=" + v) %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/main.css?v=" + v) %>" />

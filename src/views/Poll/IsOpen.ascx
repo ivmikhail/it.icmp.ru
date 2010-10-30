@@ -1,10 +1,10 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Poll>" %>
 
 голосование:
-<span class="info">
+<b class="info">
     <% if (Model.IsOpen) { %>
         открытое
     <% } else { %>
         закрытое
     <% } %>
-</span>
+</b>

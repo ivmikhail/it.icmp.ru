@@ -1,4 +1,4 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Poll>" %>
 
 
-проголосовавших: <span class="info"><%= Model.VotedUsersCount%></span>
+проголосовавших: <b class="info"><%= Model.VotedUsersCount%></b>

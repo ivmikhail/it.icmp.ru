@@ -2,7 +2,7 @@
 
 
 <ul id="<%= Model.HtmlId %>" class="right-list">
-    <li>
+    <li class="margin-none">
         <% Html.RenderPartial("Link/Rating/Up"); %>
     </li>
     <li>

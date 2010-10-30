@@ -58,10 +58,10 @@ namespace ITCommunity.Controllers {
                 return NotFound();
             }
 
-            int width = 800;
-            int height = 400;
-            int thumbWidth = 500;
-            int thumbHeight = 250;
+            int width = Config.GetInt("PollWidth");
+            int height = Config.GetInt("PollHeight");
+            int thumbWidth = Config.GetInt("PollThumbWidth");
+            int thumbHeight = Config.GetInt("PollThumbHeight");
 
             var chart = new Chart();
             chart.BackColor = Color.White;

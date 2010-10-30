@@ -7,7 +7,9 @@
     <% } else { %>
         закончился:
     <% } %>
-    <span class="info">
-        <%= Html.Date(Model.EndDate) %>
-    </span>
+    <b class="info">
+        <%= Html.Date(Model.EndDate)%>
+    </b>
+<% } else { %>
+    не известно когда закончится
 <% } %>

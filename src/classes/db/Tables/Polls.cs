@@ -61,9 +61,11 @@ namespace ITCommunity.DB.Tables {
                 // актуально для опроса с несколько выбираемыми ответами
                 var isVoted = (
                     from vot in db.Votes
+                    from ans in db.PollAnswers
                     where
                         vot.UserId == vote.UserId &&
-                        vot.AnswerId == vote.AnswerId
+                        ans.Id == vote.AnswerId &&
+                        vot.PollAnswer.PollId == ans.PollId
                     select vot
                 ).Any();
 
