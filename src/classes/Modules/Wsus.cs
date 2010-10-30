@@ -15,20 +15,14 @@ namespace ITCommunity.Modules {
 
         private static readonly string WSUS_DIR_KEY = "WsusContentPath";
 
-        private string   _name;
-        private string   _description;
-        private DateTime _modifiedDate;
-        private string   _digest;
-
-        public string Name { get; set; }
-
-        public string Description { get;set; }
-
-        public string ModifiedDate { get; set; }
+        public string   Name { get; set; }
+        public string   Description { get;set; }
+        public DateTime ModifiedDate { get; set; }
+        public string   Digest { get; set; }
         
         public string RealPath {
             get {
-                return Config.Get(WSUS_DIR_KEY) + _digest.Substring(_digest.Length - 2, 2) + @"\" + _digest + Path.GetExtension(_name);
+                return Config.Get(WSUS_DIR_KEY) + Digest.Substring(Digest.Length - 2, 2) + @"\" + Digest + Path.GetExtension(Name);
             }
         }
         
@@ -36,10 +30,10 @@ namespace ITCommunity.Modules {
                         string description, 
                         DateTime modifiedDate, 
                         string digest) {
-            _name         = name;
-            _description  = description;
-            _modifiedDate = modifiedDate;
-            _digest       = digest;
+            Name         = name;
+            Description  = description;
+            ModifiedDate = modifiedDate;
+            Digest       = digest;
         }
     }
 
