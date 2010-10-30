@@ -23,6 +23,19 @@
 
         <div class="meta">
             <ul class="left-list">
+                <li>
+                    <% Html.RenderPartial("../Poll/EndDate", Model.Entity); %>
+                </li>
+            </ul>
+            <ul class="right-list">
+                <li>
+                    <% Html.RenderPartial("../Poll/IsOpen", Model.Entity); %>
+                </li>
+                <li>
+                    <% Html.RenderPartial("../Poll/VotedUsersCount", Model.Entity); %>
+                </li>
+            </ul>
+            <ul class="left-list">
                 <li class="info">
                     <%= Html.Date(Model.CreateDate) %>
                 </li>
@@ -32,15 +45,7 @@
             </ul>
 
             <ul class="right-list">
-                <li>
-                    <% Html.RenderPartial("../Poll/EndDate", Model.Entity); %>
-                </li>
-                <li>
-                    <% Html.RenderPartial("../Poll/IsOpen", Model.Entity); %>
-                </li>
-                <li>
-                    <% Html.RenderPartial("../Poll/VotedUsersCount", Model.Entity); %>
-                </li>
+                <li>просмотров: <b class="info">~<%= Model.ViewsCount %></b> </li>
                 <% if (CurrentUser.IsAuth) { %>
                     <li>
                         <% if (Model.Rating.IsRated) { %>

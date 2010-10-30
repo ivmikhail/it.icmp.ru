@@ -152,6 +152,10 @@ h1 .meta {
     margin-left: 12px;
 }
 
+.right-list li.margin-none {
+    margin: 0;
+}
+
 .clear {
     clear: both;
     content: "";

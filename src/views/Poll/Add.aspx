@@ -56,8 +56,8 @@
   
         <label>Категории</label>
             <div class="meta">
-            выберите в какие категории будет входить опрос.
-            <% if (Poll.Category != null) { %>
+                Выберите в какие категории будет входить пост. Пожалуйста выбирайте <b class="info">максимум 4 категории</b>.
+                <% if (Poll.Category != null) { %>
                 <span class="info">Категория "<%= Poll.Category.Name %>" будет выбрана в любом случае</span>
             <% } %>
         </div>
