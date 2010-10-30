@@ -111,8 +111,7 @@ namespace ITCommunity.Modules {
             reader.GetBytes(2, 0L, digestBuffer, 0, 20);
 
             return new WsusFile(reader["filename"].ToString(),
-                                "dsdsadas das das das",
-                                //reader["description"].ToString(),
+                                reader["description"].ToString(),
                                 (DateTime)reader["modifiedDate"],
                                 getHex(digestBuffer));
         }
