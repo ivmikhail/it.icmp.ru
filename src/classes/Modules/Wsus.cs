@@ -66,7 +66,7 @@ namespace ITCommunity.Modules {
                            left outer join tbUpdate           U    on    U.LocalUpdateID     = bR.LocalUpdateID  
                            left outer join tbPreComputedLocalizedProperty L on L.UpdateID = U.UpdateID AND L.ShortLanguage = 'ru' 
                            
-                           where R.IsLatestRevision = 1 and F.filename like @beginWith ";
+                           where R.IsLatestRevision = 1 and F.IsEula = 0 and F.filename like @beginWith ";
 
             SqlConnection conn = new SqlConnection(Config.Get(WSUS_CONN_KEY));
             try {
