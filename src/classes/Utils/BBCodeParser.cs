@@ -11,7 +11,7 @@ namespace ITCommunity.Utils {
 
         #region Constants
 
-        const string URL = @"(?:http://)?(?<url>(?:www\.)?(?<site>\w[\w-\.]*\.\w{2,10})(?:/.*?)?)";
+        const string URL = @"(?<url>(?:\w+://)?(?:www\.)?(?<site>\w[\w-\.]*\.\w{2,10})(?:/.*?)?)";
 
         const string PLAY_YKT_RU_VIDEO = @"
 <object data=""http://play.ykt.ru/player.swf"" width=""640"" height=""480"" type=""application/x-shockwave-flash"">
@@ -195,8 +195,8 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter("<code(.*?)>((.|\n)*?)</code>", "<pre><code$1>$2</code></pre>"));
 
             // ссылка
-            _formatters.Add(new TagFormatter("a", "url", "href=\"http://${url}\" title=\"http://${url}\"", null, "${site}", URL));
-            _formatters.Add(new TagFormatter("a", "url", "href=\"http://${url}\" title=\"http://${url}\"", URL));
+            _formatters.Add(new TagFormatter("a", "url", "href=\"${url}\" title=\"${url}\"", null, "${site}", URL));
+            _formatters.Add(new TagFormatter("a", "url", "href=\"${url}\" title=\"${url}\"", URL));
             _formatters.Add(new TagFormatter("a", "email", "href=\"mailto:${text}\" title=\"Написать письмо\""));
 
             // рисунок http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg
@@ -239,7 +239,7 @@ namespace ITCommunity.Utils {
             // мега регексп, который решает какие урлы конвертировать в ссылки
             // через 10 тысяч лет наши потомки найдут этот код и смогут прочесть
             // в этих иероглифах всю историю человечества =)
-            _formatters.Add(new RegexFormatter(@"(^|[^""\]=])(?:http://)(?<url>(?:www\.)?(?<site>\w[\w-\.]*\.\w{2,10})(?:/.*?)?)([,;\.\!]?\s|$)", "$1<a href=\"http://${url}\" title=\"http://${url}\">${site}</a>$2"));
+            _formatters.Add(new RegexFormatter(@"(^|\s)" + URL + @"($|\s)", "$1<a href=\"${url}\" title=\"${url}\">${url}</a>$2"));
 
             // <hr /> вместо <br />
             _formatters.Add(new ReplaceFormatter("\n\n", "\n<hr />\n"));

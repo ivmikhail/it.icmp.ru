@@ -1,5 +1,5 @@
 html {
-    background: #ffffff;
+    background: #afafaf;
     color: #333333;
     font-family: arial;
     font-size: 0.9em;
@@ -7,6 +7,8 @@ html {
 
 body {
     background: #f0f0f0;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 a {
