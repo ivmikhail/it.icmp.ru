@@ -33,11 +33,9 @@
 
     <ul class="right-list">
         <li>просмотров: <b class="info">~<%= Model.ViewsCount %></b> </li>
-        <% if (Model.Rating.IsRated) { %>
-            <li>
-                <% Html.RenderPartial("../Rating/Rated", Model.Rating); %>
-            </li>
-        <% } %>
+        <li>
+            <% Html.RenderPartial("../Rating/Rating", Model.Rating); %>
+        </li>
     </ul>
 
     <ul class="left-list">

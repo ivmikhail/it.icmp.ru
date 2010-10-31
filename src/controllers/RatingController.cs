@@ -32,6 +32,10 @@ namespace ITCommunity.Controllers {
                 return PartialView("RecentRegistration");
             }
 
+            if (Ratings.IsRated(CurrentUser.User.Id, log.EntityId, log.EntityType)) {
+                return PartialView("Rated");
+            }
+
             var value = Rating.GetValue(log.EntityType);
 
             log.UserId = CurrentUser.User.Id;
@@ -40,7 +44,7 @@ namespace ITCommunity.Controllers {
             var rating = Ratings.Log(log);
             rating.IsRated = true;
 
-            return PartialView("Rated", rating);
+            return PartialView("Rating", rating);
         }
     }
 }

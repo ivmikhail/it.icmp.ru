@@ -9,6 +9,9 @@
         <% Html.RenderPartial("Link/Captcha/List"); %>
     </li>
     <li>
+        <% Html.RenderPartial("Link/Rss/List"); %>
+    </li>
+    <li>
         <% Html.RenderPartial("Link/MenuItem/List"); %>
     </li>
     <li>

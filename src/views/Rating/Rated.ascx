@@ -1,7 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="ViewUserControl<Rating>" %>
+﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
 
-рейтинг:
-<b class="rating-<%= Model.Sign %>">
-    <%= Model.Value %>
-</b>
+Вы уже голосовали
