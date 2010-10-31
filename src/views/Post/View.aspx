@@ -18,8 +18,7 @@
             <hr id="cut" />
             <%= Model.TextFormatted %>
         </div>
-
-        <div class="meta">
+            <div class="meta">
             <ul class="left-list">
                 <li class="info">
                     <%= Html.Date(Model.CreateDate) %>
@@ -85,6 +84,22 @@
         <div class="clear"></div>
     </div>
 
+    <% if (Model.PostsLike.Count >0 ) {%>
+        <div class="meta">
+            Похожие новости: 
+            <ul class="left-list">
+            <% foreach(ITCommunity.IndexerLib.SearchedPost post in Model.PostsLike) { %>
+                <li class="info">
+                    <%= Html.ActionLink(post.Title, "View", new {id = "" + post.Id}) %>
+                </li>
+                            
+            <% } %>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    <% } %>
+        
+    
     <% if (Model.IsCommentable) { %>
 
         <h2 id="comments">Комментарии (<%= Model.CommentsCount%>)</h2>

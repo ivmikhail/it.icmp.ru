@@ -6,7 +6,7 @@
         <% if (Model.Page == 1) { %>
             <span>назад</span>
         <% } else { %>
-            <a href="?page=<%= Model.Page - 1 %>">назад</a>
+            <a href="?page=<%= Model.Page - 1 %><%= Html.Encode(Model.Query) %>">назад</a>
         <% } %>
     </li>
     <% for (int i = Model.StartPage; i <= Model.EndPage; i++) { %>
@@ -14,7 +14,7 @@
             <% if (i == Model.Page) { %>
                 <span class="current-page"><%= i %></span>
             <% } else { %>
-                <a href="?page=<%= i %>"><%= i %></a>
+                <a href="?page=<%= i %><%= Html.Encode(Model.Query) %>"><%= i %></a>
             <% } %>
         </li>
     <% } %>
@@ -22,7 +22,7 @@
         <% if (Model.Page >= Model.PagesCount) { %>
             <span>вперед</span>
         <% } else { %>
-            <a href="?page=<%= Model.Page + 1 %>">вперед</a>
+            <a href="?page=<%= Model.Page + 1 %><%= Html.Encode(Model.Query) %>">вперед</a>
         <% } %>
     </li>
 </ul>

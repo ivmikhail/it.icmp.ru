@@ -4,6 +4,7 @@ using System.Web;
 using ITCommunity.Core;
 using ITCommunity.Utils;
 using ITCommunity.DB.Tables;
+using ITCommunity.IndexerLib;
 
 
 namespace ITCommunity.DB {
@@ -86,6 +87,15 @@ namespace ITCommunity.DB {
                 return Polls.Get(EntityId.Value);
             }
             return null;
+        }
+        private List<SearchedPost> _PostsLike = null;
+        public List<SearchedPost> PostsLike {
+            get {
+                if (_PostsLike == null) {
+                    _PostsLike = Indexer.GetInstance().SearchLike(this.Id, 3);
+                }
+                return _PostsLike;
+            }
         }
     }
 }
