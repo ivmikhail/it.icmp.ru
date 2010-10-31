@@ -11,6 +11,7 @@ using Lucene.Net.Search;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
+using Similarity.Net;
 
 namespace ITCommunity.IndexerLib {
     public class Indexer {
@@ -90,9 +91,9 @@ namespace ITCommunity.IndexerLib {
         }
         public void UpdateDocument(String title, String postText, String postId) {
             Document doc = new Document();
-            doc.Add(new Field(DocField.Title, title, Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field(DocField.Text, postText, Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field(DocField.Id, postId, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field(DocField.Title, title, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES));
+            doc.Add(new Field(DocField.Text, postText, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES));
+            doc.Add(new Field(DocField.Id, postId, Field.Store.YES, Field.Index.NOT_ANALYZED, Field.TermVector.YES));
             indexWriter.UpdateDocument(new Term(DocField.Id, postId), doc);
 
         }
@@ -118,7 +119,7 @@ namespace ITCommunity.IndexerLib {
         /// <returns></returns>
         public List<SearchedPost> Search(string queryText, int page, int count, ref int posts_count) {
             String[] fields = new String[]{DocField.Title, DocField.Text};
-            QueryParser queryParser = new MultiFieldQueryParser(fields, analyzer);
+            QueryParser queryParser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_29, fields, analyzer);
             queryParser.SetDefaultOperator(QueryParser.Operator.AND);
             Query query = queryParser.Parse(queryText);
             
@@ -148,6 +149,50 @@ namespace ITCommunity.IndexerLib {
         }
         public int PostFreq(String postId) {
             return indexReader.DocFreq(new Term(DocField.Id, postId));
+        }
+        public List<SearchedPost> SearchLike(int postId, int count) {
+            List<SearchedPost> result;
+            String[] fields = new String[] { DocField.Title, DocField.Text };
+            // Query query = queryParser.Parse(queryText);
+            
+            IndexSearcher searcher = new IndexSearcher(indexReader);
+            // находим номер документа поста в бд люцен
+            TermDocs liked = indexReader.TermDocs(new Term(DocField.Id, postId.ToString()));
+            int likedDocId = -1;
+            if(liked.Next()) {
+                likedDocId = liked.Doc();
+            } else {
+                result = new List<SearchedPost>(0);
+                return result;
+            }
+            liked.Close();
+
+            MoreLikeThis mlt = new MoreLikeThis(indexReader);
+            mlt.SetAnalyzer(Indexer.analyzer);
+            mlt.SetFieldNames(fields);
+            mlt.SetMaxNumTokensParsed(6);
+            mlt.SetMaxQueryTerms(20);
+            mlt.SetMaxWordLen(15);
+            mlt.SetMinDocFreq(2);
+            mlt.SetMinTermFreq(2);
+            mlt.SetMinWordLen(3);
+            Query query = mlt.Like(likedDocId);
+            
+            TopFieldDocs topDocs = searcher.Search(searcher.CreateWeight(query), null, count + 1, Sort.RELEVANCE);
+
+            result = new List<SearchedPost>(topDocs.totalHits);
+            for (int i = 0; i < topDocs.scoreDocs.Length; i++) {
+                ScoreDoc scoreDoc = topDocs.scoreDocs[i];
+                Document document = searcher.Doc(scoreDoc.doc);
+                int id = Int32.Parse(document.Get(DocField.Id));
+                if (id == postId) {
+                    continue;
+                }
+                SearchedPost post = new SearchedPost(id,
+                    document.Get(DocField.Title), document.Get(DocField.Text));
+                result.Add(post);
+            }
+            return result;
         }
     }
 }

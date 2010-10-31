@@ -134,7 +134,6 @@
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\BrowserController.cs" />
     <Compile Include="Controllers\BasePictureController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\WinUpdatesController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -170,7 +169,6 @@
     <Compile Include="Models\Captcha\CaptchaModel.cs" />
     <Compile Include="Models\Post\PostEditCategoriesModel.cs" />
     <Compile Include="Models\Rfc\RfcListModel.cs" />
-    <Compile Include="Models\Search\SearchListModel.cs" />
     <Compile Include="Models\User\UserEditModel.cs" />
     <Compile Include="Models\User\UserListModel.cs" />
     <Compile Include="Models\User\UserCommentsModel.cs" />
@@ -183,7 +181,7 @@
     <Compile Include="Classes\DB\Tables\Headers.cs" />
     <Compile Include="Classes\DB\Tables\Recoveries.cs" />
     <Compile Include="Classes\DB\User.cs" />
-    <Compile Include="Models\PaginatorModel.cs" />
+    <Compile Include="Models\PaginatedModel.cs" />
     <Compile Include="Models\Favorite\FavoritePostsModel.cs" />
     <Compile Include="Models\WinUpdates\WinUpdatesListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

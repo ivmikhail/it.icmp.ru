@@ -22,12 +22,6 @@ namespace ITCommunity {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                "Search",
-                "search",
-                new { controller = "Search", action = "search", query = "" , page = 1}
-            );
-
-            routes.MapRoute(
                 "Rfc",
                 "rfc",
                 new { controller = "Rfc", action = "search" }

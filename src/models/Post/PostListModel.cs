@@ -41,6 +41,9 @@ namespace ITCommunity.Models {
                 }
                 return _posts;
             }
+            set {
+                _posts = value;
+            }
         }
 
         public PostListModel(SortBy sortBy, int? page) :

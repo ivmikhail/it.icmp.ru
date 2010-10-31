@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 namespace ITCommunity.Models {
 
     public class PaginatedModel {
@@ -50,5 +51,6 @@ namespace ITCommunity.Models {
         public PaginatedModel(int? page, int totalCount) : this(page) {
             this.TotalCount = totalCount;
         }
+        public String Query { get; set; }
     }
 }
