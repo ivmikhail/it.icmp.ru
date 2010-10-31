@@ -80,16 +80,6 @@
       <Association Name="User_Message1" Member="Sender" Storage="_User1" ThisKey="SenderId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Notes" Member="Notes">
-    <Type Name="Note">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="User_Note" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.PostsCategories" Member="PostsCategories">
     <Type Name="PostsCategory">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -126,13 +116,6 @@
       <Association Name="User_Recovery" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Rfcs" Member="Rfcs">
-    <Type Name="Rfc">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.Users" Member="Users">
     <Type Name="User">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -148,7 +131,6 @@
       <Association Name="User_Header" Member="Headers" ThisKey="Id" OtherKey="UserId" Type="Header" />
       <Association Name="User_Message" Member="ReceivedMessages" Storage="_Messages" ThisKey="Id" OtherKey="ReceiverId" Type="Message" />
       <Association Name="User_Message1" Member="SentMessages" Storage="_Messages1" ThisKey="Id" OtherKey="SenderId" Type="Message" />
-      <Association Name="User_Note" Member="Notes" ThisKey="Id" OtherKey="UserId" Type="Note" />
       <Association Name="User_RatingLog" Member="RatingLogs" ThisKey="Id" OtherKey="UserId" Type="RatingLog" />
       <Association Name="User_Recovery" Member="Recoveries" ThisKey="Id" OtherKey="UserId" Type="Recovery" />
       <Association Name="User_Post" Member="Posts" ThisKey="Id" OtherKey="AuthorId" Type="Post" />
@@ -203,6 +185,21 @@
       <Column Name="PollId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="PollAnswer_Vote" Member="Votes" ThisKey="Id" OtherKey="AnswerId" Type="Vote" />
       <Association Name="Poll_PollAnswer" Member="Poll" ThisKey="PollId" OtherKey="Id" Type="Poll" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rsses" Member="Rsses">
+    <Type Name="Rss">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Uri" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="Sort" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rfcs" Member="Rfcs">
+    <Type Name="Rfc">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Number" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

@@ -7,8 +7,7 @@ using System.Xml;
 using ITCommunity.Core;
 using ITCommunity.DB;
 using ITCommunity.DB.Tables;
-using ITCommunity.Modules;
-using System.Web.Mvc.Html;
+using ITCommunity.Models;
 
 
 namespace ITCommunity.Controllers {
@@ -31,7 +30,7 @@ namespace ITCommunity.Controllers {
 
         public ActionResult Feed() {
             var siteTitle = "Ykt IT Community RSS channel";
-            var siteDescription = "RSS лента новостей якутского сообщества ИТ-специалистов - " + Config.SiteAddress;
+            var siteDescription = "RSS лента новостей якутского сообщества ИТ-специалистов";
             var siteUrl = new Uri(Config.SiteAddress);
             var feed = new SyndicationFeed(siteTitle, siteDescription, siteUrl);
 
@@ -48,6 +47,15 @@ namespace ITCommunity.Controllers {
                     post.CreateDate.ToUniversalTime()
                 );
 
+                var authorUrl = Config.SiteAddress + Url.Action("profile", "user", new { nick = post.Author.Nick });
+                var itemAuthor = new SyndicationPerson("", post.Author.Nick, authorUrl);
+                item.Authors.Add(itemAuthor);
+
+                foreach (var category in post.Categories) {
+                    var itemCategory = new SyndicationCategory(category.Name);
+                    item.Categories.Add(itemCategory);
+                }
+
                 items.Add(item);
             }
 
@@ -56,12 +64,58 @@ namespace ITCommunity.Controllers {
             return new RssActionResult() { Feed = feed };
         }
 
-        public ActionResult Load() {
-            var uri = "http://localhost:56910/rss";
+        public ActionResult Load(int? id) {
+            if (id == 0) {
+                if (Rsses.All.Count == 0) {
+                    return NotFound();
+                }
+                return View(Rsses.All[0]);
+            }
 
-            var items = RssLoader.Load(uri);
+            var rss = Rsses.Get(id.Value);
 
-            return View(items);
+            return View(rss);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult List(int? id) {
+            if (id == 0) {
+                return View();
+            }
+
+            var model = new RssEditModel(id.Value);
+
+            return View("ListPage", model);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult List(int? id, RssEditModel model) {
+            if (ModelState.IsValid) {
+                var rss = model.ToRss();
+
+                if (id == 0) {
+                    Rsses.Add(rss);
+                } else {
+                    rss.Id = id.Value;
+                    Rsses.Update(rss);
+                }
+
+                return RedirectToAction("list", new { id = 0 });
+            }
+
+            return View("ListPage", model);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult Delete(int? id) {
+            if (id == 0) {
+                return NotFound();
+            }
+
+            Rsses.Delete(id.Value);
+
+            return RedirectToAction("list");
         }
     }
 }

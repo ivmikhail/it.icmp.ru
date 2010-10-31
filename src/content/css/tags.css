@@ -1,7 +1,7 @@
 html {
     background: #e0e0e0;
     color: #333333;
-    font-family: arial;
+    font-family: Arial;
     font-size: 0.9em;
 }
 
@@ -10,7 +10,7 @@ body {
     border-left: 1px solid #cccccc;
     border-right: 1px solid #cccccc;
     min-width: 840px;
-    max-width: 1000px;
+    max-width: 1020px;
     margin: 0 auto;
 }
 

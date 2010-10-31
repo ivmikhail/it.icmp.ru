@@ -2,7 +2,7 @@
 
 
 <%= Html.ActionLink(
-    "простеры",
+    "постеры",
     "list",
     "user",
     new { role = "poster" },

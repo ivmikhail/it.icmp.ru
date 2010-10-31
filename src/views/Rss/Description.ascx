@@ -19,7 +19,12 @@
         </li>
         <li>
             <% foreach (var author in Model.Authors) { %>
-                <%= author.Name %>
+                <% if (author.Uri != null) { %>
+                    <a href="<%= author.Uri%>" title="Посетить страницу - <%= author.Name%>" class="user-link">
+                        <%= author.Name%></a>
+                <% } else { %>
+                    <%= author.Name%>
+                <% } %>
             <% } %>
         </li>
     </ul>
@@ -31,8 +36,11 @@
     </ul>
 
     <ul class="left-list">
-        <li>
-        </li>
+        <% foreach (var category in Model.Categories) { %>
+            <li>
+                <%= category.Name%>
+            </li>
+        <% } %>
     </ul>
 
     <ul class="right-list">

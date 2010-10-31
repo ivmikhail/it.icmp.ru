@@ -35,7 +35,7 @@
                 <% if (CurrentUser.IsAuth) { %>
                     <li>
                         <% if (Model.Rating.IsRated) { %>
-                            <% Html.RenderPartial("../Rating/Rated", Model.Rating); %>
+                            <% Html.RenderPartial("../Rating/Rating", Model.Rating); %>
                         <% } else { %>
                             <% Html.RenderPartial("../Rating/Rate", Model.Rating); %>
                         <% } %>

@@ -80,6 +80,7 @@
     <Compile Include="Classes\Core\EmailSender.cs" />
     <Compile Include="Classes\Core\Picture.cs" />
     <Compile Include="Classes\Core\TimerTask.cs" />
+    <Compile Include="Classes\DB\Rss.cs" />
     <Compile Include="Classes\DB\PollAnswer.cs" />
     <Compile Include="Classes\DB\Poll.cs" />
     <Compile Include="Classes\DB\Rating.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Classes\DB\Post.cs" />
     <Compile Include="Classes\DB\Rfc.cs" />
     <Compile Include="Classes\DB\Tables\Categories.cs" />
+    <Compile Include="Classes\DB\Tables\Rsses.cs" />
     <Compile Include="Classes\DB\Tables\Rfcs.cs" />
     <Compile Include="Classes\DB\Tables\Comments.cs" />
     <Compile Include="Classes\DB\Tables\Captchas.cs" />
@@ -112,7 +114,6 @@
     <Compile Include="Classes\DB\Tables\Posts.cs" />
     <Compile Include="Classes\DB\Tables\Users.cs" />
     <Compile Include="Classes\Modules\Greeting.cs" />
-    <Compile Include="Classes\Modules\RssLoader.cs" />
     <Compile Include="Classes\Modules\Wsus.cs" />
     <Compile Include="Classes\Utils\BBCodeParser.cs" />
     <Compile Include="Classes\Core\ExtensionMethods.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Models\Captcha\CaptchaModel.cs" />
     <Compile Include="Models\Post\PostEditCategoriesModel.cs" />
     <Compile Include="Models\Rfc\RfcListModel.cs" />
+    <Compile Include="Models\Rss\RssEditModel.cs" />
     <Compile Include="Models\User\UserEditModel.cs" />
     <Compile Include="Models\User\UserListModel.cs" />
     <Compile Include="Models\User\UserCommentsModel.cs" />
@@ -253,14 +255,17 @@
     <Content Include="Views\Post\Periods.ascx" />
     <Content Include="Views\Post\PopularList.aspx" />
     <Content Include="Views\Post\EditCategories.ascx" />
+    <Content Include="Views\Rating\Rated.ascx" />
     <Content Include="Views\Rating\RecentRegistration.ascx" />
     <Content Include="Views\Rating\Login.ascx" />
-    <Content Include="Views\Rating\Rated.ascx" />
+    <Content Include="Views\Rating\Rating.ascx" />
     <Content Include="Views\Rating\Rate.ascx" />
     <Content Include="Views\Rfc\List.aspx" />
     <Content Include="Views\Rss\Description.ascx" />
     <Content Include="Views\Rss\List.ascx" />
     <Content Include="Views\Rss\Load.aspx" />
+    <Content Include="Views\Rss\Menu.ascx" />
+    <Content Include="Views\Rss\Sidebar.ascx" />
     <Content Include="Views\Shared\Forbidden.aspx" />
     <Content Include="Views\Shared\Link\Browser\Dir.ascx" />
     <Content Include="Views\Shared\Link\Browser\File.ascx" />
@@ -300,6 +305,14 @@
     <Content Include="Views\Shared\Link\Rating\Down.ascx" />
     <Content Include="Views\Shared\Link\Rating\Up.ascx" />
     <Content Include="Views\Shared\Link\Rfc\View.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Edit.ascx" />
+    <Content Include="Views\Shared\Link\Rss\List.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Feed.ascx" />
+    <Content Include="Views\Rss\ListPage.aspx" />
+    <Content Include="Views\Shared\Link\Rss\LoadFeed.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Site.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Load.ascx" />
     <Content Include="Views\Shared\Link\Rss\Title.ascx" />
     <Content Include="Views\Shared\Link\User\Comments.ascx" />
     <Content Include="Views\Shared\Link\Admin\Index.ascx" />
@@ -330,6 +343,7 @@
     <Content Include="Views\Shared\Sidebar\Categories.ascx" />
     <Content Include="Views\Shared\Sidebar\ActivePosters.ascx" />
     <Content Include="Views\Shared\Sidebar\ActiveCommentators.ascx" />
+    <Content Include="Views\Shared\Sidebar\Rss.ascx" />
     <Content Include="Views\Shared\Sidebar\RatedPosts.ascx" />
     <Content Include="Views\Shared\Sidebar\TopCommentators.ascx" />
     <Content Include="Views\Shared\Sidebar\TopPosters.ascx" />
@@ -397,6 +411,7 @@
     <Content Include="Content\js\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Shared\Site.master" />
     <Content Include="Views\Web.config" />
+    <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />

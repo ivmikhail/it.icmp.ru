@@ -22,11 +22,9 @@
         <li>
             просмотров: <b class="info">~<%= Model.ViewsCount %></b>
         </li>
-        <% if (Model.Rating.IsRated) { %>
-            <li>
-                <% Html.RenderPartial("../Rating/Rated", Model.Rating); %>
-            </li>
-        <% } %>
+        <li>
+            <% Html.RenderPartial("../Rating/Rating", Model.Rating); %>
+        </li>
     </ul>
 
     <ul class="left-list">
@@ -49,11 +47,13 @@
                 </li>
             <% } %>
         <% } %>
-        <% if (Model.IsCommentable) { %>
-            <li>
+        <li>
+            <% if (Model.IsCommentable) { %>
                 <% Html.RenderPartial("Link/Post/Comments", Model); %>
-            </li>
-        <% } %>
+            <% } else { %>
+                комментарии отключены
+            <% } %>
+        </li>
         <li>
             <% Html.RenderPartial("Link/Post/More", Model); %>
         </li>

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using ITCommunity.Core;
 
-using ITCommunity.Core;
 
-namespace ITCommunity.DB
-{
-    public partial class Rfc
-    {
+namespace ITCommunity.DB {
+
+    public partial class Rfc {
+
         public string RelativeUrl {
             get {
                 string num = "";
