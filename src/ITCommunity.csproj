@@ -411,7 +411,6 @@
     <Content Include="Content\js\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Shared\Site.master" />
     <Content Include="Views\Web.config" />
-    <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
