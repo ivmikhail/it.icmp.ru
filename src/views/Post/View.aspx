@@ -87,9 +87,9 @@
     <% if (Model.PostsLike.Count >0 ) {%>
         <h2>Похожие новости: </h2>
         <ul>
-        <% foreach(ITCommunity.IndexerLib.SearchedPost post in Model.PostsLike) { %>
+        <% foreach(var post in Model.PostsLike) { %>
             <li class="light-block">
-                <% Html.RenderPartial("Link/Post/Title", post); %>
+                <%= Html.ActionLink(post.Title, "View", new {id = "" + post.Id}) %>
             </li>
         <% } %>
         </ul>
