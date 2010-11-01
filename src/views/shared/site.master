@@ -39,6 +39,7 @@
         <a href="#down-arrow" id="up-arrow" title="Посмотреть что наверху">&uarr;</a>
     </div>
 
+
     <div id="sidebar">
         <asp:ContentPlaceHolder ID="SidebarContent" runat="server">
             <% Html.RenderPartial("Sidebar"); %>

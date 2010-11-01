@@ -3,7 +3,7 @@
 #sidebar {
     background: #f0f0f0;
     color: #999999;
-    float: left;
+    float: right;
     padding: 16px 4%;
     width: 27%;
 }
@@ -25,4 +25,8 @@
 }
 #sidebar a:hover {
     color: #333333;
+}
+
+#sidebar .banner {
+    text-align: center;
 }

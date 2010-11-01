@@ -1,6 +1,8 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<dynamic>" %>
 
 
+<% Html.RenderPartial("Sidebar/Banner"); %>
+
 <% Html.RenderPartial("Sidebar/LastComments"); %>
 
 <% Html.RenderPartial("Sidebar/RatedPosts"); %>
