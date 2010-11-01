@@ -7,15 +7,18 @@ using System.Web.Mvc;
 using ITCommunity.Models;
 using ITCommunity.Modules;
 
-namespace ITCommunity.Controllers
-{
-    public class WinUpdatesController : BaseController
-    {        
-        public ActionResult Search(string start = "", string q1 = "", string q2 ="") {
+
+namespace ITCommunity.Controllers {
+
+    public class WinUpdatesController : BaseController {
+
+        [Authorize]
+        public ActionResult Search(string start = "", string q1 = "", string q2 = "") {
             var model = new WinUpdatesListModel(start, q1, q2);
             return View("List", model);
         }
 
+        [Authorize]
         public ActionResult File(string name = "") {
             string filename = Server.UrlDecode(name);
             WsusFile file = null;
@@ -29,6 +32,6 @@ namespace ITCommunity.Controllers
             } else {
                 return NotFound();
             }
-        }       
+        }
     }
 }
