@@ -24,7 +24,11 @@ namespace ITCommunity.Modules {
                 return Config.WsusContentPath + Digest.Substring(Digest.Length - 2, 2) + @"\" + Digest + Path.GetExtension(Name);
             }
         }
-        
+        public bool IsExists {
+            get {
+                return File.Exists(RealPath);
+            }
+        }
         public WsusFile(string name, 
                         string description, 
                         DateTime modifiedDate, 
@@ -82,7 +86,10 @@ namespace ITCommunity.Modules {
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
-                    files.Add(parse(reader));
+                    WsusFile f = parse(reader);
+                    if (f.IsExists) {
+                        files.Add(f);
+                    }
                 }
             } catch (SqlException ex) {
                 Logger.Log.Error("Ошибка при поиске обновлений в БД WSUS", ex);

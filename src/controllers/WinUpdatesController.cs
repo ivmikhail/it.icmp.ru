@@ -22,7 +22,7 @@ namespace ITCommunity.Controllers
             if (name != "") {
                 file = Wsus.get(filename);
             }
-            if (file != null && System.IO.File.Exists(file.RealPath)) {
+            if (file != null && file.IsExists) {
                 HttpResponseBase response = ControllerContext.HttpContext.Response;
                 response.AddHeader("content-disposition", "attachment; filename=" + file.Name);
                 return base.File(file.RealPath, "application/octet-stream");
