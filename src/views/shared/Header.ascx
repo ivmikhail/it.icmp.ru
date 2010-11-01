@@ -18,9 +18,11 @@
         <li>
             <% Html.RenderPartial("Link/Post/List"); %>
         </li>
+<%--
         <li>
             <% Html.RenderPartial("Link/Rss/Load"); %>
         </li>
+--%>
         <% if (CurrentUser.IsAuth) { %>
             <li>
                 <% Html.RenderPartial("Link/Message/CurrentReceivedList"); %>

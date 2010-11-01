@@ -10,7 +10,7 @@
     <p class="meta">
         Поиск производится по названию файла(обновления), аргументы 1 и 2 это строки которые содержатся в имени файла. Пожалуйста указывайте более конкретные критерии поиска, иначе поиск может затянуться...
     </p>
-    <% using (Html.BeginForm("search", "winupdates", null, FormMethod.Get, new { enctype = "multipart/form-data" })) { %>           
+    <% using (Html.BeginForm("search", "winupdates", null, FormMethod.Get)) { %>           
        
         <%= Html.LabelFor(m => m.Start) %>        
 	    <p class="meta">Cтрока, с которой должно начинаться имя файла, например "windows6.0"</p>
