@@ -21,7 +21,9 @@
 <div class="footer-bottom">
 
     <ul class="counters">
-        <li></li>
+        <li>
+            <% Html.RenderPartial("Counter/Yaknet"); %>
+        </li>
     </ul>
 
     <div class="copy">

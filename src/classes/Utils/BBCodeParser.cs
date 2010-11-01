@@ -11,7 +11,7 @@ namespace ITCommunity.Utils {
 
         #region Constants
 
-        const string URL = @"(?<url>(?:\w+://)?(?:www\.)?(?<site>\w[\w-\.]*\.\w{2,10})(?:/.*?)?)";
+        const string URL = @"(?<url>(?:\w+://)(?:www\.)?(?<site>\w[\w-\.]*\.\w{2,10})(?:/.*?)?)";
 
         const string PLAY_YKT_RU_VIDEO = @"
 <object data=""http://play.ykt.ru/player.swf"" width=""640"" height=""480"" type=""application/x-shockwave-flash"">
