@@ -21,6 +21,8 @@
             <%= Model.TextFormatted %>
         </div>
 
+        <% Html.RenderPartial("../Poll/UserAnswers", Model.Entity); %>
+
         <div class="meta">
             <ul class="left-list">
                 <li>

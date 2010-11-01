@@ -80,6 +80,7 @@
     <Compile Include="Classes\Core\EmailSender.cs" />
     <Compile Include="Classes\Core\Picture.cs" />
     <Compile Include="Classes\Core\TimerTask.cs" />
+    <Compile Include="Classes\DB\Vote.cs" />
     <Compile Include="Classes\DB\Rss.cs" />
     <Compile Include="Classes\DB\PollAnswer.cs" />
     <Compile Include="Classes\DB\Poll.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Views\Picture\List.ascx" />
     <Content Include="Views\Picture\Upload.ascx" />
     <Content Include="Views\Poll\Answers.ascx" />
+    <Content Include="Views\Poll\UserAnswers.ascx" />
     <Content Include="Views\Poll\Edit.aspx" />
     <Content Include="Views\Poll\EndDate.ascx" />
     <Content Include="Views\Poll\IsOpen.ascx" />
