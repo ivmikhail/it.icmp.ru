@@ -5,6 +5,6 @@
     "войти",
     "login",
     "user",
-    new { returnUrl = Request.Url.AbsolutePath },
+    new { returnUrl = (Request.Url.AbsolutePath != Url.Action("login", "user")) ? Request.Url.AbsolutePath : Request["returnUrl"] },
     new { title = "Приветствуем!" }
 )%>
