@@ -72,7 +72,11 @@ namespace ITCommunity.DB.Tables {
 
         public static List<Rss> GetAll() {
             using (var db = Database.Connect()) {
-                return db.Rsses.ToList();
+                var rsses =
+                    from rss in db.Rsses
+                    orderby rss.Sort ascending
+                    select rss;
+                return rsses.ToList();
             }
         }
     }

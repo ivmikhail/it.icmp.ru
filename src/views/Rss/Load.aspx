@@ -25,6 +25,9 @@
 
     <% if (Model.Feed == null) { %>
         <h2>Упс, ничего нет</h2>
+        <div class="info">
+            возможно проблема в url-е rss или в не правильном <a href="http://validator.w3.org/feed/check.cgi?url=<%= Url.Encode(Model.Uri) %>" title="Проверить">формате</a> rss
+        </div>
     <% } else { %>
         <ul>
             <% foreach (var item in Model.Feed.Items) { %>
