@@ -130,7 +130,7 @@ namespace ITCommunity {
 
             routes.MapRoute(
                 "NotFound",
-                "notfound",
+                "notfound.aspx",
                 new { controller = "Base", action = "NotFound" }
             );
 
