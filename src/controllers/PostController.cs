@@ -69,7 +69,7 @@ namespace ITCommunity.Controllers {
             model.List = posts;
             model.TotalCount = postsCount;
             model.Query = "&q=" + query;
-            
+
             ViewData["Searched"] = query;
             return View("ListPage", model);
         }
@@ -85,10 +85,12 @@ namespace ITCommunity.Controllers {
         private static List<Post> SearchLucene(string query, int page, int count, ref int posts_count) {
 
             List<SearchedPost> list = Indexer.GetInstance().Search(query, page, count, ref posts_count);
-            List<Post> result = new List<Post>(list.Count);
+            List<Post> result = new List<Post>();
             for (int i = 0; i < list.Count; i++) {
                 Post post = Posts.Get(list[i].Id);
-                result.Add(post);
+                if (post != null) {
+                    result.Add(post);
+                }
             }
             return result;
         }
