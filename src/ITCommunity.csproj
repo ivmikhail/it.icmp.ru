@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5C5D6820-1F3C-476D-BF60-9501840418E0}</ProjectGuid>
+    <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ITCommunity</RootNamespace>
+    <AssemblyName>mvc</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Core\AppCache.cs" />
+    <Compile Include="Classes\Core\BrowseItem.cs" />
+    <Compile Include="Classes\Core\Config.cs" />
+    <Compile Include="Classes\Core\CurrentUser.cs" />
+    <Compile Include="Classes\Core\Logger.cs" />
+    <Compile Include="Classes\Core\EmailSender.cs" />
+    <Compile Include="Classes\Core\Picture.cs" />
+    <Compile Include="Classes\Core\TimerTask.cs" />
+    <Compile Include="Classes\DB\Rss.cs" />
+    <Compile Include="Classes\DB\PollAnswer.cs" />
+    <Compile Include="Classes\DB\Poll.cs" />
+    <Compile Include="Classes\DB\Rating.cs" />
+    <Compile Include="Classes\DB\Header.cs" />
+    <Compile Include="Classes\DB\Message.cs" />
+    <Compile Include="Classes\DB\Recovery.cs" />
+    <Compile Include="Classes\DB\Database.cs">
+      <DependentUpon>Database.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\DB\Database.designer.cs">
+      <DependentUpon>Database.dbml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Classes\DB\Category.cs" />
+    <Compile Include="Classes\DB\Comment.cs" />
+    <Compile Include="Classes\DB\Captcha.cs" />
+    <Compile Include="Classes\DB\MenuItem.cs" />
+    <Compile Include="Classes\DB\Post.cs" />
+    <Compile Include="Classes\DB\Rfc.cs" />
+    <Compile Include="Classes\DB\Tables\Categories.cs" />
+    <Compile Include="Classes\DB\Tables\Rsses.cs" />
+    <Compile Include="Classes\DB\Tables\Rfcs.cs" />
+    <Compile Include="Classes\DB\Tables\Comments.cs" />
+    <Compile Include="Classes\DB\Tables\Captchas.cs" />
+    <Compile Include="Classes\DB\Tables\Polls.cs" />
+    <Compile Include="Classes\DB\Tables\Ratings.cs" />
+    <Compile Include="Classes\DB\Tables\Messages.cs" />
+    <Compile Include="Classes\DB\Tables\Favorites.cs" />
+    <Compile Include="Classes\DB\Tables\MenuItems.cs" />
+    <Compile Include="Classes\DB\Tables\Posts.cs" />
+    <Compile Include="Classes\DB\Tables\Users.cs" />
+    <Compile Include="Classes\Modules\Greeting.cs" />
+    <Compile Include="Classes\Modules\Wsus.cs" />
+    <Compile Include="Classes\Utils\BBCodeParser.cs" />
+    <Compile Include="Classes\Core\ExtensionMethods.cs" />
+    <Compile Include="Classes\Utils\HtmlExtension.cs" />
+    <Compile Include="Classes\Utils\Hash.cs" />
+    <Compile Include="Classes\Validators\CaptchaAnswerAttribute.cs" />
+    <Compile Include="Classes\Validators\AnotherUserNickAttribute.cs" />
+    <Compile Include="Classes\Validators\PictureAllowedTypesAttribute.cs" />
+    <Compile Include="Classes\Validators\PictureMaxSizeAttribute.cs" />
+    <Compile Include="Classes\Validators\EmailAttribute.cs" />
+    <Compile Include="Classes\Validators\UniqueEmailAttribute.cs" />
+    <Compile Include="Classes\Validators\CurrentUserPasswordAttribute.cs" />
+    <Compile Include="Classes\Validators\HeaderTextAttribute.cs" />
+    <Compile Include="Classes\Validators\UserNickAttribute.cs" />
+    <Compile Include="Classes\Validators\PropertiesMustMatchAttribute.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\BrowserController.cs" />
+    <Compile Include="Controllers\BasePictureController.cs" />
+    <Compile Include="Controllers\WinUpdatesController.cs" />
+    <Compile Include="Controllers\PollController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\RfcController.cs" />
+    <Compile Include="Controllers\RssController.cs" />
+    <Compile Include="Controllers\MenuItemController.cs" />
+    <Compile Include="Controllers\HeaderController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\FavoriteController.cs" />
+    <Compile Include="Controllers\BasePostController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Captcha\CaptchaEditModel.cs" />
+    <Compile Include="Models\Captcha\CaptchaListModel.cs" />
+    <Compile Include="Models\Category\CategoryEditModel.cs" />
+    <Compile Include="Models\Comment\AnonymousCommentAddModel.cs" />
+    <Compile Include="Models\Comment\CommentEditModel.cs" />
+    <Compile Include="Models\Header\HeaderAddModel.cs" />
+    <Compile Include="Models\Header\HeaderListModel.cs" />
+    <Compile Include="Models\MenuItem\MenuItemEditModel.cs" />
+    <Compile Include="Models\Message\MessageReceivedListModel.cs" />
+    <Compile Include="Models\Message\MessageSentListModel.cs" />
+    <Compile Include="Models\Message\MessageSendModel.cs" />
+    <Compile Include="Models\Message\MessageListModel.cs" />
+    <Compile Include="Models\Picture\PictureUploadModel.cs" />
+    <Compile Include="Models\Poll\PollEditModel.cs" />
+    <Compile Include="Models\Post\PostListModel.cs" />
+    <Compile Include="Models\Category\CategoryPostsModels.cs" />
+    <Compile Include="Models\Post\PostEditModel.cs" />
+    <Compile Include="Models\Captcha\CaptchaModel.cs" />
+    <Compile Include="Models\Post\PostEditCategoriesModel.cs" />
+    <Compile Include="Models\Rfc\RfcListModel.cs" />
+    <Compile Include="Models\Rss\RssEditModel.cs" />
+    <Compile Include="Models\User\UserEditModel.cs" />
+    <Compile Include="Models\User\UserListModel.cs" />
+    <Compile Include="Models\User\UserCommentsModel.cs" />
+    <Compile Include="Models\User\UserPostsModel.cs" />
+    <Compile Include="Models\User\UserNickModel.cs" />
+    <Compile Include="Models\User\UserNewPasswordModel.cs" />
+    <Compile Include="Models\User\UserLoginModel.cs" />
+    <Compile Include="Models\User\UserRegisterModel.cs" />
+    <Compile Include="Classes\Validators\UniqueNickAttribute.cs" />
+    <Compile Include="Classes\DB\Tables\Headers.cs" />
+    <Compile Include="Classes\DB\Tables\Recoveries.cs" />
+    <Compile Include="Classes\DB\User.cs" />
+    <Compile Include="Models\PaginatedModel.cs" />
+    <Compile Include="Models\Favorite\FavoritePostsModel.cs" />
+    <Compile Include="Models\WinUpdates\WinUpdatesListModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\bbcode-info.css" />
+    <Content Include="Content\css\highlight-vs.css" />
+    <Content Include="Content\css\links.css" />
+    <Content Include="Content\css\sidebar.css" />
+    <Content Include="Content\css\pagination.css" />
+    <Content Include="Content\css\footer.css" />
+    <Content Include="Content\css\header.css" />
+    <Content Include="Content\css\ie7-fix.css" />
+    <Content Include="Content\css\ie6-fix.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\menu.css" />
+    <Content Include="Content\css\reset.css" />
+    <Content Include="Content\css\tags.css" />
+    <Content Include="Content\css\validation.css" />
+    <Content Include="Content\img\browser\any.ico" />
+    <Content Include="Content\img\browser\exe.ico" />
+    <Content Include="Content\img\browser\folder.gif" />
+    <Content Include="Content\img\browser\up.ico" />
+    <Content Include="Content\img\design\rss.png" />
+    <Content Include="Content\js\it-community.js" />
+    <Content Include="Content\js\highlight.pack.js" />
+    <Content Include="Content\other\greetings.txt" />
+    <Content Include="Content\other\greetings_personal.txt" />
+    <Content Include="Error.htm" />
+    <Content Include="Favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Views\Admin\Sidebar.ascx" />
+    <Content Include="Views\Browser\Menu.ascx" />
+    <Content Include="Views\Browser\Files.aspx" />
+    <Content Include="Views\Browser\Sidebar.ascx" />
+    <Content Include="Views\Captcha\EditAnswers.ascx" />
+    <Content Include="Views\Captcha\Edit.aspx" />
+    <Content Include="Views\Captcha\List.aspx" />
+    <Content Include="Views\Captcha\Sidebar.ascx" />
+    <Content Include="Views\Category\List.aspx" />
+    <Content Include="Views\Admin\Menu.ascx" />
+    <Content Include="Views\Comment\Add.ascx" />
+    <Content Include="Views\Comment\AddPage.aspx" />
+    <Content Include="Views\Comment\AnonymousAddPage.aspx" />
+    <Content Include="Views\Comment\AnonymousAdd.ascx" />
+    <Content Include="Views\Comment\EditPage.aspx" />
+    <Content Include="Views\Comment\List.ascx" />
+    <Content Include="Views\Header\Added.aspx" />
+    <Content Include="Views\Header\List.aspx" />
+    <Content Include="Views\Header\Add.aspx" />
+    <Content Include="Views\Header\Sidebar.ascx" />
+    <Content Include="Views\MenuItem\List.aspx" />
+    <Content Include="Views\Message\Sent.aspx" />
+    <Content Include="Views\Message\Send.aspx" />
+    <Content Include="Views\Message\SentList.aspx" />
+    <Content Include="Views\Message\ReceivedList.aspx" />
+    <Content Include="Views\Message\List.ascx" />
+    <Content Include="Views\Message\Menu.ascx" />
+    <Content Include="Views\Picture\List.ascx" />
+    <Content Include="Views\Picture\Upload.ascx" />
+    <Content Include="Views\Poll\Answers.ascx" />
+    <Content Include="Views\Poll\Edit.aspx" />
+    <Content Include="Views\Poll\EndDate.ascx" />
+    <Content Include="Views\Poll\IsOpen.ascx" />
+    <Content Include="Views\Poll\Description.ascx" />
+    <Content Include="Views\Poll\VotedUsersCount.ascx" />
+    <Content Include="Views\Post\Add.aspx" />
+    <Content Include="Views\Poll\Add.aspx" />
+    <Content Include="Views\Poll\View.aspx" />
+    <Content Include="Views\Post\Description.ascx" />
+    <Content Include="Views\Post\EditForm.ascx" />
+    <Content Include="Views\Post\DiscussibleList.aspx" />
+    <Content Include="Views\Post\Periods.ascx" />
+    <Content Include="Views\Post\PopularList.aspx" />
+    <Content Include="Views\Post\EditCategories.ascx" />
+    <Content Include="Views\Rating\Rated.ascx" />
+    <Content Include="Views\Rating\RecentRegistration.ascx" />
+    <Content Include="Views\Rating\Login.ascx" />
+    <Content Include="Views\Rating\Rating.ascx" />
+    <Content Include="Views\Rating\Rate.ascx" />
+    <Content Include="Views\Rfc\List.aspx" />
+    <Content Include="Views\Rss\Description.ascx" />
+    <Content Include="Views\Rss\Load.aspx" />
+    <Content Include="Views\Rss\Menu.ascx" />
+    <Content Include="Views\Rss\Sidebar.ascx" />
+    <Content Include="Views\Shared\Forbidden.aspx" />
+    <Content Include="Views\Shared\Link\Browser\Dir.ascx" />
+    <Content Include="Views\Shared\Link\Browser\File.ascx" />
+    <Content Include="Views\Shared\Link\Browser\Parent.ascx" />
+    <Content Include="Views\Shared\Link\Captcha\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Captcha\Edit.ascx" />
+    <Content Include="Views\Shared\Link\Captcha\List.ascx" />
+    <Content Include="Views\Shared\Link\Category\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Category\Edit.ascx" />
+    <Content Include="Views\Shared\Link\Category\List.ascx" />
+    <Content Include="Views\Shared\Link\Comment\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Header\Add.ascx" />
+    <Content Include="Views\Shared\Link\Header\Show.ascx" />
+    <Content Include="Views\Shared\Link\Header\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Header\Block.ascx" />
+    <Content Include="Views\Shared\Link\Header\Stop.ascx" />
+    <Content Include="Views\Shared\Link\Header\List.ascx" />
+    <Content Include="Views\Shared\Link\MenuItem\AddChild.ascx" />
+    <Content Include="Views\Shared\Link\MenuItem\Delete.ascx" />
+    <Content Include="Views\Shared\Link\MenuItem\Edit.ascx" />
+    <Content Include="Views\Shared\Link\MenuItem\List.ascx" />
+    <Content Include="Views\Shared\Link\MenuItem\Url.ascx" />
+    <Content Include="Views\Shared\Link\Browser\Files.ascx" />
+    <Content Include="Views\Shared\Link\Message\Reply.ascx" />
+    <Content Include="Views\Shared\Link\Message\DeleteAll.ascx" />
+    <Content Include="Views\Shared\Link\Message\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Message\ReceivedList.ascx" />
+    <Content Include="Views\Shared\Link\Message\CurrentReceivedList.ascx" />
+    <Content Include="Views\Shared\Link\Message\SentList.ascx" />
+    <Content Include="Views\Shared\Link\Poll\Add.ascx" />
+    <Content Include="Views\Shared\Link\Poll\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Poll\Edit.ascx" />
+    <Content Include="Views\Shared\Link\Post\Rss.ascx" />
+    <Content Include="Views\Shared\Link\Post\List.ascx" />
+    <Content Include="Views\Shared\Link\Post\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Post\Edit.ascx" />
+    <Content Include="Views\Shared\Link\Rating\Down.ascx" />
+    <Content Include="Views\Shared\Link\Rating\Up.ascx" />
+    <Content Include="Views\Shared\Link\Rfc\View.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Author.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Edit.ascx" />
+    <Content Include="Views\Shared\Link\Rss\List.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Feed.ascx" />
+    <Content Include="Views\Rss\List.aspx" />
+    <Content Include="Views\Shared\Link\Rss\LoadFeed.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Site.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Load.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Title.ascx" />
+    <Content Include="Views\Shared\Link\User\Comments.ascx" />
+    <Content Include="Views\Shared\Link\Admin\Index.ascx" />
+    <Content Include="Views\Shared\Link\User\Edit.ascx" />
+    <Content Include="Views\Shared\Link\User\List.ascx" />
+    <Content Include="Views\Shared\Link\User\Posts.ascx" />
+    <Content Include="Views\Shared\Link\Message\Send.ascx" />
+    <Content Include="Views\Shared\Link\User\Role\Admins.ascx" />
+    <Content Include="Views\Shared\Link\User\Role\Posters.ascx" />
+    <Content Include="Views\Shared\Link\User\Role\Users.ascx" />
+    <Content Include="Views\Shared\Link\User\Role\Banneds.ascx" />
+    <Content Include="Views\Shared\Link\User\Role\ToBanned.ascx" />
+    <Content Include="Views\Shared\Link\User\Role\ToUser.ascx" />
+    <Content Include="Views\Shared\Link\User\Role\ToPoster.ascx" />
+    <Content Include="Views\Shared\Link\User\Role\ToAdmin.ascx" />
+    <Content Include="Views\Shared\Link\User\Settings.ascx" />
+    <Content Include="Views\Shared\Link\User\Logout.ascx" />
+    <Content Include="Views\Shared\Link\User\CurrentProfile.ascx" />
+    <Content Include="Views\Shared\Link\User\ForgotPassword.ascx" />
+    <Content Include="Views\Shared\Link\User\Login.ascx" />
+    <Content Include="Views\Shared\Link\User\Register.ascx" />
+    <Content Include="Views\Shared\Link\WinUpdates\View.ascx" />
+    <Content Include="Views\Shared\Menu.ascx" />
+    <Content Include="Views\Favorite\Posts.aspx" />
+    <Content Include="Views\Shared\Link\Comment\Edit.ascx" />
+    <Content Include="Views\Shared\Link\Post\Add.ascx" />
+    <Content Include="Views\Shared\Link\Post\Source.ascx" />
+    <Content Include="Views\Shared\Sidebar\Banner.ascx" />
+    <Content Include="Views\Shared\Sidebar\Categories.ascx" />
+    <Content Include="Views\Shared\Sidebar\ActivePosters.ascx" />
+    <Content Include="Views\Shared\Sidebar\ActiveCommentators.ascx" />
+    <Content Include="Views\Shared\Sidebar\Rss.ascx" />
+    <Content Include="Views\Shared\Sidebar\RatedPosts.ascx" />
+    <Content Include="Views\Shared\Sidebar\TopCommentators.ascx" />
+    <Content Include="Views\Shared\Sidebar\TopPosters.ascx" />
+    <Content Include="Views\Shared\Sidebar\LastRegisteredUsers.ascx" />
+    <Content Include="Views\Shared\Sidebar\DiscussiblePosts.ascx" />
+    <Content Include="Views\Shared\Sidebar\LastComments.ascx" />
+    <Content Include="Views\Shared\Sidebar\PopularPosts.ascx" />
+    <Content Include="Views\Post\Edit.aspx" />
+    <Content Include="Views\Shared\Sidebar.ascx" />
+    <Content Include="Views\Shared\Link\Category\Posts.ascx" />
+    <Content Include="Views\Shared\EditorToolbar.ascx" />
+    <Content Include="Views\Shared\Footer.ascx" />
+    <Content Include="Views\Shared\Head\Links.ascx" />
+    <Content Include="Views\Shared\Head\Metas.ascx" />
+    <Content Include="Views\Shared\Link\Comment\Perma.ascx" />
+    <Content Include="Views\Shared\Link\Favorite\Delete.ascx" />
+    <Content Include="Views\Shared\Link\Favorite\Add.ascx" />
+    <Content Include="Views\Shared\Link\Favorite\Posts.ascx" />
+    <Content Include="Views\Shared\Link\Post\Comments.ascx" />
+    <Content Include="Views\Shared\Link\Post\PopularList.ascx" />
+    <Content Include="Views\Shared\Link\Post\DiscussibleList.ascx" />
+    <Content Include="Views\Shared\Link\Post\Popular.ascx" />
+    <Content Include="Views\Shared\Link\Post\Discussible.ascx" />
+    <Content Include="Views\Shared\Link\Comment\Last.ascx" />
+    <Content Include="Views\Shared\Link\Post\More.ascx" />
+    <Content Include="Views\Shared\Link\Post\Title.ascx" />
+    <Content Include="Views\Shared\NotFound.aspx" />
+    <Content Include="Views\Captcha\Captcha.ascx" />
+    <Content Include="Views\Shared\Link\User\Profile.ascx" />
+    <Content Include="Views\Shared\Counter\Yaknet.ascx" />
+    <Content Include="Views\User\Comments.aspx" />
+    <Content Include="Views\User\Whoami.aspx" />
+    <Content Include="Views\User\Edit.aspx" />
+    <Content Include="Views\User\List.aspx" />
+    <Content Include="Views\User\Posts.aspx" />
+    <Content Include="Views\User\Profile.aspx" />
+    <Content Include="Views\User\ForgotPasswordSent.aspx" />
+    <Content Include="Views\User\Login.aspx" />
+    <Content Include="Views\User\NewPassword.aspx" />
+    <Content Include="Views\User\ForgotPassword.aspx" />
+    <Content Include="Views\User\Register.aspx" />
+    <Content Include="Views\Post\ListPage.aspx" />
+    <Content Include="Views\Category\Posts.aspx" />
+    <Content Include="Views\Post\View.aspx" />
+    <Content Include="Views\Post\List.ascx" />
+    <Content Include="Views\Shared\Header.ascx" />
+    <Content Include="Views\Shared\Pagination.ascx" />
+    <Content Include="Views\User\Edited.aspx" />
+    <Content Include="Views\User\Sidebar.ascx" />
+    <Content Include="Views\User\UserMenu.ascx" />
+    <Content Include="Views\WinUpdates\List.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\js\jquery-1.3.2.js" />
+    <Content Include="Content\js\jquery-1.3.2.min.js" />
+    <Content Include="Content\js\jquery-1.3.2-vsdoc.js" />
+    <Content Include="Content\js\jquery.validate.js" />
+    <Content Include="Content\js\jquery.validate.min.js" />
+    <Content Include="Content\js\jquery.validate-vsdoc.js" />
+    <Content Include="Content\js\MicrosoftAjax.js" />
+    <Content Include="Content\js\MicrosoftAjax.debug.js" />
+    <Content Include="Content\js\MicrosoftMvcAjax.js" />
+    <Content Include="Content\js\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Content\js\MicrosoftMvcValidation.js" />
+    <Content Include="Content\js\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\Shared\Site.master" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config" />
+    <None Include="Classes\DB\Database.dbml.layout">
+      <DependentUpon>Database.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Classes\DB\Database.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Database.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IndexerLib\IndexerLib.csproj">
+      <Project>{C30A7E20-711F-4EFE-9751-51C80E05765F}</Project>
+      <Name>IndexerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56910</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/ITCommunity</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://it2.icmp.ru</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

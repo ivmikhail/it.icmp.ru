@@ -1,0 +1,24 @@
+/* стили менюшки груп страний */
+
+#menu {
+    background: #e5e5e5;
+    height: 1.5em;
+    padding: 12px 4%;
+}
+
+#menu .search-form {
+    float: right;
+    text-align: right;
+}
+#menu .search-form input {
+    display: inline;
+    font-size: 1em;
+    margin: 0;
+}
+#menu .search-form input[type=submit] {
+    padding: 2px 8px;
+}
+#menu .search-form input[type=text] {
+    padding: 1px 4px;
+    width: auto;
+}

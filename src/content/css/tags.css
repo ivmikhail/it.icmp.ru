@@ -1,0 +1,115 @@
+html {
+    background: #e0e0e0;
+    color: #333333;
+    font-family: Arial;
+    font-size: 0.9em;
+}
+
+body {
+    background: #f0f0f0;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    min-width: 840px;
+    max-width: 1180px;
+}
+
+a {
+    color: #3366ff;
+    text-decoration: underline;
+}
+a:hover {
+    color: #0033cc;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 1.75em;
+    font-weight: normal;
+    padding-bottom: 0.5em;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: normal;
+    padding: 0.25em 0 0.75em;
+}
+
+h3 {
+    font-size: 1.25em;
+    font-weight: normal;
+    padding-bottom: 0.5em;
+}
+
+h4 {
+    font-size: 1em;
+    padding-bottom: 0.25em;
+}
+
+h5 {
+    font-size: 0.75em;
+}
+
+h6 {
+    font-size: 0.5em;
+}
+
+hr {
+    margin: 0.6em 0 0.4em;
+}
+
+/* элементы форм */
+
+label {
+    display: block;
+    margin: 16px 0 4px;
+}
+label.radio {
+    display: inline;
+    margin: 0;
+}
+
+select,
+input {
+    font-size: 1.5em;
+}
+
+input[type=radio],
+input[type=checkbox] {
+    font-size: 1em;
+}
+
+select,
+input[type=text],
+input[type=password],
+input[type=file] {
+    padding: 1px 0.5%;
+    width: 99%;
+}
+
+input[type=submit] {
+    display: block;
+    margin: 1em 0 12px;
+    padding: 4px 16px;
+}
+
+textarea {
+    font-family: arial;
+    font-size: 1em;
+    height: 10em;
+    width: 98%;
+    padding: 1%;
+} 
+
+textarea.large {
+    height: 30em;
+}
+
+noscript div {
+    background: #ffffff;
+    border-bottom: 5px solid #cccccc;
+    color: #444444;
+    font-size: 2em;
+    line-height: 1.5em;
+    padding: 0.5em;
+    text-align: center;
+}

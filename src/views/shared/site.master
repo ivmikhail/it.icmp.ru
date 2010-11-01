@@ -1,0 +1,54 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head id="Head" runat="server">
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    <% Html.RenderPartial("Head/Metas"); %>
+    <% Html.RenderPartial("Head/Links"); %>
+</head>
+
+<body>
+
+    <div id="header">
+        <% Html.RenderPartial("Header"); %>
+    </div>
+
+    <div id="menu">
+        <asp:ContentPlaceHolder ID="MenuContent" runat="server">
+            <% Html.RenderPartial("Menu"); %>
+        </asp:ContentPlaceHolder>
+
+        <% using (Html.BeginForm("search", "post", FormMethod.Get, new { @class = "search-form" } )) { %>
+            <div>
+                <input type="text" name="q" value="<%= Html.Encode(ViewData["Searched"]) %>" />
+                <input type="submit" value="поиск" />
+            </div>
+        <% } %>
+    </div>
+
+    <div id="content">
+        <a href="#up-arrow" id="down-arrow" title="Посмотреть что внизу">&darr;</a>
+
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        
+        <a href="#down-arrow" id="up-arrow" title="Посмотреть что наверху">&uarr;</a>
+    </div>
+
+
+    <div id="sidebar">
+        <asp:ContentPlaceHolder ID="SidebarContent" runat="server">
+            <% Html.RenderPartial("Sidebar"); %>
+        </asp:ContentPlaceHolder>
+    </div>
+
+    <div id="footer">
+        <% Html.RenderPartial("Footer"); %>
+    </div>
+
+</body>
+</html>

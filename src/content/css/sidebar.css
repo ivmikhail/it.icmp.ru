@@ -1,0 +1,31 @@
+/* стили сайдбара */
+
+#sidebar {
+    background: #f0f0f0;
+    color: #999999;
+    float: right;
+    padding: 16px 4%;
+    width: 24%;
+}
+
+#sidebar h2 {
+    padding: 24px 0 12px;
+}
+
+#sidebar ul {
+    padding: 0 0 12px;
+    line-height: 1.25em;
+}
+#sidebar ul li {
+    padding: 4px 0;
+}
+
+#sidebar a {
+    color: #999999;
+}
+#sidebar a:hover {
+    color: #333333;
+}
+
+#sidebar .banner {
+}
