@@ -215,11 +215,14 @@
     <Content Include="Error.htm" />
     <Content Include="Favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Admin\Sidebar.ascx" />
     <Content Include="Views\Browser\Menu.ascx" />
     <Content Include="Views\Browser\Files.aspx" />
+    <Content Include="Views\Browser\Sidebar.ascx" />
     <Content Include="Views\Captcha\EditAnswers.ascx" />
     <Content Include="Views\Captcha\Edit.aspx" />
     <Content Include="Views\Captcha\List.aspx" />
+    <Content Include="Views\Captcha\Sidebar.ascx" />
     <Content Include="Views\Category\List.aspx" />
     <Content Include="Views\Admin\Menu.ascx" />
     <Content Include="Views\Comment\Add.ascx" />
@@ -231,6 +234,7 @@
     <Content Include="Views\Header\Added.aspx" />
     <Content Include="Views\Header\List.aspx" />
     <Content Include="Views\Header\Add.aspx" />
+    <Content Include="Views\Header\Sidebar.ascx" />
     <Content Include="Views\MenuItem\List.aspx" />
     <Content Include="Views\Message\Sent.aspx" />
     <Content Include="Views\Message\Send.aspx" />
