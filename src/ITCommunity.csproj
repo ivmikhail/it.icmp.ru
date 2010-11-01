@@ -340,6 +340,7 @@
     <Content Include="Views\Shared\Link\Comment\Edit.ascx" />
     <Content Include="Views\Shared\Link\Post\Add.ascx" />
     <Content Include="Views\Shared\Link\Post\Source.ascx" />
+    <Content Include="Views\Shared\Sidebar\Banner.ascx" />
     <Content Include="Views\Shared\Sidebar\Categories.ascx" />
     <Content Include="Views\Shared\Sidebar\ActivePosters.ascx" />
     <Content Include="Views\Shared\Sidebar\ActiveCommentators.ascx" />

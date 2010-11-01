@@ -9,6 +9,10 @@
     <% Html.RenderPartial("../Admin/Menu"); %>
 </asp:Content>
 
+<asp:Content ID="Sidebar" ContentPlaceHolderID="SidebarContent" runat="server">
+    <% Html.RenderPartial("../Admin/Sidebar"); %>
+</asp:Content>
+
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="block">
