@@ -85,7 +85,7 @@ namespace ITCommunity.Controllers {
 
             var model = new RssEditModel(id.Value);
 
-            return View("ListPage", model);
+            return View(model);
         }
 
         [Authorize(Roles = "admin")]
@@ -104,7 +104,7 @@ namespace ITCommunity.Controllers {
                 return RedirectToAction("list", new { id = 0 });
             }
 
-            return View("ListPage", model);
+            return View(model);
         }
 
         [Authorize(Roles = "admin")]
@@ -115,7 +115,7 @@ namespace ITCommunity.Controllers {
 
             Rsses.Delete(id.Value);
 
-            return RedirectToAction("list");
+            return RedirectToAction("list", new { id = 0 });
         }
     }
 }

@@ -262,7 +262,6 @@
     <Content Include="Views\Rating\Rate.ascx" />
     <Content Include="Views\Rfc\List.aspx" />
     <Content Include="Views\Rss\Description.ascx" />
-    <Content Include="Views\Rss\List.ascx" />
     <Content Include="Views\Rss\Load.aspx" />
     <Content Include="Views\Rss\Menu.ascx" />
     <Content Include="Views\Rss\Sidebar.ascx" />
@@ -305,11 +304,12 @@
     <Content Include="Views\Shared\Link\Rating\Down.ascx" />
     <Content Include="Views\Shared\Link\Rating\Up.ascx" />
     <Content Include="Views\Shared\Link\Rfc\View.ascx" />
+    <Content Include="Views\Shared\Link\Rss\Author.ascx" />
     <Content Include="Views\Shared\Link\Rss\Delete.ascx" />
     <Content Include="Views\Shared\Link\Rss\Edit.ascx" />
     <Content Include="Views\Shared\Link\Rss\List.ascx" />
     <Content Include="Views\Shared\Link\Rss\Feed.ascx" />
-    <Content Include="Views\Rss\ListPage.aspx" />
+    <Content Include="Views\Rss\List.aspx" />
     <Content Include="Views\Shared\Link\Rss\LoadFeed.ascx" />
     <Content Include="Views\Shared\Link\Rss\Site.ascx" />
     <Content Include="Views\Shared\Link\Rss\Load.ascx" />

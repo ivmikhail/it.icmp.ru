@@ -19,12 +19,7 @@
         </li>
         <li>
             <% foreach (var author in Model.Authors) { %>
-                <% if (author.Uri != null) { %>
-                    <a href="<%= author.Uri%>" title="Посетить страницу - <%= author.Name%>" class="user-link">
-                        <%= author.Name%></a>
-                <% } else { %>
-                    <%= author.Name%>
-                <% } %>
+                <% Html.RenderPartial("Link/Rss/Author", author); %>
             <% } %>
         </li>
     </ul>
