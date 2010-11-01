@@ -1,0 +1,175 @@
+#content {
+    background: #ffffff;
+    float: left;
+    padding: 16px 4%;
+    position: relative;
+	width: 60%;
+}
+
+#content h1 {
+    border-bottom: 4px solid #f0f0f0;
+    margin-bottom: 0.5em;
+    padding: 0.2em 0;
+}
+
+/* совсем уникальные стили для вложенных айдишников, что есть не хорошо */
+
+#content #cut {
+    border: 1px solid #f0f0f0;
+    clear: both;
+}
+
+#content #comments {
+    padding-top: 1em;
+}
+
+#content #add-comment {
+    padding-top: 1em;
+}
+
+/* базовые блоки и панели, так сказать "кирпичики" */
+
+.block {
+	padding-bottom: 1em;
+	border-bottom: 2px solid #f0f0f0;
+	margin-bottom: 1.5em;
+}
+.block h2 {
+    padding-top: 0.5em;
+}
+
+.light-block {
+    border-bottom: 1px solid #f0f0f0;
+	margin-bottom: 0.5em;
+    padding: 0.5em 0;
+}
+
+
+.text {
+	line-height: 1.5em;
+	padding-bottom: 1em;
+	text-align: justify;
+}
+.block .text {
+	padding-bottom: 1.5em;
+}
+.text hr {
+    border: none;
+}
+.text ul,
+.text ol {
+    list-style-position: outside;
+    padding: 0.3em 0 0.7em 2em;
+}
+.text ul {
+    padding-left: 1.5em;
+    list-style-type: disc;
+}
+.text ol {
+    list-style-type: decimal;
+}
+.text ol li,
+.text ul li {
+    padding: 0.2em 0;
+}
+.text blockquote,
+.text pre {
+	border-left: solid 2px #bbbbbb;
+	padding: 0.2em 0 0.2em 1em;
+	margin: 0.3em 0 0.3em 1em;
+}
+.text blockquote {
+	font-style: italic;
+	color: #666666;
+}
+.text pre {
+	overflow: auto;
+	color: #000000;
+}
+.text table {
+	border-bottom: 1px solid #bbbbbb;
+	border-right: 1px solid #bbbbbb;
+}
+.text table td {
+	border-left: 1px solid #bbbbbb;
+	border-top: 1px solid #bbbbbb;
+	padding: 1px 5px;
+}
+.text .center {
+    text-align: center;
+}
+.text .left {
+    float: left;
+    margin-right: 1.5em;
+}
+.text .right {
+    float: right;
+    margin-left: 1.5em;
+}
+
+.pictures-thumbs img {
+    float: left;
+}
+
+.meta {
+	color: #999999;
+	font-size: 0.75em;
+}
+div.meta {
+    clear: both;
+}
+h1 .meta {
+	font-size: 0.6em;
+}
+
+.info {
+	color: #666666;
+}
+
+.none-active {
+	color: #999999;
+}
+
+.text .left-list,
+.left-list {
+    clear: left;
+    float: left;
+    line-height: 2em;
+    padding: 0;
+    text-align: left;
+}
+.text .left-list li,
+.left-list li {
+    display: inline;
+    margin-right: 12px;
+    padding: 0;
+}
+
+.right-list {
+    clear: right;
+    float: right;
+    line-height: 2em;
+    text-align: right;
+}
+.right-list li {
+    display: inline;
+    margin-left: 12px;
+}
+
+.right-list li.margin-none {
+    margin: 0;
+}
+
+.clear {
+    clear: both;
+    content: "";
+    display: block;
+}
+
+.blink {
+    text-decoration: blink;
+}
+
+.middle {
+    vertical-align: middle;
+}

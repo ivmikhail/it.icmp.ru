@@ -1,0 +1,21 @@
+/* стили сообщений валитаторов */
+
+#sidebar .validation-summary-errors,
+#content .validation-summary-errors {
+    color: #ff7777;
+    font-size: 1.5em;
+}
+#sidebar .validation-summary-errors ul,
+#content .validation-summary-errors ul {
+    line-height: 1em;
+    padding: 0;
+}
+#sidebar .validation-summary-errors ul li,
+#content .validation-summary-errors ul li {
+}
+
+#content .field-validation-error {
+    color: #ff7777;
+    display: block;
+    padding: 8px 0;
+}
