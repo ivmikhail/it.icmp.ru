@@ -2,5 +2,5 @@
 
 
 <a 
-    href="<%= Url.Action("load", "rss", new {id = Model.Id}) %>" title="<%= Model.Feed.Description.Text %>">
+    href="<%= Url.Action("load", "rss", new {id = Model.Id}) %>" title="<%= Model.Description %>">
     <%= Model.Title %></a>
