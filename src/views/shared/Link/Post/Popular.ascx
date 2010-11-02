@@ -2,6 +2,6 @@
 
 
 <a  href="<%= Url.Action("view", "post", new { id = Model.Id }) %>"
-    title="<%= Model.ViewsCount %> просмотров"
+    title="Просмотров: <%= Model.ViewsCount %>"
     >
     <%= Model.TitleFormatted %></a>

@@ -261,6 +261,7 @@
     <Content Include="Views\Post\Periods.ascx" />
     <Content Include="Views\Post\PopularList.aspx" />
     <Content Include="Views\Post\EditCategories.ascx" />
+    <Content Include="Views\Rating\AuthorRating.ascx" />
     <Content Include="Views\Rating\Rated.ascx" />
     <Content Include="Views\Rating\RecentRegistration.ascx" />
     <Content Include="Views\Rating\Login.ascx" />

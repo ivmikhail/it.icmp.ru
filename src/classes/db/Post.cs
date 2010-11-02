@@ -5,6 +5,7 @@ using ITCommunity.Core;
 using ITCommunity.Utils;
 using ITCommunity.DB.Tables;
 using ITCommunity.IndexerLib;
+using System;
 
 
 namespace ITCommunity.DB {
@@ -88,11 +89,17 @@ namespace ITCommunity.DB {
             }
             return null;
         }
+
         private List<SearchedPost> _PostsLike = null;
         public List<SearchedPost> PostsLike {
             get {
                 if (_PostsLike == null) {
-                    _PostsLike = Indexer.GetInstance().SearchLike(this.Id, 3);
+                    try {
+                        _PostsLike = Indexer.GetInstance().SearchLike(this.Id, 3);
+                    } catch (Exception ex) {
+                        _PostsLike = new List<SearchedPost>();
+                        Logger.Log.Error("Люцене не работает" + Logger.GetUserInfo(), ex);
+                    }
                 }
                 return _PostsLike;
             }

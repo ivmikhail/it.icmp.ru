@@ -11,9 +11,7 @@
 
     <h3>Редактируется только в течение 5 минут после добавления</h3>                        
 
-    <%-- 
-        <% Html.RenderPartial("EditorToolbar", "adding-comment"); %>
-    --%>
+    <% Html.RenderPartial("EditorToolbar"); %>
 
     <% using (Html.BeginForm()) { %>
 
