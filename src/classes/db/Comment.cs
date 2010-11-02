@@ -70,6 +70,7 @@ namespace ITCommunity.DB {
 
         partial void OnLoaded() {
             Author = Users.Get(AuthorId);
+            var loadPost = Post;
         }
     }
 }

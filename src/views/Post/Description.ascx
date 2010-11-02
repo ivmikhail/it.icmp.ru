@@ -23,7 +23,11 @@
             просмотров: <b class="info">~<%= Model.ViewsCount %></b>
         </li>
         <li>
-            <% Html.RenderPartial("../Rating/Rating", Model.Rating); %>
+            <% if (Model.AuthorId == CurrentUser.User.Id) { %>
+                <% Html.RenderPartial("../Rating/AuthorRating", Model.Rating); %>
+            <% } else { %>
+                <% Html.RenderPartial("../Rating/Rating", Model.Rating); %>
+            <% } %>
         </li>
     </ul>
 
