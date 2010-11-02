@@ -58,16 +58,6 @@ hr {
     margin: 0.6em 0 0.4em;
 }
 
-br:after {
-    display: block;
-    content: "";
-    margin-bottom: 1em;
-}
-br {
-    line-height: 2.5em;
-    vertical-align: top;
-}
-
 /* элементы форм */
 
 label {
