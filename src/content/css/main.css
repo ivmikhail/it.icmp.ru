@@ -55,6 +55,15 @@
 .text hr {
     border: none;
 }
+.text br:after {
+    display: block;
+    content: "";
+    margin-bottom: 1em;
+}
+.text br {
+    line-height: 2.5em;
+    vertical-align: top;
+}
 .text ul,
 .text ol {
     list-style-position: outside;
