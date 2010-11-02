@@ -6,6 +6,6 @@
     <% if (Model.ActiveDays != null) { %>
         <%= Html.Date(Model.EndDate)%>
     <% } else { %>
-        дата окончания голосования: бессрочный
+        бессрочный
     <% } %>
 </b>
