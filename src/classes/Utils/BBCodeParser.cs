@@ -247,7 +247,7 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"(^|\s)" + URL + @"($|\s)", "$1<a href=\"${url}\" title=\"${url}\">${url}</a>$2"));
 
             // <hr /> вместо <br />
-            _formatters.Add(new ReplaceFormatter("\n\n", "<br />"));
+            _formatters.Add(new ReplaceFormatter("\n\n", "<br />\n"));
         }
 
         private static string abundaEvaluator(Match match) {
