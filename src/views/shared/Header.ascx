@@ -23,29 +23,19 @@
             <% Html.RenderPartial("Link/Rss/Load"); %>
         </li>
 --%>
-        <% if (CurrentUser.IsAuth) { %>
-            <li>
-                <% Html.RenderPartial("Link/Message/CurrentReceivedList"); %>
-                <% if (CurrentUser.User.UnreadMessagesCount > 0) { %>
-                    <span class="blink important-link">
-                        (<%= CurrentUser.User.UnreadMessagesCount %>)
-                    </span>
+        <li class="menu">
+            <% foreach (var item in MenuItems.GetRoot()) { %>
+            <dl>
+                <dt><%= item.Name %></dt>
+                <% foreach (var child in item.Children) { %>
+                <dd>
+                    <% Html.RenderPartial("Link/MenuItem/Url", child); %>
+                </dd>
                 <% } %>
-            </li>
-            <li>
-                <% Html.RenderPartial("Link/Browser/Files"); %>
-            </li>
-<%--
-            <li>
-                <% Html.RenderPartial("Link/User/Settings"); %>
-            </li>
---%>
-            <% if (CurrentUser.IsAdmin) { %>
-                <li>
-                   <% Html.RenderPartial("Link/Admin/Index"); %>
-                </li>
+            </dl>
             <% } %>
-        <% } %>
+        </li>
+
     </ul>
 
     <ul class="right-list">
@@ -53,6 +43,24 @@
             <li>
                 <%= Greeting.Get() %>, <% Html.RenderPartial("Link/User/CurrentProfile"); %>
             </li>
+<%--
+            <li>
+                <% Html.RenderPartial("Link/User/Settings"); %>
+            </li>
+--%>
+            <% if (CurrentUser.IsAuth) { %>
+                <li>
+                    <% Html.RenderPartial("Link/Message/CurrentReceivedList"); %>
+                    <% if (CurrentUser.User.UnreadMessagesCount > 0) { %>
+                    <span class="blink important-link">(<%= CurrentUser.User.UnreadMessagesCount %>) </span>
+                    <% } %>
+                </li>
+            <% } %>
+            <% if (CurrentUser.IsAdmin) { %>
+                <li>
+                    <% Html.RenderPartial("Link/Admin/Index"); %>
+                </li>
+            <% } %>
             <li>
                 <% Html.RenderPartial("Link/User/Logout"); %>
             </li>
