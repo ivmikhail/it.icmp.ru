@@ -58,7 +58,7 @@ namespace ITCommunity.DB {
         }
 
         public string PicturesPath {
-            get { return Config.PostPicturesFolder + "/" + CurrentUser.User.Id + "/" + Id; }
+            get { return Config.PostPicturesFolder + "/" + AuthorId + "/" + Id; }
         }
 
         partial void OnLoaded() {
