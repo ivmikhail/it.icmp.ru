@@ -62,6 +62,9 @@
     margin-top: -0.1em;
 }
 
+#content .rating-none {
+	color: #666666;
+}
 #content .rating-negative {
 	color: #c03030;
 }

@@ -4,14 +4,14 @@
 }
 
 #header a {
-    color: #787878;
+    color: #666666;
 }
 #header a:hover {
     color: #333333;
 }
 
 #header .top-menu {
-    color: #787878;
+    color: #666666;
     height: 1.5em;
     padding: 4px 4%;
 }

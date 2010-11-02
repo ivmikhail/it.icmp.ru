@@ -3,7 +3,7 @@
 
 <link rel="alternate"  type="application/rss+xml" href="<%= Url.Action("feed", "rss") %>" />
     
-<% var v = "0.4"; %>
+<% var v = "0.5"; %>
 
 <link rel="shortcut icon" href="<%= Url.Content("~/favicon.ico?v=" + v) %>" type="image/vnd.microsoft.icon" />
 
