@@ -1,5 +1,8 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<ITCommunity.DB.MenuItem>" %>
 
-
-<a  href="<%= Model.Url %>" 
-    title="<%= Model.Url %>" <% if(Model.IsTargetBlank) { %> target="_blank" <% } %>><%= Model.Name %></a>
+<% if (Model.Url == "none" || Model.Url == "") { %>
+    <%= Model.Name %>
+<% } else { %>
+    <a  href="<%= Model.Url %>" 
+        <% if (Model.IsTargetBlank) { %> target="_blank" <% } %>><%= Model.Name%></a>
+<% } %>

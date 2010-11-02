@@ -3,17 +3,7 @@
 
 <div class="bottom-menu">
 
-    <% foreach (var item in MenuItems.GetRoot()) { %>
-        <dl>
-            <dt><%= item.Name %></dt>
-
-            <% foreach (var child in item.Children) { %>
-                <dd>
-                    <% Html.RenderPartial("Link/MenuItem/Url", child); %>
-                </dd>
-            <% } %>
-        </dl>
-    <% } %>
+    <% Html.RenderPartial("../MenuItem/Menu"); %>
 
     <div class="clear"></div>
 </div>
