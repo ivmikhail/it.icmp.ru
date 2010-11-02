@@ -15,6 +15,50 @@
     height: 1.5em;
     padding: 4px 4%;
 }
+#header .top-menu li {
+}
+
+#header .top-menu .menu {
+    display: inline-block;
+}
+#header .top-menu .menu dl {
+    cursor: pointer;
+    display: inline-block;
+    height: 2em;
+    margin-right: 12px;
+    overflow: hidden;
+    position:relative;
+    text-decoration: underline;
+    vertical-align: top;
+    z-index: 100;
+}
+#header .top-menu .menu dl:hover {
+    overflow: visible;
+    text-decoration: none;
+    color: #333333;
+}
+#header .top-menu .menu dl dt {
+    text-transform: lowercase;
+}
+#header .top-menu .menu dl dd {
+    width: 1em;
+    overflow: visible;
+}
+#header .top-menu .menu dl dd a {
+    background: #f0f0f0;
+    line-height: 1.3em;
+    display: block;
+    padding: 0.5em 1em;
+    width: 120px;
+    border-bottom: 1px solid #cccccc;
+}
+#header .top-menu .menu dl dd a:hover {
+    background: #ffffff;
+    display: block;
+    padding: 0.5em 1em;
+    border-bottom: 1px solid #aaaaaa;
+}
+
 
 #header .header-text {
     font-family: consolas;
