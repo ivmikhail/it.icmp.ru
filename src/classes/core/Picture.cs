@@ -93,7 +93,9 @@ namespace ITCommunity.Core {
                 var files = Directory.GetFiles(directory);
                 foreach (string file in files) {
                     var info = new FileInfo(file);
-                    pictures.Add(new Picture(basePath, info.Name));
+                    if (info.Extension != ".db") {
+                        pictures.Add(new Picture(basePath, info.Name));
+                    }
                 }
             }
 
