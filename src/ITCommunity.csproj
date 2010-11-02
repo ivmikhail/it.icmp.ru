@@ -237,6 +237,7 @@
     <Content Include="Views\Header\Add.aspx" />
     <Content Include="Views\Header\Sidebar.ascx" />
     <Content Include="Views\MenuItem\List.aspx" />
+    <Content Include="Views\MenuItem\Menu.ascx" />
     <Content Include="Views\Message\Sent.aspx" />
     <Content Include="Views\Message\Send.aspx" />
     <Content Include="Views\Message\SentList.aspx" />
