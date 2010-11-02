@@ -1,15 +1,11 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Poll>" %>
 
 
-<% if (Model.ActiveDays != null) { %>
-    <% if (Model.IsActive) { %>
-        закончится:
-    <% } else { %>
-        закончился:
-    <% } %>
-    <b class="info">
+дата окончания голосования:
+<b class="info">
+    <% if (Model.ActiveDays != null) { %>
         <%= Html.Date(Model.EndDate)%>
-    </b>
-<% } else { %>
-    дата окончания голосования: бессрочный
-<% } %>
+    <% } else { %>
+        дата окончания голосования: бессрочный
+    <% } %>
+</b>
