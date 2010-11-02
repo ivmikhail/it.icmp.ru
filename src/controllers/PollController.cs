@@ -37,7 +37,12 @@ namespace ITCommunity.Controllers {
                         UserId = CurrentUser.User.Id
                     };
 
-                    Polls.AddVote(vote);
+                    if (Polls.IsUserVoted(id.Value, CurrentUser.User.Id)) {
+                        Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
+                        return Forbidden();
+                    } else {
+                        Polls.AddVote(vote);
+                    }
                 } else {
                     Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
                     return Forbidden();
