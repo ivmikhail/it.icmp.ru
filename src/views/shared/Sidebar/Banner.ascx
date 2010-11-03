@@ -20,9 +20,11 @@
             document.write("'><\/scr" + "ipt>");
         //]]>--></script>
         <noscript>
-            <a href='http://it.icmp.ru/openx/www/delivery/ck.php?n=a9a7f1b8&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'>
-                <img src='http://it.icmp.ru/openx/www/delivery/avw.php?zoneid=1&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a9a7f1b8' border='0' alt='' />
-            </a>
+            <div>
+                <a href='http://it.icmp.ru/openx/www/delivery/ck.php?n=a9a7f1b8&amp;cb=INSERT_RANDOM_NUMBER_HERE'>
+                    <img src='http://it.icmp.ru/openx/www/delivery/avw.php?zoneid=1&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a9a7f1b8' alt='' />
+                </a>
+            </div>
         </noscript>
     </div>
 <% } %>
