@@ -12,6 +12,7 @@ namespace ITCommunity.Models {
         [DisplayName("Ваш ник")]
         [Required(ErrorMessage = "Введите Ваш ник")]
         [UniqueNick]
+        [RegularExpression(@"^[A-Za-z0-9_\-\.]{2,20}$", ErrorMessage = "Плохой ник, выберите другой")]
         public string UserNick { get; set; }
 
         [DisplayName("Email адрес")]

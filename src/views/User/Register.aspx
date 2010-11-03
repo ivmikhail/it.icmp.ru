@@ -13,6 +13,7 @@
         <%= Html.ValidationSummary(true) %>
 
         <%= Html.LabelFor(m => m.UserNick) %>
+        <div class="meta">RegExp паттерн валидного логина: ^[A-Za-z0-9_\-\.]{2,20}$</div>
         <%= Html.TextBoxFor(m => m.UserNick) %>
         <%= Html.ValidationMessageFor(m => m.UserNick) %>
 
