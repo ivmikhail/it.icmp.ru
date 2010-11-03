@@ -4,5 +4,5 @@
     <%= Model.Name %>
 <% } else { %>
     <a  href="<%= Model.Url %>" 
-        <% if (Model.IsTargetBlank) { %> target="_blank" <% } %>><%= Model.Name%></a>
+        <%-- if (Model.IsTargetBlank) { %> target="_blank" <% } --%>><%= Model.Name%></a>
 <% } %>
