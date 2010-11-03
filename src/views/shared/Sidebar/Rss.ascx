@@ -11,10 +11,12 @@
     <ul>
         <% foreach (var item in Model.Feed.Items.Take(Config.GetInt("SidebarRssCount"))) { %>        
             <li>
-                <% foreach (var author in item.Authors) { %>
-                    <% Html.RenderPartial("Link/Rss/Author", author); %>
+                <% if (item.Authors.Count != 0) { %>
+                    <% foreach (var author in item.Authors) { %>
+                        <% Html.RenderPartial("Link/Rss/Author", author); %>
+                    <% } %>
+                    →
                 <% } %>
-                →
                 <% Html.RenderPartial("Link/Rss/Title", item); %>
             </li>
         <% } %>
