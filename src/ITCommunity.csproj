@@ -256,9 +256,13 @@
     <Content Include="Views\Post\Add.aspx" />
     <Content Include="Views\Poll\Add.aspx" />
     <Content Include="Views\Poll\View.aspx" />
+    <Content Include="Views\Post\Comments.ascx" />
+    <Content Include="Views\Post\Like.ascx" />
+    <Content Include="Views\Post\ViewMeta.ascx" />
     <Content Include="Views\Post\Description.ascx" />
     <Content Include="Views\Post\EditForm.ascx" />
     <Content Include="Views\Post\DiscussibleList.aspx" />
+    <Content Include="Views\Post\Meta.ascx" />
     <Content Include="Views\Post\Periods.ascx" />
     <Content Include="Views\Post\PopularList.aspx" />
     <Content Include="Views\Post\EditCategories.ascx" />

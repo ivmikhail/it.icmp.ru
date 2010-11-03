@@ -43,12 +43,15 @@
 }
 #footer .footer-bottom .counters {
     float: left;
-    padding: 6px 0 0 6px;
     text-align: left;
+    padding: 7px 0 0 7px;
 }
 #footer .footer-bottom .counters li {
-    float: left;
-    width: 16%;
+    display: inline;
+    margin-right: 7px;
+}
+#footer .footer-bottom .counters li a {
+    text-decoration: none;
 }
 #footer .footer-bottom .copy {
     float: right;
