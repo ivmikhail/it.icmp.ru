@@ -7,6 +7,7 @@ namespace ITCommunity.Core {
 
     public static class Config {
 
+        private static readonly String computerName = Environment.MachineName;
         private static string _connectionString;
 
         /// <summary>
@@ -24,8 +25,8 @@ namespace ITCommunity.Core {
         public static string ConnectionString {
             get {
                 if (_connectionString == null) {
-                    if (ConfigurationManager.ConnectionStrings[Environment.MachineName] != null) {
-                        _connectionString = ConfigurationManager.ConnectionStrings[Environment.MachineName].ConnectionString;
+                    if (ConfigurationManager.ConnectionStrings[computerName] != null) {
+                        _connectionString = ConfigurationManager.ConnectionStrings[computerName].ConnectionString;
                     } else {
                         _connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
                     }
@@ -37,32 +38,41 @@ namespace ITCommunity.Core {
         private static string Get(string param) {
             string result = null;
             try {
-                result = ConfigurationManager.AppSettings[param];
+                result = ConfigurationManager.AppSettings.Get(param + "." + Config.computerName);
+                if (result == null) {
+                    result = ConfigurationManager.AppSettings.Get(param);
+                }
             } catch (ConfigurationErrorsException ex) {
                 Logger.Log.Fatal("Ошибка при чтении конфигурации, параметр " + param, ex);
             }
             if (result == null) {
-                Logger.Log.Info("Не задан параметр " + param);
+                Logger.Log.Error("Не задан параметр " + param);
             }
             return result;
         }
 
         public static int GetInt(string param) {
             int result = 0;
-            try {
-                result = Convert.ToInt32(Get(param));
-            } catch (FormatException ex) {
-                Logger.Log.Fatal("Ошибка при конвертации параметра в int, параметр " + param, ex);
+
+            String s = Get(param);
+            if (s == null) {
+                Logger.Log.Error("Не задан параметр " + param);
             }
+            if (!Int32.TryParse(s, out result)) {
+                Logger.Log.Fatal("Ошибка при конвертации параметра в int, параметр " + param);
+            }
+                    
             return result;
         }
 
         public static double GetDouble(string param) {
             double result = 0;
-            try {
-                result = Convert.ToDouble(Get(param));
-            } catch (FormatException ex) {
-                Logger.Log.Fatal("Ошибка при конвертации параметра в double, параметр " + param, ex);
+            String s = Get(param);
+            if (s == null) {
+                Logger.Log.Error("Не задан параметр " + param);
+            }
+            if (!Double.TryParse(s, out result)) {
+                Logger.Log.Fatal("Ошибка при конвертации параметра в double, параметр " + param);
             }
             return result;
         }
@@ -108,6 +118,7 @@ namespace ITCommunity.Core {
             get { return Get("TrustedSites"); }
         }
         public static string IndexerPath {
+            
             get { return Get("IndexerPath"); }
         }
         public static string WsusContentPath {
