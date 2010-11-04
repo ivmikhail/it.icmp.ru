@@ -118,6 +118,9 @@ namespace ITCommunity.IndexerLib {
         /// <param name="posts_count"></param>
         /// <returns></returns>
         public List<SearchedPost> Search(string queryText, int page, int count, ref int posts_count) {
+            if (queryText.Trim().Length == 0) {
+                return new List<SearchedPost>(0);
+            }
             String[] fields = new String[]{DocField.Title, DocField.Text};
             QueryParser queryParser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_29, fields, analyzer);
             queryParser.SetDefaultOperator(QueryParser.Operator.AND);
