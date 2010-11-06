@@ -440,7 +440,9 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config" />
+    <Content Include="App.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Classes\DB\Database.dbml.layout">
       <DependentUpon>Database.dbml</DependentUpon>
     </None>
