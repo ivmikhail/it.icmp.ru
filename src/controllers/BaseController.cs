@@ -49,7 +49,7 @@ namespace ITCommunity.Controllers {
     #endregion
 
     [ValidateInput(false)]
-    public abstract class BaseController : Controller {
+    public class BaseController : Controller {
 
         public NotFoundResult NotFound() {
             return new NotFoundResult();
