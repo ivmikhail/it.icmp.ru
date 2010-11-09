@@ -89,8 +89,8 @@ namespace ITCommunity.Controllers {
             foreach (var answer in poll.PollAnswers) {
                 if (answer.Votes.Count > 0) {
                     votes.Points.Add(new DataPoint {
-                        Label = "#PERCENT (" + answer.Votes.Count + ")",
-                        LegendText = "#PERCENT " + answer.Text,
+                        Label = "#PERCENT",
+                        LegendText = "#PERCENT (" + answer.Votes.Count + ") " + answer.Text,
                         YValues = new double[] { answer.Votes.Count }
                     });
                 }
