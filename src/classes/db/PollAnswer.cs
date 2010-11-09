@@ -9,6 +9,13 @@ namespace ITCommunity.DB {
             get { return HttpUtility.HtmlEncode(Text); }
         }
 
+        public double Percent {
+            get {
+                double count = Votes.Count;
+                return 100 * count / Poll.TotalVotesCount;
+            }
+        }
+
         partial void OnLoaded() {
             Votes.Load();
         }
