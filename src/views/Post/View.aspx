@@ -2,7 +2,7 @@
 
 
 <asp:Content ID="Title" ContentPlaceHolderID="TitleContent" runat="server">
-    <%= Model.TitleFormatted %>
+    <%= string.IsNullOrEmpty(Model.TitleFormatted) ? "Без названия" : Model.TitleFormatted %>
 </asp:Content>
 
 
