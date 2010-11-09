@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<Poll>" %>
 
 
-<% if (Model.IsVoted || Model.IsOpen == true) { %>
+<% if (Model.IsVoted && Model.IsOpen == true) { %>
 
     <h2>Кто как голосовал:</h2>
 

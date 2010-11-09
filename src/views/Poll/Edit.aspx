@@ -10,32 +10,33 @@
     <h1>Редактирование опроса</h1>
  
     <% using (Html.BeginForm("edit", "poll", null, FormMethod.Post, new { enctype = "multipart/form-data" })) { %>
-
-        <%= Html.HiddenFor(m => m.Topic) %>
-        <%= Html.HiddenFor(m => m.Answers) %>
-
         <h2>
-            <%= Html.LabelFor(m => m.Topic)%>
+            <%= Html.LabelFor(m => m.Topic) %>
             <div class="meta">
                 нельзя редактировать
             </div>
-            <%= Model.Topic%>
+            <%= Html.TextBoxFor(m => m.Topic, new { disabled = "disabled" })%>
+            <%= Html.ValidationMessageFor(m => m.Topic)%>
         </h2>
-
-        <%= Html.LabelFor(m => m.Answers)%>
-        <div class="meta">
-            нельзя редактировать
-        </div>
-        <pre><%= Model.Answers%></pre>
-
         <% if (CurrentUser.IsAdmin) { %>
             <label>
                 <%= Html.CheckBoxFor(m => m.IsAttached)%> прикрепленный опрос?
             </label>
         <% } %>
-
         <label>
             <%= Html.CheckBoxFor(m => m.IsCommentable, new { @checked = "checked" })%> разрешить комментарии?
+        </label>
+        <label>
+            <%= Html.CheckBoxFor(m => m.IsMultiselect, new { disabled = "disabled" })%> разрешить выбирать несколько ответов?
+            <div class="meta">
+                нельзя редактировать
+            </div>
+        </label>
+        <label>
+            <%= Html.CheckBoxFor(m => m.IsOpen, new { disabled = "disabled" })%> показывать кто как проголосовал?
+            <div class="meta">
+                нельзя редактировать
+            </div>
         </label>
 
         <%= Html.LabelFor(m => m.ActiveDays)%>
