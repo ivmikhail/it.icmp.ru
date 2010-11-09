@@ -6,7 +6,7 @@
     <ul>
         <% foreach(var post in Model.PostsLike) { %>
             <li class="light-block">
-                <%= Html.ActionLink(post.Title, "View", new {id = "" + post.Id}) %>
+                <%= Html.ActionLink(string.IsNullOrEmpty(post.Title) ? "Без названия" : post.Title, "View", new { id = post.Id })%>
             </li>
         <% } %>
     </ul>

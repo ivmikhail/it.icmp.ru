@@ -29,6 +29,10 @@ namespace ITCommunity.Controllers {
                 Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
                 return Forbidden();
             }
+            if (Polls.IsUserVoted(id.Value, CurrentUser.User.Id)) {
+                Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
+                return Forbidden();
+            }
 
             foreach (var answerId in answers) {
                 if (poll.ContainsAnswer(answerId)) {
@@ -36,13 +40,7 @@ namespace ITCommunity.Controllers {
                         AnswerId = answerId,
                         UserId = CurrentUser.User.Id
                     };
-
-                    if (Polls.IsUserVoted(id.Value, CurrentUser.User.Id)) {
-                        Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
-                        return Forbidden();
-                    } else {
-                        Polls.AddVote(vote);
-                    }
+                    Polls.AddVote(vote);
                 } else {
                     Logger.Log.Error("Кто-то хочет смухливать в опросе" + Logger.GetUserInfo());
                     return Forbidden();
@@ -90,7 +88,7 @@ namespace ITCommunity.Controllers {
                 if (answer.Votes.Count > 0) {
                     votes.Points.Add(new DataPoint {
                         Label = "#PERCENT",
-                        LegendText = "#PERCENT (" + answer.Votes.Count + ") " + answer.Text,
+                        LegendText = answer.Text + " #PERCENT (" + answer.Votes.Count + ")",
                         YValues = new double[] { answer.Votes.Count }
                     });
                 }

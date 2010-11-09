@@ -36,6 +36,16 @@ namespace ITCommunity.DB {
             get { return Posts.GetByEntity(Id); }
         }
 
+        public int TotalVotesCount {
+            get {
+                int count = 0;
+                foreach (var answer in PollAnswers) {
+                    count += answer.Votes.Count;
+                }
+                return count;
+            }
+        }
+
         public bool ContainsAnswer(int answerId) {
             foreach (var answer in PollAnswers) {
                 if (answer.Id == answerId) {
