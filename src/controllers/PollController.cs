@@ -89,7 +89,7 @@ namespace ITCommunity.Controllers {
             foreach (var answer in poll.PollAnswers) {
                 if (answer.Votes.Count > 0) {
                     votes.Points.Add(new DataPoint {
-                        Label = "#PERCENT",
+                        Label = "#PERCENT (" + answer.Votes.Count + ")",
                         LegendText = "#PERCENT " + answer.Text,
                         YValues = new double[] { answer.Votes.Count }
                     });
@@ -149,14 +149,11 @@ namespace ITCommunity.Controllers {
 
         [Authorize]
         public ActionResult Edit(int? id) {
-            var poll = Polls.Get(id.Value);
-            if (poll == null) {
+            var post = Posts.Get(id.Value);
+            if (post == null || post.EntityType != Post.EntityTypes.Poll) {
                 return NotFound();
             }
-            var post = Posts.GetByEntity(id.Value);
-            if (post == null) {
-                return NotFound();
-            }
+            var poll = (Poll)post.Entity;
 
             if (post.Editable == false) {
                 return Forbidden();
@@ -170,14 +167,11 @@ namespace ITCommunity.Controllers {
         [Authorize]
         [HttpPost]
         public ActionResult Edit(int? id, PollEditModel model) {
-            var poll = Polls.Get(id.Value);
-            if (poll == null) {
+            var post = Posts.Get(id.Value);
+            if (post == null || post.EntityType != Post.EntityTypes.Poll) {
                 return NotFound();
             }
-            var post = Posts.GetByEntity(id.Value);
-            if (post == null) {
-                return NotFound();
-            }
+            var poll = (Poll)post.Entity;
 
             if (post.Editable == false) {
                 return Forbidden();

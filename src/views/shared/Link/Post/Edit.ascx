@@ -4,7 +4,7 @@
 <%= Html.ActionLink(
     "редактировать",
     "edit",
-    "post",
+    Model.EntityType.ToString().ToLower(),
     new { id = Model.Id },
     new { title = "Редактировать пост" }
 )%>
