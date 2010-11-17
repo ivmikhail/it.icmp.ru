@@ -52,7 +52,8 @@ namespace ITCommunity.IndexerProg {
                 }
                 text += reader["text"].ToString();
                 String postId = reader["id"].ToString();
-                indexer.UpdateDocument(title, text, postId);
+                String timestamp = ((DateTime)reader["CreateDate"]).ToString("u");
+                indexer.UpdateDocument(title, text, postId, timestamp);
                 count++;
                 if (count % 100 == 0) {
                     Console.WriteLine(count);
