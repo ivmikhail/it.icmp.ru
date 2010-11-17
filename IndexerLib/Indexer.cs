@@ -20,6 +20,7 @@ namespace ITCommunity.IndexerLib {
             internal const String Id = "post_id";
             internal const String Text = "post";
             internal const String Title = "title";
+            internal const String Timestamp = "timestamp";
         }
     
         private static Indexer indexer = null;
@@ -89,11 +90,12 @@ namespace ITCommunity.IndexerLib {
                 return indexer;
             }
         }
-        public void UpdateDocument(String title, String postText, String postId) {
+        public void UpdateDocument(String title, String postText, String postId, String timestamp) {
             Document doc = new Document();
             doc.Add(new Field(DocField.Title, title, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES));
             doc.Add(new Field(DocField.Text, postText, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES));
             doc.Add(new Field(DocField.Id, postId, Field.Store.YES, Field.Index.NOT_ANALYZED, Field.TermVector.YES));
+            doc.Add(new Field(DocField.Timestamp, timestamp, Field.Store.YES, Field.Index.NOT_ANALYZED, Field.TermVector.NO));
             indexWriter.UpdateDocument(new Term(DocField.Id, postId), doc);
 
         }
@@ -180,8 +182,12 @@ namespace ITCommunity.IndexerLib {
             mlt.SetMinTermFreq(2);
             mlt.SetMinWordLen(3);
             Query query = mlt.Like(likedDocId);
-            
-            TopFieldDocs topDocs = searcher.Search(searcher.CreateWeight(query), null, count + 1, Sort.RELEVANCE);
+
+            String from = DateTime.Now.Subtract(new TimeSpan(730, 0, 0, 0)).ToString("u");
+            String to = DateTime.Now.ToString("u");
+
+            Query timeRange = new TermRangeQuery("timestamp", from, to, true, true);
+            TopFieldDocs topDocs = searcher.Search(searcher.CreateWeight(query.Combine(new Query[]{timeRange})), null, count + 1, Sort.RELEVANCE);
 
             result = new List<SearchedPost>(topDocs.totalHits);
             for (int i = 0; i < topDocs.scoreDocs.Length; i++) {
@@ -194,6 +200,9 @@ namespace ITCommunity.IndexerLib {
                 SearchedPost post = new SearchedPost(id,
                     document.Get(DocField.Title), document.Get(DocField.Text));
                 result.Add(post);
+                if (result.Count == count) {
+                    break;
+                }
             }
             return result;
         }
