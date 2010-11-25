@@ -53,6 +53,7 @@
         <% Html.RenderPartial("../Picture/Upload", Model); %>
   
         <label>Категории</label>
+        <%= Html.ValidationMessageFor(m => m.IsSetCategory)%>
         <div class="meta">
             выберите в какие категории будет входить опрос.
             <% if (Poll.Category != null) { %>

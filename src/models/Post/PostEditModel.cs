@@ -32,6 +32,17 @@ namespace ITCommunity.Models {
 
         public int? EntityId { get; set; }
 
+        [Required(ErrorMessage = "Выберите категории")]
+        public bool? IsSetCategory {
+            get {
+                if (IsSetCategories()) {
+                    return true;
+                } else {
+                    return null;
+                }
+            }
+        }
+
         public PostEditModel() {
             Path = Post.DefaultPicturesPath;
             IsCommentable = true;
@@ -57,6 +68,11 @@ namespace ITCommunity.Models {
                 PostEditCategoriesModel.Current.IsAttached[category.Id] = true;
             }
         }
+
+        protected virtual bool IsSetCategories() {
+            return PostEditCategoriesModel.Current.AttachedCount > 0;
+        }
+
 
         public virtual Post ToPost() {
             var post = new Post();

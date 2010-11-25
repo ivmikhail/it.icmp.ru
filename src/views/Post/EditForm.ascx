@@ -29,6 +29,7 @@
 <% Html.RenderPartial("../Picture/Upload", Model); %>
 
 <label>Категории</label>
+<%= Html.ValidationMessageFor(m => m.IsSetCategory)%>
 <div class="meta">
     Выберите в какие категории будет входить пост. Пожалуйста выбирайте <b class="info">максимум 4 категории</b>.
 </div>

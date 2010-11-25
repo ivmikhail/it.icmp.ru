@@ -10,7 +10,19 @@ namespace ITCommunity.Models {
 
         public const string SESSION_NAME = "PostEditCategories";
 
-        public Dictionary<int, bool> IsAttached;
+        public Dictionary<int, bool> IsAttached { get; set; }
+
+        public int AttachedCount {
+            get {
+                int count = 0;
+                foreach (var cat in IsAttached) {
+                    if (cat.Value) {
+                        count++;
+                    }
+                }
+                return count;
+            }
+        }
 
         public PostEditCategoriesModel() {
             IsAttached = new Dictionary<int, bool>();

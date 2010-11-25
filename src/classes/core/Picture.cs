@@ -104,7 +104,8 @@ namespace ITCommunity.Core {
 
         public static Picture Upload(HttpPostedFileBase image, string basePath) {
             var extension = Path.GetExtension(image.FileName).ToLower();
-            var name = new Random().Next(0, 999999).ToString() + extension;
+//            var name = new Random().Next(0, 999999).ToString() + extension;
+            var name = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + extension;
 
             var picture = new Picture(basePath, name);
 
