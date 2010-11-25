@@ -12,9 +12,9 @@
     <% for (int i = Model.StartPage; i <= Model.EndPage; i++) { %>
         <li>
             <% if (i == Model.Page) { %>
-                <span class="current-page"><%= i %></span>
+                <span class="current-page"><%= i%></span>
             <% } else { %>
-                <a href="?page=<%= i %><%= Html.Encode(Model.Query) %>"><%= i %></a>
+                <a href="?page=<%= i %><%= Html.Encode(Model.Query) %>"><%= i%></a>
             <% } %>
         </li>
     <% } %>

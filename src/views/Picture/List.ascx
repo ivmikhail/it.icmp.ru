@@ -10,19 +10,18 @@
             <img src="<%= picture.ThumbUrl %>" alt="<%= picture.Name %>" />
 
             <% foreach (var textarea in Model.PictureTextareas) { %>
+                <h3>в <%= textarea.Value%></h3>
                 <ul class="right-list meta">
-                    <li class="info">
-                        вставить в <%= textarea.Value%>:
-                    </li>
-                    <li>
-                        <a href="<%= picture.ThumbUrl %>" title="#<%= textarea.Key %>" class="left">слева</a>
-                    </li>
-                    <li>
-                        <a href="<%= picture.ThumbUrl %>" title="#<%= textarea.Key %>" class="center">по центру</a>
-                    </li>
-                    <li>
-                        <a href="<%= picture.ThumbUrl %>" title="#<%= textarea.Key %>" class="right">справа</a>
-                    </li>
+                    <li class="info">thumb: </li>
+                    <li><a href="<%= picture.ThumbUrl %>" title="<%= textarea.Key %>" class="left">слева</a> </li>
+                    <li><a href="<%= picture.ThumbUrl %>" title="<%= textarea.Key %>" class="center">по центру</a> </li>
+                    <li><a href="<%= picture.ThumbUrl %>" title="<%= textarea.Key %>" class="right">справа</a> </li>
+                </ul>
+                <ul class="right-list meta">
+                    <li class="info">full: </li>
+                    <li><a href="<%= picture.FullUrl %>" title="<%= textarea.Key %>" class="left">слева</a> </li>
+                    <li><a href="<%= picture.FullUrl %>" title="<%= textarea.Key %>" class="center">по центру</a> </li>
+                    <li><a href="<%= picture.FullUrl %>" title="<%= textarea.Key %>" class="right">справа</a> </li>
                 </ul>
             <% } %>
             <div class="clear"></div>

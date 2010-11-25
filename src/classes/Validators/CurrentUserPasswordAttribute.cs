@@ -10,7 +10,7 @@ namespace ITCommunity.Validators {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class CurrentUserPasswordAttribute : ValidationAttribute {
 
-        private const string _defaultErrorMessage = "Вы не правильно ввели свой текущий пароль.";
+        private const string _defaultErrorMessage = "Вы неправильно ввели свой текущий пароль.";
 
         public CurrentUserPasswordAttribute()
             : base(_defaultErrorMessage) {

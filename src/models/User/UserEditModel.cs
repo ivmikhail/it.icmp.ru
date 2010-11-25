@@ -15,7 +15,6 @@ namespace ITCommunity.Models {
 
         [DisplayName("e-mail адрес")]
         [Required(ErrorMessage = "Введите e-mail")]
-        [UniqueEmail]
         public string Email { get; set; }
 
         [DisplayName("Новый пароль")]

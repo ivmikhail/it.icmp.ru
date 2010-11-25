@@ -44,7 +44,7 @@
 
 #up-arrow,
 #down-arrow {
-    color: #f0f0f0;
+    color: #e0e0e0;
     font-size: 5em;
     position: absolute;
     left: 94%;
@@ -63,7 +63,7 @@
 }
 
 #content .rating-none {
-	color: #666666;
+	color: #444444;
 }
 #content .rating-negative {
 	color: #c03030;
@@ -89,10 +89,10 @@
     color: #2b91af;
 }
 #content .select-categories .attached-category:hover {
-	color: #006f83;
+	color: #666666;
 }
 #content .select-categories .disattached-category {
-    color: #999999;
+    color: #666666;
 }
 #content .select-categories .disattached-category:hover {
 	color: #2b91af;

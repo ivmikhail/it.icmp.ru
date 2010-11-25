@@ -15,14 +15,19 @@
 
     // Вставка загруженного изображения
     $('.pictures-thumbs a').click(function () {
-        var textarea = $(this.title);
+        var textarea = $('#' + this.title);
 
         var thumbUrl = this.href;
+        var is_full = thumbUrl.indexOf('thumb') == -1;
         var fullUrl = thumbUrl.replace('thumb', 'full');
         var text = textarea.attr('value');
         var align = $(this).attr('class');
 
-        textarea.attr('value', text + '[' + align + '][img=' + fullUrl + ']' + thumbUrl + '[/img][/' + align + ']');
+        if (is_full) {
+            textarea.attr('value', text + '[' + align + '][img]' + fullUrl + '[/img][/' + align + ']');
+        } else {
+            textarea.attr('value', text + '[' + align + '][img=' + fullUrl + ']' + thumbUrl + '[/img][/' + align + ']');
+        }
 
         return false;
     });
