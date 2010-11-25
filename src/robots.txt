@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /browser/ 
+Disallow: /ClientWebService/
+Disallow: /SelfUpdate/
+Disallow: /wuident.cab
