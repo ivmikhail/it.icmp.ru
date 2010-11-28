@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    // прикрипление события для ссылки инвормации о bbcode-е
+    // прикрипление события для ссылки информации о bbcode-е
     $('.tags-info-link').click(function () {
         $('.tags-info', this.parentNode).toggleClass('hide');
         return false;

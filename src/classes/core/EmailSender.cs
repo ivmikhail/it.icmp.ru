@@ -15,15 +15,15 @@ namespace ITCommunity.Core {
             try {
                 var message = new MailMessage();
                 message.To.Add(new MailAddress(user.Email));
-                message.Subject = "Ykt IT Community - задание нового пароля";
+                message.Subject = "Ykt IT Community - восстановление пароля";
                 message.Body =
                     "Здравствуйте " + user.Nick + "!\n\n" +
 
-                    "Вы запросили сброс пароля с сайта " + Config.SiteAddress + "\n," +
-                    "сделать это можно перейдя по ссылке:\n" +
-                    Config.SiteAddress + "/user/newpassword?guid=" + recovery.Guid.ToString() + "\n" +
-                    "Ссылка активна в течении 3-4 дней." + "\n" +
-                    "______" +
+                    "Вы запросили сброс пароля с сайта " + Config.SiteAddress + "," +
+                    "сделать это можно перейдя по ссылке:\n\n" +
+                    Config.SiteAddress + "/user/newpassword?guid=" + recovery.Guid.ToString() + "\n\n" +
+                    "Ссылка активна в течении 3-4 дней." + "\n\n\n\n" +
+                    "------------\n" +
                     "С уважением, робот находящийся в рабстве у держателей сайта" + Config.SiteAddress;
 
                 var client = new SmtpClient(); // используются параметры из web.config
