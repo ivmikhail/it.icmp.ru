@@ -24,8 +24,8 @@
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/ie7-fix.css?v=" + v) %>" /><![endif]-->
 
 <script type="text/javascript" src="<%= Url.Content("~/content/js/highlight.pack.js?v=" + v) %>"></script>
-<script type="text/javascript" src="<%= Url.Content("~/content/js/jquery-1.3.2.js?v=" + v) %>"></script>
-<script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftAjax.debug.js?v=" + v) %>"></script>
-<script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftMvcAjax.debug.js?v=" + v) %>"></script>
+<script type="text/javascript" src="<%= Url.Content("~/content/js/jquery-1.3.2.min.js?v=" + v) %>"></script>
+<script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftAjax.js?v=" + v) %>"></script>
+<script type="text/javascript" src="<%= Url.Content("~/content/js/MicrosoftMvcAjax.js?v=" + v) %>"></script>
 
 <script type="text/javascript" src="<%= Url.Content("~/content/js/it-community.js?v=" + v) %>"></script>
