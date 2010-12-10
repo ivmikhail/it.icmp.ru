@@ -109,6 +109,7 @@ namespace ITCommunity.Utils {
 
             private string _replace;
             private Regex _regex;
+			private bool _cleanCaretReturn = false;
 
             /// <summary>
             /// Тупо заменяет bbcode на html
@@ -122,12 +123,16 @@ namespace ITCommunity.Utils {
                 this(htmlTag, bbTag, null) {
             }
 
-            public TagFormatter(string htmlTag, string bbTag, string htmlAttrs) :
-                this(htmlTag, bbTag, htmlAttrs, null) {
-            }
+			public TagFormatter(string htmlTag, string bbTag, string htmlAttrs) :
+				this(htmlTag, bbTag, htmlAttrs, null, false) {
+			}
+			public TagFormatter(string htmlTag, string bbTag, string htmlAttrs, bool cleanCaretReturn) :
+				this(htmlTag, bbTag, htmlAttrs, null, cleanCaretReturn) {
+			}
 
-            public TagFormatter(string htmlTag, string bbTag, string htmlAttrs, string bbAttr) :
+            public TagFormatter(string htmlTag, string bbTag, string htmlAttrs, string bbAttr, bool cleanCaretReturn) :
                 this(htmlTag, bbTag, htmlAttrs, bbAttr, _defaultHtmlText, _defaultBBText) {
+				_cleanCaretReturn = cleanCaretReturn;
             }
 
             /// <summary>
@@ -160,9 +165,16 @@ namespace ITCommunity.Utils {
             }
 
             public string Format(string data) {
+				if (_cleanCaretReturn) {
+					data = _regex.Replace(data, caretCleaner);
+				}
                 return _regex.Replace(data, _replace);
             }
-        }
+
+			private String caretCleaner(Match match) {
+				return match.Value.Replace("\n", "");
+			}
+		}
 
         #endregion
 
@@ -180,7 +192,7 @@ namespace ITCommunity.Utils {
             _formatters.Add(new TagFormatter("i"));
             _formatters.Add(new TagFormatter("u"));
             _formatters.Add(new TagFormatter("strike", "s"));
-            _formatters.Add(new TagFormatter("span", "size", "style=\"font-size:$1px\"", @"(\d*?)px"));
+            _formatters.Add(new TagFormatter("span", "size", "style=\"font-size:$1px\"", @"(\d*?)px", false));
 
             // расположение
             _formatters.Add(new TagFormatter("div", "left", "class=\"left\""));
@@ -190,13 +202,13 @@ namespace ITCommunity.Utils {
             // цитата и код
             _formatters.Add(new TagFormatter("blockquote", "quote"));
             _formatters.Add(new TagFormatter("code"));
-            _formatters.Add(new TagFormatter("code", "code", "class=\"$1\"", @"(\w*?)"));
+            _formatters.Add(new TagFormatter("code", "code", "class=\"$1\"", @"(\w*?)", false));
             // знаю, что это глюк
             _formatters.Add(new RegexFormatter("<code(.*?)>((.|\n)*?)</code>", "<pre><code$1>$2</code></pre>"));
 
             // ссылка
             _formatters.Add(new TagFormatter("a", "url", "href=\"${url}\" title=\"${url}\"", null, "${site}", URL));
-            _formatters.Add(new TagFormatter("a", "url", "href=\"${url}\" title=\"${url}\"", URL));
+            _formatters.Add(new TagFormatter("a", "url", "href=\"${url}\" title=\"${url}\"", URL, false));
             _formatters.Add(new TagFormatter("a", "email", "href=\"mailto:${text}\" title=\"Написать письмо\""));
 
             // рисунок http://it.icmp.ru/postimages/2174/6529/thumb/648611.jpg 
@@ -226,11 +238,11 @@ namespace ITCommunity.Utils {
             _formatters.Add(new RegexFormatter(@"\[list=A\]((.|\n)*?)\[/list\]", string.Format(sListFormat, "upper-alpha"), false));
 
             // таблица
-            _formatters.Add(new TagFormatter("table", "table", "cellpadding=\"0\" cellspacing=\"0\" width=\"100%\""));
-            _formatters.Add(new TagFormatter("table", "table", "cellpadding=\"0\" cellspacing=\"0\" width=\"$1%\"", @"(\d*%)"));
+            _formatters.Add(new TagFormatter("table", "table", "cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"", true));
+            _formatters.Add(new TagFormatter("table", "table", "cellpadding=\"0\" cellspacing=\"0\" width=\"$1%\"", @"(\d*%)", true));
             _formatters.Add(new TagFormatter("tr"));
             _formatters.Add(new TagFormatter("td"));
-            _formatters.Add(new TagFormatter("td", "td", "colspan=\"$1\"", @"(\d*)"));
+            _formatters.Add(new TagFormatter("td", "td", "colspan=\"$1\"", @"(\d*)", false));
 
             // убираем whitespaces в video
             _formatters.Add(new RegexFormatter(@"\[video\]\s*(.*?)\s*\[/video\]", "[video]$1[/video]"));

@@ -59,15 +59,18 @@ namespace ITCommunity.DB.Tables {
         }
 
         public static List<Category> GetAll() {
-            using (var db = Database.Connect()) {
-                var categories =
-                    from cat in db.Categories
-                    orderby cat.Sort ascending
-                    select cat;
-
-                return categories.ToList();
-            }
+			return AppCache.Get("CategoryList", () => getAllFromDb());
         }
+		private static List<Category> getAllFromDb() {
+			using (var db = Database.Connect()) {
+				var categories =
+					from cat in db.Categories
+					orderby cat.Sort ascending
+					select cat;
+
+				return categories.ToList();
+			}
+		}
 
         public static Category Get(int id) {
             var category = (
