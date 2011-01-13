@@ -11,30 +11,38 @@ namespace ITCommunity.Controllers {
 
         [HttpPost]
         public ActionResult AnonymousAdd(AnonymousCommentAddModel model) {
+            if (Request.IsAjaxRequest() == false) {
+                return Forbidden();
+            }
+
             if (ModelState.IsValid) {
                 var comment = model.ToComment();
 
                 comment = Comments.Add(comment);
 
-                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
+                return null;
             }
 
             model.NewCaptcha();
-            return View("AnonymousAddPage", model);
+            return PartialView("AnonymousAdd", model);
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult Add(CommentEditModel model) {
+            if (Request.IsAjaxRequest() == false) {
+                return Forbidden();
+            }
+            
             if (ModelState.IsValid) {
                 var comment = model.ToComment();
 
                 comment = Comments.Add(comment);
 
-                return Redirect("/post/view/" + comment.PostId + "#comment-" + comment.Id);
+                return null;
             }
 
-            return View("AddPage", model);
+            return PartialView("Add", model);
         }
 
         [Authorize]
