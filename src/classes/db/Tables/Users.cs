@@ -29,6 +29,8 @@ namespace ITCommunity.DB.Tables {
                 user.Role = editedUser.Role;
                 user.Email = editedUser.Email;
                 user.HeadersCounter = editedUser.HeadersCounter;
+                user.PostsCount = editedUser.PostsCount;
+                user.CommentsCount = editedUser.CommentsCount;
 
                 db.SubmitChanges();
 
