@@ -17,10 +17,9 @@
  
     <% using (Html.BeginForm()) { %>
        
-        <h2>
-            <label for="desc">Редактировать описание</label>
-            <%= Html.TextBox("desc", Model.Description)%>
-        </h2>
+        <label for="desc">Редактировать описание</label>
+        <span class="meta">Максимум 64 символов, <b class="info">&lt;</b> и <b class="info">&gt;</b> экранируются </span>
+        <%= Html.TextBox("desc", Model.Description, new { maxlength = 64 })%>
 
         <input type="submit" value="сохранить" />
 

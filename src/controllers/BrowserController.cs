@@ -43,7 +43,11 @@ namespace ITCommunity.Controllers {
             }
 
             if (desc != null) {
-                item.UpdateDesciption(HttpUtility.HtmlEncode(desc));
+                var descText = HttpUtility.HtmlEncode(desc);
+                if (descText.Length > 64) {
+                    descText = descText.Substring(0, 64);
+                }
+                item.UpdateDesciption(descText);
             }
 
             return RedirectToAction("Files", new { link = item.Parent.RelativeLink });
