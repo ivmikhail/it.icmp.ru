@@ -117,6 +117,12 @@ namespace ITCommunity {
             );
 
             routes.MapRoute(
+                "BrowserEditDesc",
+                "browsereditdesc/{*link}",
+                new { controller = "Browser", action = "EditDesc" }
+            );
+
+            routes.MapRoute(
                 "Browser",
                 "browser/{*link}",
                 new { controller = "Browser", action = "Files", link = BrowseItem.DefaultDir }

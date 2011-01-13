@@ -1,0 +1,21 @@
+﻿.browse-table {
+    width: 100%;
+}
+
+.browse-table .file-icon {
+    width: 20px;
+}
+
+.browse-table .file-date {
+    width: 20%;
+}
+
+.browse-table .file-desc {
+    width: 30%;
+}
+
+.browse-table .file-size {
+    text-align: right;
+    width: 12%;
+}
+

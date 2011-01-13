@@ -202,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bbcode-info.css" />
+    <Content Include="Content\css\browse.css" />
     <Content Include="Content\css\highlight-vs.css" />
     <Content Include="Content\css\links.css" />
     <Content Include="Content\css\sidebar.css" />
@@ -228,6 +229,7 @@
     <Content Include="Favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Views\Admin\Sidebar.ascx" />
+    <Content Include="Views\Browser\EditDesc.aspx" />
     <Content Include="Views\Browser\Menu.ascx" />
     <Content Include="Views\Browser\Files.aspx" />
     <Content Include="Views\Browser\Sidebar.ascx" />
@@ -289,6 +291,7 @@
     <Content Include="Views\Rss\Menu.ascx" />
     <Content Include="Views\Rss\Sidebar.ascx" />
     <Content Include="Views\Shared\Forbidden.aspx" />
+    <Content Include="Views\Shared\Link\Browser\EditDesc.ascx" />
     <Content Include="Views\Shared\Link\Browser\Dir.ascx" />
     <Content Include="Views\Shared\Link\Browser\File.ascx" />
     <Content Include="Views\Shared\Link\Browser\Parent.ascx" />
