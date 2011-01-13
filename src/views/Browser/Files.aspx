@@ -20,7 +20,7 @@
                 <td class="light-block file-icon">
                     <img src="<%= Url.Content("~/content/img/browser/up.ico") %>" alt="up.ico" class="middle" />
                 </td>
-                <td class="light-block">
+                <td class="light-block" colspan="3">
                     <% Html.RenderPartial("Link/Browser/Parent", Model.Parent); %>
                 </td>
             </tr>
@@ -38,9 +38,13 @@
                     <td class="meta light-block file-date">
                         <%= Html.Date(child.ModifiedDate) %>
                     </td>
-                    <td class="meta light-block file-desc" colspan="2">
+                    <td class="meta light-block file-desc">
                         <%= child.Description %>
+                    </td>
+                    <td class="meta light-block file-edit-desc">
                         <% Html.RenderPartial("Link/Browser/EditDesc", child); %>
+                    </td>
+                    <td class="meta light-block file-size">
                     </td>
                 <% } else {%>
                     <td class="light-block">
@@ -51,6 +55,8 @@
                     </td>
                     <td class="meta light-block file-desc">
                         <%= child.Description %>
+                    </td>
+                    <td class="meta light-block file-edit-desc">
                         <% Html.RenderPartial("Link/Browser/EditDesc", child); %>
                     </td>
                     <td class="meta light-block file-size">

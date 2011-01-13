@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.browse-table tr:hover td {
+    background: #f6f6f6;
+}
+
 .browse-table .file-icon {
     width: 20px;
 }
@@ -12,6 +16,16 @@
 
 .browse-table .file-desc {
     width: 30%;
+}
+
+.browse-table .file-edit-desc {
+    width: 3%;
+}
+.browse-table tr .file-edit-desc a {
+    display: none;
+}
+.browse-table tr:hover .file-edit-desc a {
+    display: inline;
 }
 
 .browse-table .file-size {
