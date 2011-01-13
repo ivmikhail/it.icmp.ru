@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using ITCommunity.DB;
+using ITCommunity.Validators;
 
 
 namespace ITCommunity.Models {
@@ -16,6 +17,7 @@ namespace ITCommunity.Models {
 
         [DisplayName("Варианты ответов")]
         [Required(ErrorMessage = "Напишите варианты ответов", AllowEmptyStrings = false)]
+        [LineLength(60)]
         public string Answers { get; set; }
 
         [DisplayName("Сколько дней активен опрос")]

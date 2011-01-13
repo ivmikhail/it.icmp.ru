@@ -3,7 +3,7 @@
 
 <h2>
     <%= Html.LabelFor(m => m.Title) %>
-    <%= Html.TextBoxFor(m => m.Title) %>
+    <%= Html.TextBoxFor(m => m.Title, new { maxlength = 128 })%>
     <%= Html.ValidationMessageFor(m => m.Title) %>
 </h2>
 
@@ -38,4 +38,4 @@
 </div>
         
 <%= Html.LabelFor(m => m.Source)%>
-<%= Html.TextBoxFor(m => m.Source)%>
+<%= Html.TextBoxFor(m => m.Source, new { maxlength = 1024 })%>

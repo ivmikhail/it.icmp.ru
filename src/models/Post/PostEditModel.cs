@@ -12,6 +12,7 @@ namespace ITCommunity.Models {
 
         [DisplayName("Заголовок поста")]
         [Required(ErrorMessage = "Напишите заголовок поста")]
+        [StringLength(128, ErrorMessage = "Максимум 128 символов")]
         public string Title { get; set; }
 
         [DisplayName("Краткое описание")]
@@ -22,6 +23,7 @@ namespace ITCommunity.Models {
         public string Text { get; set; }
 
         [DisplayName("Источник")]
+        [StringLength(1024, ErrorMessage = "Максимум 1024 символа")]
         public string Source { get; set; }
 
         public bool IsAttached { get; set; }
