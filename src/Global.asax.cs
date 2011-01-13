@@ -118,7 +118,7 @@ namespace ITCommunity {
 
             routes.MapRoute(
                 "BrowserEditDesc",
-                "browsereditdesc/{*link}",
+                "editdesc",
                 new { controller = "Browser", action = "EditDesc" }
             );
 

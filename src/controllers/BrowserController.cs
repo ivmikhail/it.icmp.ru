@@ -20,7 +20,8 @@ namespace ITCommunity.Controllers {
         }
 
         [Authorize(Roles = "admin")]
-        public ActionResult EditDesc(string link) {
+        public ActionResult EditDesc(string path) {
+            var link = System.Uri.UnescapeDataString(path);
             var item = BrowseItem.GetByLink(link);
 
             if (item != null) {
@@ -32,7 +33,8 @@ namespace ITCommunity.Controllers {
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult EditDesc(string link, string desc) {
+        public ActionResult EditDesc(string path, string desc) {
+            var link = System.Uri.UnescapeDataString(path);
             var item = BrowseItem.GetByLink(link);
 
             if (item == null || item.IsRoot) {

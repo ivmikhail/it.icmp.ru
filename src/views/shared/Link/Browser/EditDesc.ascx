@@ -5,6 +5,6 @@
     "edit",
     "editdesc",
     "browser",
-    new { link = Model.RelativeLink },
+    new { path = Uri.EscapeDataString(Model.RelativeLink) },
     new { title = "Редактировать описание" }
 )%>

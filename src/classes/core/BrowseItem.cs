@@ -243,7 +243,11 @@ namespace ITCommunity.Core {
                 descs.Add("\"" + desc.Key + "\" " + desc.Value);
             }
 
-            File.WriteAllLines(descPath, descs, Encoding.UTF8);
+            try {
+                File.WriteAllLines(descPath, descs, Encoding.UTF8);
+            } catch (Exception ex) {
+                Logger.Log.Error("Произошла ошибка при записи файла", ex);
+            }
         }
 
         public void UpdateDesciption(string desc) {
