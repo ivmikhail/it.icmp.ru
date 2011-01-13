@@ -33,9 +33,17 @@ namespace ITCommunity.DB.Tables {
                 db.SubmitChanges();
 
                 comment.Post.CommentsCount++;
-                if (comment.Author != null) {
-                    comment.Author.CommentsCount++;
+
+                if (comment.AuthorId > 0) {
+                    var author = (
+                        from usr in db.Users
+                        where usr.Id == comment.AuthorId
+                        select usr
+                        ).Single();
+
+                    author.CommentsCount++;
                 }
+
                 db.SubmitChanges();
 
                 AppCache.Remove(LAST_CACHE_KEY);
@@ -68,7 +76,17 @@ namespace ITCommunity.DB.Tables {
                 ).Single();
 
                 comment.Post.CommentsCount--;
-                comment.Author.CommentsCount--;
+
+                if (comment.AuthorId > 0) {
+                    var author = (
+                        from usr in db.Users
+                        where usr.Id == comment.AuthorId
+                        select usr
+                        ).Single();
+
+                    author.CommentsCount--;
+                }
+
                 db.SubmitChanges();
 
                 db.Comments.DeleteOnSubmit(comment);

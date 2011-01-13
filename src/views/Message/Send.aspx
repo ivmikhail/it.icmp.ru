@@ -16,7 +16,7 @@
         <%= Html.ValidationMessageFor(m => m.Receiver)%>
 
         <%= Html.LabelFor(m => m.Title) %>
-        <%= Html.TextBoxFor(m => m.Title)%>
+        <%= Html.TextBoxFor(m => m.Title, new { maxlength = 64 })%>
         <%= Html.ValidationMessageFor(m => m.Title)%>
 
         <%= Html.LabelFor(m => m.Text) %>
