@@ -1,9 +1,9 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<CommentEditModel>" %>
 
 
-<h3 id="add-comment"><%= CurrentUser.User.Nick %>, напиши комментарий!</h3>                        
+<h3><%= CurrentUser.User.Nick %>, напиши комментарий!</h3>                        
 
-<% using (Html.BeginForm("add", "comment")) { %>
+<% using (Ajax.BeginForm("add", "comment", new AjaxOptions() { HttpMethod = "post", OnSuccess = "checkAddedComment", UpdateTargetId = "add-comment" })) { %>
 
     <%= Html.HiddenFor(m => m.PostId) %>
 

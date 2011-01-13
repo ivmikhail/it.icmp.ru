@@ -33,7 +33,7 @@
 
     <div id="content">
         <a href="#up-arrow" id="down-arrow" title="Посмотреть что внизу">&darr;</a>
-
+        
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         
         <a href="#down-arrow" id="up-arrow" title="Посмотреть что наверху">&uarr;</a>

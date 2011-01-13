@@ -32,3 +32,9 @@
         return false;
     });
 });
+
+function checkAddedComment() {
+    if ($('#add-comment').html().length == 0) {
+        location.reload(true);
+    }
+}

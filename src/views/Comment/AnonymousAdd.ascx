@@ -1,19 +1,19 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<AnonymousCommentAddModel>" %>
 
 
-<h3 id="add-comment">Вы - anonymous, <% Html.RenderPartial("Link/User/Login"); %>?</h3>
+<h3>Вы - anonymous, <% Html.RenderPartial("Link/User/Login"); %>?</h3>
 
-<% using (Html.BeginForm("anonymousadd", "comment")) { %>
+<% using (Ajax.BeginForm("anonymousadd", "comment", new AjaxOptions() { HttpMethod = "post", OnSuccess = "checkAddedComment", UpdateTargetId = "add-comment" })) { %>
 
-    <%= Html.HiddenFor(m => m.PostId) %>
+    <%= Html.HiddenFor(m => m.PostId)%>
 
     <% Html.RenderPartial("../Captcha/Captcha", Model); %>
 
     <% Html.RenderPartial("EditorToolbar"); %>
 
-    <%= Html.TextAreaFor(m => m.Text) %>
-    <%= Html.ValidationMessageFor(m => m.Text) %>
+    <%= Html.TextAreaFor(m => m.Text)%>
+    <%= Html.ValidationMessageFor(m => m.Text)%>
 
-    <input type="submit" value="добавить" />                
+    <input type="submit" value="добавить" />
 
 <% } %>
