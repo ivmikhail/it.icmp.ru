@@ -5,6 +5,6 @@
      Model.Name,
     "files",
     "browser",
-    new { link = Model.Link },
+    new { link = Model.RelativeLink },
     new { title = Model.Description }
 )%>

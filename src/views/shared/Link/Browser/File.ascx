@@ -3,5 +3,5 @@
 
 <a 
     href="<%= Model.Link %>"
-    title="<%= Model.Description %>">
-    <%= Model.Name %></a>
+    title="<%= Model.Name %>">
+    <%= Model.ShortName%></a>

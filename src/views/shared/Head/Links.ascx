@@ -3,7 +3,7 @@
 
 <link rel="alternate"  type="application/rss+xml" href="<%= Url.Action("feed", "rss") %>" />
     
-<% var v = "0.5.4"; %>
+<% var v = "0.5.5"; %>
 
 <link rel="shortcut icon" href="<%= Url.Content("~/favicon.ico?v=" + v) %>" type="image/vnd.microsoft.icon" />
 
@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/menu.css?v=" + v) %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/footer.css?v=" + v) %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/pagination.css?v=" + v) %>" />
+<link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/browse.css?v=" + v) %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/links.css?v=" + v) %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/validation.css?v=" + v) %>" />
 <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/content/css/bbcode-info.css?v=" + v) %>" />

@@ -31,17 +31,42 @@ namespace ITCommunity.Core {
 
         private string _path;
 
-        public bool IsRoot { get; set; }
+        public bool IsRoot {
+            get {
+                return ParentPath.Equals(BasePath, StringComparison.CurrentCultureIgnoreCase);
+            }
+        }
         public bool IsDir { get; set; }
         public string Name { get; set; }
         public string Extension { get; set; }
         public long Size { get; set; }
         public string Description { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
         public string Link {
             get {
-                var relative = _path.Replace(BasePath, "").Replace('\\', '/');
-                return IsDir ? relative : BaseUrl + relative;
+                return BaseUrl + RelativeLink;
+            }
+        }
+
+        public string ShortName {
+            get {
+                if (Name.Length > 30) {
+                    return Name.Substring(0, 27) + "...";
+                }
+                return Name;
+            }
+        }
+
+        public string RelativeLink {
+            get {
+                return _path.Replace(BasePath, "").Replace('\\', '/');
+            }
+        }
+
+        public string ParentPath {
+            get {
+                return _path.Substring(0, _path.LastIndexOf('\\'));
             }
         }
 
@@ -66,9 +91,12 @@ namespace ITCommunity.Core {
 
         private void Initialize() {
             if (IsDir) {
-                Name = _path.Substring(_path.LastIndexOf('\\') + 1);
+                var info = new DirectoryInfo(_path);
+                Name = info.Name;
+                ModifiedDate = info.LastWriteTime;
             } else {
                 var info = new FileInfo(_path);
+                ModifiedDate = info.LastWriteTime;
                 Name = info.Name;
                 Extension = info.Extension;
                 Size = info.Length;
@@ -79,7 +107,12 @@ namespace ITCommunity.Core {
             var path = GetRealPath(link);
 
             if (path != null) {
-                return new BrowseItem(path, true);
+                var item = new BrowseItem(path, true);
+                if (!item.IsRoot) {
+                    var descs = GetDescriptions(item.ParentPath);
+                    item.Description = descs.ContainsKey(item.Name) ? descs[item.Name] : null;
+                }
+                return item;
             }
 
             return null;
@@ -104,7 +137,7 @@ namespace ITCommunity.Core {
             var fullPath = BasePath + path;
             fullPath = Path.GetFullPath(fullPath);
 
-            if (Directory.Exists(fullPath) == false) {
+            if (!Directory.Exists(fullPath) && !File.Exists(fullPath)) {
                 return null;
             }
             if (fullPath.StartsWith(BasePath, StringComparison.CurrentCultureIgnoreCase) == false) {
@@ -129,7 +162,7 @@ namespace ITCommunity.Core {
             if (onlyDirs == false) {
                 var files = Directory.GetFiles(path);
                 foreach (var file in files) {
-                    if (file.EndsWith('\\' + DESCRIPTION_FILENAME)) {
+                    if (file.EndsWith('\\' + DESCRIPTION_FILENAME, StringComparison.CurrentCultureIgnoreCase)) {
                         continue;
                     }
                     var item = new BrowseItem(file, false);
@@ -171,7 +204,7 @@ namespace ITCommunity.Core {
             var descPath = path + '\\' + DESCRIPTION_FILENAME;
 
             if (File.Exists(descPath)) {
-                string[] descs = File.ReadAllLines(descPath, Encoding.GetEncoding(866));
+                string[] descs = File.ReadAllLines(descPath, Encoding.UTF8);
                 foreach (var line in descs) {
                     string fname = null;
                     string desc = null;
@@ -199,6 +232,30 @@ namespace ITCommunity.Core {
             }
 
             return descriptions;
+        }
+
+        private static void SaveDescriptions(Dictionary<string, string> descriptions, string path) {
+            var descPath = path + '\\' + DESCRIPTION_FILENAME;
+
+            var descs = new List<string>();
+
+            foreach (var desc in descriptions) {
+                descs.Add("\"" + desc.Key + "\" " + desc.Value);
+            }
+
+            File.WriteAllLines(descPath, descs, Encoding.UTF8);
+        }
+
+        public void UpdateDesciption(string desc) {
+            var descriptions = GetDescriptions(ParentPath);
+
+            if (descriptions.ContainsKey(Name)) {
+                descriptions[Name] = desc;
+            } else {
+                descriptions.Add(Name, desc);
+            }
+
+            SaveDescriptions(descriptions, ParentPath);
         }
     }
 }

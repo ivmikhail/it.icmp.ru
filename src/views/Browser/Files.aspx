@@ -14,26 +14,50 @@
         <%= Model.Name %>
     </h1>
 
-    <ul>
+    <table class="browse-table" cellspacing="0">
         <% if (Model.Parent != null) { %>
-            <li class="light-block">
-                <img src="<%= Url.Content("~/content/img/browser/up.ico") %>" alt="up.ico" class="middle" />
-	            <% Html.RenderPartial("Link/Browser/Parent", Model.Parent); %>	
-            </li>
+            <tr>
+                <td class="light-block file-icon">
+                    <img src="<%= Url.Content("~/content/img/browser/up.ico") %>" alt="up.ico" class="middle" />
+                </td>
+                <td class="light-block">
+                    <% Html.RenderPartial("Link/Browser/Parent", Model.Parent); %>
+                </td>
+            </tr>
         <% } %>
 
         <% foreach (var child in Model.Children) { %>
-            <li class="light-block">
-                <img src="<%= Url.Content("~/content/img/browser/" + Html.Icon(child.Extension)) %>" alt="<%= Html.Icon(child.Extension) %>" class="middle" />
+            <tr>
+                <td class="light-block file-icon">
+                    <img src="<%= Url.Content("~/content/img/browser/" + Html.Icon(child.Extension)) %>" alt="<%= Html.Icon(child.Extension) %>" class="middle" />
+                </td>
                 <%if (child.IsDir) { %>
-                    <% Html.RenderPartial("Link/Browser/Dir", child); %>	
+                    <td class="light-block">
+                        <% Html.RenderPartial("Link/Browser/Dir", child); %>
+                    </td>
+                    <td class="meta light-block file-date">
+                        <%= Html.Date(child.ModifiedDate) %>
+                    </td>
+                    <td class="meta light-block file-desc" colspan="2">
+                        <%= child.Description %>
+                        <% Html.RenderPartial("Link/Browser/EditDesc", child); %>
+                    </td>
                 <% } else {%>
-                    <% Html.RenderPartial("Link/Browser/File", child); %>	
-                    <span class="meta">
+                    <td class="light-block">
+                        <% Html.RenderPartial("Link/Browser/File", child); %>
+                    </td>
+                    <td class="meta light-block file-date">
+                        <%= Html.Date(child.ModifiedDate) %>
+                    </td>
+                    <td class="meta light-block file-desc">
+                        <%= child.Description %>
+                        <% Html.RenderPartial("Link/Browser/EditDesc", child); %>
+                    </td>
+                    <td class="meta light-block file-size">
                         <%= Html.FileSize(child.Size) %>
-                    </span>
+                    </td>
                 <% } %>
-            </li>
+            </tr>
         <% } %>
-    </ul>
+    </table>
 </asp:Content>
