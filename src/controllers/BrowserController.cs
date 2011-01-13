@@ -2,6 +2,7 @@
 
 using ITCommunity.Core;
 using ITCommunity.Models;
+using System.Web;
 
 
 namespace ITCommunity.Controllers {
@@ -42,7 +43,7 @@ namespace ITCommunity.Controllers {
             }
 
             if (desc != null) {
-                item.UpdateDesciption(desc.Trim());
+                item.UpdateDesciption(HttpUtility.HtmlEncode(desc));
             }
 
             return RedirectToAction("Files", new { link = item.Parent.RelativeLink });
