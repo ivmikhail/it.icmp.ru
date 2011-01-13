@@ -20,7 +20,7 @@
                 <td class="light-block file-icon">
                     <img src="<%= Url.Content("~/content/img/browser/up.ico") %>" alt="up.ico" class="middle" />
                 </td>
-                <td class="light-block" colspan="3">
+                <td class="light-block" colspan="5">
                     <% Html.RenderPartial("Link/Browser/Parent", Model.Parent); %>
                 </td>
             </tr>
