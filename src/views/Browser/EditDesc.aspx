@@ -7,12 +7,18 @@
 
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h1>Редактирование описания</h1>
+    <h1>
+        <% foreach (var parent in Model.Parents) { %>
+            <% Html.RenderPartial("Link/Browser/Dir", parent); %>
+            /
+        <% } %>
+        <%= Model.Name %>
+    </h1>
  
     <% using (Html.BeginForm()) { %>
        
         <h2>
-            <label for="desc"><%= Model.Name %></label>
+            <label for="desc">Редактировать описание</label>
             <%= Html.TextBox("desc", Model.Description)%>
         </h2>
 
