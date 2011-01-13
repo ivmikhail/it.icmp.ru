@@ -30,6 +30,11 @@ namespace ITCommunity.Models {
             User = user;
             PerPage = Config.UserCommentsPerPage;
             Load();
+
+            if (user.CommentsCount != TotalCount) {
+                user.CommentsCount = TotalCount;
+                Users.Update(user);
+            }
         }
 
         public void Load() {

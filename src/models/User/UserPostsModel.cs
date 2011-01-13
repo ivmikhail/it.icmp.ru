@@ -17,6 +17,11 @@ namespace ITCommunity.Models {
             base(SortBy.Date, page) {
             User = user;
             Load();
+
+            if (user.PostsCount != TotalCount) {
+                user.PostsCount = TotalCount;
+                Users.Update(user);
+            }
         }
 
         protected override List<Post> GetList() {

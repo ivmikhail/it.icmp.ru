@@ -20,7 +20,15 @@ namespace ITCommunity.Validators {
             if (value == null)
                 return true;
 
-            return value.ToString().Length <= _maxLength;
+            var lines = value.ToString().Split('\n');
+
+            foreach (var line in lines) {
+                if (line.Length > _maxLength) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public override string FormatErrorMessage(string name) {
