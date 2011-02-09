@@ -20,7 +20,7 @@ namespace ITCommunity.Controllers {
             }
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize]
         public ActionResult EditDesc(string path) {
             var link = System.Uri.UnescapeDataString(path);
             var item = BrowseItem.GetByLink(link);
@@ -32,7 +32,7 @@ namespace ITCommunity.Controllers {
             }
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize]
         [HttpPost]
         public ActionResult EditDesc(string path, string desc) {
             var link = System.Uri.UnescapeDataString(path);
