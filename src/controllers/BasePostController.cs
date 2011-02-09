@@ -98,7 +98,7 @@ namespace ITCommunity.Controllers {
                 editedPost.Id = post.Id;
                 Posts.Update(editedPost);
 
-                Picture.DeleteUnused(editedPost.PicturesPath, editedPost.Description + editedPost.Text);
+                Picture.DeleteUnused(post.PicturesPath, editedPost.Description + editedPost.Text);
 
                 return RedirectToAction("view", "post", new { id = post.Id });
             }
