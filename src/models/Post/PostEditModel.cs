@@ -45,12 +45,15 @@ namespace ITCommunity.Models {
             }
         }
 
+        public bool ShowPreview { get; set; }
+
         public PostEditModel() {
             Path = Post.DefaultPicturesPath;
             IsCommentable = true;
             PictureTextareas = new Dictionary<string, string>();
             PictureTextareas.Add("Description", "описание");
             PictureTextareas.Add("Text", "текст");
+            ShowPreview = false;
         }
 
         public PostEditModel(Post post) :
@@ -94,7 +97,6 @@ namespace ITCommunity.Models {
                     post.PostsCategories.Add(new PostsCategory { CategoryId = isAttached.Key });
                 }
             }
-            PostEditCategoriesModel.Current.Clear();
 
             return post;
         }

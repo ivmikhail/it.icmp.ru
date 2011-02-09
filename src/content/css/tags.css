@@ -88,8 +88,8 @@ input[type=file] {
 }
 
 input[type=submit] {
-    display: block;
-    margin: 1em 0 12px;
+    display: inline-block;
+    margin: 1em 1em 12px 0;
     padding: 4px 16px;
 }
 

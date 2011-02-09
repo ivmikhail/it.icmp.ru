@@ -8,12 +8,15 @@
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
     <h1>Редактирование поста</h1>
- 
+
+    <% if (Model.ShowPreview) Html.RenderPartial("../Post/Preview", Model); %>
+
     <% using (Html.BeginForm("edit", "post", null, FormMethod.Post, new { enctype = "multipart/form-data" })) { %>           
        
         <% Html.RenderPartial("EditForm", Model); %>
-    
-        <input type="submit" value="сохранить" />
+
+        <input type="submit" name="publish" value="изменить" />
+        <input type="submit" name="preview" value="просмотреть" />
 
     <% } %>
 
