@@ -132,6 +132,7 @@
     <Compile Include="Classes\Utils\Hash.cs" />
     <Compile Include="Classes\Validators\CaptchaAnswerAttribute.cs" />
     <Compile Include="Classes\Validators\AnotherUserNickAttribute.cs" />
+    <Compile Include="Classes\Validators\PictureAllowedExtensionsAttribute.cs" />
     <Compile Include="Classes\Validators\LineLengthAttribute.cs" />
     <Compile Include="Classes\Validators\PictureAllowedTypesAttribute.cs" />
     <Compile Include="Classes\Validators\PictureMaxSizeAttribute.cs" />

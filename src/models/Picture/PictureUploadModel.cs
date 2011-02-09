@@ -11,7 +11,8 @@ namespace ITCommunity.Models {
     public class PictureUploadModel {
 
         [DisplayName("Выберите рисунок для загрузки")]
-        [PictureAllowedTypes]
+//        [PictureAllowedTypes]
+        [PictureAllowedExtensions]
         [PictureMaxSize]
         public HttpPostedFileBase Picture { get; set; }
 
