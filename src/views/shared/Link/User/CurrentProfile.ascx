@@ -5,6 +5,6 @@
     CurrentUser.User.Nick,
     "profile",
     "user",
-    null,
+    new { nick = CurrentUser.User.Nick },
     new { title = "Мой профиль" }
 )%>
