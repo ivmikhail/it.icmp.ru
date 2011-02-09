@@ -37,6 +37,10 @@ namespace ITCommunity.Controllers {
             if (Upload(model, Post.DefaultPicturesPath)) {
                 return View(model);
             }
+            if (Request.Params["preview"] != null) {
+                model.ShowPreview = true;
+                return View(model);
+            }
 
             if (ModelState.IsValid) {
                 var post = model.ToPost();
@@ -91,6 +95,10 @@ namespace ITCommunity.Controllers {
 
             if (Upload(model, post.PicturesPath)) {
                 model.Path = post.PicturesPath;
+                return View(model);
+            }
+            if (Request.Params["preview"] != null) {
+                model.ShowPreview = true;
                 return View(model);
             }
 

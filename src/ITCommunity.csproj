@@ -261,6 +261,7 @@
     <Content Include="Views\Picture\List.ascx" />
     <Content Include="Views\Picture\Upload.ascx" />
     <Content Include="Views\Poll\Answers.ascx" />
+    <Content Include="Views\Poll\Preview.ascx" />
     <Content Include="Views\Poll\UserAnswers.ascx" />
     <Content Include="Views\Poll\Edit.aspx" />
     <Content Include="Views\Poll\EndDate.ascx" />
@@ -272,6 +273,7 @@
     <Content Include="Views\Poll\View.aspx" />
     <Content Include="Views\Post\Comments.ascx" />
     <Content Include="Views\Post\Like.ascx" />
+    <Content Include="Views\Post\Preview.ascx" />
     <Content Include="Views\Post\ViewMeta.ascx" />
     <Content Include="Views\Post\Description.ascx" />
     <Content Include="Views\Post\EditForm.ascx" />
