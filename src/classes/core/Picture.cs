@@ -103,9 +103,10 @@ namespace ITCommunity.Core {
         }
 
         public static Picture Upload(HttpPostedFileBase image, string basePath) {
-            var extension = Path.GetExtension(image.FileName).ToLower();
+//            var extension = Path.GetExtension(image.FileName).ToLower();
 //            var name = new Random().Next(0, 999999).ToString() + extension;
-            var name = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + extension;
+//            var name = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + extension;
+            var name = image.FileName;
 
             var picture = new Picture(basePath, name);
 
@@ -156,12 +157,18 @@ namespace ITCommunity.Core {
 
                     data = data.Replace(picture.FullUrl, newPicture.FullUrl);
                     data = data.Replace(picture.ThumbUrl, newPicture.ThumbUrl);
-
-                    picture.Move(newPicture.BasePath);
                 }
             }
 
             return data;
+        }
+
+        public static void MoveAll(string srcPath, string dstPath) {
+            var pictures = GetList(srcPath);
+
+            foreach (Picture picture in pictures) {
+                picture.Move(dstPath);
+            }
         }
 
         private static void CreateDirectories(string basePath) {

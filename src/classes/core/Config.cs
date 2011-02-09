@@ -35,7 +35,7 @@ namespace ITCommunity.Core {
             }
         }
 
-        private static string Get(string param) {
+        public static string Get(string param) {
             string result = null;
             try {
                 result = ConfigurationManager.AppSettings.Get(param + "." + Config.computerName);

@@ -53,6 +53,7 @@ namespace ITCommunity.Controllers {
                 post.Text = Picture.ReplaceUrls(Post.DefaultPicturesPath, post.PicturesPath, post.Text);
                 Posts.Update(post, false);
 
+                Picture.MoveAll(Post.DefaultPicturesPath, post.PicturesPath);
                 Picture.Clear(Post.DefaultPicturesPath);
 
                 return RedirectToAction("view", "post", new { id = post.Id });
