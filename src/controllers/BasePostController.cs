@@ -53,12 +53,13 @@ namespace ITCommunity.Controllers {
                     Users.Update(user);
                 }
 
+                Picture.DeleteUnused(Post.DefaultPicturesPath, post.Description + post.Text);
+
                 post.Description = Picture.ReplaceUrls(Post.DefaultPicturesPath, post.PicturesPath, post.Description);
                 post.Text = Picture.ReplaceUrls(Post.DefaultPicturesPath, post.PicturesPath, post.Text);
                 Posts.Update(post, false);
 
                 Picture.MoveAll(Post.DefaultPicturesPath, post.PicturesPath);
-                Picture.Clear(Post.DefaultPicturesPath);
 
                 return RedirectToAction("view", "post", new { id = post.Id });
             }
