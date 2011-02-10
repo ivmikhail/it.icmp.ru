@@ -13,7 +13,7 @@
     // инициализация подсветки кода
     hljs.initHighlightingOnLoad();
 
-    // Вставка загруженного изображения
+    // вставка загруженного изображения
     $('.pictures-thumbs a').click(function () {
         var textarea = $('#' + this.title);
 
@@ -30,6 +30,22 @@
         }
 
         return false;
+    });
+
+    // авто-сабмит формы при выборе рисунка для загрузки
+    $('#Picture').change(function () {
+        var form = $(this).parent('form');
+        
+        // добавляем такой фиелд, который говорит, что загружаем рисунок, а не сохраняем пост
+        var upload_field = '<input type="hidden" name="UploadPicture" value="do" />';
+        form.append(upload_field);
+
+        // немножко корректируем action, чтобы после загрузки сразу увидеть список рисуноков
+        var action = form.attr('action');
+        action += '#UploadedPictures';
+        form.attr('action', action);
+
+        form.submit();
     });
 });
 
