@@ -8,7 +8,9 @@
 <asp:Content ID="Content" ContentPlaceHolderID="MainContent" runat="server">
 
     <h1>Редактирование опроса</h1>
- 
+    
+    <% if (Model.ShowPreview) Html.RenderPartial("../Poll/Preview", Model); %>
+    
     <% using (Html.BeginForm("edit", "poll", null, FormMethod.Post, new { enctype = "multipart/form-data" })) { %>
         <h2>
             <%= Html.LabelFor(m => m.Topic) %>
@@ -64,8 +66,8 @@
             <% Html.RenderPartial("../Post/EditCategories", PostEditCategoriesModel.Current); %>    
         </div>
 
-        <input type="submit" value="сохранить опрос" />
-
+        <input type="submit" name="publish" value="изменить" />
+        <input type="submit" name="preview" value="просмотреть" />
     <% } %>
     
 </asp:Content>

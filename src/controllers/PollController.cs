@@ -178,10 +178,26 @@ namespace ITCommunity.Controllers {
             if (post.Editable == false) {
                 return Forbidden();
             }
+            
+            var oldModel = new PollEditModel(post);
+            model.Topic = oldModel.Topic;
+            model.Answers = oldModel.Answers;
+            model.IsMultiselect = oldModel.IsMultiselect;
+            model.IsOpen = oldModel.IsOpen;
+
+            ModelState.Remove("Topic");
+            ModelState.Remove("Answers");
+            ModelState.Remove("IsMultiselect");
+            ModelState.Remove("IsOpen");
+
+            if (Request.Params["preview"] != null) {
+                model.ShowPreview = true;
+                return View(model);
+            }
 
             if (ModelState.IsValid) {
                 var editedPoll = model.ToPoll();
-                editedPoll.Id = id.Value;
+                editedPoll.Id = poll.Id;
                 Polls.Update(editedPoll);
 
                 return base.BaseEdit(post.Id, model);
