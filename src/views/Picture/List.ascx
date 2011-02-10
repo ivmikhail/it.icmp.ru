@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="ViewUserControl<PictureUploadModel>" %>
 
 
-<label>Загруженные рисунки</label>
+<label id="UploadedPictures">Загруженные рисунки</label>
 <div class="meta">Не добавленные в новость картинки будут удалены автоматически. Чтобы добавить картинку в пост кликните по соответствующей ссылке.</div>
 
 <ul class="pictures-thumbs">
