@@ -135,12 +135,6 @@ namespace ITCommunity {
             );
 
             routes.MapRoute(
-                "NotFound",
-                "notfound",
-                new { controller = "Base", action = "NotFound" }
-            );
-
-            routes.MapRoute(
                 "Forbidden",
                 "forbidden",
                 new { controller = "Base", action = "Forbidden" }
@@ -149,7 +143,13 @@ namespace ITCommunity {
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new { controller = "Base", action = "NotFound", id = 0 }
+                new { id = 0 }
+            );
+
+            routes.MapRoute(
+                "Notfound",
+                "{*anyurl}",
+                new { controller = "Base", action = "Notfound" }
             );
         }
 
