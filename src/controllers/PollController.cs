@@ -208,9 +208,12 @@ namespace ITCommunity.Controllers {
 
         [Authorize(Roles = "admin")]
         public override ActionResult Delete(int? id) {
-            Polls.Delete(id.Value);
+            var post = Posts.Get(id.Value);
 
-            var post = Posts.GetByEntity(id.Value);
+            if (post.EntityType == Post.EntityTypes.Poll && post.EntityId != null) {
+                int pollId = post.EntityId.Value;
+                Polls.Delete(pollId);
+            }
 
             return base.Delete(post.Id);
         }
