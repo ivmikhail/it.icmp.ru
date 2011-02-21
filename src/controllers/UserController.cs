@@ -113,6 +113,9 @@ namespace ITCommunity.Controllers {
 
         [HttpPost]
         public ActionResult Login(UserLoginModel model, string returnUrl) {
+            if (CurrentUser.IsAuth) {
+                return Redirect("/");
+            }
             if (ModelState.IsValid) {
                 if (CurrentUser.Login(model.UserNick, model.Password, model.RememberMe)) {
                     if (!String.IsNullOrEmpty(returnUrl)) {
@@ -129,6 +132,9 @@ namespace ITCommunity.Controllers {
         }
 
         public ActionResult Register() {
+            if (CurrentUser.IsAuth) {
+                return Redirect("/");
+            }
             var model = new UserRegisterModel();
 
             return View(model);
@@ -136,6 +142,9 @@ namespace ITCommunity.Controllers {
 
         [HttpPost]
         public ActionResult Register(UserRegisterModel model) {
+            if (CurrentUser.IsAuth) {
+                return Redirect("/");
+            }
             if (ModelState.IsValid) {
                 var user = CurrentUser.Register(model.UserNick, model.Password, model.Email);
 
@@ -183,11 +192,17 @@ namespace ITCommunity.Controllers {
         }
 
         public ActionResult ForgotPassword() {
+            if (CurrentUser.IsAuth) {
+                return Redirect("/");
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult ForgotPassword(UserNickModel model) {
+            if (CurrentUser.IsAuth) {
+                return Redirect("/");
+            }
             if (model == null) {
                 return NotFound();
             }
