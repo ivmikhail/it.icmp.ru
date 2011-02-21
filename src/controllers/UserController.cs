@@ -108,6 +108,9 @@ namespace ITCommunity.Controllers {
         }
 
         public ActionResult Login() {
+            if (CurrentUser.IsAuth) {
+                return Redirect("/");
+            }
             return View();
         }
 
