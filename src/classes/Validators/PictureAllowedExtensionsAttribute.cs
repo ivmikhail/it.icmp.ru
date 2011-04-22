@@ -32,7 +32,7 @@ namespace ITCommunity.Validators {
             var allowedExts = AllowedExtensions.Replace(" ", "").Split(',');
 
             foreach (var allowedExt in allowedExts) {
-                if (extension.Equals(allowedExt)) {
+                if (extension.Equals(allowedExt, StringComparison.CurrentCultureIgnoreCase)) {
                     return true;
                 }
             }
