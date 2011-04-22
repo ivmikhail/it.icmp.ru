@@ -51,11 +51,6 @@ namespace ITCommunity.Models {
             }
         }
 
-        protected override bool IsSetCategories() {
-            int minCount = (Poll.Category != null) ? 1 : 0;
-            return PostEditCategoriesModel.Current.AttachedCount > minCount;
-        }
-
         public Poll ToPoll() {
             var poll = new Poll();
 

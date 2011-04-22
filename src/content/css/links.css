@@ -42,8 +42,8 @@
     border-bottom: none;
 }
 
-#up-arrow,
-#down-arrow {
+#to-down,
+#to-up {
     color: #e0e0e0;
     font-size: 5em;
     position: absolute;
@@ -51,14 +51,14 @@
     text-align: right;
     text-decoration: none;
 }
-#up-arrow:hover,
-#down-arrow:hover {
+#to-down:hover,
+#to-up:hover {
     color: #cccccc;
 }
-#up-arrow {
+#to-down {
     margin-top: -1.2em;
 }
-#down-arrow {
+#to-up {
     margin-top: -0.1em;
 }
 
