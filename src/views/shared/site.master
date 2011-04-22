@@ -32,11 +32,11 @@
     </div>
 
     <div id="content">
-        <a href="#up-arrow" id="down-arrow" title="Посмотреть что внизу">&darr;</a>
+        <a href="#to-down" id="to-up" title="Посмотреть что внизу">&darr;</a>
         
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         
-        <a href="#down-arrow" id="up-arrow" title="Посмотреть что наверху">&uarr;</a>
+        <a href="#to-up" id="to-down" title="Посмотреть что наверху">&uarr;</a>
     </div>
 
 
