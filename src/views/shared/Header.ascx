@@ -66,8 +66,8 @@
 </div>
 
 <div class="header-text">
-    <a href="/" title="IT Community">
-        <span class="it">IT</span>.<span class="community">Community</span>&lt;<span class="in">in</span> <span class="beta">Beta</span>&gt;;
-        <span class="text">// <%= Headers.GetRandom().Text %></span>
-    </a>
+	<div class="header-logo">
+		<a href="/" title="IT Community"><img alt="IT-Community" src="content/img/design/itc-logo.png" /></a>
+	</div>
+	<span class="header-greeting"><%= Headers.GetRandom().Text %></span>
 </div>

@@ -13,7 +13,8 @@
 #header .top-menu {
     color: #666666;
     height: 1.5em;
-    padding: 4px 4%;
+    padding: 4px 4% 14px 4%;
+    display: block;
 }
 #header .top-menu li {
 }
@@ -60,18 +61,22 @@
 }
 
 
-#header .header-text {
+#header div.header-text {
     font-family: consolas;
     font-size: 2.5em;
     font-weight: bold;
+    padding-left:4%;
+    display:block;
+    height:50px;
 }
-#header .header-text a {
-    clear: both;
-    color: #333333;
-    display: block;
-    padding: 1em 2em 0.5em;
-    text-align: center;
-    text-decoration: none;
+div.header-logo {
+	float:left;
+	height:50px;
+	padding-right:30px;
+}
+span.header-greeting {
+	float: left;
+	line-height: 50px;
 }
 #header .header-text a:hover {
     color: #535353;
