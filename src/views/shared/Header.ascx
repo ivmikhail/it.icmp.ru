@@ -67,7 +67,7 @@
 
 <div class="header-text">
 	<div class="header-logo">
-		<a href="/" title="IT Community"><img alt="IT-Community" src="content/img/design/itc-logo.png" /></a>
+		<a href="/" title="IT Community"><img alt="IT-Community" src="/content/img/design/itc-logo.png" /></a>
 	</div>
 	<span class="header-greeting"><%= Headers.GetRandom().Text %></span>
 </div>
